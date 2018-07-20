@@ -1,0 +1,27 @@
+//OFF = 0, WARN = 1, ERROR = 2;
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "modules": true,
+            "jsx": true
+        }
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "semi": 0,
+        "spaced-comment": 1,
+        "space-before-function-paren": 1,
+        "indent": 1,
+        "space-before-blocks": 1,
+        "keyword-spacing": 1,
+        "eol-last": 1,
+        "no-trailing-spaces": 1,
+        "no-mixed-spaces-and-tabs": 1,
+        "no-tabs": 1
+    }
+}
