@@ -22,7 +22,7 @@
         "eslint-plugin-react": "^7.10.0",
         "file-loader": "^1.1.5",
         "html-webpack-plugin": "^2.30.1",
-        "node-sass": "^4.5.3",
+        "node-sass": "^4.9.2",
         "sass-loader": "^6.0.6",
         "style-loader": "^0.19.0",
         "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
@@ -31,6 +31,7 @@
         "webpack-dev-server": "^2.9.1"
     },
     "dependencies": {
+        "hoek": "^5.0.3",
         "react": "^16.0.0",
         "react-dom": "^16.0.0"
     }
