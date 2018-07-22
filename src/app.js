@@ -3,7 +3,7 @@ import './css/style.css'
 
 class App extends React.Component {
 	render() {
-		return(
+		return (
 			<h1>First Component</h1>
 		)
 	}

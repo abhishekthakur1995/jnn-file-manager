@@ -15,14 +15,14 @@
     "rules": {
         "semi": 0,
         "spaced-comment": 1,
-        "space-before-function-paren": 1,
-        "indent": 1,
+        "space-before-function-paren": [ 1, "never" ],
+        "indent": [ 0, "tab" ],
         "space-before-blocks": 1,
         "keyword-spacing": 1,
         "eol-last": 1,
         "no-trailing-spaces": 1,
         "no-mixed-spaces-and-tabs": 1,
-        "no-tabs": 1,
+        "no-tabs": 0,
         "no-unused-vars": 1
     }
 }
