@@ -1,0 +1,2 @@
+reset
+npm run dev

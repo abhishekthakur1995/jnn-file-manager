@@ -6,7 +6,11 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 module.exports = {
 	entry: {
 		vendor: ["react", "react-dom"],
-		app: "./src/index.js"
+		app:
+		[
+			"./src/index.js",
+			"./src/app.js"
+		]
 	},
 	output: {
 		filename: "[name].bundle.js",
@@ -68,7 +72,11 @@ module.exports = {
 			name: "vendor",
 			filename: "vendor.bundle.js"
 		}),
-		new HTMLWebpackPlugin(),
+		new HTMLWebpackPlugin({
+      		title: 'File Manager',
+      		filename: 'index.html',
+      		template: 'public/index.html'
+    	})
 		//new UglifyJsPlugin()  // run when creating production build only.
 	]
 }
