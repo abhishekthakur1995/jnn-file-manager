@@ -38,13 +38,16 @@ module.exports = {
 				use: {
 					loader: "babel-loader",
 					options: {
-						presets: ["env", "stage-0", "react"]
+						presets: ["env", "stage-0", "react"],
+						"plugins": [
+    						["import", { "libraryName": "antd", "style": "css" }] 
+  						]
 					}
 				}
 			},
 			{
 				test: /\.css$/,
-				exclude: /(node_modules)/,
+				//exclude: /(node_modules)/,
 				use: [
 					{loader: "style-loader"},
 					{loader: "css-loader"}
