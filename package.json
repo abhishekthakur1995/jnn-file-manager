@@ -24,13 +24,14 @@
         "eslint-plugin-react": "^7.10.0",
         "file-loader": "^1.1.11",
         "html-webpack-plugin": "^3.2.0",
+        "lodash": "^4.17.10",
         "node-sass": "^4.9.2",
         "sass-loader": "^7.0.3",
         "style-loader": "^0.21.0",
         "uglifyjs-webpack-plugin": "^1.2.7",
         "url-loader": "^1.0.1",
-        "webpack": "^4.16.1",
-        "webpack-dev-server": "^3.1.5"
+        "webpack": "^3.6.0",
+        "webpack-dev-server": "^2.9.1"
     },
     "dependencies": {
         "hoek": "^5.0.3",
