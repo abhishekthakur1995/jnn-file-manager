@@ -9,7 +9,8 @@ module.exports = {
 		app:
 		[
 			"./src/index.js",
-			"./src/app.js"
+			"./src/app.js",
+			"./src/EntryForm.js"
 		]
 	},
 	output: {

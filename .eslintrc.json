@@ -21,8 +21,8 @@
         "keyword-spacing": 1,
         "eol-last": 1,
         "no-trailing-spaces": 1,
-        "no-mixed-spaces-and-tabs": 1,
+        "no-mixed-spaces-and-tabs": 0,
         "no-tabs": 0,
-        "no-unused-vars": 1
+        "no-unused-vars": 0
     }
 }

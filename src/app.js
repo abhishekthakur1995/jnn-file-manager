@@ -1,10 +1,10 @@
 import React from 'react'
-import './css/style.css'
+import EntryForm from './EntryForm.js'
 
 class App extends React.Component {
 	render() {
 		return (
-			<h1>First Component</h1>
+			<EntryForm />
 		)
 	}
 }
