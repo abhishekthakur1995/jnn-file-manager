@@ -5,13 +5,13 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 
 module.exports = {
 	entry: {
-		vendor: ["react", "react-dom"],
+		vendor: ["react", "react-dom", "react-bootstrap"],
 		app:
 		[
 			"./src/index.js",
 			"./src/app.js",
 			"./src/EntryForm.js"
-		]
+		],
 	},
 	output: {
 		filename: "[name].bundle.js",
@@ -39,15 +39,12 @@ module.exports = {
 					loader: "babel-loader",
 					options: {
 						presets: ["env", "stage-0", "react"],
-						"plugins": [
-    						["import", { "libraryName": "antd", "style": "css" }] 
-  						]
 					}
 				}
 			},
 			{
 				test: /\.css$/,
-				//exclude: /(node_modules)/,
+				exclude: /(node_modules)/,
 				use: [
 					{loader: "style-loader"},
 					{loader: "css-loader"}
@@ -63,12 +60,12 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.jpg$/,
+				test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.jpg($|\?)|\.svg($|\?)/,
 				exclude: /(node_modules)/,
 				use: [
 					{loader: "url-loader"}
 				]
-			}
+			},
 		]
 	},
 	plugins: [
