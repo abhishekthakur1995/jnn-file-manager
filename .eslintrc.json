@@ -8,7 +8,8 @@
         "sourceType": "module",
         "ecmaFeatures": {
             "modules": true,
-            "jsx": true
+            "jsx": true,
+            "experimentalObjectRestSpread": true
         }
     },
     "extends": "eslint:recommended",
