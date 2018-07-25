@@ -1,5 +1,4 @@
 import React from 'react'
-import './css/style.css'
 import { Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
 
 class EntryForm extends React.Component {
