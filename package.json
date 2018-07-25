@@ -4,6 +4,7 @@
     "description": "File manager to maintain file records on various levels",
     "main": "index.js",
     "scripts": {
+        "start": "nodemon --exec babel-node server.js --ignore css/",
         "build": "webpack --progress && serve",
         "dev": "webpack-dev-server --open",
         "watch": "webpack --w"
@@ -12,6 +13,7 @@
     "license": "ISC",
     "devDependencies": {
         "babel-core": "^6.26.3",
+        "babel-eslint": "^8.2.6",
         "babel-loader": "^7.1.5",
         "babel-plugin-import": "^1.8.0",
         "babel-preset-env": "^1.7.0",
@@ -23,9 +25,8 @@
         "eslint-plugin-react": "^7.10.0",
         "file-loader": "^1.1.11",
         "html-webpack-plugin": "^3.2.0",
-        "lodash": "^4.17.10",
         "node-sass": "^4.9.2",
-        "react-bootstrap": "^0.32.1",
+        "nodemon": "^1.18.3",
         "sass-loader": "^7.0.3",
         "style-loader": "^0.21.0",
         "uglifyjs-webpack-plugin": "^1.2.7",
@@ -34,8 +35,10 @@
         "webpack-dev-server": "^2.9.1"
     },
     "dependencies": {
-        "hoek": "^5.0.3",
+        "express": "^4.16.3",
+        "lodash": "^4.17.10",
         "react": "^16.4.1",
-        "react-dom": "^16.4.1"
+        "react-dom": "^16.4.1",
+        "react-bootstrap": "^0.32.1"
     }
 }

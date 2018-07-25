@@ -12,7 +12,7 @@
             "experimentalObjectRestSpread": true
         }
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
     "rules": {
         "semi": 0,
         "spaced-comment": 1,
@@ -25,7 +25,7 @@
         "no-mixed-spaces-and-tabs": 0,
         "no-tabs": 0,
         "no-unused-vars": 0,
-        "no-console":1,
+        "no-console": ["warn", { "allow": ["info", "error"] }],
         "eol-last":0
     }
 }
