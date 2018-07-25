@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
+import { Form, Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
 
 class EntryForm extends React.Component {
     constructor(props) {
@@ -18,6 +18,9 @@ class EntryForm extends React.Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+
+        this.myRef = new Array({ length: 7 }, React.createRef())
+        console.log(this.myRef)
     }
 
     handleChange(event) {
@@ -41,7 +44,7 @@ class EntryForm extends React.Component {
             <Grid>
                 <Row>
                     <section className="col-xs-12">
-                        <form onSubmit={this.handleSubmit}>
+                        <Form onSubmit={this.handleSubmit}>
                             <Col md={4}>
                                 <FormGroup md={4} bsSize="large" >
                                     <ControlLabel htmlFor="applicantName">Applicant Name</ControlLabel>
@@ -49,7 +52,7 @@ class EntryForm extends React.Component {
                                         type="text"
                                         autoComplete="on"
                                         name="applicantName"
-                                        ref="applicantName"
+                                        ref={this.myRef.applicantName}
                                         value={this.state.fields.applicantName}
                                         onChange={this.handleChange}
                                     />
@@ -63,7 +66,7 @@ class EntryForm extends React.Component {
                                         type="text"
                                         autoComplete="on"
                                         name="applicantAddress"
-                                        ref="applicantAddress"
+                                        ref={this.myRef.applicantAddress}
                                         value={this.state.fields.applicantAddress}
                                         onChange={this.handleChange}
                                     />
@@ -77,7 +80,7 @@ class EntryForm extends React.Component {
                                         type="text"
                                         autoComplete="on"
                                         name="applicantContact"
-                                        ref="applicantContact"
+                                        ref={this.myRef.applicantContact}
                                         value={this.state.fields.applicantContact}
                                         onChange={this.handleChange}
                                     />
@@ -91,7 +94,7 @@ class EntryForm extends React.Component {
                                         type="text"
                                         autoComplete="on"
                                         name="buildingName"
-                                        ref="buildingName"
+                                        ref={this.myRef.buildingName}
                                         value={this.state.fields.buildingName}
                                         onChange={this.handleChange}
                                     />
@@ -105,7 +108,7 @@ class EntryForm extends React.Component {
                                         type="text"
                                         autoComplete="on"
                                         name="buildingAddress"
-                                        ref="buildingAddress"
+                                        ref={this.myRef.buildingAddress}
                                         value={this.state.fields.buildingAddress}
                                         onChange={this.handleChange}
                                     />
@@ -118,7 +121,7 @@ class EntryForm extends React.Component {
                                     <FormControl
                                     componentClass="select"
                                     name="area"
-                                    ref="area"
+                                    ref={this.myRef.area}
                                     value={this.state.fields.area}
                                     onChange={this.handleChange}>
                                         <option value="">Select</option>
@@ -134,7 +137,7 @@ class EntryForm extends React.Component {
                                     <FormControl
                                     componentClass="select"
                                     name="applicantType"
-                                    ref="applicantType"
+                                    ref={this.myRef.applicantType}
                                     value={this.state.fields.applicantType}
                                     onChange={this.handleChange}>
                                         <option value="">Select</option>
@@ -147,7 +150,7 @@ class EntryForm extends React.Component {
                             <Col md={12}>
                                 <Button type="submit" className="btn btn-default">Submit</Button>
                             </Col>
-                        </form>
+                        </Form>
                     </section>
                 </Row>
             </Grid>
