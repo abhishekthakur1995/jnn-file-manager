@@ -17,11 +17,12 @@ class LoginForm extends Component {
 	}
 
 	handleChange(event) {
-		console.log('event', event);
+		// console.log('event', event);
+		event.preventDefault();
 	}
 
 	handleSubmit(event) {
-		console.log('event', event);
+		// console.log('event', event);
 		event.preventDefault();
 	}
 

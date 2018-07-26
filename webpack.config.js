@@ -11,6 +11,7 @@ module.exports = {
 			"./src/index.js",
 			"./src/components/App.js",
 			"./src/components/NavBar.js",
+			"./src/components/SideBar.js",
 			"./src/components/EntryForm.js",
 			"./src/components/LoginForm.js"
 		],
