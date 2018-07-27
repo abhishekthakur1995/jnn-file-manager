@@ -31,3 +31,9 @@
     	padding-right: $i * 5px !important;
   	}
 }
+
+@for $i from 0 through 40 {
+    .fs#{$i} {
+        font-size: 0px + $i !important
+    }
+}

@@ -1,19 +1,10 @@
-@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700");
-
-@for $i from 0 through 40 {
-    .fs#{$i} {
-        font-size: 0px + $i !important
-    }
-}
-
 .wrapper {
     display: flex;
     align-items: stretch;
-    font-family: 'Poppins', sans-serif;
     background: #fafafa;
+    min-height: calc(100vh - 52px);
 
     p {
-        font-family: 'Poppins', sans-serif;
         font-size: 1.1em;
         font-weight: 300;
         line-height: 1.7em;
@@ -30,13 +21,28 @@
         display: inline-block;
     }
 
+    .navbar {
+        padding: 5px;
+        background: #fff;
+        border: none;
+        border-radius: 0;
+        margin-bottom: 40px;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-btn {
+        box-shadow: none;
+        outline: none !important;
+        border: none;
+    }
+
     #sidebar {
         min-width: 250px;
         max-width: 250px;
         background: #7386D5;
         color: #fff;
         transition: all 0.3s;
-        height: 100vh;
+        //height: calc(100vh - 52px);
         &.active {
             min-width: 80px;
             max-width: 80px;
@@ -148,6 +154,11 @@
                 font-size: 0.6em;
             }
         }
+    }
+    .content {
+        padding: 20px;
+        //min-height: 100vh;
+        transition: all 0.3s;
     }
 }
 
