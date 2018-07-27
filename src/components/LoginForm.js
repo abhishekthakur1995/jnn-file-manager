@@ -17,14 +17,19 @@ class LoginForm extends Component {
 	}
 
 	handleChange(event) {
-		// console.log('event', event);
-		event.preventDefault();
-	}
+        const element = event.nativeEvent.target;
+        this.setState((prevState) => ({
+            ...prevState,
+            fields: {
+                ...prevState.fields,
+                [element.name]: element.value
+            }
+        }));
+    }
 
-	handleSubmit(event) {
-		// console.log('event', event);
+  	handleSubmit(event) {
 		event.preventDefault();
-	}
+  	}
 
 	render() {
 		return (
