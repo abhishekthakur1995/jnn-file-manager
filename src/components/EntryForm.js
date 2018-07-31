@@ -18,9 +18,6 @@ class EntryForm extends React.Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-
-        this.myRef = new Array({ length: 7 }, React.createRef())
-        // console.log(this.myRef)
     }
 
     handleChange(event) {

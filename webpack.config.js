@@ -13,7 +13,8 @@ module.exports = {
 			"./src/components/NavBar.js",
 			"./src/components/SideBar.js",
 			"./src/components/EntryForm.js",
-			"./src/components/LoginForm.js"
+			"./src/components/LoginForm.js",
+			"./src/components/ErrorPage.js"
 		],
 	},
 	output: {

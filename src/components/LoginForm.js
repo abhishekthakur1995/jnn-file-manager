@@ -27,6 +27,16 @@ class LoginForm extends Component {
         }));
     }
 
+    getValidationState() {
+    	var re = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    	if (!this.state.fields.email.length) {
+    		return null;
+    	}
+		const isValid = !this.state.fields.email.length ? null : re.test(String(this.state.fields.email).toLowerCase()) ? 'success' : 'error'
+		return isValid
+  	}
+
+
   	handleSubmit(event) {
 		event.preventDefault();
   	}
@@ -38,19 +48,20 @@ class LoginForm extends Component {
 			        <section className="col-xs-6">
 			        	<Form onSubmit={this.handleSubmit}>
 			        		<Col md={12}>
-		        			    <FormGroup md={4} bsSize="large" >
+		        			    <FormGroup md={4} bsSize="large" validationState={this.getValidationState()}>
 		        			        <ControlLabel htmlFor="email">Email</ControlLabel>
 		        			        <FormControl
-		        			            type="text"
+		        			            type="email"
 		        			            autoComplete="on"
 		        			            name="email"
 		        			            value={this.state.fields.email}
 		        			            onChange={this.handleChange}
 		        			        />
+		        			        <FormControl.Feedback />
 		        			    </FormGroup>
 			        		</Col>
 			        		<Col md={12}>
-		        			    <FormGroup md={4} bsSize="large" >
+		        			    <FormGroup md={4} bsSize="large">
 		        			        <ControlLabel htmlFor="password">Password</ControlLabel>
 		        			        <FormControl
 		        			            type="password"
