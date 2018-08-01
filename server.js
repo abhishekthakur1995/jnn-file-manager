@@ -18,11 +18,11 @@ server.use((req, res, next) => {
 })
 
 // serve public folders
-server.use(express.static('public'))
-server.use(express.static('registerHandler'))
+// server.use(express.static('public'))
 
 // handle server routes
-// server.use(require('./router/index'))
+server.use(require('./router/index'))
+server.use(require('./router/users'))
 
 server.listen(process.env.PORT, () => {
 	console.info('Express listening on port', process.env.PORT)
