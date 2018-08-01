@@ -1,7 +1,7 @@
-import config from './config';
 import apiRouter from './api';
-
 import express from 'express';
+require('dotenv').config()
+
 const server = express();
 
 server.get('/', (req, res) => {
@@ -11,6 +11,6 @@ server.get('/', (req, res) => {
 server.use('/api', apiRouter);
 server.use(express.static('public'));
 
-server.listen(config.port, () => {
-	console.info('Express listening on port', config.port);
+server.listen(process.env.PORT, () => {
+	console.info('Express listening on port', process.env.PORT);
 });
