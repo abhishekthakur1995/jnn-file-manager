@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
+import { fakeAuth } from './services/AuthService.js'
 
 class LoginForm extends Component {
 	constructor(props) {
@@ -9,14 +11,24 @@ class LoginForm extends Component {
 		    fields: {
 		        email: '',
 		        password: ''
-		    }
+		    },
+		    redirectToReferrer: false
 		}
 
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-	handleChange(event) {
+   	getValidationState() {
+    	var re = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    	if (!this.state.fields.email.length) {
+    		return null;
+    	}
+		const isValid = !this.state.fields.email.length ? null : re.test(String(this.state.fields.email).toLowerCase()) ? 'success' : 'error'
+		return isValid
+  	}
+
+	handleChange() {
         const element = event.nativeEvent.target;
         this.setState((prevState) => ({
             ...prevState,
@@ -27,21 +39,24 @@ class LoginForm extends Component {
         }));
     }
 
-    getValidationState() {
-    	var re = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-    	if (!this.state.fields.email.length) {
-    		return null;
-    	}
-		const isValid = !this.state.fields.email.length ? null : re.test(String(this.state.fields.email).toLowerCase()) ? 'success' : 'error'
-		return isValid
-  	}
-
-
-  	handleSubmit(event) {
+  	handleSubmit() {
 		event.preventDefault();
   	}
 
+  	login() {
+  	    fakeAuth.authenticate(() => {
+      		this.setState(() => ({
+  	        	redirectToReferrer: true
+  	      	}))
+  	    })
+  	}
+
 	render() {
+		const { redirectToReferrer } = this.state
+	    if (redirectToReferrer === true) {
+	      	return <Redirect to='/' />
+	    }
+
 		return (
 			<Grid>
 			    <Row>
