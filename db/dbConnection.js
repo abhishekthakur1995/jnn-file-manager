@@ -16,4 +16,4 @@ dbConnection.connect(function(err) {
   	console.log('connected as id ' + dbConnection.threadId);
 });
 
-module.exports.dbConnection = dbConnection;
+module.exports = dbConnection;

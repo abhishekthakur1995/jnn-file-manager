@@ -12,7 +12,6 @@ users.post('/register', function(req, res) {
         "EMAIL": req.body.email,
         "PASSWORD": req.body.password,
         "ROLE": req.body.role,
-        "CREATED": new Date()
     }
 	connection.query(`INSERT INTO ${process.env.USER_TBL} SET ?`, userData, function(err, results, fields) {
 		if (err) {
@@ -52,7 +51,7 @@ users.post('/login', function(req, res) {
 })
 
 users.use(function(req, res, next) {
-	const token = req.body.token
+	const token = req.body.token || req.query.token || req.headers['x-access-token'];
  	if (token) {
 		jwt.verify(token, process.env.SECRET_KEY, function(err) {
 			if (err) {
