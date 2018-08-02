@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types';
 
-export const fakeAuth = {
+export const userAuth = {
 	isAuthenticated: false,
   	authenticate(cb) {
     	this.isAuthenticated = true
@@ -16,7 +16,7 @@ export const fakeAuth = {
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
 	<Route {...rest} render={(props) => (
-		fakeAuth.isAuthenticated === true ? <Component {...props} /> : <Redirect to={{
+		userAuth.isAuthenticated === true ? <Component {...props} /> : <Redirect to={{
 			pathname: '/login',
           	state: { from: props.location }
         }} />

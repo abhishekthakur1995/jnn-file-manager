@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios';
 import { Form, Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
 
 class EntryForm extends React.Component {
@@ -12,7 +13,8 @@ class EntryForm extends React.Component {
                 applicantContact: '',
                 buildingName: '',
                 buildingAddress: '',
-                area:'',
+                buildingArea: '',
+                fileNumber: '',
             }
         }
 
@@ -32,8 +34,23 @@ class EntryForm extends React.Component {
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
+        event.preventDefault()
+        axios.post(`http://localhost:3001/addNewRecord`, {
+            applicant_name: this.state.fields.applicantName,
+            applicant_type: this.state.fields.applicantType,
+            applicant_address: this.state.fields.applicantAddress,
+            applicant_contact: this.state.fields.applicantContact,
+            building_name: this.state.fields.buildingName,
+            building_address: this.state.fields.buildingAddress,
+            building_area: this.state.fields.buildingArea,
+            file_number: this.state.fields.fileNumber
+        }).then(res => {
+            if (res.data.saved) {
+                console.log("record saved")
+            } else {
+                // show error here
+            }
+        })
     }
 
     render() {
@@ -49,7 +66,6 @@ class EntryForm extends React.Component {
                                         type="text"
                                         autoComplete="on"
                                         name="applicantName"
-                                        ref={this.myRef.applicantName}
                                         value={this.state.fields.applicantName}
                                         onChange={this.handleChange}
                                     />
@@ -63,7 +79,6 @@ class EntryForm extends React.Component {
                                         type="text"
                                         autoComplete="on"
                                         name="applicantAddress"
-                                        ref={this.myRef.applicantAddress}
                                         value={this.state.fields.applicantAddress}
                                         onChange={this.handleChange}
                                     />
@@ -77,7 +92,6 @@ class EntryForm extends React.Component {
                                         type="text"
                                         autoComplete="on"
                                         name="applicantContact"
-                                        ref={this.myRef.applicantContact}
                                         value={this.state.fields.applicantContact}
                                         onChange={this.handleChange}
                                     />
@@ -86,12 +100,11 @@ class EntryForm extends React.Component {
 
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="applicantContact">Building Name</ControlLabel>
+                                    <ControlLabel htmlFor="buildingName">Building Name</ControlLabel>
                                     <FormControl
                                         type="text"
                                         autoComplete="on"
                                         name="buildingName"
-                                        ref={this.myRef.buildingName}
                                         value={this.state.fields.buildingName}
                                         onChange={this.handleChange}
                                     />
@@ -100,12 +113,11 @@ class EntryForm extends React.Component {
 
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="applicantContact">Building Address</ControlLabel>
+                                    <ControlLabel htmlFor="buildingAddress">Building Address</ControlLabel>
                                     <FormControl
                                         type="text"
                                         autoComplete="on"
                                         name="buildingAddress"
-                                        ref={this.myRef.buildingAddress}
                                         value={this.state.fields.buildingAddress}
                                         onChange={this.handleChange}
                                     />
@@ -114,12 +126,11 @@ class EntryForm extends React.Component {
 
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="applicantContact">Area</ControlLabel>
+                                    <ControlLabel htmlFor="buildingArea">Area</ControlLabel>
                                     <FormControl
                                     componentClass="select"
-                                    name="area"
-                                    ref={this.myRef.area}
-                                    value={this.state.fields.area}
+                                    name="buildingArea"
+                                    value={this.state.fields.buildingArea}
                                     onChange={this.handleChange}>
                                         <option value="">Select</option>
                                         <option value="urban">Urban</option>
@@ -130,17 +141,29 @@ class EntryForm extends React.Component {
 
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="applicantContact">Applicant Type</ControlLabel>
+                                    <ControlLabel htmlFor="applicantType">Applicant Type</ControlLabel>
                                     <FormControl
                                     componentClass="select"
                                     name="applicantType"
-                                    ref={this.myRef.applicantType}
                                     value={this.state.fields.applicantType}
                                     onChange={this.handleChange}>
                                         <option value="">Select</option>
                                         <option value="urban">Permanent</option>
                                         <option value="rural">Temporary</option>
                                     </FormControl>
+                                </FormGroup>
+                            </Col>
+
+                            <Col md={4}>
+                                <FormGroup bsSize="large" >
+                                    <ControlLabel htmlFor="fileNumber">File Number</ControlLabel>
+                                    <FormControl
+                                        type="text"
+                                        autoComplete="on"
+                                        name="fileNumber"
+                                        value={this.state.fields.fileNumber}
+                                        onChange={this.handleChange}
+                                    />
                                 </FormGroup>
                             </Col>
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Nav } from 'react-bootstrap'
-import '../scss/sidebar.scss'
+import '../../public/scss/sidebar.scss'
 
 class SideBar extends React.Component {
 	render() {

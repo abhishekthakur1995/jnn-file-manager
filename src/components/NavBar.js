@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navbar, NavDropdown, NavItem, Grid, Nav, MenuItem } from 'react-bootstrap'
-import '../scss/generic.scss'
+import '../../public/scss/sidebar.scss'
 import LoginForm from './LoginForm.js'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 

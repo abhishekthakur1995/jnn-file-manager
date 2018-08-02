@@ -62,7 +62,7 @@ users.post('/login', function(req, res) {
 })
 
 users.use(function(req, res, next) {
-	const token = req.body.token || req.query.token || req.headers['x-access-token'];
+	const token = req.headers.authorization
  	if (token) {
 		jwt.verify(token, process.env.SECRET_KEY, function(err) {
 			if (err) {

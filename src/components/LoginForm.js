@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 import { Form, Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
-import { fakeAuth } from './services/AuthService.js'
+import { userAuth } from './services/AuthService.js'
+import _ from 'lodash'
 
 class LoginForm extends Component {
 	constructor(props) {
@@ -19,16 +21,7 @@ class LoginForm extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-   	getValidationState() {
-    	var re = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-    	if (!this.state.fields.email.length) {
-    		return null;
-    	}
-		const isValid = !this.state.fields.email.length ? null : re.test(String(this.state.fields.email).toLowerCase()) ? 'success' : 'error'
-		return isValid
-  	}
-
-	handleChange() {
+	handleChange(event) {
         const element = event.nativeEvent.target;
         this.setState((prevState) => ({
             ...prevState,
@@ -36,15 +29,25 @@ class LoginForm extends Component {
                 ...prevState.fields,
                 [element.name]: element.value
             }
-        }));
+        }))
     }
 
-  	handleSubmit() {
-		event.preventDefault();
+  	handleSubmit(event) {
+		event.preventDefault()
+		axios.post(`http://localhost:3001/login`, {
+			email: this.state.fields.email,
+			password: this.state.fields.password
+		}).then(res => {
+        	if (!_.isEmpty(res.data.token)) {
+        		this.authenticate()
+        	} else {
+        		// show error here
+        	}
+      	})
   	}
 
-  	login() {
-  	    fakeAuth.authenticate(() => {
+  	authenticate() {
+  	    userAuth.authenticate(() => {
       		this.setState(() => ({
   	        	redirectToReferrer: true
   	      	}))
@@ -63,7 +66,7 @@ class LoginForm extends Component {
 			        <section className="col-xs-6">
 			        	<Form onSubmit={this.handleSubmit}>
 			        		<Col md={12}>
-		        			    <FormGroup md={4} bsSize="large" validationState={this.getValidationState()}>
+		        			    <FormGroup md={4} bsSize="large">
 		        			        <ControlLabel htmlFor="email">Email</ControlLabel>
 		        			        <FormControl
 		        			            type="email"

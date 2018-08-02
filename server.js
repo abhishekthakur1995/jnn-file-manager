@@ -23,6 +23,7 @@ server.use((req, res, next) => {
 // handle server routes
 server.use(require('./router/index'))
 server.use(require('./router/users'))
+server.use(require('./router/records'))
 
 server.listen(process.env.PORT, () => {
 	console.info('Express listening on port', process.env.PORT)
