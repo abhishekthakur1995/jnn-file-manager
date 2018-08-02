@@ -1,6 +1,7 @@
 const express = require('express')
 const users = express.Router()
 const connection = require('../db/dbConnection')
+const jwt = require('jsonwebtoken')
 
 /* 	path: /register
  *	type: POST 
@@ -19,7 +20,9 @@ users.post('/register', function(req, res) {
 		}
 		res.status(400).json({'message' : 'User Registered successfully'})
 	})
-	connection.release()
+	connection.end(err => {
+		if(err) console.log(err);
+	})
 })
 
 /* 	path: /login
@@ -34,9 +37,9 @@ users.post('/login', function(req, res) {
 		if (err) {
 			res.status(400).json({'message' : err, 'token' : token})
 		}
-		if (rows.length > 0) {
-			if (rows[0].password == password) {
-				token = jwt.sign(rows[0], process.env.SECRET_KEY, {
+		if (results.length > 0) {
+			if (results[0].PASSWORD == password) {
+				token = jwt.sign(JSON.parse(JSON.stringify(results[0])), process.env.SECRET_KEY, {
 		 			expiresIn: 5000
 				})
 				res.status(200).json({'message' : 'User verified', 'token' : token})
@@ -47,7 +50,9 @@ users.post('/login', function(req, res) {
 			res.status(204).json({'message' : 'Email does not exists', 'token' : token})
 		}
 	})
-	connection.release()
+	connection.end(err => {
+		if(err) console.log(err);
+	})
 })
 
 users.use(function(req, res, next) {
