@@ -45,7 +45,7 @@ users.post('/login', function(req, res) {
 			bcrypt.compare(password, results[0].PASSWORD).then(function(match) {
 				if (match == true) {
 					token = jwt.sign(JSON.parse(JSON.stringify(results[0])), process.env.SECRET_KEY, {
-			 			expiresIn: 5000
+			 			expiresIn: process.env.TOKEN_EXPIRY_TIME
 					})
 					res.status(200).json({'message' : 'User verified', 'token' : token})
 				} else {
