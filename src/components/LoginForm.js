@@ -39,6 +39,7 @@ class LoginForm extends Component {
 			password: this.state.fields.password
 		}).then(res => {
         	if (!_.isEmpty(res.data.token)) {
+        		localStorage.setItem('authToken', res.data.token)
         		this.authenticate()
         	} else {
         		// show error here

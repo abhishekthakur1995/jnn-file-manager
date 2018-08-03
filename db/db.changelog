@@ -19,6 +19,8 @@ CREATE TABLE `tbl_file_records` (
 	`BUILDING_AREA` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
 	`FILE_NUMBER` varchar(20) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
 	`FILE_STATUS` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
+	`DEPARTMENT_VIEW_LEVEL` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
+	`REMARK` text COLLATE utf8_unicode_ci DEFAULT NULL,
 	`STATUS` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
 	`CREATED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

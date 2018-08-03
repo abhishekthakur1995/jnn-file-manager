@@ -15,6 +15,7 @@ class EntryForm extends React.Component {
                 buildingAddress: '',
                 buildingArea: '',
                 fileNumber: '',
+                remark: '',
             }
         }
 
@@ -35,6 +36,7 @@ class EntryForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault()
+        const headers = { 'Authorization': localStorage.getItem('authToken') }
         axios.post(`http://localhost:3001/addNewRecord`, {
             applicant_name: this.state.fields.applicantName,
             applicant_type: this.state.fields.applicantType,
@@ -43,8 +45,9 @@ class EntryForm extends React.Component {
             building_name: this.state.fields.buildingName,
             building_address: this.state.fields.buildingAddress,
             building_area: this.state.fields.buildingArea,
-            file_number: this.state.fields.fileNumber
-        }).then(res => {
+            file_number: this.state.fields.fileNumber,
+            remark: this.state.fields.remark
+        }, {headers}).then(res => {
             if (res.data.saved) {
                 console.log("record saved")
             } else {
@@ -148,8 +151,8 @@ class EntryForm extends React.Component {
                                     value={this.state.fields.applicantType}
                                     onChange={this.handleChange}>
                                         <option value="">Select</option>
-                                        <option value="urban">Permanent</option>
-                                        <option value="rural">Temporary</option>
+                                        <option value="permanent">Permanent</option>
+                                        <option value="temporary">Temporary</option>
                                     </FormControl>
                                 </FormGroup>
                             </Col>
@@ -162,6 +165,19 @@ class EntryForm extends React.Component {
                                         autoComplete="on"
                                         name="fileNumber"
                                         value={this.state.fields.fileNumber}
+                                        onChange={this.handleChange}
+                                    />
+                                </FormGroup>
+                            </Col>
+
+                            <Col md={4}>
+                                <FormGroup bsSize="large" >
+                                    <ControlLabel htmlFor="remark">Remark</ControlLabel>
+                                    <FormControl
+                                        type="textarea"
+                                        autoComplete="on"
+                                        name="remark"
+                                        value={this.state.fields.remark}
                                         onChange={this.handleChange}
                                     />
                                 </FormGroup>

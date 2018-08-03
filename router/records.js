@@ -17,6 +17,7 @@ records.post('/addNewRecord', function(req, res) {
         "BUILDING_ADDRESS": req.body.building_address,
         "BUILDING_AREA": req.body.building_area,
         "FILE_NUMBER": req.body.file_number,
+        "REMARK": req.body.remark,
     }
 	connection.query(`INSERT INTO ${process.env.FILE_RECORD_TBL} SET ?`, fileRecordData, function(err, results, fields) {
 		if (err) {
