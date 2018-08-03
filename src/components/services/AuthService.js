@@ -14,9 +14,9 @@ export const userAuth = {
   	}
 }
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
+export const PrivateRoute = ({ component: Component, isAuthenticated: isAuthenticated, ...rest }) => (
 	<Route {...rest} render={(props) => (
-		userAuth.isAuthenticated === true ? <Component {...props} /> : <Redirect to={{
+		isAuthenticated === true ? <Component {...props} /> : <Redirect to={{
 			pathname: '/login',
           	state: { from: props.location }
         }} />
@@ -24,6 +24,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
 )
 
 PrivateRoute.propTypes = {
-    component: PropTypes.object,
-    location: PropTypes.object
+    component: PropTypes.func,
+    location: PropTypes.object,
+    isAuthenticated: PropTypes.bool
 }

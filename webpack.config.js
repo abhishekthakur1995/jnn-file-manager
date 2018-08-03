@@ -14,7 +14,8 @@ module.exports = {
 			"./src/components/SideBar.js",
 			"./src/components/EntryForm.js",
 			"./src/components/LoginForm.js",
-			"./src/components/ErrorPage.js"
+			"./src/components/ErrorPage.js",
+			"./src/components/Dashboard.js"
 		],
 	},
 	output: {

@@ -174,6 +174,7 @@ class EntryForm extends React.Component {
                                 <FormGroup bsSize="large" >
                                     <ControlLabel htmlFor="remark">Remark</ControlLabel>
                                     <FormControl
+                                        componentClass="textarea"
                                         type="textarea"
                                         autoComplete="on"
                                         name="remark"

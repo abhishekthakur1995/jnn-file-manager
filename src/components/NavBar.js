@@ -3,6 +3,7 @@ import { Navbar, NavDropdown, NavItem, Grid, Nav, MenuItem } from 'react-bootstr
 import '../../public/scss/sidebar.scss'
 import LoginForm from './LoginForm.js'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { userAuth } from './services/AuthService.js'
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -14,12 +15,13 @@ class NavBar extends React.Component {
     		<Navbar className="margin-0x">
 				<Navbar.Header>
 					<Navbar.Brand>
-                        <Link to="/">Jaipur Nagar Nigam</Link>
+                        <Link to="/">JNN</Link>
 					</Navbar.Brand>
 				</Navbar.Header>
 
 				<Nav pullRight>
                     <NavItem componentClass={Link} href="/login" to="/login">Login</NavItem>
+                    <NavItem componentClass={Link} href="/logout" to="/login">Logout</NavItem>
  				</Nav>
     		</Navbar>
 		)

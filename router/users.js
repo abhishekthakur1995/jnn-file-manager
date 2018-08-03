@@ -56,9 +56,9 @@ users.post('/login', function(req, res) {
 			res.status(200).json({'message' : 'Email does not exists', 'token' : token})
 		}
 	})
-	connection.end(err => {
-		if(err) console.log(err);
-	})
+	// connection.end(err => {
+	// 	if(err) console.log(err);
+	// })
 })
 
 users.use(function(req, res, next) {

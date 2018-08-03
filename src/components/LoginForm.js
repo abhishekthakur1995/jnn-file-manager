@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { Form, Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 import { userAuth } from './services/AuthService.js'
 import _ from 'lodash'
 
-class LoginForm extends Component {
+class LoginForm extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -53,12 +54,13 @@ class LoginForm extends Component {
   	        	redirectToReferrer: true
   	      	}))
   	    })
+  	    this.props.callbackFromParent(true)
   	}
 
 	render() {
 		const { redirectToReferrer } = this.state
 	    if (redirectToReferrer === true) {
-	      	return <Redirect to='/' />
+	      	return <Redirect to='/dashboard' />
 	    }
 
 		return (
@@ -100,6 +102,10 @@ class LoginForm extends Component {
 			</Grid>
 		)
 	}
+}
+
+LoginForm.propTypes = {
+    callbackFromParent: PropTypes.func,
 }
 
 export default LoginForm
