@@ -17,10 +17,13 @@ class LoginForm extends React.Component {
 		        password: ''
 		    },
 		    redirectToReferrer: false,
+		    message: '',
+		    showAlert: false
 		}
 
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.hideAlert = this.hideAlert.bind(this)
 	}
 
 	handleChange(event) {
@@ -42,6 +45,11 @@ class LoginForm extends React.Component {
 		}).then(res => {
         	if (!_.isEmpty(res.data.token)) {
         		this.authenticate(res.data.token)
+        	} else {
+        		this.setState(() => ({
+  	        		message: res.data.message,
+  	        		showAlert: true
+  	      		}))
         	}
       	})
   	}
@@ -54,6 +62,12 @@ class LoginForm extends React.Component {
   	    })
   	}
 
+  	hideAlert() {
+  		this.setState(() => ({
+        	showAlert: false
+      	}))
+  	}
+
 	render() {
 		const { redirectToReferrer } = this.state
 	    if (redirectToReferrer === true) {
@@ -62,7 +76,7 @@ class LoginForm extends React.Component {
 		return (
 			<Grid>
 			    <Row>
-			    	<AlertComponent message={this.state.message} />
+			    	<AlertComponent message={this.state.message} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
 			        <section className="col-xs-6">
 			        	<Form onSubmit={this.handleSubmit}>
 			        		<Col md={12}>

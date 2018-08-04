@@ -39,7 +39,7 @@ users.post('/login', function(req, res) {
     var token = '';
 	connection.query(`SELECT * FROM ${process.env.USER_TBL} WHERE EMAIL = ?`, [email], function(err, results, fields) {
 		if (err) {
-			res.status(200).json({'message' : err, 'token' : token})
+			res.status(200).json({'message' : err, 'token' : token, 'success':false})
 		}
 		if (results.length > 0) {
 			bcrypt.compare(password, results[0].PASSWORD).then(function(match) {
@@ -47,13 +47,13 @@ users.post('/login', function(req, res) {
 					token = jwt.sign(JSON.parse(JSON.stringify(results[0])), process.env.SECRET_KEY, {
 			 			expiresIn: process.env.TOKEN_EXPIRY_TIME
 					})
-					res.status(200).json({'message' : 'User verified', 'token' : token})
+					res.status(200).json({'message' : 'User verified', 'token' : token, 'success':true})
 				} else {
-					res.status(200).json({'message' : 'Email or Password does not match', 'token' : token})
+					res.status(200).json({'message' : 'Email or Password does not match', 'token' : token, 'success':false})
 				}
 			})
 		} else {
-			res.status(200).json({'message' : 'Email does not exists', 'token' : token})
+			res.status(200).json({'message' : 'Email does not exists', 'token' : token, 'success':false})
 		}
 	})
 	// connection.end(err => {
