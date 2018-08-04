@@ -12,15 +12,6 @@ class App extends React.Component {
 		this.state = {
 			authenticated: false
 		}
-		this.myCallback = this.myCallback.bind(this)
-	}
-
-	myCallback(dataFromChild) {
-		if(dataFromChild) {
-			this.setState(() => ({
-  	        	authenticated: true
-  	      	}))
-		}
 	}
 
 	render() {
@@ -28,9 +19,9 @@ class App extends React.Component {
 			<div className="app">
 				<NavBar />
 				<Switch>
-					<Route path="/" exact={true} render={(props) => <LoginForm callbackFromParent={this.myCallback} {...props} />} />
-                    <Route exact={true} path="/login" render={(props) => <LoginForm callbackFromParent={this.myCallback} {...props} />} />
-                    <PrivateRoute path="/dashboard" isAuthenticated={this.state.authenticated} component={Dashboard} />
+					<Route path="/" exact={true} render={(props) => <LoginForm {...props} />} />
+                    <Route exact={true} path="/login" render={(props) => <LoginForm {...props} />} />
+                    <PrivateRoute path="/dashboard" component={Dashboard} />
                     <Route component={ErrorPage} />
 				</Switch>
 			</div>

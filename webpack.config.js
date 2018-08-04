@@ -15,7 +15,8 @@ module.exports = {
 			"./src/components/EntryForm.js",
 			"./src/components/LoginForm.js",
 			"./src/components/ErrorPage.js",
-			"./src/components/Dashboard.js"
+			"./src/components/Dashboard.js",
+			"./src/components/uiComponents/AlertComponent.js"
 		],
 	},
 	output: {

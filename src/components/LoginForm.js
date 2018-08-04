@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import AlertComponent from './uiComponents/AlertComponent.js'
 import { Form, Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 import { userAuth } from './services/AuthService.js'
@@ -15,7 +16,7 @@ class LoginForm extends React.Component {
 		        email: '',
 		        password: ''
 		    },
-		    redirectToReferrer: false
+		    redirectToReferrer: false,
 		}
 
 		this.handleChange = this.handleChange.bind(this)
@@ -40,21 +41,17 @@ class LoginForm extends React.Component {
 			password: this.state.fields.password
 		}).then(res => {
         	if (!_.isEmpty(res.data.token)) {
-        		localStorage.setItem('authToken', res.data.token)
-        		this.authenticate()
-        	} else {
-        		// show error here
+        		this.authenticate(res.data.token)
         	}
       	})
   	}
 
-  	authenticate() {
-  	    userAuth.authenticate(() => {
+  	authenticate(authToken) {
+  	    userAuth.authenticate(authToken, () => {
       		this.setState(() => ({
   	        	redirectToReferrer: true
   	      	}))
   	    })
-  	    this.props.callbackFromParent(true)
   	}
 
 	render() {
@@ -62,10 +59,10 @@ class LoginForm extends React.Component {
 	    if (redirectToReferrer === true) {
 	      	return <Redirect to='/dashboard' />
 	    }
-
 		return (
 			<Grid>
 			    <Row>
+			    	<AlertComponent message={this.state.message} />
 			        <section className="col-xs-6">
 			        	<Form onSubmit={this.handleSubmit}>
 			        		<Col md={12}>
@@ -105,7 +102,7 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-    callbackFromParent: PropTypes.func,
+    callbackFromParent: PropTypes.func
 }
 
 export default LoginForm
