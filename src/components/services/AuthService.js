@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 export const userAuth = {
   	authenticate(authToken, cb) {
@@ -17,7 +17,7 @@ export const userAuth = {
     }
 }
 
-export const PrivateRoute = ({ component: Component, isAuthenticated: isAuthenticated, ...rest }) => (
+export const PrivateRoute = ({ component: Component, ...rest }) => (
 	<Route {...rest} render={(props) => (
 		userAuth.isUserAuthenticated() === true ? <Component {...props} /> : <Redirect to={{
 			pathname: '/login',

@@ -8,7 +8,7 @@ class SideBar extends React.Component {
 			<Grid bsClass="wrapper">
 				<nav id="sidebar">
 					<Grid bsClass="sidebar-header">
-						<h3>Bootstrap Sidebar</h3>
+						<h3>File Records</h3>
 						<strong>BS</strong>
 					</Grid>
 

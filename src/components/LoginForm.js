@@ -1,6 +1,6 @@
 import React from 'react'
-import axios from 'axios';
-import PropTypes from 'prop-types';
+import axios from 'axios'
+import PropTypes from 'prop-types'
 import AlertComponent from './uiComponents/AlertComponent.js'
 import { Form, Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
