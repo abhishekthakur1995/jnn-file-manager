@@ -1,10 +1,14 @@
 import React from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import AlertComponent from './uiComponents/AlertComponent.js'
-import { Form, Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
+import Form from 'react-validation/build/form'
+import Input from 'react-validation/build/input'
+import Button from 'react-validation/build/button'
+import { Grid, FormGroup, ControlLabel, Row, Col, Label } from 'react-bootstrap'
+import { required, email } from './helpers/ValidationHelper'
 import { Redirect } from 'react-router-dom'
-import { userAuth } from './services/AuthService.js'
+import { userAuth } from './services/AuthService'
+import AlertComponent from './uiComponents/AlertComponent'
 import _ from 'lodash'
 
 class LoginForm extends React.Component {
@@ -27,7 +31,7 @@ class LoginForm extends React.Component {
 	}
 
 	handleChange(event) {
-        const element = event.nativeEvent.target;
+        const element = event.nativeEvent.target
         this.setState((prevState) => ({
             ...prevState,
             fields: {
@@ -82,23 +86,26 @@ class LoginForm extends React.Component {
 			        		<Col md={12}>
 		        			    <FormGroup md={4} bsSize="large">
 		        			        <ControlLabel htmlFor="email">Email</ControlLabel>
-		        			        <FormControl
+		        			        <Input
 		        			            type="email"
 		        			            autoComplete="on"
 		        			            name="email"
+		        			            validations={[required, email]}
+		        			            className="form-control"
 		        			            value={this.state.fields.email}
 		        			            onChange={this.handleChange}
 		        			        />
-		        			        <FormControl.Feedback />
 		        			    </FormGroup>
 			        		</Col>
 			        		<Col md={12}>
 		        			    <FormGroup md={4} bsSize="large">
 		        			        <ControlLabel htmlFor="password">Password</ControlLabel>
-		        			        <FormControl
+		        			        <Input
 		        			            type="password"
 		        			            autoComplete="on"
 		        			            name="password"
+		        			            validations={[required]}
+		        			            className="form-control"
 		        			            value={this.state.fields.password}
 		        			            onChange={this.handleChange}
 		        			        />

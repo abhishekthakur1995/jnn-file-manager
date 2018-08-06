@@ -1,10 +1,18 @@
 import React from 'react'
-import axios from 'axios';
-import { Form, Button, Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label } from 'react-bootstrap'
+import axios from 'axios'
+import Form from 'react-validation/build/form'
+import Input from 'react-validation/build/input'
+import Button from 'react-validation/build/button'
+import Select from 'react-validation/build/select'
+import Textarea from 'react-validation/build/textarea'
+import { Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label, Clearfix } from 'react-bootstrap'
+import { required, email, phoneNumber } from './helpers/ValidationHelper'
 
 class EntryForm extends React.Component {
     constructor(props) {
         super(props)
+
+        // state
         this.state = {
             fields: {
                 applicantName: '',
@@ -19,19 +27,23 @@ class EntryForm extends React.Component {
             }
         }
 
+        // refs
+        this.form = React.createRef()
+
+        // functions binding
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange(event) {
-        const element = event.nativeEvent.target;
+        const element = event.nativeEvent.target
         this.setState((prevState) => ({
             ...prevState,
             fields: {
                 ...prevState.fields,
                 [element.name]: element.value
             }
-        }));
+        }))
     }
 
     handleSubmit(event) {
@@ -61,14 +73,16 @@ class EntryForm extends React.Component {
             <Grid>
                 <Row>
                     <section className="col-xs-12">
-                        <Form onSubmit={this.handleSubmit}>
+                    <Form ref={this.form} onSubmit={this.handleSubmit}>
                             <Col md={4}>
                                 <FormGroup md={4} bsSize="large" >
                                     <ControlLabel htmlFor="applicantName">Applicant Name</ControlLabel>
-                                    <FormControl
+                                    <Input
                                         type="text"
                                         autoComplete="on"
                                         name="applicantName"
+                                        validations={[required]}
+                                        className="form-control"
                                         value={this.state.fields.applicantName}
                                         onChange={this.handleChange}
                                     />
@@ -78,10 +92,12 @@ class EntryForm extends React.Component {
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
                                     <ControlLabel htmlFor="applicantAddress">Applicant Address</ControlLabel>
-                                    <FormControl
+                                    <Input
                                         type="text"
                                         autoComplete="on"
                                         name="applicantAddress"
+                                        validations={[required]}
+                                        className="form-control"
                                         value={this.state.fields.applicantAddress}
                                         onChange={this.handleChange}
                                     />
@@ -91,23 +107,28 @@ class EntryForm extends React.Component {
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
                                     <ControlLabel htmlFor="applicantContact">Applicant Contact</ControlLabel>
-                                    <FormControl
+                                    <Input
                                         type="text"
                                         autoComplete="on"
                                         name="applicantContact"
+                                        validations={[required, phoneNumber]}
+                                        className="form-control"
                                         value={this.state.fields.applicantContact}
                                         onChange={this.handleChange}
                                     />
                                 </FormGroup>
                             </Col>
+                            <Clearfix />
 
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
                                     <ControlLabel htmlFor="buildingName">Building Name</ControlLabel>
-                                    <FormControl
+                                    <Input
                                         type="text"
                                         autoComplete="on"
                                         name="buildingName"
+                                        validations={[required]}
+                                        className="form-control"
                                         value={this.state.fields.buildingName}
                                         onChange={this.handleChange}
                                     />
@@ -117,10 +138,12 @@ class EntryForm extends React.Component {
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
                                     <ControlLabel htmlFor="buildingAddress">Building Address</ControlLabel>
-                                    <FormControl
+                                    <Input
                                         type="text"
                                         autoComplete="on"
                                         name="buildingAddress"
+                                        validations={[required]}
+                                        className="form-control"
                                         value={this.state.fields.buildingAddress}
                                         onChange={this.handleChange}
                                     />
@@ -130,40 +153,44 @@ class EntryForm extends React.Component {
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
                                     <ControlLabel htmlFor="buildingArea">Area</ControlLabel>
-                                    <FormControl
-                                    componentClass="select"
+                                    <Select
                                     name="buildingArea"
                                     value={this.state.fields.buildingArea}
+                                    validations={[required]}
+                                    className="form-control"
                                     onChange={this.handleChange}>
                                         <option value="">Select</option>
                                         <option value="urban">Urban</option>
                                         <option value="rural">Rural</option>
-                                    </FormControl>
+                                    </Select>
                                 </FormGroup>
                             </Col>
+                            <Clearfix />
 
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
                                     <ControlLabel htmlFor="applicantType">Applicant Type</ControlLabel>
-                                    <FormControl
-                                    componentClass="select"
+                                    <Select
                                     name="applicantType"
                                     value={this.state.fields.applicantType}
+                                    className="form-control"
                                     onChange={this.handleChange}>
                                         <option value="">Select</option>
                                         <option value="permanent">Permanent</option>
                                         <option value="temporary">Temporary</option>
-                                    </FormControl>
+                                    </Select>
                                 </FormGroup>
                             </Col>
 
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
                                     <ControlLabel htmlFor="fileNumber">File Number</ControlLabel>
-                                    <FormControl
+                                    <Input
                                         type="text"
                                         autoComplete="on"
                                         name="fileNumber"
+                                        className="form-control"
+                                        validations={[required]}
                                         value={this.state.fields.fileNumber}
                                         onChange={this.handleChange}
                                     />
@@ -173,16 +200,17 @@ class EntryForm extends React.Component {
                             <Col md={4}>
                                 <FormGroup bsSize="large" >
                                     <ControlLabel htmlFor="remark">Remark</ControlLabel>
-                                    <FormControl
-                                        componentClass="textarea"
-                                        type="textarea"
+                                    <Textarea
                                         autoComplete="on"
                                         name="remark"
+                                        className="form-control"
+                                        validations={[required]}
                                         value={this.state.fields.remark}
                                         onChange={this.handleChange}
                                     />
                                 </FormGroup>
                             </Col>
+                            <Clearfix />
 
                             <Col md={12}>
                                 <Button type="submit" className="btn btn-default">Submit</Button>
