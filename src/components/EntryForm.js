@@ -5,6 +5,7 @@ import Input from 'react-validation/build/input'
 import Button from 'react-validation/build/button'
 import Select from 'react-validation/build/select'
 import Textarea from 'react-validation/build/textarea'
+import AlertComponent from './uiComponents/AlertComponent'
 import { Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label, Clearfix } from 'react-bootstrap'
 import { required, email, phoneNumber } from './helpers/ValidationHelper'
 
@@ -24,7 +25,12 @@ class EntryForm extends React.Component {
                 buildingArea: '',
                 fileNumber: '',
                 remark: '',
-            }
+            },
+            message: {
+                text: '',
+                type: 'danger'
+            },
+            showAlert: false
         }
 
         // refs
@@ -33,6 +39,7 @@ class EntryForm extends React.Component {
         // functions binding
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.hideAlert = this.hideAlert.bind(this)
     }
 
     handleChange(event) {
@@ -61,19 +68,39 @@ class EntryForm extends React.Component {
             remark: this.state.fields.remark
         }, {headers}).then(res => {
             if (res.data.saved) {
-                console.log("record saved")
+                this.setState(() => ({
+                    message: {
+                        text: res.data.message,
+                        type: 'success'
+                    }
+                }))
             } else {
-                // show error here
+                this.setState(() => ({
+                    message: {
+                        text: res.data.message,
+                        type: 'danger'
+                    }
+                }))
             }
+            this.setState(() => ({
+                showAlert: true
+            }))
         })
+    }
+
+    hideAlert() {
+        this.setState(() => ({
+            showAlert: false
+        }))
     }
 
     render() {
         return (
             <Grid>
                 <Row>
+                    <AlertComponent message={this.state.message} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
                     <section className="col-xs-12">
-                    <Form ref={this.form} onSubmit={this.handleSubmit}>
+                        <Form ref={this.form} onSubmit={this.handleSubmit}>
                             <Col md={4}>
                                 <FormGroup md={4} bsSize="large" >
                                     <ControlLabel htmlFor="applicantName">Applicant Name</ControlLabel>

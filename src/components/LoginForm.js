@@ -21,7 +21,10 @@ class LoginForm extends React.Component {
 		        password: ''
 		    },
 		    redirectToReferrer: false,
-		    message: '',
+		    message: {
+		    	text: '',
+		    	type: 'danger'
+		    },
 		    showAlert: false
 		}
 
@@ -51,8 +54,11 @@ class LoginForm extends React.Component {
         		this.authenticate(res.data.token)
         	} else {
         		this.setState(() => ({
-  	        		message: res.data.message,
-  	        		showAlert: true
+  	        		message: {
+  	        		 	text: res.data.message,
+  	        		 	type: 'danger'
+  	        		},
+        			showAlert: true
   	      		}))
         	}
       	})

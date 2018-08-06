@@ -16,8 +16,8 @@ class AlertComponent extends React.Component {
         return (
             <Grid className="alert-message">
                 { !this.props.showAlert ? null :
-                    <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
-                        <p>{this.props.message}</p>
+                    <Alert bsStyle={this.props.message.type} onDismiss={this.handleDismiss}>
+                        <p>{this.props.message.text}</p>
                     </Alert>
                 }
             </Grid>
@@ -26,7 +26,7 @@ class AlertComponent extends React.Component {
 }
 
 AlertComponent.propTypes = {
-    message: PropTypes.string,
+    message: PropTypes.object,
     showAlert: PropTypes.bool,
     hideAlert: PropTypes.func
 }

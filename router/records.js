@@ -25,9 +25,9 @@ records.post('/addNewRecord', function(req, res) {
 		}
 		res.status(200).json({'message' : 'Record saved successfully', 'saved' : true})
 	})
-	connection.end(err => {
-		if(err) console.log(err);
-	})
+	// connection.end(err => {
+	// 	if(err) console.log(err);
+	// })
 })
 
 module.exports = records
