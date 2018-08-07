@@ -22,5 +22,6 @@ CREATE TABLE `tbl_file_records` (
 	`DEPARTMENT_VIEW_LEVEL` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
 	`REMARK` text COLLATE utf8_unicode_ci DEFAULT NULL,
 	`STATUS` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
-	`CREATED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP )
+	`CREATED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP,
+	`MODIFIED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

@@ -44,4 +44,17 @@ records.post('/addNewRecord',
 	}
 )
 
+/* 	path: /getAllRecords
+ *	type: GET
+ */
+
+records.get('/getAllRecords', function(req, res) {
+	connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL}`, function(err, results, fields) {
+		if (err) {
+			return res.status(400).json({data: [], message : err, success : false})
+		}
+		res.status(200).json({data : results, messaage : 'Records fetched successfully', success : true})
+	})
+})
+
 module.exports = records
