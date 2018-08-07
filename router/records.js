@@ -57,4 +57,25 @@ records.get('/getAllRecords', function(req, res) {
 	})
 })
 
+/* 	path: /updateRecordStatus
+ *	type: PUT
+ */
+
+records.put('/updateRecordStatus/:id', 
+	[
+		check('id').not().isEmpty().withMessage('No record id was sent'),
+		check('status').not().isEmpty().withMessage('Status cannot be empty')
+	], 
+	function(req, res) {
+		const id = req.params.id
+		const status = req.body.status
+		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET FILE_STATUS = ? WHERE ID = ?`, [status, id], function(err, results, fields) {
+			if (err) {
+				return res.status(400).json({message : err, success : false})
+			}
+			res.status(200).json({messaage : 'Record status updated successfully', success : true})
+		})
+	}
+)
+
 module.exports = records

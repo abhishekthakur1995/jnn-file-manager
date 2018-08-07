@@ -10,6 +10,8 @@ class RecordList extends React.Component {
 		this.state = {
 			records:[]
 		}
+
+		this.approveRecord = this.approveRecord.bind(this)
 	}
 
 	componentDidMount() {
@@ -22,11 +24,26 @@ class RecordList extends React.Component {
       	})
 	}
 
+	approveRecord(rec) {
+		const headers = { 'Authorization': localStorage.getItem('authToken') }
+		axios.put(`http://localhost:3001/updateRecordStatus/${rec.ID}`, {
+			status: +!rec.FILE_STATUS
+		}, {headers}).then(res => {
+        	if(res.data.success === true) {
+        		this.setState(prevState => ({
+        			records: prevState.records.map(
+        				record => (record.ID !== rec.ID) ? record : {...record, FILE_STATUS: +!record.FILE_STATUS }
+        			)
+        		}))
+        	}
+      	})
+	}
+
 	render() {
 		var filteredRecords = this.state.records
 		filteredRecords = filteredRecords.map(function(record, index) {
 			return (
-				<Record key={index} singleRecord={record} />
+				<Record key={index} whichItem={record} singleRecord={record} onApprove={this.approveRecord} />
 			)
 		}.bind(this))
 		return (
