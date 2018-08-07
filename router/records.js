@@ -22,7 +22,7 @@ records.post('/addNewRecord',
 	function(req, res) {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    res.status(200).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array(), saved : false})
 	  	}
 		const fileRecordData = {
 	        "APPLICANT_NAME": req.body.applicant_name,
@@ -37,13 +37,10 @@ records.post('/addNewRecord',
 	    }
 		connection.query(`INSERT INTO ${process.env.FILE_RECORD_TBL} SET ?`, fileRecordData, function(err, results, fields) {
 			if (err) {
-				res.status(200).json({message : err, saved : false})
+				return res.status(400).json({message : err, saved : false})
 			}
 			res.status(200).json({message : 'Record saved successfully', saved : true})
 		})
-		// connection.end(err => {
-		// 	if(err) console.log(err);
-		// })
 	}
 )
 
