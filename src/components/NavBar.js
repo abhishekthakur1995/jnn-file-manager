@@ -1,6 +1,6 @@
 import React from 'react'
-import { Navbar, NavDropdown, NavItem, Grid, Nav, MenuItem } from 'react-bootstrap'
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+import { Navbar, NavItem, Nav } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { userAuth } from './services/AuthService.js'
 import PropTypes from 'prop-types'
 import '../../public/scss/sidebar.scss'

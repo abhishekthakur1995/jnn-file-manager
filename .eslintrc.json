@@ -24,9 +24,9 @@
         "no-trailing-spaces": 1,
         "no-mixed-spaces-and-tabs": 0,
         "no-tabs": 0,
-        "no-unused-vars": 0,
+        "no-unused-vars": 1,
         "no-console": ["warn", { "allow": ["info", "error"] }],
-        "eol-last":0,
+        "eol-last": 0,
         "no-useless-escape": 0
     }
 }

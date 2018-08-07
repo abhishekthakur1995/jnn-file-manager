@@ -6,8 +6,8 @@ import Button from 'react-validation/build/button'
 import Select from 'react-validation/build/select'
 import Textarea from 'react-validation/build/textarea'
 import AlertComponent from './uiComponents/AlertComponent'
-import { Grid, FormGroup, ControlLabel, FormControl, Row, Col, Label, Clearfix } from 'react-bootstrap'
-import { required, email, phoneNumber } from './helpers/ValidationHelper'
+import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix } from 'react-bootstrap'
+import { required, phoneNumber } from './helpers/ValidationHelper'
 
 class EntryForm extends React.Component {
     constructor(props) {

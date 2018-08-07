@@ -17,6 +17,7 @@ class App extends React.Component {
 	}
 
 	doRedirectToHome() {
+		// Used to redirect to home after logout is clicked in navbar
 		this.setState(() => ({
 			initRedirection:true
 		}))

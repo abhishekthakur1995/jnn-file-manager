@@ -30,7 +30,7 @@ export const isEqual = (value, props, components) => {
   	}
 }
 
-export const number = (value, props, component) => {
+export const number = (value) => {
 	if (!isNumeric(value)) {
   		return <span className="error is-visible">{value} is not a valid number.</span>;
 	}
