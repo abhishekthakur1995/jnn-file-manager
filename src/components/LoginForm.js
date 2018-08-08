@@ -118,7 +118,7 @@ class LoginForm extends React.Component {
 		        			    </FormGroup>
 			        		</Col>
 			        		<Col md={6}>
-			        		    <Button type="submit" className="btn btn-default">Submit</Button>
+			        		    <Button type="submit" className="btn btn-default">Login</Button>
 			        		</Col>
 			        	</Form>
 			        </section>

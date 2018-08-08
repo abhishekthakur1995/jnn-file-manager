@@ -1,63 +1,40 @@
 import React from 'react'
-import { Grid } from 'react-bootstrap'
+import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Link, Route, Switch } from 'react-router-dom'
+import EntryForm from './EntryForm'
+import RecordList from './RecordList'
 import '../../public/scss/sidebar.scss'
+import PropTypes from 'prop-types'
 
 class SideBar extends React.Component {
+	constructor(props) {
+		super(props)
+	}
+
 	render() {
 		return (
 			<Grid bsClass="wrapper">
 				<nav id="sidebar">
 					<Grid bsClass="sidebar-header">
 						<h3>File Records</h3>
-						<strong>BS</strong>
+						<strong>FR</strong>
 					</Grid>
 
-					<ul className="list-unstyled components">
-					    <li className="active">
-					        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-					            <i className="glyphicon glyphicon-home"></i>
-					            Title-1
-					        </a>
-					        <ul className="collapse list-unstyled" id="homeSubmenu">
-					            <li><a href="#">Home 1</a></li>
-					            <li><a href="#">Home 2</a></li>
-					            <li><a href="#">Home 3</a></li>
-					        </ul>
-					    </li>
-					    <li>
-					        <a href="#">
-					            <i className="glyphicon glyphicon-briefcase"></i>
-					            Title-2
-					        </a>
-					        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
-					            <i className="glyphicon glyphicon-duplicate"></i>
-					            Title-3
-					        </a>
-					        <ul className="collapse list-unstyled" id="pageSubmenu">
-					            <li><a href="#">Page 1</a></li>
-					            <li><a href="#">Page 2</a></li>
-					            <li><a href="#">Page 3</a></li>
-					        </ul>
-					    </li>
-					    <li>
-					        <a href="#">
-					            <i className="glyphicon glyphicon-link"></i>
-					            Title-4
-					        </a>
-					    </li>
-					    <li>
-					        <a href="#">
-					            <i className="glyphicon glyphicon-paperclip"></i>
-					            Title-5
-					        </a>
-					    </li>
-					    <li>
-					        <a href="#">
-					            <i className="glyphicon glyphicon-send"></i>
-					            Title-6
-					        </a>
-					    </li>
-					</ul>
+					<ListGroup componentClass="ul" className="list-unstyled components">
+					    <ListGroupItem className="active" bsClass="list">
+					        <Link to={`${this.props.match.url}/addNewRecord`}>
+					            <i className="glyphicon glyphicon-file"></i>
+					            Add New Record
+					        </Link>
+					    </ListGroupItem>
+
+					   	<ListGroupItem bsClass="list">
+					        <Link to={`${this.props.match.url}/manageRecordStatus`}>
+					            <i className="glyphicon glyphicon-lock"></i>
+					            Manage Record Status
+					        </Link>
+					    </ListGroupItem>
+					</ListGroup>
 				</nav>
 
 				<Grid bsClass="container content">
@@ -72,9 +49,19 @@ class SideBar extends React.Component {
 	                    </Grid>
                 	</nav>
 				</Grid>
+
+				<Switch>
+					<Route path={`${this.props.match.path}/addNewRecord`} component={EntryForm} />
+					<Route path={`${this.props.match.path}/manageRecordStatus`} component={RecordList} />
+				</Switch>
+
 			</Grid>
 		)
 	}
+}
+
+SideBar.propTypes = {
+    match: PropTypes.object
 }
 
 export default SideBar

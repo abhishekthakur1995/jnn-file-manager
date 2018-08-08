@@ -1,16 +1,24 @@
 import React from 'react'
-// import EntryForm from './EntryForm.js'
-import RecordList from './RecordList.js'
+import SideBar from './SideBar.js'
 import { Grid } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 class Dashboard extends React.Component {
+	constructor(props) {
+		super(props)
+	}
+
 	render() {
 		return (
 			<Grid bsClass="dashboard">
-				<RecordList />
+				<SideBar match={this.props.match}/>
 			</Grid>
 		)
 	}
+}
+
+Dashboard.propTypes = {
+    match: PropTypes.object
 }
 
 export default Dashboard
