@@ -26,7 +26,7 @@ class NavBar extends React.Component {
     		<Navbar className="margin-0x">
 				<Navbar.Header>
 					<Navbar.Brand>
-                        <Link to="/">JNN</Link>
+                        <Link to="/dashboard">JNN</Link>
 					</Navbar.Brand>
 				</Navbar.Header>
 
