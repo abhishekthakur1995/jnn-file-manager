@@ -29,7 +29,7 @@ class RecordList extends React.Component {
 		axios.put(`http://localhost:3001/updateRecordStatus/${rec.ID}`, {
 			status: +!rec.FILE_STATUS
 		}, {headers}).then(res => {
-        	if(res.data.success === true) {
+        	if (res.data.success === true) {
         		this.setState(prevState => ({
         			records: prevState.records.map(
         				record => (record.ID !== rec.ID) ? record : {...record, FILE_STATUS: +!record.FILE_STATUS }

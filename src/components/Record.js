@@ -19,8 +19,8 @@ class Record extends React.Component {
 					<Grid componentClass="span" bsClass="item"> {this.props.singleRecord.BUILDING_NAME} </Grid>
 					<Grid componentClass="span" bsClass="item"> {this.props.singleRecord.BUILDING_ADDRESS} </Grid>
 				</Grid>
-				<Button className="pet-delete btn btn-xs btn-success" onClick={this.handleApproveBtnClick}>
-					<Grid componentClass="span" bsClass="glyphicon glyphicon-ok"></Grid>
+				<Button className={`btn btn-xs ${this.props.singleRecord.FILE_STATUS == 0 ? 'btn-success' : 'btn-danger'}`} onClick={this.handleApproveBtnClick}>
+					{this.props.singleRecord.FILE_STATUS == 0 ? 'Approve' : 'Reject'}
 				</Button>
 			</ListGroupItem>
 		)
@@ -29,8 +29,8 @@ class Record extends React.Component {
 
 Record.propTypes = {
     singleRecord: PropTypes.object,
-    onApprove: PropTypes.func,
-    whichItem: PropTypes.object
+    whichItem: PropTypes.object,
+    onApprove: PropTypes.func
 }
 
 export default Record
