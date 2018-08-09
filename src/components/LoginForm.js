@@ -51,31 +51,31 @@ class LoginForm extends React.Component {
 			password: this.state.fields.password
 		}).then(res => {
         	if (!_.isEmpty(res.data.token)) {
-        		this.authenticate(res.data.token)
+        		this.authenticate(res.data.token, res.data.validUpto)
         	} else {
-        		this.setState(() => ({
+        		this.setState({
   	        		message: {
   	        		 	text: res.data.message,
   	        		 	type: 'danger'
   	        		},
         			showAlert: true
-  	      		}))
+  	      		})
         	}
       	})
   	}
 
-  	authenticate(authToken) {
-  	    userAuth.authenticate(authToken, () => {
-      		this.setState(() => ({
+  	authenticate(authToken, validUpto) {
+  	    userAuth.authenticate(authToken, validUpto, () => {
+      		this.setState({
   	        	redirectToReferrer: true
-  	      	}))
+  	      	})
   	    })
   	}
 
   	hideAlert() {
-  		this.setState(() => ({
+  		this.setState({
         	showAlert: false
-      	}))
+      	})
   	}
 
 	render() {

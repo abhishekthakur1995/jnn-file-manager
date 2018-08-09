@@ -1,9 +1,9 @@
 import React from 'react'
 import NavBar from './NavBar.js'
-import LoginForm from './LoginForm.js'
-import Dashboard from './Dashboard.js'
-import ErrorPage from './ErrorPage.js'
-import { PrivateRoute } from './services/AuthService.js'
+import LoginForm from './LoginForm'
+import Dashboard from './Dashboard'
+import ErrorPage from './ErrorPage'
+import { PrivateRoute } from './services/AuthService'
 import { Grid } from 'react-bootstrap'
 import { Switch, Route } from 'react-router-dom'
 
@@ -18,9 +18,9 @@ class App extends React.Component {
 
 	doRedirectToHome() {
 		// Used to redirect to home after logout is clicked in navbar
-		this.setState(() => ({
+		this.setState({
 			initRedirection:true
-		}))
+		})
 	}
 
 	render() {

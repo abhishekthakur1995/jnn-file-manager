@@ -3,8 +3,9 @@ import { Route, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 export const userAuth = {
-  	authenticate(authToken, cb) {
+  	authenticate(authToken, validUpto, cb) {
         localStorage.setItem('authToken', authToken)
+        localStorage.setItem('tokenValidUpto', JSON.stringify(validUpto))
     	setTimeout(cb, 100)
   	},
   	signout(cb) {
@@ -12,7 +13,11 @@ export const userAuth = {
     	cb()
   	},
     isUserAuthenticated() {
-        const isAuthenticated = localStorage.getItem('authToken') ? true : false
+        var isAuthenticated = false
+        const validUpto = JSON.parse(localStorage.getItem('tokenValidUpto'))
+        if (validUpto && Date.now() < validUpto) {
+            isAuthenticated = localStorage.getItem('authToken') ? true : false
+        }
         return isAuthenticated
     }
 }
