@@ -64,11 +64,11 @@ users.post('/login',
 						})
 						return res.status(200).json({message : 'User verified', token : token, validUpto : Date.now() + process.env.TOKEN_EXPIRY_TIME, success : true})
 					} else {
-						return res.status(400).json({message : 'Email or Password does not match', token : token, success : false})
+						return res.status(200).json({message : 'Email or Password does not match', token : token, success : false})
 					}
 				})
 			} else {
-				res.status(400).json({message : 'Email does not exists', token : token, success : false})
+				res.status(200).json({message : 'Email does not exists', token : token, success : false})
 			}
 		})
 	}
