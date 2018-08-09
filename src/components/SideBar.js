@@ -16,19 +16,19 @@ class SideBar extends React.Component {
 			<Grid bsClass="wrapper">
 				<nav id="sidebar">
 					<Grid bsClass="sidebar-header">
-						<h3>File Records</h3>
-						<strong>FR</strong>
+						<h3>Dashboard</h3>
+						<strong>DB</strong>
 					</Grid>
 
 					<ListGroup componentClass="ul" className="list-unstyled components">
-					    <ListGroupItem className="active" bsClass="list">
+					    <ListGroupItem className={`${this.props.location.pathname == '/dashboard/addNewRecord' ? 'active' : ''}`} bsClass="list">
 					        <Link to={`${this.props.match.url}/addNewRecord`}>
 					            <i className="glyphicon glyphicon-file"></i>
 					            Add New Record
 					        </Link>
 					    </ListGroupItem>
 
-					   	<ListGroupItem bsClass="list">
+					   	<ListGroupItem className={`${this.props.location.pathname == '/dashboard/manageRecordStatus' ? 'active' : ''}`} bsClass="list">
 					        <Link to={`${this.props.match.url}/manageRecordStatus`}>
 					            <i className="glyphicon glyphicon-lock"></i>
 					            Manage Record Status
@@ -42,7 +42,6 @@ class SideBar extends React.Component {
 	                    <Grid bsClass="container-fluid">
 	                        <Grid bsClass="navbar-header">
 	                            <button type="button" id="sidebarCollapse" className="btn btn-info navbar-btn">
-	                                <i className="glyphicon glyphicon-align-left"></i>
 	                                <span>Page Title</span>
 	                            </button>
 	                        </Grid>
@@ -61,7 +60,8 @@ class SideBar extends React.Component {
 }
 
 SideBar.propTypes = {
-    match: PropTypes.object
+    match: PropTypes.object,
+    location: PropTypes.object
 }
 
 export default SideBar

@@ -11,14 +11,15 @@ class Dashboard extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="dashboard">
-				<SideBar match={this.props.match}/>
+				<SideBar match={this.props.match} location={this.props.location}/>
 			</Grid>
 		)
 	}
 }
 
 Dashboard.propTypes = {
-    match: PropTypes.object
+    match: PropTypes.object,
+    location: PropTypes.object
 }
 
 export default Dashboard
