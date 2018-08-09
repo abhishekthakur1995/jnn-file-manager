@@ -13,11 +13,16 @@ class AlertComponent extends React.Component {
     }
 
     render() {
+        if (this.props.options.autoHide) {
+            setTimeout(function() {
+                this.props.hideAlert()
+            }.bind(this), 5000)
+        }
         return (
             <Grid className="alert-message">
                 { !this.props.showAlert ? null :
-                    <Alert bsStyle={this.props.message.type} onDismiss={this.handleDismiss}>
-                        <p>{this.props.message.text}</p>
+                    <Alert bsStyle={this.props.options.type} onDismiss={this.handleDismiss}>
+                        <p>{this.props.options.text}</p>
                     </Alert>
                 }
             </Grid>
@@ -26,7 +31,7 @@ class AlertComponent extends React.Component {
 }
 
 AlertComponent.propTypes = {
-    message: PropTypes.object,
+    options: PropTypes.object,
     showAlert: PropTypes.bool,
     hideAlert: PropTypes.func
 }

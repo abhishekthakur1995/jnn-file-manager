@@ -26,9 +26,10 @@ class EntryForm extends React.Component {
                 fileNumber: '',
                 remark: '',
             },
-            message: {
+            alertOptions: {
                 text: '',
-                type: 'danger'
+                type: 'danger',
+                autoHide: false
             },
             showAlert: false
         }
@@ -68,37 +69,39 @@ class EntryForm extends React.Component {
             remark: this.state.fields.remark
         }, {headers}).then(res => {
             if (res.data.saved) {
-                this.setState(() => ({
-                    message: {
+                this.setState({
+                    alertOptions: {
                         text: res.data.message,
-                        type: 'success'
+                        type: 'success',
+                        autoHide: true
                     }
-                }))
+                })
             } else {
-                this.setState(() => ({
-                    message: {
+                this.setState({
+                    alertOptions: {
                         text: res.data.message,
-                        type: 'danger'
+                        type: 'danger',
+                        autoHide: true
                     }
-                }))
+                })
             }
-            this.setState(() => ({
+            this.setState({
                 showAlert: true
-            }))
+            })
         })
     }
 
     hideAlert() {
-        this.setState(() => ({
+        this.setState({
             showAlert: false
-        }))
+        })
     }
 
     render() {
         return (
             <Grid>
                 <Row>
-                    <AlertComponent message={this.state.message} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
+                    <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
                     <section className="col-xs-12">
                         <Form ref={this.form} onSubmit={this.handleSubmit}>
                             <Col md={4}>

@@ -21,9 +21,10 @@ class LoginForm extends React.Component {
 		        password: ''
 		    },
 		    redirectToReferrer: false,
-		    message: {
+		    alertOptions: {
 		    	text: '',
-		    	type: 'danger'
+		    	type: 'danger',
+		    	autoHide: false
 		    },
 		    showAlert: false
 		}
@@ -54,9 +55,10 @@ class LoginForm extends React.Component {
         		this.authenticate(res.data.token, res.data.validUpto)
         	} else {
         		this.setState({
-  	        		message: {
+  	        		alertOptions: {
   	        		 	text: res.data.message,
-  	        		 	type: 'danger'
+  	        		 	type: 'danger',
+  	        		 	autoHide: true
   	        		},
         			showAlert: true
   	      		})
@@ -86,7 +88,7 @@ class LoginForm extends React.Component {
 		return (
 			<Grid>
 			    <Row>
-			    	<AlertComponent message={this.state.message} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
+			    	<AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
 			        <section className="col-xs-6">
 			        	<Form onSubmit={this.handleSubmit}>
 			        		<Col md={12}>
