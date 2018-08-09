@@ -34,14 +34,11 @@ class EntryForm extends React.Component {
             showAlert: false
         }
 
-        // refs
-        this.form = React.createRef()
-
         // functions binding
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.hideAlert = this.hideAlert.bind(this)
-    }
+    } 
 
     handleChange(event) {
         const element = event.nativeEvent.target
@@ -103,7 +100,7 @@ class EntryForm extends React.Component {
                 <Row>
                     <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
                     <section className="col-xs-12">
-                        <Form ref={this.form} onSubmit={this.handleSubmit}>
+                        <Form onSubmit={this.handleSubmit}>
                             <Col md={4}>
                                 <FormGroup md={4} bsSize="large" >
                                     <ControlLabel htmlFor="applicantName">Applicant Name</ControlLabel>
