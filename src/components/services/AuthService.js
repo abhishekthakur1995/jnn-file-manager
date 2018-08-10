@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 export const userAuth = {
   	authenticate(authToken, validUpto, cb) {
         localStorage.setItem('authToken', authToken)
-        localStorage.setItem('tokenValidUpto', JSON.stringify(validUpto))
+        localStorage.setItem('tokenValidUpto', validUpto)
     	setTimeout(cb, 100)
   	},
   	signout(cb) {
@@ -14,7 +14,7 @@ export const userAuth = {
   	},
     isUserAuthenticated() {
         var isAuthenticated = false
-        const validUpto = JSON.parse(localStorage.getItem('tokenValidUpto'))
+        const validUpto = localStorage.getItem('tokenValidUpto')
         if (validUpto && Date.now() < validUpto) {
             isAuthenticated = localStorage.getItem('authToken') ? true : false
         }
