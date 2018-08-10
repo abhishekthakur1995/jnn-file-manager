@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, ListGroup } from 'react-bootstrap'
 import axios from 'axios'
 import Record from './Record'
+import { PageHead } from './uiComponents/CommonComponent'
 
 class RecordList extends React.Component {
 	constructor(props) {
@@ -16,7 +17,7 @@ class RecordList extends React.Component {
 
 	componentDidMount() {
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.get(`http://localhost:3001/getAllRecords`, {headers})
+		axios.get('http://localhost:3001/getAllRecords', {headers})
       	.then(res => {
 	        this.setState(() => ({
 	        	records: res.data.data
@@ -48,6 +49,7 @@ class RecordList extends React.Component {
 		}.bind(this))
 		return (
 			<Grid bsClass="record-list">
+				<PageHead title="Manage Record Status"/>
 				<ListGroup componentClass="ul">
 					{filteredRecords}
 				</ListGroup>

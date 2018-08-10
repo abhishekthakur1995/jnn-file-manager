@@ -17,7 +17,7 @@
         transition: all 0.3s;
     }
 
-    i, span {
+    i {
         display: inline-block;
     }
 
@@ -26,7 +26,7 @@
         background: #fff;
         border: none;
         border-radius: 0;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     }
 
@@ -222,5 +222,15 @@
     .alert-message {
         width: 50%;
         margin-left: 25%;
+    }
+}
+
+// RECORD LIST
+.record-list {
+    .status-control {
+        width: 10em;
+        height: 4em;
+        margin-top: -4.5em;
+        float: right;
     }
 }

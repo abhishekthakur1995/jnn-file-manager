@@ -16,10 +16,10 @@ class Record extends React.Component {
 		return (
 			<ListGroupItem>
 				<Grid bsClass="record-info">
-					<Grid componentClass="span" bsClass="item"> {this.props.singleRecord.BUILDING_NAME} </Grid>
-					<Grid componentClass="span" bsClass="item"> {this.props.singleRecord.BUILDING_ADDRESS} </Grid>
+					<Grid componentClass="p" bsClass="item"> {this.props.singleRecord.BUILDING_NAME} </Grid>
+					<Grid componentClass="p" bsClass="item"> {this.props.singleRecord.BUILDING_ADDRESS} </Grid>
 				</Grid>
-				<Button className={`btn btn-xs ${this.props.singleRecord.FILE_STATUS == 0 ? 'btn-success' : 'btn-danger'}`} onClick={this.handleApproveBtnClick}>
+				<Button className={`${this.props.singleRecord.FILE_STATUS == 0 ? 'btn-success' : 'btn-danger'} status-control`} onClick={this.handleApproveBtnClick}>
 					{this.props.singleRecord.FILE_STATUS == 0 ? 'Approve' : 'Reject'}
 				</Button>
 			</ListGroupItem>
