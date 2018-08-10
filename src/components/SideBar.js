@@ -3,7 +3,6 @@ import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { Link, Route, Switch } from 'react-router-dom'
 import EntryForm from './EntryForm'
 import RecordList from './RecordList'
-import '../../public/scss/sidebar.scss'
 import PropTypes from 'prop-types'
 
 class SideBar extends React.Component {

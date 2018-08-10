@@ -1,9 +1,9 @@
 import React from 'react'
 import { Navbar, NavItem, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { userAuth } from './services/AuthService.js'
+import { userAuth } from './services/AuthService'
 import PropTypes from 'prop-types'
-import '../../public/scss/sidebar.scss'
+import '../../public/scss/style.scss'
 import '../../public/scss/generic.scss'
 
 class NavBar extends React.Component {

@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from './NavBar.js'
+import NavBar from './NavBar'
 import LoginForm from './LoginForm'
 import Dashboard from './Dashboard'
 import ErrorPage from './ErrorPage'

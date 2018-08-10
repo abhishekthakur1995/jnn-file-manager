@@ -38,7 +38,7 @@ class EntryForm extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.hideAlert = this.hideAlert.bind(this)
-    } 
+    }
 
     handleChange(event) {
         const element = event.nativeEvent.target
