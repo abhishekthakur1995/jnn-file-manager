@@ -18,7 +18,8 @@ module.exports = {
 			"./src/components/Dashboard.js",
 			"./src/components/RecordList.js",
 			"./src/components/Record.js",
-			"./src/components/uiComponents/AlertComponent.js"
+			"./src/components/uiComponents/AlertComponent.js",
+			"./src/components/uiComponents/CommonComponent.js"
 		],
 	},
 	output: {

@@ -6,8 +6,9 @@ import Button from 'react-validation/build/button'
 import Select from 'react-validation/build/select'
 import Textarea from 'react-validation/build/textarea'
 import AlertComponent from './uiComponents/AlertComponent'
-import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix } from 'react-bootstrap'
+import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon } from 'react-bootstrap'
 import { required, phoneNumber } from './helpers/ValidationHelper'
+import { PageHead } from './uiComponents/CommonComponent'
 
 class EntryForm extends React.Component {
     constructor(props) {
@@ -96,10 +97,11 @@ class EntryForm extends React.Component {
 
     render() {
         return (
-            <Grid>
-                <Row>
+            <Grid bsClass="entry-form">
+                <PageHead title="Add New Record"/>
+                <Row className="margin-0x">
                     <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
-                    <section className="col-xs-12">
+                    <Grid componentClass="section" bsClass="col-xs-12">
                         <Form onSubmit={this.handleSubmit}>
                             <Col md={4}>
                                 <FormGroup md={4} bsSize="large" >
@@ -223,8 +225,9 @@ class EntryForm extends React.Component {
                                     />
                                 </FormGroup>
                             </Col>
+                            <Clearfix />
 
-                            <Col md={4}>
+                            <Col md={12}>
                                 <FormGroup bsSize="large" >
                                     <ControlLabel htmlFor="remark">Remark</ControlLabel>
                                     <Textarea
@@ -240,10 +243,12 @@ class EntryForm extends React.Component {
                             <Clearfix />
 
                             <Col md={12}>
-                                <Button type="submit" className="btn btn-default">Submit</Button>
+                                <Button type="submit" className="btn btn-default">
+                                    <Glyphicon className="padding-right-1x" glyph="saved" />Save
+                                </Button>
                             </Col>
                         </Form>
-                    </section>
+                    </Grid>
                 </Row>
             </Grid>
         )

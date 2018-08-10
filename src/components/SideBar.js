@@ -36,23 +36,12 @@ class SideBar extends React.Component {
 					</ListGroup>
 				</nav>
 
-				<Grid bsClass="container content">
-					<nav className="navbar navbar-default">
-	                    <Grid bsClass="container-fluid">
-	                        <Grid bsClass="navbar-header">
-	                            <button type="button" id="sidebarCollapse" className="btn btn-info navbar-btn">
-	                                <span>Page Title</span>
-	                            </button>
-	                        </Grid>
-	                    </Grid>
-                	</nav>
+				<Grid bsClass="container padding-2x">
+					<Switch>
+						<Route path={`${this.props.match.path}/addNewRecord`} component={EntryForm} />
+						<Route path={`${this.props.match.path}/manageRecordStatus`} component={RecordList} />
+					</Switch>
 				</Grid>
-
-				<Switch>
-					<Route path={`${this.props.match.path}/addNewRecord`} component={EntryForm} />
-					<Route path={`${this.props.match.path}/manageRecordStatus`} component={RecordList} />
-				</Switch>
-
 			</Grid>
 		)
 	}
