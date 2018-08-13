@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from 'react-bootstrap'
-import { InfoBlock } from './uiComponents/CommonComponent'
+import { InfoBlock, ChartHolder } from './uiComponents/CommonComponent'
 import { Doughnut } from 'react-chartjs-2'
 
 class InfoBoard extends React.Component {
@@ -28,13 +28,18 @@ class InfoBoard extends React.Component {
 				'#FFCE56'
 				]
 			}]
-		};
+		}
+
+		const chart = <Doughnut data={chartData} width={100} height={100} />
+
 		return (
-			<Grid bsClass="InfoBoard">
-				<InfoBlock title="Received" value="100" />
-				<InfoBlock title="Approved" value="60" />
-				<InfoBlock title="Pending" value="40" />
-				<Doughnut data={chartData} width={100} height={100} options={{maintainAspectRatio: false}} />
+			<Grid bsClass="full-width fleft">
+				<Grid bsClass="full-width fleft">
+					<InfoBlock title="Received" value="100" />
+					<InfoBlock title="Approved" value="60" />
+					<InfoBlock title="Pending" value="40" />
+				</Grid>
+				<ChartHolder title="Application Status" chart={chart}/>
 			</Grid>
 		)
 	}

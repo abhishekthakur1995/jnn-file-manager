@@ -14,6 +14,14 @@
 	.margin-right-#{$i}x {
     	margin-right: $i * 5px !important;
   	}
+    .margin-vert-#{$i}x {
+        margin-right: $i * 5px !important;
+        margin-left: $i * 5px !important;
+    }
+    .margin-horiz-#{$i}x {
+        margin-top: $i * 5px !important;
+        margin-bottom: $i * 5px !important;
+    }
 
 	.padding-#{$i}x {
     	padding: $i * 5px !important;
@@ -44,4 +52,16 @@
 
 .mt50 {
     margin-top: 50px;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+.fleft {
+    float: left;
+}
+
+.fright {
+    float: right;
 }

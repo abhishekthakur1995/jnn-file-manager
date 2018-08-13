@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from 'react-bootstrap'
+import { Grid, Col } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 export const PageHead = (props) => {
@@ -40,3 +40,24 @@ InfoBlock.propTypes = {
     title: PropTypes.string,
     value: PropTypes.string
 }
+
+export const ChartHolder = (props) => {
+    return (
+        <Col md={4}>
+            <Grid bsClass="panel panel-primary">
+                <Grid bsClass="panel-heading" align="center">
+                   {props.title}
+                </Grid>
+                <Grid bsClass="panel-body">
+                    {props.chart}
+                </Grid>
+            </Grid>
+        </Col>
+    )
+}
+
+ChartHolder.propTypes = {
+    title: PropTypes.string,
+    chart: PropTypes.element
+}
+
