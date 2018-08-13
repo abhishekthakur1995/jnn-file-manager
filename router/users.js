@@ -22,7 +22,7 @@ users.post('/register',
 		    return res.status(400).json({message: errors.array()})
 	  	}
 
-		bcrypt.hash(req.body.password, process.env.SALT_ROUNDS).then(function(hash) {
+		bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS)).then(function(hash) {
 			const userData = {
 		        "USER_NAME": req.body.user_name,
 		        "EMAIL": req.body.email,
@@ -60,7 +60,7 @@ users.post('/login',
 				bcrypt.compare(password, results[0].PASSWORD).then(function(match) {
 					if (match == true) {
 						token = jwt.sign(JSON.parse(JSON.stringify(results[0])), process.env.SECRET_KEY, {
-				 			expiresIn: process.env.TOKEN_EXPIRY_TIME
+				 			expiresIn: parseInt(process.env.TOKEN_EXPIRY_TIME)
 						})
 						return res.status(200).json({message : 'User verified', token : token, validUpto : Date.now() + parseInt(process.env.TOKEN_EXPIRY_TIME), success : true})
 					} else {
