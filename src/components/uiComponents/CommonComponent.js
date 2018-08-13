@@ -17,5 +17,26 @@ export const PageHead = (props) => {
 }
 
 PageHead.propTypes = {
-	title: PropTypes.string
+    title: PropTypes.string
+}
+
+export const InfoBlock = (props) => {
+    return (
+        <Grid bsClass="boxes">
+            <Grid bsClass="info-box">
+                <Grid componentClass="span" bsClass="info-box-icon bg-green">
+                    <img></img>
+                </Grid>
+                <Grid bsClass="info-box-content">
+                    <Grid componentClass="span" bsClass="info-box-text">{props.title}</Grid>
+                    <Grid componentClass="span" bsClass="info-box-number">{props.value}</Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    )
+}
+
+InfoBlock.propTypes = {
+    title: PropTypes.string,
+    value: PropTypes.string
 }

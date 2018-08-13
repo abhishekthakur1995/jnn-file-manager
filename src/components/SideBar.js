@@ -1,9 +1,10 @@
 import React from 'react'
-import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
-import { Link, Route, Switch } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import EntryForm from './EntryForm'
 import RecordList from './RecordList'
-import PropTypes from 'prop-types'
+import InfoBoard from './InfoBoard'
+import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Link, Route, Switch } from 'react-router-dom'
 
 class SideBar extends React.Component {
 	constructor(props) {
@@ -40,6 +41,7 @@ class SideBar extends React.Component {
 					<Switch>
 						<Route path={`${this.props.match.path}/addNewRecord`} component={EntryForm} />
 						<Route path={`${this.props.match.path}/manageRecordStatus`} component={RecordList} />
+						<Route path={`${this.props.match.path}`} component={InfoBoard} />
 					</Switch>
 				</Grid>
 			</Grid>
