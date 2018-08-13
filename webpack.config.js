@@ -5,7 +5,7 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 
 module.exports = {
 	entry: {
-		vendor: ["react", "react-dom", "react-bootstrap"],
+		vendor: ["react", "react-dom", "react-bootstrap", "react-chartjs-2"],
 		app:
 		[
 			"./src/index.js",
