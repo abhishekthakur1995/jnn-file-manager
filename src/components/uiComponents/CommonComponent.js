@@ -1,5 +1,6 @@
 import React from 'react'
-import { Grid, Col } from 'react-bootstrap'
+import EntryForm from './../EntryForm'
+import { Grid, Col, Modal, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 export const PageHead = (props) => {
@@ -44,11 +45,11 @@ InfoBlock.propTypes = {
 export const ChartHolder = (props) => {
     return (
         <Col md={4}>
-            <Grid bsClass="panel panel-primary">
-                <Grid bsClass="panel-heading" align="center">
+            <Grid bsClass="chart-holder">
+                <Grid bsClass="chart-holder-heading" align="center">
                    {props.title}
                 </Grid>
-                <Grid bsClass="panel-body">
+                <Grid bsClass="chart-holder-body">
                     {props.chart}
                 </Grid>
             </Grid>
@@ -61,3 +62,57 @@ ChartHolder.propTypes = {
     chart: PropTypes.element
 }
 
+export const EditRecordModal = (props) => {
+    return (
+        <Modal show={props.show} onHide={props.onHide} dialogClassName={props.dialogClassName}>
+            <Modal.Header closeButton>
+                <Modal.Title>{props.modalTitle}</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+                <EntryForm showPageHead={false} mode="edit" record={props.record} onUpdate={props.onUpdate}/>
+            </Modal.Body>
+
+            <Modal.Footer>
+                <Button onClick={props.handleModalClose}>Close</Button>
+            </Modal.Footer>
+        </Modal>
+    )
+}
+
+EditRecordModal.propTypes = {
+    show: PropTypes.bool,
+    dialogClassName: PropTypes.string,
+    onHide: PropTypes.func,
+    onUpdate: PropTypes.func,
+    modalTitle: PropTypes.string,
+    record: PropTypes.object,
+    handleModalClose: PropTypes.func
+}
+
+export const DeleteRecordModal = (props) => {
+    return (
+        <Modal show={props.show} onHide={props.onHide}>
+            <Modal.Header closeButton>
+                <Modal.Title bsClass="bold fs22">{props.modalTitle}</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+                Are you sure you want to delete this record? This cannot be undone.
+            </Modal.Body>
+
+            <Modal.Footer>
+                <Button onClick={props.handleModalClose}>Close</Button>
+                <Button bsClass="btn btn-danger" onClick={props.onDelete}>Delete</Button>
+            </Modal.Footer>
+        </Modal>
+    )
+}
+
+DeleteRecordModal.propTypes = {
+    show: PropTypes.bool,
+    onHide: PropTypes.func,
+    onDelete: PropTypes.func,
+    modalTitle: PropTypes.string,
+    handleModalClose: PropTypes.func
+}

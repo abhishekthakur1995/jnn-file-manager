@@ -46,6 +46,12 @@
     }
 }
 
+@for $i from 1 through 10 {
+    .width-#{$i}x {
+        width: $i * 10% !important
+    }
+}
+
 .error {
     color: #a94442;
 }
@@ -54,14 +60,22 @@
     margin-top: 50px;
 }
 
-.full-width {
-    width: 100% !important;
-}
-
 .fleft {
     float: left;
 }
 
 .fright {
     float: right;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.pointer-event-none {
+  pointer-events: none;
+}
+
+.bold {
+  font-weight: bold;
 }

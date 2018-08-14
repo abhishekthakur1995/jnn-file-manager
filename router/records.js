@@ -53,15 +53,42 @@ records.get('/getAllRecords', function(req, res) {
 		if (err) {
 			return res.status(400).json({data: [], message : err, success : false})
 		}
-		res.status(200).json({data : results, messaage : 'Records fetched successfully', success : true})
+		res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
 	})
 })
 
-/* 	path: /updateRecordStatus
+/* 	path: /updateRecord/:id
  *	type: PUT
  */
 
-records.put('/updateRecordStatus/:id', 
+records.put('/updateRecord/:id',
+	[
+		check('applicant_name').not().isEmpty().withMessage('Applicant name cannot be empty').trim().escape(),
+		check('applicant_type').not().isEmpty().withMessage('Please select an applicant type').trim().escape(),
+		check('applicant_address').not().isEmpty().withMessage('Applicant address cannot be empty').trim().escape(),
+		check('applicant_contact').not().isEmpty().withMessage('Applicant contact cannot be empty').trim().escape(),
+		check('building_name').not().isEmpty().withMessage('Building name cannot be empty').trim().escape(),
+		check('building_address').not().isEmpty().withMessage('Building Address cannot be empty').trim().escape(),
+		check('building_area').not().isEmpty().withMessage('Building Area cannot be empty').trim().escape(),
+		check('file_number').not().isEmpty().withMessage('File number cannot be empty').trim().escape(),
+		check('remark').trim().escape(),
+		check('id').not().isEmpty().withMessage('No record id was sent')
+	],
+	(req, res) => {
+		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET APPLICANT_NAME = ?, APPLICANT_TYPE = ?, APPLICANT_ADDRESS = ?, APPLICANT_CONTACT = ?, BUILDING_NAME = ?, BUILDING_ADDRESS = ?, BUILDING_AREA = ?, FILE_NUMBER = ?, REMARK = ? WHERE ID = ?`, [req.body.applicant_name, req.body.applicant_type, req.body.applicant_address, req.body.applicant_contact, req.body.building_name, req.body.building_address, req.body.building_area, req.body.file_number, req.body.remark, req.params.id], function(err, results, fields) {
+			if (err) {
+				return res.status(400).json({message : err, saved : false})
+			}
+			res.status(200).json({message : 'Record updated successfully', saved : true})
+		})
+	}
+)
+
+/* 	path: /updateRecordStatus/:id
+ *	type: PUT
+ */
+
+records.put('/updateRecordStatus/:id',
 	[
 		check('id').not().isEmpty().withMessage('No record id was sent'),
 		check('status').not().isEmpty().withMessage('Status cannot be empty')
@@ -71,9 +98,27 @@ records.put('/updateRecordStatus/:id',
 		const status = req.body.status
 		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET FILE_STATUS = ? WHERE ID = ?`, [status, id], function(err, results, fields) {
 			if (err) {
-				return res.status(400).json({message : err, success : false})
+				return res.status(400).json({message : err, saved : false})
 			}
-			res.status(200).json({messaage : 'Record status updated successfully', success : true})
+			res.status(200).json({message : 'Record status updated successfully', saved : true})
+		})
+	}
+)
+
+/* 	path: /deleteRecord/:id
+ *	type: DELETE
+ */
+
+records.delete('/deleteRecord/:id',
+	[
+		check('id').not().isEmpty().withMessage('No record id was sent'),
+	],
+	(req, res) => {
+		connection.query(`DELETE FROM ${process.env.FILE_RECORD_TBL} WHERE ID = ${req.params.id}`, function(err, results, fields) {
+			if (err) {
+				return res.status(400).json({message : err, saved : false})
+			}
+			res.status(200).json({message : 'Record deleted successfully', success : true})
 		})
 	}
 )

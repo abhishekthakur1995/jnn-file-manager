@@ -33,8 +33,8 @@ class InfoBoard extends React.Component {
 		const chart = <Doughnut data={chartData} width={100} height={100} />
 
 		return (
-			<Grid bsClass="full-width fleft">
-				<Grid bsClass="full-width fleft">
+			<Grid bsClass="width-10x fleft">
+				<Grid bsClass="width-10x fleft">
 					<InfoBlock title="Received" value="100" />
 					<InfoBlock title="Approved" value="60" />
 					<InfoBlock title="Pending" value="40" />

@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import PropTypes from 'prop-types'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Button from 'react-validation/build/button'
@@ -41,6 +42,25 @@ class EntryForm extends React.Component {
         this.hideAlert = this.hideAlert.bind(this)
     }
 
+    componentDidMount() {
+        if (this.props.record) {
+            const record = this.props.record
+            this.setState({
+                fields: {
+                    applicantName: record.APPLICANT_NAME,
+                    applicantType: record.APPLICANT_TYPE,
+                    applicantAddress: record.APPLICANT_ADDRESS,
+                    applicantContact: record.APPLICANT_CONTACT,
+                    buildingName: record.BUILDING_NAME,
+                    buildingAddress: record.BUILDING_ADDRESS,
+                    buildingArea: record.BUILDING_AREA,
+                    fileNumber: record.FILE_NUMBER,
+                    remark: record.REMARK,
+                }
+            })
+        }
+    }
+
     handleChange(event) {
         const element = event.nativeEvent.target
         this.setState((prevState) => ({
@@ -54,18 +74,23 @@ class EntryForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        const headers = { 'Authorization': localStorage.getItem('authToken') }
-        axios.post(`http://localhost:3001/addNewRecord`, {
-            applicant_name: this.state.fields.applicantName,
-            applicant_type: this.state.fields.applicantType,
-            applicant_address: this.state.fields.applicantAddress,
-            applicant_contact: this.state.fields.applicantContact,
-            building_name: this.state.fields.buildingName,
-            building_address: this.state.fields.buildingAddress,
-            building_area: this.state.fields.buildingArea,
-            file_number: this.state.fields.fileNumber,
-            remark: this.state.fields.remark
-        }, {headers}).then(res => {
+        const apiUrl = this.props.mode === 'edit' ? `http://localhost:3001/updateRecord/${this.props.record.ID}` : 'http://localhost:3001/addNewRecord'
+        axios({
+            method: this.props.mode === 'edit' ? 'put' : 'post',
+            url: apiUrl,
+            data: {
+                applicant_name: this.state.fields.applicantName,
+                applicant_type: this.state.fields.applicantType,
+                applicant_address: this.state.fields.applicantAddress,
+                applicant_contact: this.state.fields.applicantContact,
+                building_name: this.state.fields.buildingName,
+                building_address: this.state.fields.buildingAddress,
+                building_area: this.state.fields.buildingArea,
+                file_number: this.state.fields.fileNumber,
+                remark: this.state.fields.remark
+            },
+            headers: {'Authorization': localStorage.getItem('authToken')}
+        }).then(res => {
             if (res.data.saved) {
                 this.setState({
                     alertOptions: {
@@ -87,6 +112,9 @@ class EntryForm extends React.Component {
                 showAlert: true
             })
         })
+
+        // to update the record list when a record is updated
+        this.props.onUpdate(this.state.fields)
     }
 
     hideAlert() {
@@ -96,9 +124,10 @@ class EntryForm extends React.Component {
     }
 
     render() {
+        const btnText = this.props.mode === 'edit' ? 'Update' : 'Save'
         return (
             <Grid bsClass="entry-form">
-                <PageHead title="Add New Record"/>
+                { (this.props.showPageHead) && <PageHead title="Add New Record"/> }
                 <Row className="margin-0x">
                     <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
                     <Grid componentClass="section" bsClass="col-xs-12">
@@ -244,7 +273,7 @@ class EntryForm extends React.Component {
 
                             <Col md={12}>
                                 <Button type="submit" className="btn btn-default">
-                                    <Glyphicon className="padding-right-1x" glyph="saved" />Save
+                                    <Glyphicon className="padding-right-1x" glyph="saved" />{btnText}
                                 </Button>
                             </Col>
                         </Form>
@@ -253,6 +282,13 @@ class EntryForm extends React.Component {
             </Grid>
         )
     }
+}
+
+EntryForm.propTypes = {
+    showPageHead: PropTypes.bool,
+    record: PropTypes.object,
+    mode: PropTypes.string,
+    onUpdate: PropTypes.func
 }
 
 export default EntryForm
