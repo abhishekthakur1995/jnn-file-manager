@@ -57,25 +57,34 @@
 }
 
 .mt50 {
-    margin-top: 50px;
+    margin-top: 50px !important;
 }
 
-.fleft {
-    float: left;
-}
-
-.fright {
-    float: right;
+.p50{
+    padding: 50px !important;
 }
 
 .cursor-pointer {
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 .pointer-event-none {
-  pointer-events: none;
+  pointer-events: none !important;
 }
 
 .bold {
-  font-weight: bold;
+  font-weight: bold !important;
 }
+
+.text-align-center {
+    text-align: center !important;
+}
+
+.display-block {
+  display: block !important;
+}
+
+.display-inline {
+  display: inline-block !important;
+}
+

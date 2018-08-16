@@ -14,6 +14,7 @@ class RecordList extends React.Component {
 
 		this.handleRecordUpdate = this.handleRecordUpdate.bind(this)
 		this.handleRecordDelete = this.handleRecordDelete.bind(this)
+		this.handleRecordStatus = this.handleRecordStatus.bind(this)
 	}
 
 	componentDidMount() {
@@ -48,12 +49,27 @@ class RecordList extends React.Component {
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.delete(`http://localhost:3001/deleteRecord/${deletedRecordId}`, {headers}).then(res => {
 			if (res.data.success === true) {
-				console.log("p")
 				this.setState(prevState => ({
 					records: prevState.records.filter(record => record.ID !== deletedRecordId)
 				}))
 			}
 		})
+	}
+
+	handleRecordStatus(rec, action) {
+		const headers = { 'Authorization': localStorage.getItem('authToken') }
+		const newStatus = (action === 'approve') ? 1 : 2
+		axios.put(`http://localhost:3001/updateRecordStatus/${rec.ID}`, {
+			status: newStatus
+		}, {headers}).then(res => {
+        	if (res.data.saved === true) {
+        		this.setState(prevState => ({
+        			records: prevState.records.map(
+        				record => (record.ID !== rec.ID) ? record : {...record, FILE_STATUS: newStatus }
+        			)
+        		}))
+        	}
+      	})
 	}
 
 	render() {
@@ -65,7 +81,8 @@ class RecordList extends React.Component {
 					index={index}
 					singleRecord={record}
 					onUpdate={this.handleRecordUpdate}
-					onDelete={this.handleRecordDelete}  />
+					onDelete={this.handleRecordDelete}
+					onStatusChange={this.handleRecordStatus}  />
 			)
 		}.bind(this))
 		return (
@@ -80,6 +97,7 @@ class RecordList extends React.Component {
                             <th>Applicant Contact</th>
                             <th>Building Name</th>
                             <th>File Number</th>
+                            <th>Current State</th>
                             <th>Action</th>
                         </tr>
                     </thead>

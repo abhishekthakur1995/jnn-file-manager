@@ -1,6 +1,6 @@
 import React from 'react'
 import EntryForm from './../EntryForm'
-import { Grid, Col, Modal, Button } from 'react-bootstrap'
+import { Grid, Col, Modal, Button, Table } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 export const PageHead = (props) => {
@@ -115,4 +115,63 @@ DeleteRecordModal.propTypes = {
     onDelete: PropTypes.func,
     modalTitle: PropTypes.string,
     handleModalClose: PropTypes.func
+}
+
+export const ManageRecordModal = (props) => {
+    return (
+        <Modal show={props.show} onHide={props.onHide}>
+            <Modal.Header closeButton>
+                <Modal.Title bsClass="bold fs22">{props.modalTitle}</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+                <RecordDetails record={props.record} handleApproveBtnClick={props.onApprove} handleRejectBtnClick={props.onReject} />
+            </Modal.Body>
+        </Modal>
+    )
+}
+
+ManageRecordModal.propTypes = {
+    show: PropTypes.bool,
+    onHide: PropTypes.func,
+    modalTitle: PropTypes.string,
+    record: PropTypes.object,
+    onApprove: PropTypes.func,
+    onReject: PropTypes.func,
+    handleModalClose: PropTypes.func
+}
+
+export const RecordDetails = (props) => {
+    const { record } = props
+    return (
+        <Grid bsClass="record-details">
+            <Table>
+                <thead>
+                    <tr><th>File Number: {record.FILE_NUMBER}</th></tr>
+                    <tr><th>Current State: {record.FILE_STATUS == 1 ? 'Approved' : (record.FILE_STATUS == 2 ? 'Rejected' : 'Pending')}</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Applicant Name: {record.APPLICANT_NAME}</td></tr>
+                    <tr><td>Applicant Type: {record.APPLICANT_TYPE}</td></tr>
+                    <tr><td>Applicant Address: {record.APPLICANT_ADDRESS}</td></tr>
+                    <tr><td>Applicant Contact: {record.APPLICANT_CONTACT}</td></tr>
+                    <tr><td>Building Name: {record.BUILDING_NAME}</td></tr>
+                    <tr><td>Building Address: {record.BUILDING_ADDRESS}</td></tr>
+                    <tr><td>Building Area: {record.BUILDING_AREA}</td></tr>
+                    <tr><td>Remark: {record.REMARK}</td></tr>
+                </tbody>
+            </Table>
+
+            <Grid bsClass="width-10x display-inline">
+                <Button className="btn-success pull-right margin-left-1x" onClick={props.handleApproveBtnClick}> Approve </Button>
+                <Button className="btn-danger pull-right" onClick={props.handleRejectBtnClick}> Reject </Button>
+            </Grid>
+        </Grid>
+    )
+}
+
+RecordDetails.propTypes = {
+    record: PropTypes.object,
+    handleApproveBtnClick: PropTypes.func,
+    handleRejectBtnClick: PropTypes.func
 }
