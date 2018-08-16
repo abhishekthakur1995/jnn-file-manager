@@ -71,7 +71,7 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.jpg($|\?)|\.svg($|\?)/,
+				test: /\.woff($|\?)|\.woff2($|\?)|\.png($|\?)|\.ttf($|\?)|\.eot($|\?)|\.jpg($|\?)|\.svg($|\?)/,
 				exclude: /(node_modules)/,
 				use: [
 					{loader: "url-loader"}
