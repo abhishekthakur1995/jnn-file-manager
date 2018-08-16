@@ -13,6 +13,7 @@ class RecordList extends React.Component {
 		}
 
 		this.handleRecordUpdate = this.handleRecordUpdate.bind(this)
+		this.handleRecordDelete = this.handleRecordDelete.bind(this)
 	}
 
 	componentDidMount() {
@@ -47,6 +48,7 @@ class RecordList extends React.Component {
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.delete(`http://localhost:3001/deleteRecord/${deletedRecordId}`, {headers}).then(res => {
 			if (res.data.success === true) {
+				console.log("p")
 				this.setState(prevState => ({
 					records: prevState.records.filter(record => record.ID !== deletedRecordId)
 				}))

@@ -39,7 +39,7 @@ class SideBar extends React.Component {
 
 				<Grid bsClass="container padding-2x">
 					<Switch>
-						<Route path={`${this.props.match.path}/addNewRecord`} component={EntryForm} />
+						<Route path={`${this.props.match.path}/addNewRecord`} render={(props) => <EntryForm {...props} showPageHead={true} />} />
 						<Route path={`${this.props.match.path}/manageRecordStatus`} component={RecordList} />
 						<Route path={`${this.props.match.path}`} component={InfoBoard} />
 					</Switch>
