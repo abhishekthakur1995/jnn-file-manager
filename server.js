@@ -18,7 +18,7 @@ server.use((req, res, next) => {
 })
 
 // serve public folders
-// server.use(express.static('public'))
+server.use('/static', express.static('public'))
 
 // handle server routes
 server.use(require('./router/index'))

@@ -29,8 +29,22 @@ module.exports = {
 		publicPath: "/"
 	},
 	devServer: {
+		inline: false,
 		contentBase: path.join(__dirname, "dist"),
-		port: 8080
+		port: 8080,
+		proxy: {
+			'/static': {
+				target: 'http://localhost:3001', 
+				secure: false
+				// pathRewrite: {'^/static' : ''}
+				// bypass: function(req, res, proxyOptions) {
+				//   	if (req.accepts('html')) {
+				//     	console.log('Skipping proxy for browser request.')
+				//     	return '/index.html'
+				//   	}
+				// }
+			}
+		}
 	},
 	module: {
 		rules: [

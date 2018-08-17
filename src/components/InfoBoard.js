@@ -36,8 +36,8 @@ class InfoBoard extends React.Component {
 			<Grid bsClass="width-10x pull-left">
 				<Grid bsClass="width-10x pull-left">
 					<InfoBlock title="Received" value="100" />
+					<InfoBlock title="Pending"  value="40" />
 					<InfoBlock title="Approved" value="60" />
-					<InfoBlock title="Pending" value="40" />
 				</Grid>
 				<ChartHolder title="Application Status" chart={chart}/>
 			</Grid>
