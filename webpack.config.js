@@ -2,6 +2,7 @@ const path = require("path")
 const webpack = require("webpack")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
 	entry: {
@@ -78,11 +79,10 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				exclude: /(node_modules)/,
-				use: [
-					{loader: "style-loader"},
-					{loader: "css-loader"},
-					{loader: "sass-loader"}
-				]
+				use: ExtractTextPlugin.extract({
+                    fallback:'style-loader',
+                    use:['css-loader','sass-loader'],
+                })
 			},
 			{
 				test: /\.woff($|\?)|\.woff2($|\?)|\.png($|\?)|\.ttf($|\?)|\.eot($|\?)|\.jpg($|\?)|\.svg($|\?)/,
@@ -102,7 +102,10 @@ module.exports = {
       		title: 'File Manager',
       		filename: 'index.html',
       		template: 'public/index.html'
-    	})
+    	}),
+    	new ExtractTextPlugin({
+    		filename:'app.bundle.css'
+    	}),
 		//new UglifyJsPlugin()  // run when creating production build only.
 	]
 }
