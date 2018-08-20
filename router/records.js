@@ -123,4 +123,17 @@ records.delete('/deleteRecord/:id',
 	}
 )
 
+/* 	path: /getDashboardData
+ *	type: GET
+ */
+
+records.get('/getDashboardData', function(req, res) {
+	connection.query(`SELECT COUNT(*) AS RECEIVED, COUNT(CASE WHEN FILE_STATUS = 0 THEN 1 END) AS PENDING, COUNT(CASE WHEN FILE_STATUS = 1 THEN 1 END) AS APPROVED FROM ${process.env.FILE_RECORD_TBL}`, function(err, results, fields) {
+		if (err) {
+			return res.status(400).json({data: [], message : err, success : false})
+		}
+		res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
+	})
+})
+
 module.exports = records

@@ -10,6 +10,7 @@ import AlertComponent from './uiComponents/AlertComponent'
 import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon } from 'react-bootstrap'
 import { required, phoneNumber } from './helpers/ValidationHelper'
 import { PageHead } from './uiComponents/CommonComponent'
+import config from 'config'
 
 class EntryForm extends React.Component {
     constructor(props) {
@@ -74,7 +75,7 @@ class EntryForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        const apiUrl = this.props.mode === 'edit' ? `http://localhost:3001/updateRecord/${this.props.record.ID}` : 'http://localhost:3001/addNewRecord'
+        const apiUrl = this.props.mode === 'edit' ? `${config.baseUrl}/updateRecord/${this.props.record.ID}` : `${config.baseUrl}/addNewRecord`
         axios({
             method: this.props.mode === 'edit' ? 'put' : 'post',
             url: apiUrl,

@@ -3,6 +3,7 @@ import { Grid, Table } from 'react-bootstrap'
 import axios from 'axios'
 import Record from './Record'
 import { PageHead } from './uiComponents/CommonComponent'
+import config from 'config'
 
 class RecordList extends React.Component {
 	constructor(props) {
@@ -19,11 +20,11 @@ class RecordList extends React.Component {
 
 	componentDidMount() {
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.get('http://localhost:3001/getAllRecords', {headers})
+		axios.get(`${config.baseUrl}/getAllRecords`, {headers})
       	.then(res => {
-	        this.setState(() => ({
+	        this.setState({
 	        	records: res.data.data
-	        }))
+	        })
       	})
 	}
 
@@ -47,7 +48,7 @@ class RecordList extends React.Component {
 
 	handleRecordDelete(deletedRecordId) {
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.delete(`http://localhost:3001/deleteRecord/${deletedRecordId}`, {headers}).then(res => {
+		axios.delete(`${config.baseUrl}/deleteRecord/${deletedRecordId}`, {headers}).then(res => {
 			if (res.data.success === true) {
 				this.setState(prevState => ({
 					records: prevState.records.filter(record => record.ID !== deletedRecordId)
@@ -59,7 +60,7 @@ class RecordList extends React.Component {
 	handleRecordStatus(rec, action) {
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		const newStatus = (action === 'approve') ? 1 : 2
-		axios.put(`http://localhost:3001/updateRecordStatus/${rec.ID}`, {
+		axios.put(`${config.baseUrl}/updateRecordStatus/${rec.ID}`, {
 			status: newStatus
 		}, {headers}).then(res => {
         	if (res.data.saved === true) {

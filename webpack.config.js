@@ -30,7 +30,6 @@ module.exports = {
 		publicPath: "/"
 	},
 	devServer: {
-		inline: false,
 		contentBase: path.join(__dirname, "dist"),
 		port: 8080,
 		proxy: {
@@ -107,5 +106,8 @@ module.exports = {
     		filename:'app.bundle.css'
     	}),
 		//new UglifyJsPlugin()  // run when creating production build only.
-	]
+	],
+	externals: {
+	  	'config': JSON.stringify(require('./config.dev.json'))
+	}
 }
