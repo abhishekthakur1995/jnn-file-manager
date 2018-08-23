@@ -5,6 +5,9 @@ import { InfoBlock, ChartHolder } from './uiComponents/CommonComponent'
 import { Doughnut } from 'react-chartjs-2'
 import _ from 'lodash'
 import config from 'config'
+import approved from './../../public/img/approved.png'
+import received from './../../public/img/received.png'
+import pending from './../../public/img/pending.png'
 
 class InfoBoard extends React.Component {
 	constructor(props) {
@@ -46,9 +49,9 @@ class InfoBoard extends React.Component {
 		return (
 			<Grid bsClass="width-10x pull-left">
 				<Grid bsClass="width-10x pull-left">
-					<InfoBlock title="Received" value={dashboardData.RECEIVED} />
-					<InfoBlock title="Pending"  value={dashboardData.APPROVED} />
-					<InfoBlock title="Approved" value={dashboardData.PENDING} />
+					<InfoBlock title="Received" img={received} value={dashboardData.RECEIVED} />
+					<InfoBlock title="Pending"  img={pending} value={dashboardData.APPROVED} />
+					<InfoBlock title="Approved" img={approved} value={dashboardData.PENDING} />
 				</Grid>
 				<ChartHolder title="Application Status" chart={chart}/>
 			</Grid>

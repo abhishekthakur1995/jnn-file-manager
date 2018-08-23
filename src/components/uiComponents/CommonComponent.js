@@ -26,7 +26,7 @@ export const InfoBlock = (props) => {
         <Grid bsClass="boxes">
             <Grid bsClass="info-box">
                 <Grid componentClass="span" bsClass="info-box-icon bg-green">
-                    <img className="margin-bottom-8x" title={props.title} src={`static/img/${props.title}.png`}></img>
+                    <img className="margin-bottom-8x" title={props.title} src={props.img}></img>
                 </Grid>
                 <Grid bsClass="info-box-content">
                     <Grid componentClass="span" bsClass="info-box-text">{props.title}</Grid>
@@ -40,6 +40,7 @@ export const InfoBlock = (props) => {
 InfoBlock.propTypes = {
     title: PropTypes.string,
     value: PropTypes.number,
+    img: PropTypes.string
 }
 
 export const ChartHolder = (props) => {

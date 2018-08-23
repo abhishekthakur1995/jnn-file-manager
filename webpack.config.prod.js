@@ -3,6 +3,8 @@ const webpack = require("webpack")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const AppCachePlugin = require('appcache-webpack-plugin');
+
 
 module.exports = {
 	entry: {
@@ -28,23 +30,6 @@ module.exports = {
 		filename: "[name].bundle.js",
 		path: path.join(__dirname, "dist"),
 		publicPath: "/"
-	},
-	devServer: {
-		contentBase: path.join(__dirname, "dist"),
-		port: 8080,
-		proxy: {
-			'/static': {
-				target: 'http://localhost:3001', 
-				secure: false
-				// pathRewrite: {'^/static' : ''}
-				// bypass: function(req, res, proxyOptions) {
-				//   	if (req.accepts('html')) {
-				//     	console.log('Skipping proxy for browser request.')
-				//     	return '/index.html'
-				//   	}
-				// }
-			}
-		}
 	},
 	module: {
 		rules: [
@@ -123,7 +108,10 @@ module.exports = {
     	new ExtractTextPlugin({
     		filename:'app.bundle.css'
     	}),
-		//new UglifyJsPlugin()  // run when creating production build only.
+    	new AppCachePlugin({
+    		exclude: ['.htaccess']
+    	}),
+		new UglifyJsPlugin()  // run when creating production build only.
 	],
 	externals: {
 	  	'config': JSON.stringify(require('./config.dev.json'))
