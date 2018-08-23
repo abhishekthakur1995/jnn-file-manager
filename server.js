@@ -27,4 +27,4 @@ server.use(require('./router/records'))
 
 server.listen(process.env.PORT, () => {
 	console.info('Express listening on port', process.env.PORT)
-});
+})

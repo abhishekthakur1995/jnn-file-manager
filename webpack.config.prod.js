@@ -80,19 +80,7 @@ module.exports = {
 						}
 					}
 				]
-			},
-			// {
-			// 	test: /\.woff($|\?)|\.woff2($|\?)|\.png($|\?)|\.ttf($|\?)|\.eot($|\?)|\.jpg($|\?)|\.svg($|\?)/,
-			//     exclude: /(node_modules)/,
-			//     use: [
-			//     	{
-		 //    			loader: 'file-loader',
-		 //    			options: {
-		 //    				name: '/public/img/[name].[ext]'
-		 //    			}
-		 //    		}
-			//     ]
-			// }
+			}
 		]
 	},
 	plugins: [
@@ -114,6 +102,6 @@ module.exports = {
 		new UglifyJsPlugin()  // run when creating production build only.
 	],
 	externals: {
-	  	'config': JSON.stringify(require('./config.dev.json'))
+	  	'config': JSON.stringify(require('./config.prod.json'))
 	}
 }

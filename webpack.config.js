@@ -3,6 +3,7 @@ const webpack = require("webpack")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
 	entry: {
@@ -90,27 +91,16 @@ module.exports = {
 					{
 						loader: 'url-loader',
 						options: {
-							limit: 8000,
-							name: '/public/img/[name].[ext]'
+							limit: 1024,
+							name: 'public/img/[name].[ext]'
 						}
 					}
 				]
-			},
-			// {
-			// 	test: /\.woff($|\?)|\.woff2($|\?)|\.png($|\?)|\.ttf($|\?)|\.eot($|\?)|\.jpg($|\?)|\.svg($|\?)/,
-			//     exclude: /(node_modules)/,
-			//     use: [
-			//     	{
-		 //    			loader: 'file-loader',
-		 //    			options: {
-		 //    				name: '/public/img/[name].[ext]'
-		 //    			}
-		 //    		}
-			//     ]
-			// }
+			}
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(['dist'])
 		new webpack.optimize.CommonsChunkPlugin({
 			name: "vendor",
 			filename: "vendor.bundle.js"
@@ -123,7 +113,6 @@ module.exports = {
     	new ExtractTextPlugin({
     		filename:'app.bundle.css'
     	}),
-		//new UglifyJsPlugin()  // run when creating production build only.
 	],
 	externals: {
 	  	'config': JSON.stringify(require('./config.dev.json'))
