@@ -20,10 +20,13 @@ server.use((req, res, next) => {
 // serve public folders
 server.use(express.static(__dirname + '/dist'))
 
-// handle server routes
-server.use(require('./router/index'))
-server.use(require('./router/users'))
-server.use(require('./router/records'))
+//attach api middleware
+server.use('/rest', require('./api/apiMiddleware'))
+
+// send other requests to index.html
+server.get('/*', (req, res) => {
+  	res.sendFile(__dirname + '/dist/index.html')
+})
 
 server.listen(process.env.PORT, () => {
 	console.info('Express listening on port', process.env.PORT)

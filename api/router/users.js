@@ -1,6 +1,6 @@
 const express = require('express')
 const users = express.Router()
-const connection = require('../db/dbConnection')
+const connection = require('../../db/dbConnection')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const { check, validationResult } = require('express-validator/check')
@@ -9,7 +9,7 @@ const { check, validationResult } = require('express-validator/check')
  *	type: POST 
  */
 
-users.post('/register', 
+users.post('/register',
 	[
 		check('user_name').not().isEmpty().withMessage('user name cannot be empty').trim().escape(),
 		check('email').isEmail().withMessage('email is not a valid email').trim().escape(),
@@ -43,7 +43,7 @@ users.post('/register',
  *	type: POST 
  */
 
-users.post('/login', 
+users.post('/login',
 	[
 		check('email').not().isEmpty().withMessage('email cannot be empty'),
 		check('password').not().isEmpty().withMessage('password cannot be empty')
@@ -73,20 +73,5 @@ users.post('/login',
 		})
 	}
 )
-
-users.use(function(req, res, next) {
-	const token = req.headers.authorization
- 	if (token) {
-		jwt.verify(token, process.env.SECRET_KEY, function(err) {
-			if (err) {
-	 			res.status(400).json({message : err})
-			} else {
-				next();
-	 		}
- 		});
- 	} else {
-		res.status(400).json({message : 'Please send a token'})
- 	}
-})
 
 module.exports = users

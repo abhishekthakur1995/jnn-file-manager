@@ -1,6 +1,6 @@
 const express = require('express')
 const records = express.Router()
-const connection = require('../db/dbConnection')
+const connection = require('../../db/dbConnection')
 const { check, validationResult } = require('express-validator/check')
 
 /* 	path: /register
