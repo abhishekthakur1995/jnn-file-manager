@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 const server = express()
 require('dotenv').config()
 
@@ -18,7 +18,7 @@ server.use((req, res, next) => {
 })
 
 // serve public folders
-server.use(express.static('dist'))
+server.use(express.static(__dirname + '/dist'))
 
 // handle server routes
 server.use(require('./router/index'))
