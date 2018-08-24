@@ -3,8 +3,8 @@ const webpack = require("webpack")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const AppCachePlugin = require('appcache-webpack-plugin');
-
+const AppCachePlugin = require('appcache-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
 	entry: {
@@ -84,6 +84,7 @@ module.exports = {
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(['dist']),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: "vendor",
 			filename: "vendor.bundle.js"
@@ -102,6 +103,6 @@ module.exports = {
 		new UglifyJsPlugin()  // run when creating production build only.
 	],
 	externals: {
-	  	'config': JSON.stringify(require('./config.prod.json'))
+	  	'config': JSON.stringify(require('./config/config.prod.json'))
 	}
 }
