@@ -3,6 +3,7 @@ import { Grid, Table } from 'react-bootstrap'
 import axios from 'axios'
 import Record from './Record'
 import { PageHead } from './uiComponents/CommonComponent'
+import PaginationComponent from './uiComponents/PaginationComponent'
 import config from 'config'
 
 class RecordList extends React.Component {
@@ -10,20 +11,22 @@ class RecordList extends React.Component {
 		super(props)
 
 		this.state = {
-			records:[]
+			records:[],
+			totalRecords: 0
 		}
 
 		this.handleRecordUpdate = this.handleRecordUpdate.bind(this)
 		this.handleRecordDelete = this.handleRecordDelete.bind(this)
 		this.handleRecordStatus = this.handleRecordStatus.bind(this)
+		this.onPageChanged = this.onPageChanged.bind(this)
 	}
 
 	componentDidMount() {
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.get(`${config.baseUrl}/getAllRecords`, {headers})
+		axios.get(`${config.baseUrl}/getCountOfAllRecords`, {headers})
       	.then(res => {
 	        this.setState({
-	        	records: res.data.data
+	        	totalRecords: res.data.data[0].count
 	        })
       	})
 	}
@@ -73,6 +76,17 @@ class RecordList extends React.Component {
       	})
 	}
 
+	onPageChanged(data) {
+		const { currentPage, pageLimit } = data
+		const headers = { 'Authorization': localStorage.getItem('authToken') }
+		axios.get(`${config.baseUrl}/getRecords?page=${currentPage}&limit=${pageLimit}`, {headers})
+      	.then(res => {
+	        this.setState({
+	        	records: res.data.data
+	        })
+      	})
+	}
+
 	render() {
 		var filteredRecords = this.state.records
 		filteredRecords = filteredRecords.map(function(record, index) {
@@ -86,6 +100,7 @@ class RecordList extends React.Component {
 					onStatusChange={this.handleRecordStatus}  />
 			)
 		}.bind(this))
+
 		return (
 			<Grid bsClass="record-list">
 				<PageHead title="Manage Record Status"/>
@@ -106,6 +121,14 @@ class RecordList extends React.Component {
 						{filteredRecords}
 					</tbody>
 				</Table>
+				{this.state.totalRecords > 0 &&
+					<PaginationComponent
+						totalRecords={this.state.totalRecords}
+	                	pageLimit={config.pagination.pageSize}
+	                	pageNeighbours={config.pagination.neighbourSize}
+	                	onPageChanged={this.onPageChanged}
+					/>
+				}
 			</Grid>
 		)
 	}

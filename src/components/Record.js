@@ -78,9 +78,8 @@ class Record extends React.Component {
 			    <td>{record.FILE_STATUS == 1 ? 'Approved' : (record.FILE_STATUS == 2 ? 'Rejected' : 'Pending')}</td>
 			    <td>
 			    	<SplitButton title="Manage" data-id="manage" id={`split-button-basic-${this.props.index+1}`} pullRight onClick={this.showModal}>
-						<MenuItem data-id="view" eventKey="1">View</MenuItem>
-  						<MenuItem data-id="edit" eventKey="2" onClick={this.showModal}>Edit</MenuItem>
-  						<MenuItem data-id="delete" eventKey="3" onClick={this.showModal}>Delete</MenuItem>
+  						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>Edit</MenuItem>
+  						<MenuItem data-id="delete" eventKey="2" onClick={this.showModal}>Delete</MenuItem>
 					</SplitButton>
 				</td>
 

@@ -44,18 +44,41 @@ records.post('/addNewRecord',
 	}
 )
 
-/* 	path: /getAllRecords
+/* 	path: /getCountOfAllRecords
  *	type: GET
  */
 
-records.get('/getAllRecords', function(req, res) {
-	connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL}`, function(err, results, fields) {
+records.get('/getCountOfAllRecords', function(req, res) {
+	connection.query(`SELECT COUNT(*) as count FROM ${process.env.FILE_RECORD_TBL}`, function(err, results, fields) {
 		if (err) {
 			return res.status(400).json({data: [], message : err, success : false})
 		}
 		res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
 	})
 })
+
+/* 	path: /getAllRecords
+ *	type: GET
+ */
+
+records.get('/getRecords',
+	[
+		check('page').not().isEmpty().withMessage('No page number was sent'),
+		check('limit').not().isEmpty().withMessage('No limit was sent')
+	],
+	function(req, res) {
+		const page = req.query.page
+		const limit = req.query.limit
+		const offset = (page - 1) * limit
+
+		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+			if (err) {
+				return res.status(400).json({data: [], message : err, success : false})
+			}
+			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
+		})
+	}
+)
 
 /* 	path: /updateRecord/:id
  *	type: PUT

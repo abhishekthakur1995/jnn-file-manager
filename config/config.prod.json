@@ -1,3 +1,7 @@
 {
-	"baseUrl" : "http://216.10.245.195/rest"
+	"baseUrl" : "http://216.10.245.195/rest",
+	"pagination" : {
+		"pageSize" : 10,
+		"neighbourSize" : 2
+	}
 }
