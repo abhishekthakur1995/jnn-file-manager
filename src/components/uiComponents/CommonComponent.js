@@ -1,6 +1,7 @@
 import React from 'react'
 import EntryForm from './../EntryForm'
 import { Grid, Col, Modal, Button, Table } from 'react-bootstrap'
+import loader from './../../../public/img/loading.gif'
 import PropTypes from 'prop-types'
 
 export const PageHead = (props) => {
@@ -176,3 +177,9 @@ RecordDetails.propTypes = {
     handleApproveBtnClick: PropTypes.func,
     handleRejectBtnClick: PropTypes.func
 }
+
+export const LoadingSpinner = () => (
+    <div>
+        <div className="overlay" />
+    </div>
+)

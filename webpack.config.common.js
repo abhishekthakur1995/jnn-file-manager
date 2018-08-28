@@ -67,13 +67,14 @@ module.exports = {
                 })
 			},
 			{
-	            test: /\.(png|jp(e*)g|svg)$/,
+	            test: /\.(png|jp(e*)g|svg|gif)$/,
 	            exclude: /(node_modules)/,
 	            use: [{
 	                loader: 'url-loader',
 	                options: {
 	                    limit: 8196,
-	                    name: 'public/img/[name].[ext]'
+	                    name: 'public/img/[name].[ext]',
+	                    fallback: 'file-loader'
 	                }
 	            }]
 	        }

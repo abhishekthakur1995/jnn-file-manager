@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Table } from 'react-bootstrap'
 import axios from 'axios'
 import Record from './Record'
-import { PageHead } from './uiComponents/CommonComponent'
+import { PageHead, LoadingSpinner } from './uiComponents/CommonComponent'
 import PaginationComponent from './uiComponents/PaginationComponent'
 import config from 'config'
 
@@ -103,11 +103,11 @@ class RecordList extends React.Component {
 
 		return (
 			<Grid bsClass="record-list">
+				{this.state.showLoading && <LoadingSpinner />}
 				<PageHead title="Manage Record Status"/>
 				<Table hover>
                     <thead>
                         <tr>
-                        	<th>#</th>
                             <th>Applicant Name</th>
                             <th>Applicant Address</th>
                             <th>Applicant Contact</th>

@@ -69,7 +69,6 @@ class Record extends React.Component {
 		const record = this.props.singleRecord
 		return (
 			<tr>
-				<td>{this.props.index+1}</td>
 			    <td>{record.APPLICANT_NAME} </td>
 			    <td>{record.APPLICANT_ADDRESS}</td>
 			    <td>{record.APPLICANT_CONTACT}</td>
