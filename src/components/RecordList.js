@@ -101,10 +101,18 @@ class RecordList extends React.Component {
 			)
 		}.bind(this))
 
+		const pagination = this.state.totalRecords > 0 ?
+			(<PaginationComponent
+				totalRecords={this.state.totalRecords}
+            	pageLimit={config.pagination.pageSize}
+            	pageNeighbours={config.pagination.neighbourSize}
+            	onPageChanged={this.onPageChanged}
+			/>) : null;
+
 		return (
 			<Grid bsClass="record-list">
 				{this.state.showLoading && <LoadingSpinner />}
-				<PageHead title="Manage Record Status"/>
+				<PageHead title="Manage Record Status" pagination={pagination} />
 				<Table hover>
                     <thead>
                         <tr>
@@ -121,14 +129,6 @@ class RecordList extends React.Component {
 						{filteredRecords}
 					</tbody>
 				</Table>
-				{this.state.totalRecords > 0 &&
-					<PaginationComponent
-						totalRecords={this.state.totalRecords}
-	                	pageLimit={config.pagination.pageSize}
-	                	pageNeighbours={config.pagination.neighbourSize}
-	                	onPageChanged={this.onPageChanged}
-					/>
-				}
 			</Grid>
 		)
 	}

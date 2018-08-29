@@ -1,7 +1,6 @@
 import React from 'react'
 import EntryForm from './../EntryForm'
 import { Grid, Col, Modal, Button, Table } from 'react-bootstrap'
-import loader from './../../../public/img/loading.gif'
 import PropTypes from 'prop-types'
 
 export const PageHead = (props) => {
@@ -13,13 +12,15 @@ export const PageHead = (props) => {
                         <span>{props.title}</span>
                     </button>
                 </Grid>
+                <Grid bsClass="pull-right margin-top-2x">{props.pagination}</Grid>
             </Grid>
     	</Grid>
 	)
 }
 
 PageHead.propTypes = {
-    title: PropTypes.string
+    title: PropTypes.string,
+    pagination: PropTypes.object
 }
 
 export const InfoBlock = (props) => {
@@ -179,7 +180,5 @@ RecordDetails.propTypes = {
 }
 
 export const LoadingSpinner = () => (
-    <div>
-        <div className="overlay" />
-    </div>
+    <Grid className="overlay" />
 )
