@@ -13,7 +13,7 @@ export const PageHead = (props) => {
                     </button>
                 </Grid>
                 <Col sm={12} md={7} className="pull-right width-auto">
-                    <Grid bsClass="quick_search pull-left padding-vert-7x">{props.quickSearch}</Grid>
+                    <Grid bsClass="pull-left padding-vert-7x">{props.quickSearch}</Grid>
                     <Grid bsClass="pull-left margin-top-2x">{props.pagination}</Grid>
                 </Col>
             </Grid>
@@ -190,7 +190,7 @@ export const LoadingSpinner = () => (
 export const QuickSearchComponent = (props) => {
     let inputRef;
     return (
-        <Grid bsClass="pull-left padding-horiz-2x">
+        <Grid bsClass="quick_search">
             <FormControl
                 type="text"
                 inputRef={ref => inputRef = ref}
