@@ -77,6 +77,7 @@ class RecordList extends React.Component {
 	}
 
 	onPageChanged(data) {
+		console.log('data', data);
 		const { currentPage, pageLimit } = data
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getRecords?page=${currentPage}&limit=${pageLimit}`, {headers})
