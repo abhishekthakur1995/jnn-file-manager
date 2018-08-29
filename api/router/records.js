@@ -80,6 +80,27 @@ records.get('/getRecords',
 	}
 )
 
+/* 	path: /getSearchResults
+ *	type: GET
+ */
+
+records.post('/getSearchResults', 
+	[
+		check('searchTerm').not().isEmpty().withMessage('No search query was sent')
+	],
+	function(req, res) {	
+		const query = req.body.searchTerm
+
+		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%'`, function(err, results, fields) {
+			if (err) {
+				return res.status(400).json({data: [], message : err, success : false})
+			}
+			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
+		})
+	}
+)
+
+
 /* 	path: /updateRecord/:id
  *	type: PUT
  */

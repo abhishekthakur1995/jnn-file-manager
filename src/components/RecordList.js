@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Table } from 'react-bootstrap'
 import axios from 'axios'
 import Record from './Record'
-import { PageHead, LoadingSpinner } from './uiComponents/CommonComponent'
+import { PageHead, LoadingSpinner, QuickSearchComponent } from './uiComponents/CommonComponent'
 import PaginationComponent from './uiComponents/PaginationComponent'
 import config from 'config'
 
@@ -18,6 +18,7 @@ class RecordList extends React.Component {
 		this.handleRecordUpdate = this.handleRecordUpdate.bind(this)
 		this.handleRecordDelete = this.handleRecordDelete.bind(this)
 		this.handleRecordStatus = this.handleRecordStatus.bind(this)
+		this.handleQuickSearch = this.handleQuickSearch.bind(this)
 		this.onPageChanged = this.onPageChanged.bind(this)
 	}
 
@@ -87,6 +88,17 @@ class RecordList extends React.Component {
       	})
 	}
 
+	handleQuickSearch(searchTerm) {
+		const headers = { 'Authorization': localStorage.getItem('authToken') }
+		axios.post(`${config.baseUrl}/getSearchResults`, {searchTerm: searchTerm}, {headers})
+      	.then(res => {
+	        this.setState({
+	        	records: res.data.data,
+	        	totalRecords: res.data.data.length
+	        })
+      	})
+	}
+
 	render() {
 		var filteredRecords = this.state.records
 		filteredRecords = filteredRecords.map(function(record, index) {
@@ -102,17 +114,26 @@ class RecordList extends React.Component {
 		}.bind(this))
 
 		const pagination = this.state.totalRecords > 0 ?
-			(<PaginationComponent
-				totalRecords={this.state.totalRecords}
-            	pageLimit={config.pagination.pageSize}
-            	pageNeighbours={config.pagination.neighbourSize}
-            	onPageChanged={this.onPageChanged}
-			/>) : null;
+			(
+				<PaginationComponent
+					totalRecords={this.state.totalRecords}
+            		pageLimit={config.pagination.pageSize}
+            		pageNeighbours={config.pagination.neighbourSize}
+            		onPageChanged={this.onPageChanged}
+				/>
+			) : null;
+
+		const quickSearch = this.state.totalRecords > 0 ?
+			(
+				<QuickSearchComponent
+					search={this.handleQuickSearch}
+				/>
+			) : null;
 
 		return (
 			<Grid bsClass="record-list">
 				{this.state.showLoading && <LoadingSpinner />}
-				<PageHead title="Manage Record Status" pagination={pagination} />
+				<PageHead title="Manage Record Status" pagination={pagination} quickSearch={quickSearch}/>
 				<Table hover>
                     <thead>
                         <tr>

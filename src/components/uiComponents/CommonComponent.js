@@ -1,6 +1,6 @@
 import React from 'react'
 import EntryForm from './../EntryForm'
-import { Grid, Col, Modal, Button, Table } from 'react-bootstrap'
+import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 export const PageHead = (props) => {
@@ -12,7 +12,10 @@ export const PageHead = (props) => {
                         <span>{props.title}</span>
                     </button>
                 </Grid>
-                <Grid bsClass="pull-right margin-top-2x">{props.pagination}</Grid>
+                <Col sm={12} md={7} className="pull-right width-auto">
+                    <Grid bsClass="quick_search pull-left padding-vert-7x">{props.quickSearch}</Grid>
+                    <Grid bsClass="pull-left margin-top-2x">{props.pagination}</Grid>
+                </Col>
             </Grid>
     	</Grid>
 	)
@@ -20,7 +23,8 @@ export const PageHead = (props) => {
 
 PageHead.propTypes = {
     title: PropTypes.string,
-    pagination: PropTypes.object
+    pagination: PropTypes.object,
+    quickSearch: PropTypes.object
 }
 
 export const InfoBlock = (props) => {
@@ -182,3 +186,24 @@ RecordDetails.propTypes = {
 export const LoadingSpinner = () => (
     <Grid className="overlay" />
 )
+
+export const QuickSearchComponent = (props) => {
+    let inputRef;
+    return (
+        <Grid bsClass="pull-left padding-horiz-2x">
+            <FormControl
+                type="text"
+                inputRef={ref => inputRef = ref}
+                autoComplete="on"
+                placeholder="Quick Search"
+                name="quickSearch"
+                className="searchInputBox"
+            />
+            <Glyphicon className="searchInputBoxIcon" glyph="search" onClick={() => props.search(inputRef.value)}/>
+        </Grid>
+    )
+}
+
+QuickSearchComponent.propTypes = {
+    search: PropTypes.func
+}

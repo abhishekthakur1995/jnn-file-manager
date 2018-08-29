@@ -38,6 +38,14 @@
 	.padding-right-#{$i}x {
     	padding-right: $i * 5px !important;
   	}
+    .padding-vert-#{$i}x {
+        margin-right: $i * 5px !important;
+        margin-left: $i * 5px !important;
+    }
+    .padding-horiz-#{$i}x {
+        margin-top: $i * 5px !important;
+        margin-bottom: $i * 5px !important;
+    }
 }
 
 @for $i from 0 through 40 {
@@ -88,3 +96,6 @@
   display: inline-block !important;
 }
 
+.width-auto {
+  width: auto !important;
+}
