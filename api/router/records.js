@@ -86,12 +86,17 @@ records.get('/getRecords',
 
 records.post('/getSearchResults', 
 	[
-		check('searchTerm').not().isEmpty().withMessage('No search query was sent')
+		check('searchTerm').not().isEmpty().withMessage('No search query was sent'),
+		check('page').not().isEmpty().withMessage('No page number was sent'),
+		check('limit').not().isEmpty().withMessage('No limit was sent')
 	],
 	function(req, res) {	
 		const query = req.body.searchTerm
+		const page = req.body.page
+		const limit = req.body.limit
+		const offset = (page - 1) * limit
 
-		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%'`, function(err, results, fields) {
+		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%' LIMIT ${offset}, ${limit}`, function(err, results, fields) {
 			if (err) {
 				return res.status(400).json({data: [], message : err, success : false})
 			}

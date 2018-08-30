@@ -12,13 +12,17 @@ class RecordList extends React.Component {
 
 		this.state = {
 			records:[],
-			totalRecords: 0
+			currentPage: null,
+			totalRecords: 0,
+			filterApplied: false,
+			searchTerm: null
 		}
 
 		this.handleRecordUpdate = this.handleRecordUpdate.bind(this)
 		this.handleRecordDelete = this.handleRecordDelete.bind(this)
 		this.handleRecordStatus = this.handleRecordStatus.bind(this)
 		this.handleQuickSearch = this.handleQuickSearch.bind(this)
+		this.handleInitialLoad = this.handleInitialLoad.bind(this)
 		this.onPageChanged = this.onPageChanged.bind(this)
 	}
 
@@ -78,23 +82,35 @@ class RecordList extends React.Component {
 	}
 
 	onPageChanged(data) {
+		if (!this.state.filterApplied) {
+			this.handleInitialLoad(data)
+		} else {
+			this.handleQuickSearch(this.state.searchTerm, data)
+		}
+	}
+
+	handleInitialLoad(data) {
 		const { currentPage, pageLimit } = data
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getRecords?page=${currentPage}&limit=${pageLimit}`, {headers})
       	.then(res => {
 	        this.setState({
-	        	records: res.data.data
+	        	records: res.data.data,
+	        	currentPage
 	        })
       	})
 	}
 
-	handleQuickSearch(searchTerm) {
+	handleQuickSearch(searchTerm, data) {
+		const page = data && data.currentPage || this.state.currentPage
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.post(`${config.baseUrl}/getSearchResults`, {searchTerm: searchTerm}, {headers})
+		axios.post(`${config.baseUrl}/getSearchResults`, {searchTerm: searchTerm, page, limit: config.pagination.pageSize}, {headers})
       	.then(res => {
 	        this.setState({
 	        	records: res.data.data,
-	        	totalRecords: res.data.data.length
+	        	totalRecords: res.data.data.length,
+	        	filterApplied: true,
+	        	searchTerm
 	        })
       	})
 	}
@@ -123,12 +139,7 @@ class RecordList extends React.Component {
 				/>
 			) : null;
 
-		const quickSearch = this.state.totalRecords > 0 ?
-			(
-				<QuickSearchComponent
-					search={this.handleQuickSearch}
-				/>
-			) : null;
+		const quickSearch = <QuickSearchComponent search={this.handleQuickSearch} />
 
 		return (
 			<Grid bsClass="record-list">
