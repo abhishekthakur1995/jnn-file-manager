@@ -14,7 +14,12 @@ class SideBar extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="wrapper">
-				<nav id="sidebar" className="active">
+				<nav id="sidebar">
+					<Grid bsClass="sidebar-header">
+						<h3>Dashboard</h3>
+						<strong>DB</strong>
+					</Grid>
+
 					<ListGroup componentClass="ul" className="list-unstyled components">
 					    <ListGroupItem className={`${this.props.location.pathname == '/dashboard/addNewRecord' ? 'active' : ''}`} bsClass="list">
 					        <Link to={`${this.props.match.url}/addNewRecord`}>
