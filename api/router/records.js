@@ -154,6 +154,27 @@ records.put('/updateRecordStatus/:id',
 	}
 )
 
+/* 	path: /updateRecordStatus/:id
+ *	type: PUT
+ */
+
+records.put('/updateMultipleRecordStatus',
+	[
+		check('markedRecords').not().isEmpty().withMessage('No record id was sent'),
+		check('status').not().isEmpty().withMessage('Status cannot be empty')
+	], 
+	function(req, res) {
+		const markedRecords = req.body.markedRecords
+		const status = req.body.status
+		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET FILE_STATUS = ? WHERE ID IN (${markedRecords})`, [status], function(err, results, fields) {
+			if (err) {
+				return res.status(400).json({message : err, saved : false})
+			}
+			res.status(200).json({message : 'Record status updated successfully', saved : true})
+		})
+	}
+)
+
 /* 	path: /deleteRecord/:id
  *	type: DELETE
  */

@@ -1,10 +1,11 @@
 import React from 'react'
-import { Grid, Table } from 'react-bootstrap'
+import { Grid, Table, Checkbox } from 'react-bootstrap'
 import axios from 'axios'
 import Record from './Record'
-import { PageHead, LoadingSpinner, QuickSearchComponent } from './uiComponents/CommonComponent'
+import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase } from './uiComponents/CommonComponent'
 import PaginationComponent from './uiComponents/PaginationComponent'
 import config from 'config'
+import _ from 'lodash'
 
 class RecordList extends React.Component {
 	constructor(props) {
@@ -15,8 +16,11 @@ class RecordList extends React.Component {
 			currentPage: null,
 			totalRecords: 0,
 			filterApplied: false,
-			searchTerm: null
-		}
+			searchTerm: null,
+			showLoading: false,
+			checkBoxDefaultStatus: false		}
+
+		this.markedRecord = []
 
 		this.handleRecordUpdate = this.handleRecordUpdate.bind(this)
 		this.handleRecordDelete = this.handleRecordDelete.bind(this)
@@ -24,6 +28,9 @@ class RecordList extends React.Component {
 		this.handleQuickSearch = this.handleQuickSearch.bind(this)
 		this.handleInitialLoad = this.handleInitialLoad.bind(this)
 		this.onPageChanged = this.onPageChanged.bind(this)
+		this.handleMultiSelect = this.handleMultiSelect.bind(this)
+		this.getRecordsMarkedForUpdate = this.getRecordsMarkedForUpdate.bind(this)
+		this.handleMultiAction = this.handleMultiAction.bind(this)
 	}
 
 	componentDidMount() {
@@ -90,12 +97,16 @@ class RecordList extends React.Component {
 	}
 
 	handleInitialLoad(data) {
+		this.setState({
+			showLoading: true
+		})
 		const { currentPage, pageLimit } = data
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getRecords?page=${currentPage}&limit=${pageLimit}`, {headers})
       	.then(res => {
 	        this.setState({
 	        	records: res.data.data,
+	        	showLoading: false,
 	        	currentPage
 	        })
       	})
@@ -115,6 +126,43 @@ class RecordList extends React.Component {
       	})
 	}
 
+	handleMultiSelect() {
+		this.setState({
+			checkBoxDefaultStatus: !this.state.checkBoxDefaultStatus
+		})
+	}
+
+	getRecordsMarkedForUpdate(checked, id) {
+		if (checked) {
+			this.markedRecord.push(id)
+		} else {
+			_.remove(this.markedRecord, function(recordId) {
+			    return recordId === id
+			})
+		}
+	}
+
+	handleMultiAction(action) {
+		console.log('action', action);
+		if (!_.isEmpty(this.markedRecord)) {
+			this.setState({ showLoading: true })
+			const newStatus = action === 'approve' ? 1 : 2
+			const headers = { 'Authorization': localStorage.getItem('authToken') }
+			axios.put(`${config.baseUrl}/updateMultipleRecordStatus`, {markedRecords: this.markedRecord, status: newStatus}, {headers}).then(res => {
+				if (res.data.saved === true) {
+					this.markedRecord.map(markedRecordId => {
+						this.setState(prevState => ({
+							records: prevState.records.map(
+								record => (record.ID !== markedRecordId) ? record : {...record, FILE_STATUS: newStatus }
+							),
+							showLoading: false
+						}))
+					})
+	        	}
+			})
+		}
+	}
+
 	render() {
 		var filteredRecords = this.state.records
 		filteredRecords = filteredRecords.map(function(record, index) {
@@ -125,7 +173,10 @@ class RecordList extends React.Component {
 					singleRecord={record}
 					onUpdate={this.handleRecordUpdate}
 					onDelete={this.handleRecordDelete}
-					onStatusChange={this.handleRecordStatus}  />
+					onStatusChange={this.handleRecordStatus}
+					checkBoxDefaultStatus={this.state.checkBoxDefaultStatus}
+					handleMultiSelect={this.handleMultiSelect}
+					getRecordsMarkedForUpdate={this.getRecordsMarkedForUpdate} />
 			)
 		}.bind(this))
 
@@ -137,7 +188,7 @@ class RecordList extends React.Component {
             		pageNeighbours={config.pagination.neighbourSize}
             		onPageChanged={this.onPageChanged}
 				/>
-			) : null;
+			) : null
 
 		const quickSearch = <QuickSearchComponent search={this.handleQuickSearch} />
 
@@ -145,9 +196,16 @@ class RecordList extends React.Component {
 			<Grid bsClass="record-list">
 				{this.state.showLoading && <LoadingSpinner />}
 				<PageHead title="Manage Record Status" pagination={pagination} quickSearch={quickSearch}/>
-				<Table hover>
+				<Table hover bordered className="record-table margin-bottom-0x">
                     <thead>
                         <tr>
+                        	<th>
+                        		<Checkbox
+                        			inline={true}
+                        			onChange={this.handleMultiSelect}
+                        			checked={this.state.checkBoxDefaultStatus} >
+                    			</Checkbox>
+                    		</th>
                             <th>Applicant Name</th>
                             <th>Applicant Address</th>
                             <th>Applicant Contact</th>
@@ -157,10 +215,16 @@ class RecordList extends React.Component {
                             <th>Action</th>
                         </tr>
                     </thead>
+
                     <tbody>
 						{filteredRecords}
 					</tbody>
 				</Table>
+				<TableFunctionalityBase
+					onValidate={this.handleValidateAll}
+					onApprove={this.handleMultiAction}
+					onReject={this.handleMultiAction}
+				/>
 			</Grid>
 		)
 	}

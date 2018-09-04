@@ -405,3 +405,18 @@ ul {
         }
     }
 }
+
+.record-table {
+    text-align: center;
+    th {
+        text-align: center;
+    }
+}
+
+.table-base {
+    padding: 10px;
+    background-color: #ddd;
+    .glyphicon {
+        cursor: pointer;
+    }
+}

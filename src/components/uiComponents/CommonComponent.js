@@ -188,7 +188,7 @@ export const LoadingSpinner = () => (
 )
 
 export const QuickSearchComponent = (props) => {
-    let inputRef;
+    let inputRef
     return (
         <Grid bsClass="quick_search">
             <FormControl
@@ -206,4 +206,30 @@ export const QuickSearchComponent = (props) => {
 
 QuickSearchComponent.propTypes = {
     search: PropTypes.func
+}
+
+export const TableFunctionalityBase = (props) => {
+    return (
+        <Grid bsClass="table-base">
+            <Glyphicon
+                glyph="ok"
+                title="Approve"
+                onClick={() => props.onApprove('approve')}
+                className="margin-right-2x">
+                <Grid componentClass="span" bsClass="">Approve</Grid>
+            </Glyphicon>
+
+            <Glyphicon
+                glyph="remove"
+                title="Reject"
+                onClick={() => props.onReject('reject')} >
+                <Grid componentClass="span" bsClass="">Reject</Grid>
+            </Glyphicon>
+        </Grid>
+    )
+}
+
+TableFunctionalityBase.propTypes = {
+    onApprove: PropTypes.func,
+    onReject: PropTypes.func
 }

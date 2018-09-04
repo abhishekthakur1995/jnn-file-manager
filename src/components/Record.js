@@ -1,5 +1,5 @@
 import React from 'react'
-import { SplitButton, MenuItem } from 'react-bootstrap'
+import { SplitButton, MenuItem, Checkbox } from 'react-bootstrap'
 import { EditRecordModal, DeleteRecordModal, ManageRecordModal } from './uiComponents/CommonComponent'
 import PropTypes from 'prop-types'
 
@@ -10,7 +10,20 @@ class Record extends React.Component {
 		this.state = {
 			showEditModal: false,
 			showDeleteModal: false,
-			showManageModal: false
+			showManageModal: false,
+			checkBoxClick: {
+	      		1: false,
+	      		2: false,
+	      		3: false,
+	      		4: false,
+	      		5: false,
+	      		6: false,
+	      		7: false,
+	      		8: false,
+	      		9: false,
+	      		10: false,
+
+    		}
 		}
 
 		this.showModal = this.showModal.bind(this)
@@ -19,6 +32,7 @@ class Record extends React.Component {
 		this.handleDelete = this.handleDelete.bind(this)
 		this.handleApproveStatus = this.handleApproveStatus.bind(this)
 		this.handleRejectStatus = this.handleRejectStatus.bind(this)
+		this.handleCheckBoxClick = this.handleCheckBoxClick.bind(this)
 	}
 
 	showModal(e) {
@@ -65,10 +79,36 @@ class Record extends React.Component {
 		this.props.onStatusChange(this.props.singleRecord, 'reject')
 	}
 
+	handleCheckBoxClick(index, id, checked) {
+    	var checkBoxClick = this.state.checkBoxClick
+    	checkBoxClick[index] = !this.state.checkBoxClick[index]
+    	this.setState({
+      		checkBoxClick
+    	})
+
+    	this.props.getRecordsMarkedForUpdate(checked, id)
+
+    	var alltrue = Object.keys(checkBoxClick).every((k) => { return checkBoxClick[k] })
+    	if (alltrue) {
+	      	this.props.handleMultiSelect()
+    	}
+
+    	if (this.props.checkBoxDefaultStatus) {
+    		this.props.handleMultiSelect()
+    	}
+  	}
+
 	render() {
 		const record = this.props.singleRecord
 		return (
 			<tr>
+				<td>
+					<Checkbox
+						name="selectRecord"
+						checked={this.props.checkBoxDefaultStatus ? this.props.checkBoxDefaultStatus : this.state.checkBoxClick[this.props.index + 1]}
+						onChange={(e) => { this.handleCheckBoxClick(this.props.index + 1, record.ID, e.target.checked) }} >
+					</Checkbox>
+				</td>
 			    <td>{record.APPLICANT_NAME} </td>
 			    <td>{record.APPLICANT_ADDRESS}</td>
 			    <td>{record.APPLICANT_CONTACT}</td>
@@ -76,7 +116,7 @@ class Record extends React.Component {
 			    <td>{record.FILE_NUMBER}</td>
 			    <td>{record.FILE_STATUS == 1 ? 'Approved' : (record.FILE_STATUS == 2 ? 'Rejected' : 'Pending')}</td>
 			    <td>
-			    	<SplitButton title="Manage" data-id="manage" id={`split-button-basic-${this.props.index+1}`} pullRight onClick={this.showModal}>
+			    	<SplitButton title="Manage" data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
   						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>Edit</MenuItem>
   						<MenuItem data-id="delete" eventKey="2" onClick={this.showModal}>Delete</MenuItem>
 					</SplitButton>
@@ -119,7 +159,10 @@ Record.propTypes = {
     singleRecord: PropTypes.object,
     onUpdate: PropTypes.func,
     onDelete: PropTypes.func,
-    onStatusChange: PropTypes.func
+    onStatusChange: PropTypes.func,
+    handleMultiSelect: PropTypes.func,
+    getRecordsMarkedForUpdate: PropTypes.func,
+    checkBoxDefaultStatus: PropTypes.bool
 }
 
 export default Record
