@@ -28,8 +28,8 @@ server.get('/*', (req, res) => {
   	res.sendFile(__dirname + '/dist/index.html')
 })
 
-const PORT = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080;
+const PORT = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT;
 
 server.listen(PORT, () => {
-	console.info('Express listening on port', PORT)
+	console.info('Express listening on port', 3001)
 })
