@@ -9,16 +9,17 @@
         "dev": "webpack-dev-server --config webpack.config.dev.js --history-api-fallback"
     },
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/abhishekthakur1995/jnn-file-manager.git"
+        "type": "git",
+        "url": "git+https://github.com/abhishekthakur1995/jnn-file-manager.git"
     },
     "author": "Abhishek Thakur",
     "license": "ISC",
     "bugs": {
-      "url": "https://github.com/abhishekthakur1995/jnn-file-manager/issues"
+        "url": "https://github.com/abhishekthakur1995/jnn-file-manager/issues"
     },
     "homepage": "https://github.com/abhishekthakur1995/jnn-file-manager/#readme",
     "devDependencies": {
+        "babel-cli": "^6.26.0",
         "babel-core": "^6.26.3",
         "babel-eslint": "^8.2.6",
         "babel-loader": "^7.1.5",
