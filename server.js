@@ -31,5 +31,5 @@ server.get('/*', (req, res) => {
 const PORT = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT;
 
 server.listen(PORT, () => {
-	console.info('Express listening on port', 3001)
+	console.info('Express listening on port', PORT)
 })
