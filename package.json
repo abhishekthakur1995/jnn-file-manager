@@ -4,7 +4,7 @@
     "description": "File manager to maintain file records on various levels",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon --exec babel-node server.js --ignore css/",
+        "start": "node server.js",
         "build:prod": "webpack --config webpack.config.prod.js -p",
         "dev": "webpack-dev-server --config webpack.config.dev.js --history-api-fallback"
     },
