@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "nodemon --exec babel-node server.js --ignore css/",
+        "build": "webpack --config webpack.config.dev.js --progress && serve",
         "build:prod": "webpack --config webpack.config.prod.js -p",
         "dev": "webpack-dev-server --config webpack.config.dev.js --history-api-fallback"
     },
