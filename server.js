@@ -28,9 +28,7 @@ server.get('/*', (req, res) => {
   	res.sendFile(__dirname + '/dist/index.html')
 })
 
-console.log(process.env)
-
-const PORT = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 8080
+const PORT = process.env.PORT || 8080      //8080 for openshift
 
 server.listen(PORT, () => {
 	console.info('Express listening on port', PORT)

@@ -4,8 +4,15 @@
     "description": "File manager to maintain file records on various levels",
     "main": "index.js",
     "scripts": {
-        "start": "node server.js",
+        
         "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "scripts": {
+        "start": "node server.js",
+        "node:start": "nodemon --exec babel-node server.js --ignore css/",
+        "build:dev": "webpack --config webpack.config.dev.js --progress && serve",
+        "build:prod": "webpack --config webpack.config.prod.js -p",
+        "dev:start": "webpack-dev-server --config webpack.config.dev.js --history-api-fallback"
     },
     "repository": {
         "type": "git",
