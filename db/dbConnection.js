@@ -11,10 +11,10 @@ var mysql = require('mysql')
 // OPENSHIFT
 
 var dbConnection = mysql.createConnection({
-    host     : getenv('MYSQL_SERVICE_HOST'),
-    user     : getenv('databaseusername'),
-    password : getenv('databasepassword'),
-    database : getenv('databasename')
+    host     : process.env.MYSQL_SERVICE_HOST,
+    user     : process.env.databaseusername,
+    password : process.env.databasepassword,
+    database : process.env.databasename
 })
 
 dbConnection.connect(function(err) {
