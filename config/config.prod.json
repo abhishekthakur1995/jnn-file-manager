@@ -1,5 +1,5 @@
 {
-	"baseUrl" : "http://216.10.245.195/rest",
+	"baseUrl" : "http://filerecord-jnn-file-manager.193b.starter-ca-central-1.openshiftapps.com/rest",
 	"pagination" : {
 		"pageSize" : 10,
 		"neighbourSize" : 2
