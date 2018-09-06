@@ -1,6 +1,6 @@
-var mysql = require('mysql')
+const mysql = require('mysql')
 
-var dbConnection = mysql.createConnection({
+const dbConnection = mysql.createConnection({
 	host     : process.env.DB_HOST || process.env.MYSQL_SERVICE_HOST,
   	user     : process.env.DB_USER || process.env.databaseusername,
   	password : process.env.DB_PASSWORD || process.env.databasepassword,
