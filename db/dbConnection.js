@@ -8,8 +8,6 @@ var dbConnection = mysql.createConnection({
   	charset  : process.env.DB_CHARSET
 })
 
-console.log(dbConnection)
-
 dbConnection.connect(function(err) {
 	if (err) {
     	console.error('error connecting: ' + err.stack)
