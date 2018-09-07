@@ -143,7 +143,6 @@ class RecordList extends React.Component {
 	}
 
 	handleMultiAction(action) {
-		console.log('action', action);
 		if (!_.isEmpty(this.markedRecord)) {
 			this.setState({ showLoading: true })
 			const newStatus = action === 'approve' ? 1 : 2

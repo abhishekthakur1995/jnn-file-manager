@@ -80,7 +80,7 @@ class Record extends React.Component {
 	}
 
 	handleCheckBoxClick(index, id, checked) {
-    	var checkBoxClick = this.state.checkBoxClick
+    	let checkBoxClick = this.state.checkBoxClick
     	checkBoxClick[index] = !this.state.checkBoxClick[index]
     	this.setState({
       		checkBoxClick
@@ -88,7 +88,7 @@ class Record extends React.Component {
 
     	this.props.getRecordsMarkedForUpdate(checked, id)
 
-    	var alltrue = Object.keys(checkBoxClick).every((k) => { return checkBoxClick[k] })
+    	const alltrue = Object.keys(checkBoxClick).every((k) => { return checkBoxClick[k] })
     	if (alltrue) {
 	      	this.props.handleMultiSelect()
     	}
