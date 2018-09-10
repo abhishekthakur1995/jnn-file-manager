@@ -35,6 +35,10 @@ class Record extends React.Component {
 		this.handleCheckBoxClick = this.handleCheckBoxClick.bind(this)
 	}
 
+	componentDidUpdate() {
+		this.props.getRecordsMarkedForUpdate(true, this.props.singleRecord.ID)
+	}
+
 	showModal(e) {
 		switch (e.target.dataset.id) {
 			case 'edit':

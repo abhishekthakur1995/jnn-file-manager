@@ -166,7 +166,6 @@ class RecordList extends React.Component {
 
 	handleMultiAction(action) {
 		if (!_.isEmpty(this.markedRecord)) {
-			console.log(this.markedRecord)
 			this.setState({ showLoading: true })
 			const newStatus = action === 'approve' ? 1 : 2
 			const headers = { 'Authorization': localStorage.getItem('authToken') }
