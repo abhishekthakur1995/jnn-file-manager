@@ -36,7 +36,9 @@ class Record extends React.Component {
 	}
 
 	componentDidUpdate() {
-		this.props.getRecordsMarkedForUpdate(true, this.props.singleRecord.ID)
+		if(this.props.checkBoxDefaultStatus) {
+			this.props.getRecordsMarkedForUpdate(true, this.props.singleRecord.ID)
+		}
 	}
 
 	showModal(e) {

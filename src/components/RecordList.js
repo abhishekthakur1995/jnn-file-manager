@@ -149,14 +149,19 @@ class RecordList extends React.Component {
 	}
 
 	handleMultiSelect() {
-		this.setState({
-			checkBoxDefaultStatus: !this.state.checkBoxDefaultStatus
+		// callback is used for removing all marked records when the select all checkbox is set to false
+		this.setState({ checkBoxDefaultStatus: !this.state.checkBoxDefaultStatus }, () => {
+			if(!this.state.checkBoxDefaultStatus) {
+				this.markedRecord = [];
+			}
 		})
 	}
 
 	getRecordsMarkedForUpdate(checked, id) {
 		if (checked) {
-			this.markedRecord.push(id)
+			if(!_.includes(this.markedRecord, id)) {
+				this.markedRecord.push(id)
+			}
 		} else {
 			_.remove(this.markedRecord, function(recordId) {
 			    return recordId === id
