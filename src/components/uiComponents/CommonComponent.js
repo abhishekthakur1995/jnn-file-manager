@@ -13,6 +13,7 @@ export const PageHead = (props) => {
                     </button>
                 </Grid>
                 <Col sm={12} md={7} className="pull-right width-auto">
+                    <Grid bsClass="pull-left padding-vert-5x">{props.filter}</Grid>
                     <Grid bsClass="pull-left padding-vert-7x">{props.quickSearch}</Grid>
                     <Grid bsClass="pull-left margin-top-2x">{props.pagination}</Grid>
                 </Col>
@@ -24,7 +25,8 @@ export const PageHead = (props) => {
 PageHead.propTypes = {
     title: PropTypes.string,
     pagination: PropTypes.object,
-    quickSearch: PropTypes.object
+    quickSearch: PropTypes.object,
+    filter: PropTypes.object
 }
 
 export const InfoBlock = (props) => {
@@ -232,4 +234,18 @@ export const TableFunctionalityBase = (props) => {
 TableFunctionalityBase.propTypes = {
     onApprove: PropTypes.func,
     onReject: PropTypes.func
+}
+
+export const FilterButton = (props) => {
+    return (
+        <Grid bsClass="filter-dropdown">
+            <Grid bsClass="pull-left">
+                <Grid bsClass="margin-top-3x cursor-pointer" onClick={props.onClick}>Filter Result</Grid>
+            </Grid>
+        </Grid>
+    )
+}
+
+FilterButton.propTypes = {
+    onClick: PropTypes.func
 }

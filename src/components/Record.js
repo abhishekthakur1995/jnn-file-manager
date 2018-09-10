@@ -82,9 +82,7 @@ class Record extends React.Component {
 	handleCheckBoxClick(index, id, checked) {
     	let checkBoxClick = this.state.checkBoxClick
     	checkBoxClick[index] = !this.state.checkBoxClick[index]
-    	this.setState({
-      		checkBoxClick
-    	})
+    	this.setState({ checkBoxClick })
 
     	this.props.getRecordsMarkedForUpdate(checked, id)
 

@@ -2,6 +2,8 @@ const express = require('express')
 const records = express.Router()
 const connection = require('../../db/dbConnection')
 const { check, validationResult } = require('express-validator/check')
+const helper = require('../helper/Helper.js')
+const _ = require('lodash')
 
 /* 	path: /register
  *	type: POST 
@@ -80,11 +82,40 @@ records.get('/getRecords',
 	}
 )
 
+/* 	path: /getFilteredData
+ *	type: POST
+ */
+
+records.post('/getFilteredData',
+	[
+		check('page').not().isEmpty().withMessage('No page number was sent'),
+		check('limit').not().isEmpty().withMessage('No limit was sent'),
+		check('filters').not().isEmpty().withMessage('No filter data was sent')
+	],
+	function(req, res) {
+		const page = req.body.page
+		const limit = req.body.limit
+		const offset = (page - 1) * limit
+		let filters = req.body.filters
+
+		filters = filters.map((status) => {
+			return helper.getFileStatusCodeFromName(status)
+		})
+
+		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE FILE_STATUS IN (${filters}) LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+			if (err) {
+				return res.status(400).json({data: [], message : err, success : false})
+			}
+			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
+		})
+	}
+)
+
 /* 	path: /getSearchResults
  *	type: GET
  */
 
-records.post('/getSearchResults', 
+records.post('/getSearchResults',
 	[
 		check('searchTerm').not().isEmpty().withMessage('No search query was sent'),
 		check('page').not().isEmpty().withMessage('No page number was sent'),

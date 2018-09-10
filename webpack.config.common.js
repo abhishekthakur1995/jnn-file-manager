@@ -21,7 +21,8 @@ module.exports = {
 			"./src/components/Record.js",
 			"./src/components/uiComponents/AlertComponent.js",
 			"./src/components/uiComponents/CommonComponent.js",
-			"./src/components/uiComponents/PaginationComponent.js"
+			"./src/components/uiComponents/PaginationComponent.js",
+			"./src/components/uiComponents/FilterComponent.js"
 		],
 	},
 	output: {

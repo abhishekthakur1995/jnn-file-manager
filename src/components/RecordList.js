@@ -2,8 +2,9 @@ import React from 'react'
 import { Grid, Table, Checkbox } from 'react-bootstrap'
 import axios from 'axios'
 import Record from './Record'
-import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase } from './uiComponents/CommonComponent'
+import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase, FilterButton } from './uiComponents/CommonComponent'
 import PaginationComponent from './uiComponents/PaginationComponent'
+import FilterComponent from './uiComponents/FilterComponent'
 import config from 'config'
 import _ from 'lodash'
 
@@ -15,10 +16,13 @@ class RecordList extends React.Component {
 			records:[],
 			currentPage: null,
 			totalRecords: 0,
-			filterApplied: false,
+			quickSearchEnabled: false,
 			searchTerm: null,
 			showLoading: false,
-			checkBoxDefaultStatus: false		}
+			checkBoxDefaultStatus: false,
+			showFilter: false,
+			filterApplied: false
+		}
 
 		this.markedRecord = []
 
@@ -31,6 +35,8 @@ class RecordList extends React.Component {
 		this.handleMultiSelect = this.handleMultiSelect.bind(this)
 		this.getRecordsMarkedForUpdate = this.getRecordsMarkedForUpdate.bind(this)
 		this.handleMultiAction = this.handleMultiAction.bind(this)
+		this.toggleFilter = this.toggleFilter.bind(this)
+		this.applyFilter = this.applyFilter.bind(this)
 	}
 
 	componentDidMount() {
@@ -89,7 +95,7 @@ class RecordList extends React.Component {
 	}
 
 	onPageChanged(data) {
-		if (!this.state.filterApplied) {
+		if (!this.state.quickSearchEnabled) {
 			this.handleInitialLoad(data)
 		} else {
 			this.handleQuickSearch(this.state.searchTerm, data)
@@ -97,9 +103,7 @@ class RecordList extends React.Component {
 	}
 
 	handleInitialLoad(data) {
-		this.setState({
-			showLoading: true
-		})
+		this.setState({ showLoading: true })
 		const { currentPage, pageLimit } = data
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getRecords?page=${currentPage}&limit=${pageLimit}`, {headers})
@@ -113,6 +117,7 @@ class RecordList extends React.Component {
 	}
 
 	handleQuickSearch(searchTerm, data) {
+		this.setState({ showLoading: true })
 		const page = data && data.currentPage || this.state.currentPage
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.post(`${config.baseUrl}/getSearchResults`, {searchTerm: searchTerm, page, limit: config.pagination.pageSize}, {headers})
@@ -120,8 +125,25 @@ class RecordList extends React.Component {
 	        this.setState({
 	        	records: res.data.data,
 	        	totalRecords: res.data.data.length,
-	        	filterApplied: true,
+	        	quickSearchEnabled: true,
+	        	showLoading: false,
 	        	searchTerm
+	        })
+      	})
+	}
+
+	applyFilter(filters, data) {
+		this.setState({ showLoading: true })
+		const page = data && data.currentPage || this.state.currentPage
+		const headers = { 'Authorization': localStorage.getItem('authToken') }
+		axios.post(`${config.baseUrl}/getFilteredData`, { page, limit: config.pagination.pageSize, filters }, {headers})
+      	.then(res => {
+	        this.setState({
+	        	records: res.data.data,
+	        	totalRecords: res.data.data.length,
+	        	filterApplied: true,
+	        	showLoading: false,
+	        	showFilter: false
 	        })
       	})
 	}
@@ -144,6 +166,7 @@ class RecordList extends React.Component {
 
 	handleMultiAction(action) {
 		if (!_.isEmpty(this.markedRecord)) {
+			console.log(this.markedRecord)
 			this.setState({ showLoading: true })
 			const newStatus = action === 'approve' ? 1 : 2
 			const headers = { 'Authorization': localStorage.getItem('authToken') }
@@ -160,6 +183,10 @@ class RecordList extends React.Component {
 	        	}
 			})
 		}
+	}
+
+	toggleFilter() {
+		this.setState({ showFilter: !this.state.showFilter })
 	}
 
 	render() {
@@ -191,10 +218,20 @@ class RecordList extends React.Component {
 
 		const quickSearch = <QuickSearchComponent search={this.handleQuickSearch} />
 
+		const filterBtn = <FilterButton onClick={this.toggleFilter} />
+
+		const filterComponent = <FilterComponent onApply={this.applyFilter} />
+
 		return (
 			<Grid bsClass="record-list">
 				{this.state.showLoading && <LoadingSpinner />}
-				<PageHead title="Manage Record Status" pagination={pagination} quickSearch={quickSearch}/>
+				<PageHead
+					title="Manage Record Status"
+					pagination={pagination}
+					quickSearch={quickSearch}
+					filter={filterBtn}
+				/>
+				{this.state.showFilter && filterComponent}
 				<Table hover bordered className="record-table margin-bottom-0x">
                     <thead>
                         <tr>

@@ -92,25 +92,13 @@ class EntryForm extends React.Component {
             },
             headers: {'Authorization': localStorage.getItem('authToken')}
         }).then(res => {
-            if (res.data.saved) {
-                this.setState({
-                    alertOptions: {
-                        text: res.data.message,
-                        type: 'success',
-                        autoHide: true
-                    }
-                })
-            } else {
-                this.setState({
-                    alertOptions: {
-                        text: res.data.message,
-                        type: 'danger',
-                        autoHide: true
-                    }
-                })
-            }
             this.setState({
-                showAlert: true
+                alertOptions: {
+                    text: res.data.message,
+                    type: res.data.saved ? 'success' : 'danger',
+                    autoHide: true,
+                    showAlert: true
+                }
             })
         })
 
