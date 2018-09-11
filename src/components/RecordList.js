@@ -100,6 +100,8 @@ class RecordList extends React.Component {
 		} else {
 			this.handleQuickSearch(this.state.searchTerm, data)
 		}
+		// set checkbox default state to false on page changed via pagination
+		this.setState({ checkBoxDefaultStatus: false })
 	}
 
 	handleInitialLoad(data) {
