@@ -40,11 +40,13 @@ class RecordList extends React.Component {
 	}
 
 	componentDidMount() {
+		// need to reset local storage applied filter when the page refreshes/new view is rendered.
+		localStorage.setItem('appliedFilters', null)
+
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getCountOfAllRecords`, {headers})
       	.then(res => {
-      		// need to reset local storage applied filter when the page refreshes/new view is rendered.
-      		localStorage.setItem('appliedFilters', null)
+      		
 	        this.setState({ totalRecords: res.data.data[0].count })
       	})
 	}
@@ -117,6 +119,7 @@ class RecordList extends React.Component {
 		axios.get(`${config.baseUrl}/getRecords?page=${currentPage}&limit=${pageLimit}`, {headers})
       	.then(res => {
 	        this.setState({
+	        	totalRecords: res.data.totalCount,
 	        	records: res.data.data,
 	        	showLoading: false,
 	        	currentPage
@@ -131,8 +134,8 @@ class RecordList extends React.Component {
 		axios.post(`${config.baseUrl}/getSearchResults`, {searchTerm: searchTerm, page, limit: config.pagination.pageSize}, {headers})
       	.then(res => {
 	        this.setState({
+	        	totalRecords: res.data.totalCount,
 	        	records: res.data.data,
-	        	totalRecords: res.data.data.length,
 	        	quickSearchEnabled: true,
 	        	showLoading: false,
 	        	searchTerm
@@ -147,8 +150,8 @@ class RecordList extends React.Component {
 		axios.post(`${config.baseUrl}/getFilteredData`, { page, limit: config.pagination.pageSize, filters }, {headers})
       	.then(res => {
 	        this.setState({
+	        	totalRecords: res.data.totalCount,
 	        	records: res.data.data,
-	        	totalRecords: res.data.data.length,
 	        	filterApplied: true,
 	        	showLoading: false,
 	        	showFilter: false

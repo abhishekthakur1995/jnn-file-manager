@@ -73,11 +73,20 @@ records.get('/getRecords',
 		const limit = req.query.limit
 		const offset = (page - 1) * limit
 
-		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} LIMIT ${offset}, ${limit}`, function(err, results, fields) {
-			if (err) {
-				return res.status(400).json({data: [], message : err, success : false})
-			}
-			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
+		let totalCount = 0
+		let results = ''
+
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL}`, function(err, results, fields) {
+			if (err) return res.status(400).json({data: [], message : err, success : false})
+			totalCount = results[0].totalCount
+
+			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+				if (err) return res.status(400).json({data: [], message : err, success : false})
+				results = results
+
+				// send response		
+				res.status(200).json({data : results, totalCount: totalCount , message : 'Records fetched successfully', success : true})
+			})
 		})
 	}
 )
@@ -98,15 +107,24 @@ records.post('/getFilteredData',
 		const offset = (page - 1) * limit
 		let filters = req.body.filters
 
+		let totalCount = 0
+		let results = ''
+
 		filters = filters.map((status) => {
 			return helper.getFileStatusCodeFromName(status)
 		})
 
-		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE FILE_STATUS IN (${filters}) LIMIT ${offset}, ${limit}`, function(err, results, fields) {
-			if (err) {
-				return res.status(400).json({data: [], message : err, success : false})
-			}
-			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE FILE_STATUS IN (${filters})`, function(err, results, fields) {
+			if (err) return res.status(400).json({data: [], message : err, success : false})
+			totalCount = results[0].totalCount
+
+			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE FILE_STATUS IN (${filters}) LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+				if (err) return res.status(400).json({data: [], message : err, success : false})
+				results = results
+
+				// send response		
+				res.status(200).json({data : results, totalCount: totalCount , message : 'Records fetched successfully', success : true})
+			})
 		})
 	}
 )
@@ -127,11 +145,21 @@ records.post('/getSearchResults',
 		const limit = req.body.limit
 		const offset = (page - 1) * limit
 
-		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%' LIMIT ${offset}, ${limit}`, function(err, results, fields) {
-			if (err) {
-				return res.status(400).json({data: [], message : err, success : false})
-			}
-			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
+		let totalCount = 0
+		let results = ''
+
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%'`, function(err, results, fields) {
+			if (err) return res.status(400).json({data: [], message : err, success : false})
+			console.log(results)
+			totalCount = results[0].totalCount
+
+			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%' LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+				if (err) return res.status(400).json({data: [], message : err, success : false})
+				results = results
+
+				// send response		
+				res.status(200).json({data : results, totalCount: totalCount , message : 'Records fetched successfully', success : true})
+			})
 		})
 	}
 )
