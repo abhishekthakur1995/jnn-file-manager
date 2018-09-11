@@ -26,7 +26,7 @@ class SideBar extends React.Component {
 					   	<ListGroupItem className={`${this.props.location.pathname == '/dashboard/manageRecords' ? 'active' : ''}`} bsClass="list">
 					        <Link to={`${this.props.match.url}/manageRecords`}>
 					            <i className="glyphicon glyphicon-lock"></i>
-					            Manage Record
+					            Manage Records
 					        </Link>
 					    </ListGroupItem>
 					</ListGroup>
