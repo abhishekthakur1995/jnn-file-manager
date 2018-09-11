@@ -230,7 +230,7 @@ class RecordList extends React.Component {
 
 		const quickSearch = <QuickSearchComponent search={this.handleQuickSearch} />
 
-		const filterBtn = <FilterButton onClick={this.toggleFilter} />
+		const filterBtn = <FilterButton onClick={this.toggleFilter} upCheveron={this.state.showFilter} />
 
 		const filterComponent = <FilterComponent onApply={this.applyFilter} />
 

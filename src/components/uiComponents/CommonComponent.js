@@ -1,5 +1,6 @@
 import React from 'react'
 import EntryForm from './../EntryForm'
+import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
@@ -240,12 +241,15 @@ export const FilterButton = (props) => {
     return (
         <Grid bsClass="filter-dropdown">
             <Grid bsClass="pull-left">
-                <Grid bsClass="margin-top-3x cursor-pointer" onClick={props.onClick}>Filter Result</Grid>
+                <Grid bsClass="margin-top-3x cursor-pointer" onClick={props.onClick}>Filter Results
+                    <Grid bsClass="chevron"> { props.upCheveron ? <FaChevronUp /> : <FaChevronDown /> }</Grid>
+                </Grid>
             </Grid>
         </Grid>
     )
 }
 
 FilterButton.propTypes = {
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    upCheveron: PropTypes.bool
 }
