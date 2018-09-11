@@ -43,10 +43,16 @@ class RecordList extends React.Component {
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getCountOfAllRecords`, {headers})
       	.then(res => {
-	        this.setState({
-	        	totalRecords: res.data.data[0].count
-	        })
+      		// need to reset local storage applied filter when the page refreshes/new view is rendered.
+      		localStorage.setItem('appliedFilters', null)
+	        this.setState({ totalRecords: res.data.data[0].count })
       	})
+	}
+
+	componentWillUnmount() {
+		// remove the applied filter key from local storage once this component is unmounted.
+		// this code cannot be placed in the filter component as it unmount will run every time the filter is closed.
+		localStorage.setItem('appliedFilters', null)
 	}
 
 	handleRecordUpdate(updatedRecord) {

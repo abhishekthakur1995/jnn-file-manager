@@ -20,6 +20,20 @@ class FilterComponent extends React.Component {
 		this.resetAllFilters = this.resetAllFilters.bind(this)
 	}
 
+	componentDidMount() {
+		// need to maintain filter state of components
+		// get the filters from localStorageService and set them
+		const appliedFilters = JSON.parse(localStorage.getItem('appliedFilters'))
+		if (appliedFilters) {
+			this.setState(prevState => ({
+		  		formStatus: Object.keys(prevState.formStatus).reduce((newState, item) => ({
+		    		...newState,
+		    	    [item]: appliedFilters.includes(item)
+		    	}), {})
+			}))
+		}
+	}
+
 	handleCheckBoxClick(action) {
 		let { formStatus } = this.state
 		formStatus[action] = !formStatus[action]
@@ -28,7 +42,9 @@ class FilterComponent extends React.Component {
 
 	handleFilterParams() {
 		const { formStatus } = this.state
-		this.props.onApply(_.keys(_.pickBy(formStatus)))
+		const appliedFilters = _.keys(_.pickBy(formStatus))
+		localStorage.setItem('appliedFilters', JSON.stringify(appliedFilters))
+		this.props.onApply(appliedFilters)
 	}
 
 	resetAllFilters() {
