@@ -253,3 +253,15 @@ FilterButton.propTypes = {
     onClick: PropTypes.func,
     upCheveron: PropTypes.bool
 }
+
+export const NoData = (props) => {
+    return (
+        <tr>
+            <td colSpan={props.colSpan}> No results found. </td>
+        </tr>
+    )
+}
+
+NoData.propTypes = {
+    colSpan: PropTypes.number
+}

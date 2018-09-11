@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Table, Checkbox } from 'react-bootstrap'
 import axios from 'axios'
 import Record from './Record'
-import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase, FilterButton } from './uiComponents/CommonComponent'
+import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase, FilterButton, NoData } from './uiComponents/CommonComponent'
 import PaginationComponent from './uiComponents/PaginationComponent'
 import FilterComponent from './uiComponents/FilterComponent'
 import config from 'config'
@@ -206,21 +206,25 @@ class RecordList extends React.Component {
 	}
 
 	render() {
-		var filteredRecords = this.state.records
-		filteredRecords = filteredRecords.map(function(record, index) {
-			return (
-				<Record
-					key={index}
-					index={index}
-					singleRecord={record}
-					onUpdate={this.handleRecordUpdate}
-					onDelete={this.handleRecordDelete}
-					onStatusChange={this.handleRecordStatus}
-					checkBoxDefaultStatus={this.state.checkBoxDefaultStatus}
-					handleMultiSelect={this.handleMultiSelect}
-					getRecordsMarkedForUpdate={this.getRecordsMarkedForUpdate} />
-			)
-		}.bind(this))
+		let filteredRecords = this.state.records
+		if (_.isEmpty(filteredRecords)) {
+			filteredRecords = <NoData colSpan={8} />
+		} else {
+			filteredRecords = filteredRecords.map(function(record, index) {
+				return (
+					<Record
+						key={index}
+						index={index}
+						singleRecord={record}
+						onUpdate={this.handleRecordUpdate}
+						onDelete={this.handleRecordDelete}
+						onStatusChange={this.handleRecordStatus}
+						checkBoxDefaultStatus={this.state.checkBoxDefaultStatus}
+						handleMultiSelect={this.handleMultiSelect}
+						getRecordsMarkedForUpdate={this.getRecordsMarkedForUpdate} />
+				)
+			}.bind(this))
+		}
 
 		const pagination = this.state.totalRecords > 0 ?
 			(
