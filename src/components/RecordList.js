@@ -46,7 +46,6 @@ class RecordList extends React.Component {
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getCountOfAllRecords`, {headers})
       	.then(res => {
-      		
 	        this.setState({ totalRecords: res.data.data[0].count })
       	})
 	}
@@ -144,19 +143,21 @@ class RecordList extends React.Component {
 	}
 
 	applyFilter(filters, data) {
-		this.setState({ showLoading: true })
-		const page = data && data.currentPage || this.state.currentPage
-		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.post(`${config.baseUrl}/getFilteredData`, { page, limit: config.pagination.pageSize, filters }, {headers})
-      	.then(res => {
-	        this.setState({
-	        	totalRecords: res.data.totalCount,
-	        	records: res.data.data,
-	        	filterApplied: true,
-	        	showLoading: false,
-	        	showFilter: false
-	        })
-      	})
+		if (!_.isEmpty(filters)) {
+			this.setState({ showLoading: true })
+			const page = data && data.currentPage || this.state.currentPage
+			const headers = { 'Authorization': localStorage.getItem('authToken') }
+			axios.post(`${config.baseUrl}/getFilteredData`, { page, limit: config.pagination.pageSize, filters }, {headers})
+	      	.then(res => {
+		        this.setState({
+		        	totalRecords: res.data.totalCount,
+		        	records: res.data.data,
+		        	filterApplied: true,
+		        	showLoading: false,
+		        	showFilter: false
+		        })
+	      	})
+      	}
 	}
 
 	handleMultiSelect() {
@@ -270,12 +271,12 @@ class RecordList extends React.Component {
                     <tbody>
 						{filteredRecords}
 					</tbody>
+
 				</Table>
-				<TableFunctionalityBase
+				{this.state.totalRecords > 0 && <TableFunctionalityBase
 					onValidate={this.handleValidateAll}
 					onApprove={this.handleMultiAction}
-					onReject={this.handleMultiAction}
-				/>
+					onReject={this.handleMultiAction} /> }
 			</Grid>
 		)
 	}
