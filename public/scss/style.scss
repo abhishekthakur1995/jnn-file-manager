@@ -412,6 +412,13 @@ ul {
     th {
         text-align: center;
     }
+    td {
+        vertical-align: middle !important;
+        padding: 0px !important;
+    }
+    input[type=checkbox] {
+        position: relative !important;
+    }
 }
 
 .table-base {
