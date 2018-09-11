@@ -23,10 +23,10 @@ class SideBar extends React.Component {
 					        </Link>
 					    </ListGroupItem>
 
-					   	<ListGroupItem className={`${this.props.location.pathname == '/dashboard/manageRecordStatus' ? 'active' : ''}`} bsClass="list">
-					        <Link to={`${this.props.match.url}/manageRecordStatus`}>
+					   	<ListGroupItem className={`${this.props.location.pathname == '/dashboard/manageRecords' ? 'active' : ''}`} bsClass="list">
+					        <Link to={`${this.props.match.url}/manageRecords`}>
 					            <i className="glyphicon glyphicon-lock"></i>
-					            Manage Record Status
+					            Manage Record
 					        </Link>
 					    </ListGroupItem>
 					</ListGroup>
@@ -35,7 +35,7 @@ class SideBar extends React.Component {
 				<Grid bsClass="container padding-2x">
 					<Switch>
 						<Route path={`${this.props.match.path}/addNewRecord`} render={(props) => <EntryForm {...props} showPageHead={true} />} />
-						<Route path={`${this.props.match.path}/manageRecordStatus`} component={RecordList} />
+						<Route path={`${this.props.match.path}/manageRecords`} component={RecordList} />
 						<Route path={`${this.props.match.path}`} component={InfoBoard} />
 					</Switch>
 				</Grid>
