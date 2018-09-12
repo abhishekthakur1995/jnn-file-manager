@@ -454,3 +454,42 @@ ul {
         border-top: 1px solid #acacac;
     }
 }
+
+.get-records {
+    .table {
+        .formtable {
+            font-size: 13px;
+            color: #333333;
+            border-color: #ced2df;
+            border-width: 1px;
+            border-style: solid;
+            background-color: none;
+            margin-top: 2px;
+            margin-right: 0;
+            margin-bottom: 5px;
+            margin-left: 0;
+
+            td {
+                padding: 8px 10px;
+                border-bottom: 1px solid #ced2df;
+                height: 44px;
+            }
+
+            input {
+                background: #fff;
+                border: 1px solid #ccc;
+                padding: 8px 10px;
+                height: 34px;
+                border-radius: 3px;
+            }
+
+            .data-left-aligned {
+                FONT-WEIGHT: normal;
+                FONT-SIZE: 13px;
+                VERTICAL-ALIGN: middle;
+                TEXT-ALIGN: left;
+                color: #666666;
+            }
+        }
+    }
+}

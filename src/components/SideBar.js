@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import EntryForm from './EntryForm'
 import RecordList from './RecordList'
 import InfoBoard from './InfoBoard'
+import GetRecords from './GetRecords'
 import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { Link, Route, Switch } from 'react-router-dom'
 
@@ -29,6 +30,13 @@ class SideBar extends React.Component {
 					            Manage Records
 					        </Link>
 					    </ListGroupItem>
+
+					    	<ListGroupItem className={`${this.props.location.pathname == '/dashboard/getRecords' ? 'active' : ''}`} bsClass="list">
+					         <Link to={`${this.props.match.url}/getRecords`}>
+				             	<i className="glyphicon glyphicon-download"></i>
+					            Get Records
+					         </Link>
+					     </ListGroupItem>
 					</ListGroup>
 				</nav>
 
@@ -36,6 +44,7 @@ class SideBar extends React.Component {
 					<Switch>
 						<Route path={`${this.props.match.path}/addNewRecord`} render={(props) => <EntryForm {...props} showPageHead={true} />} />
 						<Route path={`${this.props.match.path}/manageRecords`} component={RecordList} />
+						<Route path={`${this.props.match.path}/getRecords`} component={GetRecords} />
 						<Route path={`${this.props.match.path}`} component={InfoBoard} />
 					</Switch>
 				</Grid>

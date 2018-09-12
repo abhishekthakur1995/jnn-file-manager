@@ -19,6 +19,7 @@ module.exports = {
 			"./src/components/InfoBoard.js",
 			"./src/components/RecordList.js",
 			"./src/components/Record.js",
+			"./src/components/GetRecords.js",
 			"./src/components/uiComponents/AlertComponent.js",
 			"./src/components/uiComponents/CommonComponent.js",
 			"./src/components/uiComponents/PaginationComponent.js",
