@@ -202,13 +202,18 @@ export const QuickSearchComponent = (props) => {
                 name="quickSearch"
                 className="searchInputBox"
             />
-            <Glyphicon className="searchInputBoxIcon" glyph="search" onClick={() => props.search(inputRef.value)}/>
+
+            { props.enabled ? <Glyphicon className="searchInputBoxIcon" glyph="remove" onClick={() => { props.remove(); inputRef.value = ''}}/> :
+                <Glyphicon className="searchInputBoxIcon" glyph="search" onClick={() => props.search(inputRef.value)}/>
+            }
         </Grid>
     )
 }
 
 QuickSearchComponent.propTypes = {
-    search: PropTypes.func
+    search: PropTypes.func,
+    remove: PropTypes.func,
+    enabled: PropTypes.bool
 }
 
 export const TableFunctionalityBase = (props) => {

@@ -31,6 +31,7 @@ class RecordList extends React.Component {
 		this.handleRecordDelete = this.handleRecordDelete.bind(this)
 		this.handleRecordStatus = this.handleRecordStatus.bind(this)
 		this.handleQuickSearch = this.handleQuickSearch.bind(this)
+		this.removeQuickSearch = this.removeQuickSearch.bind(this)
 		this.handleInitialLoad = this.handleInitialLoad.bind(this)
 		this.onPageChanged = this.onPageChanged.bind(this)
 		this.handleMultiSelect = this.handleMultiSelect.bind(this)
@@ -130,19 +131,26 @@ class RecordList extends React.Component {
 	}
 
 	handleQuickSearch(searchTerm, data) {
-		this.setState({ showLoading: true })
-		const page = data && data.currentPage || this.state.currentPage
-		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.post(`${config.baseUrl}/getSearchResults`, {searchTerm: searchTerm, page, limit: config.pagination.pageSize}, {headers})
-      	.then(res => {
-	        this.setState({
-	        	totalRecords: res.data.totalCount,
-	        	records: res.data.data,
-	        	quickSearchEnabled: true,
-	        	showLoading: false,
-	        	searchTerm
-	        })
-      	})
+		if (searchTerm) {
+			this.setState({ showLoading: true })
+			const page = data && data.currentPage || this.state.currentPage
+			const headers = { 'Authorization': localStorage.getItem('authToken') }
+			axios.post(`${config.baseUrl}/getSearchResults`, {searchTerm: searchTerm, page, limit: config.pagination.pageSize}, {headers})
+	      	.then(res => {
+		        this.setState({
+		        	totalRecords: res.data.totalCount,
+		        	records: res.data.data,
+		        	quickSearchEnabled: true,
+		        	showLoading: false,
+		        	searchTerm
+		        })
+	      	})
+	    }
+	}
+
+	removeQuickSearch() {
+		this.setState({ quickSearchEnabled: false })
+		this.handleInitialLoad({currentPage: 1, pageLimit: config.pagination.pageSize})
 	}
 
 	applyFilter(filters, data) {
@@ -240,7 +248,7 @@ class RecordList extends React.Component {
 				/>
 			) : null
 
-		const quickSearch = <QuickSearchComponent search={this.handleQuickSearch} />
+		const quickSearch = <QuickSearchComponent search={this.handleQuickSearch} remove={this.removeQuickSearch} enabled={this.state.quickSearchEnabled} />
 
 		const filterBtn = <FilterButton onClick={this.toggleFilter} upCheveron={this.state.showFilter} />
 
