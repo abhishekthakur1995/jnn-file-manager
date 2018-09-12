@@ -21,7 +21,8 @@ class RecordList extends React.Component {
 			showLoading: false,
 			checkBoxDefaultStatus: false,
 			showFilter: false,
-			filterApplied: false
+			filterApplied: false,
+			filters: []
 		}
 
 		this.markedRecord = []
@@ -102,10 +103,12 @@ class RecordList extends React.Component {
 	}
 
 	onPageChanged(data) {
-		if (!this.state.quickSearchEnabled) {
-			this.handleInitialLoad(data)
-		} else {
+		if (this.state.filterApplied) {
+			this.applyFilter(this.state.filters, data)
+		} else if (this.state.quickSearchEnabled) {
 			this.handleQuickSearch(this.state.searchTerm, data)
+		} else {
+			this.handleInitialLoad(data)
 		}
 		// set checkbox default state to false on page changed via pagination
 		this.setState({ checkBoxDefaultStatus: false })
@@ -154,7 +157,8 @@ class RecordList extends React.Component {
 		        	records: res.data.data,
 		        	filterApplied: true,
 		        	showLoading: false,
-		        	showFilter: false
+		        	showFilter: false,
+		        	filters: filters
 		        })
 	      	})
       	}
