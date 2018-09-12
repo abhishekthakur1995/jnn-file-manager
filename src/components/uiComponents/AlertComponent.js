@@ -16,7 +16,7 @@ class AlertComponent extends React.Component {
         if (this.props.options.autoHide) {
             setTimeout(function() {
                 this.props.hideAlert()
-            }.bind(this), 500000)
+            }.bind(this), 5000)
         }
         return (
             <Grid bsClass="alert-message">

@@ -39,7 +39,10 @@ records.post('/addNewRecord',
 	    }
 		connection.query(`INSERT INTO ${process.env.FILE_RECORD_TBL} SET ?`, fileRecordData, function(err, results, fields) {
 			if (err) {
-				return res.status(400).json({message : err, saved : false})
+				if(err.code === 'ER_DUP_ENTRY') {
+					return res.status(400).json({message : `This file number (${req.body.file_number}) already exists. Kindly give a new file number.`, saved : false})
+				}
+				return res.status(400).json({message : 'Unable to save file data. Please try again', saved : false})
 			}
 			res.status(200).json({message : 'Record saved successfully', saved : true})
 		})

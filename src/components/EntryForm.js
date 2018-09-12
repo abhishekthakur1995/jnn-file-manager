@@ -93,17 +93,26 @@ class EntryForm extends React.Component {
             headers: {'Authorization': localStorage.getItem('authToken')}
         }).then(res => {
             this.setState({
+                showAlert: true,
                 alertOptions: {
                     text: res.data.message,
-                    type: res.data.saved ? 'success' : 'danger',
-                    autoHide: true,
-                    showAlert: true
+                    type: 'success',
+                    autoHide: true
+                }
+            })
+        }).catch(err => {
+            this.setState({
+                showAlert: true,
+                alertOptions: {
+                    text: err.response.data.message,
+                    type: 'danger',
+                    autoHide: true
                 }
             })
         })
 
         // to update the record list when a record is updated
-        this.props.onUpdate(this.state.fields)
+        if (this.props.mode === 'edit') this.props.onUpdate(this.state.fields)
     }
 
     hideAlert() {
