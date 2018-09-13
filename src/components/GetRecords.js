@@ -7,12 +7,14 @@ import config from 'config'
 import 'react-datepicker/dist/react-datepicker.css'
 import _ from 'lodash'
 import axios from 'axios'
+import {CSVLink} from 'react-csv'
 
 class GetRecords extends React.Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
+			csvData: '',
 			filter: {
 				type: '',
 				month: '',
@@ -57,7 +59,7 @@ class GetRecords extends React.Component {
 
   	downloadData() {
   		if (_.isEmpty(this.state.filter.type)) {
-  			return	
+  			return
   		}
 
   		if (_.isEmpty(this.state.filter.downloadFormat)) {
@@ -86,7 +88,8 @@ class GetRecords extends React.Component {
   		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getDataBasedOnSelectedMonth?month=${this.state.filter.month}&year=${this.state.filter.year}`, {headers})
       	.then(res => {
-	        console.log(res.data)
+      		console.log(res.data)
+	        this.setState({csvData : res.data.data})
       	})
   	}
 
@@ -212,8 +215,19 @@ class GetRecords extends React.Component {
 										</tr>
 
 										<tr align="left" valign="middle">
-											<td width="20%" colSpan="2" className="data-left-aligned">
-												<Button bsStyle="primary" onClick={this.downloadData}>Download</Button>
+											<td width="20%" className="data-left-aligned">
+												<Button bsStyle="primary" onClick={this.downloadData}>Fetch Data</Button>
+											</td>
+
+											<td width="80%" className="data-left-aligned">
+												{this.state.csvData && 
+													<CSVLink 
+														data={this.state.csvData}
+												  		filename={`${this.state.filter.month}.csv`}
+												  		target="_blank" 
+												  		className="traditional-link"> Download Excel
+													</CSVLink>
+												}
 											</td>
 										</tr>
 
