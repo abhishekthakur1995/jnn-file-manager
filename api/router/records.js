@@ -268,4 +268,49 @@ records.get('/getDashboardData', function(req, res) {
 	})
 })
 
+/* 	path: /getDataBasedOnSelectedMonth
+ *	type: GET
+ */
+
+ records.get('/getDataBasedOnSelectedMonth', 
+ 	[
+ 		check('month').not().isEmpty().withMessage('Please select a month'),
+ 		check('year').not().isEmpty().withMessage('Please select an year')
+ 	],
+ 	function(req, res) {
+		const month = req.query.month
+		const year = req.query.year
+
+		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], function(err, results, fields) {
+			if (err) return res.status(400).json({data: [], message : err, success : false})
+
+			// send response		
+			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
+		})
+	}
+)
+
+ /* path: /getDataBasedOnSelectedDuration
+  *	type: GET
+  */
+
+  records.get('/getDataBasedOnSelectedDuration', 
+  	[
+  		check('startDate').not().isEmpty().withMessage('Please select a to date'),
+  		check('endDate').not().isEmpty().withMessage('Please select a from date')
+  	],
+  	function(req, res) {
+ 		let { startDate, endDate } = req.query
+ 		startDate = helper.convertTimestampToUnixTimestamp(startDate)
+ 		endDate = helper.convertTimestampToUnixTimestamp(endDate)
+
+ 		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, function(err, results, fields) {
+ 			if (err) return res.status(400).json({data: [], message : err, success : false})
+
+ 			// send response		
+ 			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
+ 		})
+ 	}
+)
+
 module.exports = records

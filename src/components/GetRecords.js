@@ -6,6 +6,7 @@ import moment from 'moment'
 import config from 'config'
 import 'react-datepicker/dist/react-datepicker.css'
 import _ from 'lodash'
+import axios from 'axios'
 
 class GetRecords extends React.Component {
 	constructor(props) {
@@ -30,6 +31,8 @@ class GetRecords extends React.Component {
 		this.handleRadioChange = this.handleRadioChange.bind(this)
 		this.handleFilterParams = this.handleFilterParams.bind(this)
 		this.downloadData = this.downloadData.bind(this)
+		this.getDataBasedOnMonth = this.getDataBasedOnMonth.bind(this)
+		this.getDataForSpecificPeriod = this.getDataForSpecificPeriod.bind(this)
 	}
 
 	handleRadioChange(type) {
@@ -59,15 +62,40 @@ class GetRecords extends React.Component {
 
   		if (_.isEmpty(this.state.filter.downloadFormat)) {
   			this.setState({ error : { emptyDownloadFormat: true } })
+  			return
   		}
 
-  		if (this.state.filter.type === 'monthType' && (_.isEmpty(this.state.filter.month) || _.isEmpty(this.state.filter.year))) {
-  			this.setState({ error : { monthError: true } })
+  		if (this.state.filter.type === 'monthType') {
+  			if (_.isEmpty(this.state.filter.month) || _.isEmpty(this.state.filter.year)) {
+  				this.setState({ error : { monthError: true } })
+  				return
+  			}
+  			this.getDataBasedOnMonth()
   		}
 
-  		if (this.state.filter.type === 'specificPeriodType' && (_.isEmpty(this.state.filter.startDate) || _.isEmpty(this.state.filter.endDate))) {
-  			this.setState({ error : { specificPeriodError: true } })
+  		if (this.state.filter.type === 'specificPeriodType') {
+  			if (_.isEmpty(this.state.filter.startDate) || _.isEmpty(this.state.filter.endDate)) {
+  				this.setState({ error : { specificPeriodError: true } })
+  				return
+  			}
+  			this.getDataForSpecificPeriod()
   		}
+  	}
+
+  	getDataBasedOnMonth() {
+  		const headers = { 'Authorization': localStorage.getItem('authToken') }
+		axios.get(`${config.baseUrl}/getDataBasedOnSelectedMonth?month=${this.state.filter.month}&year=${this.state.filter.year}`, {headers})
+      	.then(res => {
+	        console.log(res.data)
+      	})
+  	}
+
+  	getDataForSpecificPeriod() {
+  		const headers = { 'Authorization': localStorage.getItem('authToken') }
+		axios.get(`${config.baseUrl}/getDataBasedOnSelectedDuration?startDate=${this.state.filter.startDate}&endDate=${this.state.filter.endDate}`, {headers})
+      	.then(res => {
+	        console.log(res.data)
+      	})
   	}
 
 	render() {
@@ -171,12 +199,12 @@ class GetRecords extends React.Component {
 												<Radio
 													name="downloadFormat"
 													inline={true}
-													onChange={(e) => { this.handleFilterParams('downloadFormat', 'excel') }} >Excel
+													onChange={() => { this.handleFilterParams('downloadFormat', 'excel') }} >Excel
 												</Radio>
 												<Radio
 													name="downloadFormat"
 													inline={true}
-													onChange={(e) => { this.handleFilterParams('downloadFormat', 'pdf') }} >PDF
+													onChange={() => { this.handleFilterParams('downloadFormat', 'pdf') }} >PDF
 												</Radio>
 
 												{this.state.error.emptyDownloadFormat && <span className="error margin-left-5x">Please select a download format</span>}

@@ -8,9 +8,9 @@ const FILE_STATUS_CODE_MAPPING = {
 
 class Helper {
 
-	static getFileStatusCodeFromName(codeName) {
-		return FILE_STATUS_CODE_MAPPING[codeName]
-	}
+	static getFileStatusCodeFromName = (codeName) => FILE_STATUS_CODE_MAPPING[codeName];
+
+	static convertTimestampToUnixTimestamp = (timestamp) => timestamp/1000;
 }
 
 module.exports = Helper
