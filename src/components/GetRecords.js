@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import config from 'config'
 import 'react-datepicker/dist/react-datepicker.css'
+import _ from 'lodash'
 
 class GetRecords extends React.Component {
 	constructor(props) {
@@ -18,6 +19,11 @@ class GetRecords extends React.Component {
 				startDate: moment(),
 				endDate: moment(),
 				downloadFormat: ''
+			},
+			error: {
+				emptyDownloadFormat: false,
+				monthError: false,
+				specificPeriodError: false
 			}
 		}
 
@@ -47,7 +53,21 @@ class GetRecords extends React.Component {
   	}
 
   	downloadData() {
-  		console.log(this.state)
+  		if (_.isEmpty(this.state.filter.type)) {
+  			return	
+  		}
+
+  		if (_.isEmpty(this.state.filter.downloadFormat)) {
+  			this.setState({ error : { emptyDownloadFormat: true } })
+  		}
+
+  		if (this.state.filter.type === 'monthType' && (_.isEmpty(this.state.filter.month) || _.isEmpty(this.state.filter.year))) {
+  			this.setState({ error : { monthError: true } })
+  		}
+
+  		if (this.state.filter.type === 'specificPeriodType' && (_.isEmpty(this.state.filter.startDate) || _.isEmpty(this.state.filter.endDate))) {
+  			this.setState({ error : { specificPeriodError: true } })
+  		}
   	}
 
 	render() {
@@ -66,7 +86,7 @@ class GetRecords extends React.Component {
 											<td className="data-left-aligned" width="20%">
 												Account Number
 											</td>
-											<td width="80%">
+											<td className="data-left-aligned" width="80%">
 												32776121111234
 											</td>
 										</tr>
@@ -94,6 +114,11 @@ class GetRecords extends React.Component {
 														onClick={this.handleFilterParams}
 													/>
 												</Grid>
+
+												<Clearfix />
+
+												{this.state.error.monthError && <span className="error">Please select both year and month</span>}
+
 											</td>
 										</tr>
 
@@ -132,6 +157,9 @@ class GetRecords extends React.Component {
 													    onChange={(date) => { this.handleFilterParams('endDate', date) }}
 													/>
 												</div>
+
+												{this.state.error.specificPeriodError && <span className="error">Please select both start date and end date</span>}
+
 											</td>
 										</tr>
 
@@ -139,17 +167,19 @@ class GetRecords extends React.Component {
 											<td className="data-left-aligned" width="20%">
 												Select a format
 											</td>
-											<td width="80%">
+											<td width="80%" className="data-left-aligned">
 												<Radio
 													name="downloadFormat"
 													inline={true}
-													onChange={(e) => { this.handleFilterParams('downloadFormat', e.target.checked) }} >Excel
+													onChange={(e) => { this.handleFilterParams('downloadFormat', 'excel') }} >Excel
 												</Radio>
 												<Radio
 													name="downloadFormat"
 													inline={true}
-													onChange={(e) => { this.handleFilterParams('downloadFormat', e.target.checked) }} >PDF
+													onChange={(e) => { this.handleFilterParams('downloadFormat', 'pdf') }} >PDF
 												</Radio>
+
+												{this.state.error.emptyDownloadFormat && <span className="error margin-left-5x">Please select a download format</span>}
 											</td>
 										</tr>
 
