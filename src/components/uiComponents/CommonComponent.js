@@ -1,8 +1,9 @@
 import React from 'react'
 import EntryForm from './../EntryForm'
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
-import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon } from 'react-bootstrap'
+import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup } from 'react-bootstrap'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 
 export const PageHead = (props) => {
 	return (
@@ -269,4 +270,42 @@ export const NoData = (props) => {
 
 NoData.propTypes = {
     colSpan: PropTypes.number
+}
+
+export const YearDropDown = (props) => {
+    const yearList = [moment().format('YYYY'), moment().format('YYYY') - 1, moment().format('YYYY') - 2]
+
+    return (
+        <FormGroup controlId="formControlsSelect">
+            <FormControl componentClass="select" onChange={(e) => { props.onClick('year', e.target.value) }} >
+                <option value="">Select</option>
+                    {yearList.map((year) => <option key={year} value={year}>{year}</option>)}
+            </FormControl>
+        </FormGroup>
+    )
+}
+
+YearDropDown.propTypes = {
+    onClick: PropTypes.func
+}
+
+export const MonthDropDown = (props) => {
+    const monthList = [
+        { id: 1, name: 'January'}, { id: 2, name: 'February'}, { id: 3, name: 'March'}, { id: 4, name: 'April'},
+        { id: 5, name: 'May'}, { id: 6, name: 'June'}, { id: 7, name: 'July'}, { id: 8, name: 'August'},
+        { id: 9, name: 'September'}, { id: 10, name: 'October'}, { id: 11, name: 'November'}, { id: 12, name: 'December'},
+    ]
+
+    return (
+        <FormGroup controlId="formControlsSelect">
+            <FormControl componentClass="select" onChange={(e) => { props.onClick('month', e.target.value) }} >
+                <option value="">Select</option>
+                    {monthList.map((month) => <option key={month.id} value={month.id}>{month.name}</option>)}
+            </FormControl>
+        </FormGroup>
+    )
+}
+
+MonthDropDown.propTypes = {
+    onClick: PropTypes.func
 }

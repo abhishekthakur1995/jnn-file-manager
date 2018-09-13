@@ -3,5 +3,8 @@
 	"pagination" : {
 		"pageSize" : 10,
 		"neighbourSize" : 2
+	},
+	"datePicker" : {
+		"dateFormat" : "DD/MM/YYYY"
 	}
 }

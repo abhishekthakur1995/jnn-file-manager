@@ -1,22 +1,54 @@
 import React from 'react'
-import { Grid, Radio, Table } from 'react-bootstrap'
-import { PageHead } from './uiComponents/CommonComponent'
+import { Grid, Radio, Table, Button, Clearfix } from 'react-bootstrap'
+import { PageHead, MonthDropDown, YearDropDown } from './uiComponents/CommonComponent'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import config from 'config'
+import 'react-datepicker/dist/react-datepicker.css'
 
 class GetRecords extends React.Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			radioType: 'month',
-			date: new Date()
+			filter: {
+				type: '',
+				month: '',
+				year: '',
+				startDate: moment(),
+				endDate: moment(),
+				downloadFormat: ''
+			}
 		}
 
 		this.handleRadioChange = this.handleRadioChange.bind(this)
+		this.handleFilterParams = this.handleFilterParams.bind(this)
+		this.downloadData = this.downloadData.bind(this)
 	}
 
-	handleRadioChange(radioType, checked) {
-		// console.log(radioType)
+	handleRadioChange(type) {
+		this.setState((prevState) => ({
+  			...prevState,
+  			filter: {
+  				...prevState.filter,
+  				type
+  			}
+  		}))
 	}
+
+  	handleFilterParams(paramType, value) {
+  		this.setState((prevState) => ({
+  			...prevState,
+  			filter: {
+  				...prevState.filter,
+  				[paramType] : value
+  			}
+  		}))
+  	}
+
+  	downloadData() {
+  		console.log(this.state)
+  	}
 
 	render() {
 		return (
@@ -40,29 +72,90 @@ class GetRecords extends React.Component {
 										</tr>
 
 										<tr>
-											<td width="20%" colSpan="2" className="data-left-aligned">
+											<td width="20%" className="data-left-aligned">
 												<Radio
-													name="radioGroup"
+													name="periodType"
 													inline={true}
-													onChange={(e) => { this.handleRadioChange('year', e.target.checked) }} >By Year
+													onChange={() => { this.handleRadioChange('monthType') }} >By Month
 												</Radio>
+											</td>
+
+											<td width="80%">
+												<Grid bsClass="pull-left">Year:<br />
+													<YearDropDown
+														onClick={this.handleFilterParams}
+													/>
+												</Grid>
+
+												<Clearfix />
+
+												<Grid bsClass="pull-left">Month:<br />
+													<MonthDropDown
+														onClick={this.handleFilterParams}
+													/>
+												</Grid>
 											</td>
 										</tr>
 
 										<tr align="left" valign="middle">
 											<td className="data-left-aligned" width="20%">
-												<span>Specific Period</span>
+												<Radio
+													name="periodType"
+													inline={true}
+													onChange={() => { this.handleRadioChange('specificPeriodType') }} >Specific Period
+												</Radio>
 											</td>
 
 											<td width="80%">
-												<div>From:&nbsp;
-													<input autoComplete="off" name="frmDatePicker" id="frmDatePicker" type="text" disabled />
+												<div>From:
+													<DatePicker
+														dateFormat={config.datePicker.dateFormat}
+														placeholderText="Click to select a date"
+														maxDate={moment()}
+														selected={this.state.filter.startDate}
+														startDate={this.state.filter.startDate}
+														endDate={this.state.filter.endDate}
+														onChange={(date) => { this.handleFilterParams('startDate', date) }}
+													/>
 												</div>
+
 												<br />
 
-												<div>&nbsp;&nbsp;&nbsp;To:&nbsp;
-													<input autoComplete="off" name="toDatePicker" id="toDatePicker" type="text" disabled />
+												<div>To:
+													<DatePicker
+													   	dateFormat={config.datePicker.dateFormat}
+													   	placeholderText="Click to select a date"
+													   	maxDate={moment()}
+													   	selected={this.state.filter.endDate}
+													    startDate={this.state.filter.startDate}
+													    endDate={this.state.filter.endDate}
+													    onChange={(date) => { this.handleFilterParams('endDate', date) }}
+													/>
 												</div>
+											</td>
+										</tr>
+
+										<tr align="left" valign="middle">
+											<td className="data-left-aligned" width="20%">
+												Select a format
+											</td>
+											<td width="80%">
+												<Radio
+													name="downloadFormat"
+													inline={true}
+													onChange={(e) => { this.handleFilterParams('downloadFormat', e.target.checked) }} >Excel
+												</Radio>
+												<Radio
+													name="downloadFormat"
+													inline={true}
+													onChange={(e) => { this.handleFilterParams('downloadFormat', e.target.checked) }} >PDF
+												</Radio>
+											</td>
+										</tr>
+
+										<tr align="left" valign="middle">
+											<td width="20%" colSpan="2" className="data-left-aligned">
+												<Button bsStyle="primary" onClick={this.downloadData}>Download</Button>
 											</td>
 										</tr>
 
