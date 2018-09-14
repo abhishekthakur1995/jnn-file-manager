@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Grid } from 'react-bootstrap'
-import { InfoBlock, ChartHolder } from './uiComponents/CommonComponent'
+import { InfoBlock, ChartHolder, PageHead } from './uiComponents/CommonComponent'
 import { Doughnut } from 'react-chartjs-2'
 import _ from 'lodash'
 import config from 'config'
@@ -48,6 +48,7 @@ class InfoBoard extends React.Component {
 
 		return (
 			<Grid bsClass="width-10x pull-left">
+				<PageHead />
 				<Grid bsClass="width-10x pull-left">
 					<InfoBlock title="Received" img={received} value={dashboardData.RECEIVED} />
 					<InfoBlock title="Pending"  img={pending} value={dashboardData.APPROVED} />
