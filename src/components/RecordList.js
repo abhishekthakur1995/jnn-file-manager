@@ -7,6 +7,7 @@ import PaginationComponent from './uiComponents/PaginationComponent'
 import FilterComponent from './uiComponents/FilterComponent'
 import config from 'config'
 import _ from 'lodash'
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 
 class RecordList extends React.Component {
 	constructor(props) {
@@ -256,6 +257,7 @@ class RecordList extends React.Component {
 
 		return (
 			<Grid bsClass="record-list">
+				<BreadcrumbsItem glyph='user' to={'/dashboard/manageRecords'}> Manage Records </BreadcrumbsItem>
 				{this.state.showLoading && <LoadingSpinner />}
 				<PageHead
 					title="Manage Record Status"

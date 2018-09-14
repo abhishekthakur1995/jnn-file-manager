@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import _ from 'lodash'
 import axios from 'axios'
 import {CSVLink} from 'react-csv'
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 
 class GetRecords extends React.Component {
 	constructor(props) {
@@ -88,7 +89,6 @@ class GetRecords extends React.Component {
   		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getDataBasedOnSelectedMonth?month=${this.state.filter.month}&year=${this.state.filter.year}`, {headers})
       	.then(res => {
-      		console.log(res.data)
 	        this.setState({csvData : res.data.data})
       	})
   	}
@@ -104,6 +104,7 @@ class GetRecords extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="get-records">
+				<BreadcrumbsItem glyph='user' to={'/dashboard/getRecords'}> Get Records </BreadcrumbsItem>
 				<PageHead title="Get Records" />
 
 				<Table bordered className="table" width="100%">
@@ -220,11 +221,11 @@ class GetRecords extends React.Component {
 											</td>
 
 											<td width="80%" className="data-left-aligned">
-												{this.state.csvData && 
-													<CSVLink 
+												{this.state.csvData &&
+													<CSVLink
 														data={this.state.csvData}
 												  		filename={`${this.state.filter.month}.csv`}
-												  		target="_blank" 
+												  		target="_blank"
 												  		className="traditional-link"> Download Excel
 													</CSVLink>
 												}

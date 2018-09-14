@@ -23,7 +23,8 @@ module.exports = {
 			"./src/components/uiComponents/AlertComponent.js",
 			"./src/components/uiComponents/CommonComponent.js",
 			"./src/components/uiComponents/PaginationComponent.js",
-			"./src/components/uiComponents/FilterComponent.js"
+			"./src/components/uiComponents/FilterComponent.js",
+			"./src/components/uiComponents/CustomBreadCrumbsComponent.js"
 		],
 	},
 	output: {

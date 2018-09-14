@@ -11,6 +11,8 @@ import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon } from 're
 import { required, phoneNumber } from './helpers/ValidationHelper'
 import { PageHead } from './uiComponents/CommonComponent'
 import config from 'config'
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+
 
 class EntryForm extends React.Component {
     constructor(props) {
@@ -125,6 +127,7 @@ class EntryForm extends React.Component {
         const btnText = this.props.mode === 'edit' ? 'Update' : 'Save'
         return (
             <Grid bsClass="entry-form">
+                <BreadcrumbsItem glyph='user' to={'/dashboard/addNewRecord'}> Add New Record </BreadcrumbsItem>
                 { (this.props.showPageHead) && <PageHead title="Add New Record"/> }
                 <Row className="margin-0x">
                     <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>

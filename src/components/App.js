@@ -26,7 +26,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="app">
-				<NavBar doRedirectToHome={this.doRedirectToHome}/>
+				<NavBar doRedirectToHome={this.doRedirectToHome} />
 				<Switch>
 					<Route path="/" exact={true} render={(props) => <LoginForm {...props} />} />
                     <Route path="/login" render={(props) => <LoginForm {...props} />} />

@@ -1,18 +1,24 @@
 import React from 'react'
 import EntryForm from './../EntryForm'
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
-import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup } from 'react-bootstrap'
+import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup, Breadcrumb } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import { Switch, Route } from 'react-router-dom'
+import { Breadcrumbs } from 'react-breadcrumbs-dynamic'
+import { CrumbIconItem, CrumbItem } from './CustomBreadCrumbsComponent'
 
 export const PageHead = (props) => {
 	return (
 		<Grid bsClass="navbar">
             <Grid bsClass="container-fluid">
                 <Grid bsClass="navbar-header">
-                    <button type="button" id="sidebarCollapse" className="btn btn-info navbar-btn">
-                        <span>{props.title}</span>
-                    </button>
+                    <Breadcrumbs
+                        item={CrumbIconItem}
+                        container={Breadcrumb}
+                        finalProps={{active: true}}
+                        duplicateProps={{to:"href"}}
+                    />
                 </Grid>
                 <Col sm={12} md={7} className="pull-right width-auto">
                     <Grid bsClass="pull-left padding-vert-5x">{props.filter}</Grid>
