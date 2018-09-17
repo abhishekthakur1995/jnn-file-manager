@@ -97,7 +97,7 @@ class GetRecords extends React.Component {
   		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getDataBasedOnSelectedDuration?startDate=${this.state.filter.startDate}&endDate=${this.state.filter.endDate}`, {headers})
       	.then(res => {
-	        console.log(res.data)
+	        this.setState({csvData : res.data.data})
       	})
   	}
 

@@ -4,9 +4,8 @@ import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup, Breadcrumb } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { Switch, Route } from 'react-router-dom'
 import { Breadcrumbs } from 'react-breadcrumbs-dynamic'
-import { CrumbIconItem, CrumbItem } from './CustomBreadCrumbsComponent'
+import { CrumbIconItem } from './CustomBreadCrumbsComponent'
 
 export const PageHead = (props) => {
 	return (
