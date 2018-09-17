@@ -102,26 +102,40 @@ records.post('/getFilteredData',
 	[
 		check('page').not().isEmpty().withMessage('No page number was sent'),
 		check('limit').not().isEmpty().withMessage('No limit was sent'),
-		check('filters').not().isEmpty().withMessage('No filter data was sent')
+		check('sortFilters').not().isEmpty().withMessage('No filter data was sent')
 	],
 	function(req, res) {
 		const page = req.body.page
 		const limit = req.body.limit
 		const offset = (page - 1) * limit
-		let filters = req.body.filters
+		let { sortFilters, searchFilters } = req.body
 
 		let totalCount = 0
 		let results = ''
 
-		filters = filters.map((status) => {
+		let searchCriteria = ''
+		let sortCriteria = ''
+		let whereCriteria = ''
+
+		sortFilters = sortFilters.map((status) => {
 			return helper.getFileStatusCodeFromName(status)
 		})
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE FILE_STATUS IN (${filters})`, function(err, results, fields) {
+		if(!_.isEmpty(searchFilters)) {
+			searchFilters = `${helper.getDbFieldCodeFromName(searchFilters.queryField)} LIKE '%${searchFilters.searchTerm}%'`
+		}
+
+		if(!_.isEmpty(sortFilters)) {
+			sortCriteria = `FILE_STATUS IN (${sortFilters})`
+		}
+
+		whereCriteria = `${searchFilters} AND ${sortCriteria}`
+
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE ${whereCriteria}`, function(err, results, fields) {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE FILE_STATUS IN (${filters}) LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE ${whereCriteria} LIMIT ${offset}, ${limit}`, function(err, results, fields) {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 

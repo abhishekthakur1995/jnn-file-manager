@@ -23,7 +23,8 @@ class RecordList extends React.Component {
 			checkBoxDefaultStatus: false,
 			showFilter: false,
 			filterApplied: false,
-			filters: []
+			sortFilters: [],
+			searchFilters: {}
 		}
 
 		this.markedRecord = []
@@ -44,7 +45,8 @@ class RecordList extends React.Component {
 
 	componentDidMount() {
 		// need to reset local storage applied filter when the page refreshes/new view is rendered.
-		localStorage.setItem('appliedFilters', null)
+		localStorage.setItem('sortFilters', null)
+		localStorage.setItem('searchFilters', null)
 
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getCountOfAllRecords`, {headers})
@@ -56,7 +58,8 @@ class RecordList extends React.Component {
 	componentWillUnmount() {
 		// remove the applied filter key from local storage once this component is unmounted.
 		// this code cannot be placed in the filter component as it unmount will run every time the filter is closed.
-		localStorage.setItem('appliedFilters', null)
+		localStorage.setItem('sortFilters', null)
+		localStorage.setItem('searchFilters', null)
 	}
 
 	handleRecordUpdate(updatedRecord) {
@@ -106,7 +109,7 @@ class RecordList extends React.Component {
 
 	onPageChanged(data) {
 		if (this.state.filterApplied) {
-			this.applyFilter(this.state.filters, data)
+			this.applyFilter(this.state.sortFilters, this.state.searchFilters, data)
 		} else if (this.state.quickSearchEnabled) {
 			this.handleQuickSearch(this.state.searchTerm, data)
 		} else {
@@ -154,12 +157,12 @@ class RecordList extends React.Component {
 		this.handleInitialLoad({currentPage: 1, pageLimit: config.pagination.pageSize})
 	}
 
-	applyFilter(filters, data) {
-		if (!_.isEmpty(filters)) {
+	applyFilter(sortFilters, searchFilters, data) {
+		if (!_.isEmpty(sortFilters) || !_.isEmpty(searchFilters)) {
 			this.setState({ showLoading: true })
 			const page = data && data.currentPage || this.state.currentPage
 			const headers = { 'Authorization': localStorage.getItem('authToken') }
-			axios.post(`${config.baseUrl}/getFilteredData`, { page, limit: config.pagination.pageSize, filters }, {headers})
+			axios.post(`${config.baseUrl}/getFilteredData`, { page, limit: config.pagination.pageSize, sortFilters, searchFilters }, {headers})
 	      	.then(res => {
 		        this.setState({
 		        	totalRecords: res.data.totalCount,
@@ -167,7 +170,8 @@ class RecordList extends React.Component {
 		        	filterApplied: true,
 		        	showLoading: false,
 		        	showFilter: false,
-		        	filters: filters
+		        	sortFilters,
+		        	searchFilters
 		        })
 	      	})
       	}

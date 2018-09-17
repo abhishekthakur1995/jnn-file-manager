@@ -298,7 +298,7 @@ export const MonthDropDown = (props) => {
     const monthList = [
         { id: 1, name: 'January'}, { id: 2, name: 'February'}, { id: 3, name: 'March'}, { id: 4, name: 'April'},
         { id: 5, name: 'May'}, { id: 6, name: 'June'}, { id: 7, name: 'July'}, { id: 8, name: 'August'},
-        { id: 9, name: 'September'}, { id: 10, name: 'October'}, { id: 11, name: 'November'}, { id: 12, name: 'December'},
+        { id: 9, name: 'September'}, { id: 10, name: 'October'}, { id: 11, name: 'November'}, { id: 12, name: 'December'}
     ]
 
     return (
@@ -313,4 +313,28 @@ export const MonthDropDown = (props) => {
 
 MonthDropDown.propTypes = {
     onClick: PropTypes.func
+}
+
+export const SearchFilterOptions = (props) => {
+    const optionsList = [
+        { id: 'buildingName', name: 'Building Name'},
+        { id: 'applicantName', name: 'Applicant Name'},
+        { id: 'applicantContact', name: 'Applicant Contact'},
+        { id: 'applicantAddress', name: 'Applicant Address'},
+        { id: 'fileNumber', name: 'File Number'}
+    ]
+
+    return (
+        <FormGroup controlId="formControlsSelect">
+            <FormControl componentClass="select" value={props.value} onChange={(e) => { props.onClick(e.target.value) }} >
+                <option value="">Select</option>
+                    {optionsList.map((options) => <option key={options.id} value={options.id}>{options.name}</option>)}
+            </FormControl>
+        </FormGroup>
+    )
+}
+
+SearchFilterOptions.propTypes = {
+    onClick: PropTypes.func,
+    value: PropTypes.string
 }

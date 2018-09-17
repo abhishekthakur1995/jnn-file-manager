@@ -113,7 +113,7 @@ class Record extends React.Component {
 						onChange={(e) => { this.handleCheckBoxClick(this.props.index + 1, record.ID, e.target.checked) }} >
 					</Checkbox>
 				</td>
-			    <td>{record.APPLICANT_NAME} </td>
+			    <td>{record.APPLICANT_NAME}</td>
 			    <td>{record.APPLICANT_ADDRESS}</td>
 			    <td>{record.APPLICANT_CONTACT}</td>
 			    <td>{record.BUILDING_NAME}</td>

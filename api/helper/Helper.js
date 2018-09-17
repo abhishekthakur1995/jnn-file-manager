@@ -6,11 +6,21 @@ const FILE_STATUS_CODE_MAPPING = {
 	'rejected' : 2
 }
 
+const DB_FIELDS_CODE_MAPPING = {
+	'buildingName'  : 'BUILDING_NAME',
+	'applicantName'  : 'APPLICANT_NAME',
+	'applicantContact'  : 'APPLICANT_CONTACT',
+	'applicantAddress'  : 'APPLICANT_ADDRESS',
+	'fileNumber'  : 'FILE_NUMBER',
+}
+
 class Helper {
 
 	static getFileStatusCodeFromName = (codeName) => FILE_STATUS_CODE_MAPPING[codeName];
 
 	static convertTimestampToUnixTimestamp = (timestamp) => timestamp/1000;
+
+	static getDbFieldCodeFromName = (codeName) => DB_FIELDS_CODE_MAPPING[codeName];
 }
 
 module.exports = Helper
