@@ -79,7 +79,7 @@ records.get('/getRecords',
 		let totalCount = 0
 		let results = ''
 
-		let dataQuery = `SELECT * FROM ${process.env.FILE_RECORD_TBL} LIMIT ${offset}, ${limit}`
+		let dataQuery = `SELECT * FROM ${process.env.FILE_RECORD_TBL} ORDER BY CREATED DESC LIMIT ${offset}, ${limit}`
 		if(req.query.sortField && req.query.orderBy) {
 			dataQuery = `SELECT * FROM ${process.env.FILE_RECORD_TBL} ORDER BY ${helper.getDbFieldCodeFromName(req.query.sortField)} ${_.upperCase(req.query.orderBy)} LIMIT ${offset}, ${limit}`
 		}
