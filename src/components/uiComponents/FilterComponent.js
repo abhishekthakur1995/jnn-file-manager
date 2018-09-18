@@ -96,7 +96,7 @@ class FilterComponent extends React.Component {
 							<Col sm={12} className="pull-left">
 								<Grid bsClass="margin-1x filter-group small-12">
 									<Grid bsClass="columns">
-							            <h5 className="bold margin-left-3x">Sort By</h5>
+							            <h5 className="bold margin-left-3x">Filter By</h5>
 				                        <ul rel="sort" className="small-12 no-bullet list-style-type-none">
 			                                <li className="margin-vert-1x">
 		                                		<Checkbox
