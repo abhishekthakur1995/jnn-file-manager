@@ -9,13 +9,16 @@ import _ from 'lodash'
 import axios from 'axios'
 import {CSVLink} from 'react-csv'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 class GetRecords extends React.Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			csvData: '',
+			downloadData: '',
 			filter: {
 				type: '',
 				month: '',
@@ -36,6 +39,9 @@ class GetRecords extends React.Component {
 		this.downloadData = this.downloadData.bind(this)
 		this.getDataBasedOnMonth = this.getDataBasedOnMonth.bind(this)
 		this.getDataForSpecificPeriod = this.getDataForSpecificPeriod.bind(this)
+		this.handlePdfGeneration = this.handlePdfGeneration.bind(this)
+		this.buildTableBody = this.buildTableBody.bind(this)
+		this.table = this.table.bind(this)
 	}
 
 	handleRadioChange(type) {
@@ -89,7 +95,7 @@ class GetRecords extends React.Component {
   		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getDataBasedOnSelectedMonth?month=${this.state.filter.month}&year=${this.state.filter.year}`, {headers})
       	.then(res => {
-	        this.setState({csvData : res.data.data})
+	        this.setState({downloadData : res.data.data})
       	})
   	}
 
@@ -97,8 +103,46 @@ class GetRecords extends React.Component {
   		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getDataBasedOnSelectedDuration?startDate=${this.state.filter.startDate}&endDate=${this.state.filter.endDate}`, {headers})
       	.then(res => {
-	        this.setState({csvData : res.data.data})
+	        this.setState({downloadData : res.data.data})
       	})
+  	}
+
+  	buildTableBody(data, columns) {
+  	    var body = []
+
+  	    body.push(columns);
+
+  	    _.forEach(data, function(row) {
+  	        var dataRow = [];
+  	        _.forEach(columns, function(column) {
+  	            dataRow.push(row[column].toString());
+  	        })
+
+  	        body.push(dataRow);
+  	    })
+
+  	    return body
+  	}
+
+  	table(data, columns) {
+  	    return {
+  	    	layout: 'lightHorizontalLines', // optional
+  	        table: {
+  	            headerRows: 1,
+  	            widths: [ '15%', '15%', '15%', '15%', '15%', '15%', '15%', '15%' ],
+  	            body: this.buildTableBody(data, columns)
+  	        }
+  	    }
+  	}
+
+  	handlePdfGeneration() {
+  		var pdfLayout = {
+  			pageSize: 'A2',
+  		    content: [
+  		        this.table(this.state.downloadData, ['APPLICANT_NAME', 'APPLICANT_ADDRESS', 'APPLICANT_CONTACT', 'BUILDING_NAME', 'BUILDING_ADDRESS', 'BUILDING_AREA', 'FILE_NUMBER', 'FILE_STATUS'])
+  		    ]
+  		}
+  		pdfMake.createPdf(pdfLayout).download()
   	}
 
 	render() {
@@ -221,14 +265,18 @@ class GetRecords extends React.Component {
 											</td>
 
 											<td width="80%" className="data-left-aligned">
-												{this.state.csvData &&
-													<CSVLink
-														data={this.state.csvData}
-												  		filename={`${this.state.filter.month}.csv`}
-												  		target="_blank"
-												  		className="traditional-link"> Download Excel
-													</CSVLink>
-												}
+											{this.state.downloadData && this.state.filter.downloadFormat === 'excel' &&
+												<CSVLink
+													data={this.state.downloadData}
+											  		filename={`${this.state.filter.month}.csv`}
+											  		target="_blank"
+											  		className="traditional-link"> Download Excel
+												</CSVLink>
+											}
+
+											{this.state.downloadData && this.state.filter.downloadFormat === 'pdf' &&
+												<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>Download Pdf</span>
+											}
 											</td>
 										</tr>
 

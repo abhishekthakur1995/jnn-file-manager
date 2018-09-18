@@ -61,6 +61,7 @@
         "lodash": "^4.17.10",
         "moment": "^2.22.2",
         "mysql": "^2.16.0",
+        "pdfmake": "^0.1.38",
         "react": "^16.4.1",
         "react-bootstrap": "^0.32.1",
         "react-breadcrumbs-dynamic": "^1.1.1",
