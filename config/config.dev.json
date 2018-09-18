@@ -1,5 +1,6 @@
 {
 	"baseUrl" : "http://localhost:3001/rest",
+	"defaultDateFormat" : "DD/MM/YYYY",
 	"pagination" : {
 		"pageSize" : 10,
 		"neighbourSize" : 2

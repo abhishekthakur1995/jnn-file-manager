@@ -2,6 +2,8 @@ import React from 'react'
 import { SplitButton, MenuItem, Checkbox } from 'react-bootstrap'
 import { EditRecordModal, DeleteRecordModal, ManageRecordModal } from './uiComponents/CommonComponent'
 import PropTypes from 'prop-types'
+import moment from 'moment'
+import config from 'config'
 
 class Record extends React.Component {
 	constructor(props) {
@@ -21,8 +23,7 @@ class Record extends React.Component {
 	      		7: false,
 	      		8: false,
 	      		9: false,
-	      		10: false,
-
+	      		10: false
     		}
 		}
 
@@ -104,6 +105,8 @@ class Record extends React.Component {
 
 	render() {
 		const record = this.props.singleRecord
+		const fileStatus = record.FILE_STATUS == 1 ? 'Approved' : (record.FILE_STATUS == 2 ? 'Rejected' : 'Pending')
+		const dateCreated = moment(record.CREATED).format(config.defaultDateFormat)
 		return (
 			<tr>
 				<td>
@@ -113,12 +116,13 @@ class Record extends React.Component {
 						onChange={(e) => { this.handleCheckBoxClick(this.props.index + 1, record.ID, e.target.checked) }} >
 					</Checkbox>
 				</td>
-			    <td>{record.APPLICANT_NAME}</td>
-			    <td>{record.APPLICANT_ADDRESS}</td>
-			    <td>{record.APPLICANT_CONTACT}</td>
-			    <td>{record.BUILDING_NAME}</td>
-			    <td>{record.FILE_NUMBER}</td>
-			    <td>{record.FILE_STATUS == 1 ? 'Approved' : (record.FILE_STATUS == 2 ? 'Rejected' : 'Pending')}</td>
+			    <td title={record.APPLICANT_NAME}>{record.APPLICANT_NAME}</td>
+			    <td title={record.APPLICANT_ADDRESS}>{record.APPLICANT_ADDRESS}</td>
+			    <td title={record.APPLICANT_CONTACT}>{record.APPLICANT_CONTACT}</td>
+			    <td title={record.BUILDING_NAME}>{record.BUILDING_NAME}</td>
+			    <td title={record.FILE_NUMBER}>{record.FILE_NUMBER}</td>
+			    <td title={fileStatus}>{fileStatus}</td>
+			    <td title={dateCreated}>{dateCreated}</td>
 			    <td>
 			    	<SplitButton title="Manage" data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
   						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>Edit</MenuItem>

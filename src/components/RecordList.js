@@ -316,6 +316,10 @@ class RecordList extends React.Component {
                      		</th>
                             <th>File Number</th>
                             <th>Current State</th>
+                           	<th
+                           		className={`cursor-pointer ${this.state.sortField === 'dateCreated' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+                        		onClick={() => this.sortField('dateCreated')}>Date Created
+                    		</th>
                             <th>Action</th>
                         </tr>
                     </thead>

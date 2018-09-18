@@ -12,6 +12,7 @@ const DB_FIELDS_CODE_MAPPING = {
 	'applicantContact'  : 'APPLICANT_CONTACT',
 	'applicantAddress'  : 'APPLICANT_ADDRESS',
 	'fileNumber'  : 'FILE_NUMBER',
+	'dateCreated'  : 'CREATED'
 }
 
 class Helper {
