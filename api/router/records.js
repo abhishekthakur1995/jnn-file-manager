@@ -79,11 +79,16 @@ records.get('/getRecords',
 		let totalCount = 0
 		let results = ''
 
+		let dataQuery = `SELECT * FROM ${process.env.FILE_RECORD_TBL} LIMIT ${offset}, ${limit}`
+		if(req.query.sortField && req.query.orderBy) {
+			dataQuery = `SELECT * FROM ${process.env.FILE_RECORD_TBL} ORDER BY ${helper.getDbFieldCodeFromName(req.query.sortField)} ${_.upperCase(req.query.orderBy)} LIMIT ${offset}, ${limit}`
+		}
+
 		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL}`, function(err, results, fields) {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+			connection.query(dataQuery, function(err, results, fields) {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 

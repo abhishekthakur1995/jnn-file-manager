@@ -24,7 +24,9 @@ class RecordList extends React.Component {
 			showFilter: false,
 			filterApplied: false,
 			sortFilters: [],
-			searchFilters: {}
+			searchFilters: {},
+			sortFieldCriteria: 'asc',
+			sortField: ''
 		}
 
 		this.markedRecord = []
@@ -41,6 +43,7 @@ class RecordList extends React.Component {
 		this.handleMultiAction = this.handleMultiAction.bind(this)
 		this.toggleFilter = this.toggleFilter.bind(this)
 		this.applyFilter = this.applyFilter.bind(this)
+		this.sortField = this.sortField.bind(this)
 	}
 
 	componentDidMount() {
@@ -123,7 +126,11 @@ class RecordList extends React.Component {
 		this.setState({ showLoading: true })
 		const { currentPage, pageLimit } = data
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.get(`${config.baseUrl}/getRecords?page=${currentPage}&limit=${pageLimit}`, {headers})
+		let queryUrl = `${config.baseUrl}/getRecords?page=${currentPage}&limit=${pageLimit}`
+		if (this.state.sortField) {
+			queryUrl += `&sortField=${this.state.sortField}&orderBy=${this.state.sortFieldCriteria}`
+		}
+		axios.get(queryUrl, {headers})
       	.then(res => {
 	        this.setState({
 	        	totalRecords: res.data.totalCount,
@@ -132,6 +139,17 @@ class RecordList extends React.Component {
 	        	currentPage
 	        })
       	})
+	}
+
+	sortField(sortField) {
+		if (this.state.sortField && this.state.sortField === sortField) {
+			this.setState({
+				sortFieldCriteria: (this.state.sortFieldCriteria === 'asc') ? 'desc' : 'asc'
+			})
+		}
+		this.setState({sortField}, () => {
+			this.handleInitialLoad({currentPage: 1, pageLimit: config.pagination.pageSize})
+		})
 	}
 
 	handleQuickSearch(searchTerm, data) {
@@ -280,10 +298,22 @@ class RecordList extends React.Component {
                         			checked={this.state.checkBoxDefaultStatus} >
                     			</Checkbox>
                     		</th>
-                            <th>Applicant Name</th>
-                            <th>Applicant Address</th>
-                            <th>Applicant Contact</th>
-                            <th>Building Name</th>
+                            <th
+                            	className={`cursor-pointer ${this.state.sortField === 'applicantName' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+                            	onClick={() => this.sortField('applicantName')}>Applicant Name
+                        	</th>
+                            <th
+                            	className={`cursor-pointer ${this.state.sortField === 'applicantAddress' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+                            	onClick={() => this.sortField('applicantAddress')}>Applicant Address
+                        	</th>
+                            <th
+                            	className={`cursor-pointer ${this.state.sortField === 'applicantContact' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+                            	onClick={() => this.sortField('applicantContact')}>Applicant Contact
+                        	</th>
+                            <th
+                            	className={`cursor-pointer ${this.state.sortField === 'buildingName' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+                         		onClick={() => this.sortField('buildingName')}>Building Name
+                     		</th>
                             <th>File Number</th>
                             <th>Current State</th>
                             <th>Action</th>
