@@ -137,13 +137,13 @@ records.post('/getFilteredData',
 			sortCriteria += `FILE_STATUS IN (${sortFilters})`
 		}
 
-		whereCriteria = `${searchCriteria} ${sortCriteria}`
+		whereCriteria = `WHERE ${searchCriteria} ${sortCriteria}`
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE ${whereCriteria}`, function(err, results, fields) {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} ${whereCriteria}`, function(err, results, fields) {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE ${whereCriteria} LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} ${whereCriteria} LIMIT ${offset}, ${limit}`, function(err, results, fields) {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
