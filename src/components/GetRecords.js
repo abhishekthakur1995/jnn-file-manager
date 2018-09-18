@@ -115,7 +115,11 @@ class GetRecords extends React.Component {
   	    _.forEach(data, function(row) {
   	        var dataRow = [];
   	        _.forEach(columns, function(column) {
-  	            dataRow.push(row[column].toString());
+  	        	if (column === 'CREATED') {
+  	        		dataRow.push(moment(row[column]).format(config.defaultDateTimeFormat).toString());
+  	        	} else {
+  	            	dataRow.push(row[column].toString());
+  	            }
   	        })
 
   	        body.push(dataRow);
@@ -126,7 +130,6 @@ class GetRecords extends React.Component {
 
   	table(data, columns) {
   	    return {
-  	    	layout: 'lightHorizontalLines', // optional
   	        table: {
   	            headerRows: 1,
   	            widths: [ '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%' ],
@@ -136,11 +139,30 @@ class GetRecords extends React.Component {
   	}
 
   	handlePdfGeneration() {
+  		pdfMake.fonts = {
+  		   	mangal: {
+	     		normal: 'mangal.ttf',
+	     		bold: 'mangal.ttf',
+  		     	italics: 'mangal.ttf',
+  		     	bolditalics: 'mangal.ttf'
+  		   	},
+  		   	roboto: {
+	     		normal: 'roboto.ttf',
+	     		bold: 'roboto.ttf',
+  		     	italics: 'roboto.ttf',
+  		     	bolditalics: 'roboto.ttf'
+  		   	}
+	   	}
   		var pdfLayout = {
   			pageSize: 'A2',
   		    content: [
   		        this.table(this.state.downloadData, ['APPLICANT_NAME', 'APPLICANT_ADDRESS', 'APPLICANT_CONTACT', 'BUILDING_NAME', 'BUILDING_ADDRESS', 'BUILDING_AREA', 'FILE_NUMBER', 'FILE_STATUS', 'CREATED', 'REMARK'])
-  		    ]
+  		    ],
+  		    defaultStyle: {
+  		        font: 'roboto',
+  		        fontSize: 12,
+  		        alignment: 'center'
+		    }
   		}
   		pdfMake.createPdf(pdfLayout).download()
   	}
