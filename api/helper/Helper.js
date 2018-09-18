@@ -17,11 +17,18 @@ const DB_FIELDS_CODE_MAPPING = {
 
 class Helper {
 
-	static getFileStatusCodeFromName = (codeName) => FILE_STATUS_CODE_MAPPING[codeName];
+	static getFileStatusCodeFromName(codeName) {
+	    return FILE_STATUS_CODE_MAPPING[codeName];
+	}
 
-	static convertTimestampToUnixTimestamp = (timestamp) => timestamp/1000;
+	static convertTimestampToUnixTimestamp(timestamp) {
+	    return timestamp/1000;
+	}
 
-	static getDbFieldCodeFromName = (codeName) => DB_FIELDS_CODE_MAPPING[codeName];
+	static getDbFieldCodeFromName(codeName) {
+	    return DB_FIELDS_CODE_MAPPING[codeName];
+	}
+	
 }
 
 module.exports = Helper
