@@ -1,6 +1,7 @@
 {
 	"baseUrl" : "http://filerecord-jnn-file-manager.193b.starter-ca-central-1.openshiftapps.com/rest",
 	"defaultDateFormat" : "DD/MM/YYYY",
+	"defaultDateTimeFormat" : "DD/MM/YYYY h:mm a",
 	"pagination" : {
 		"pageSize" : 10,
 		"neighbourSize" : 2

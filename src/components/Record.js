@@ -106,7 +106,7 @@ class Record extends React.Component {
 	render() {
 		const record = this.props.singleRecord
 		const fileStatus = record.FILE_STATUS == 1 ? 'Approved' : (record.FILE_STATUS == 2 ? 'Rejected' : 'Pending')
-		const dateCreated = moment(record.CREATED).format(config.defaultDateFormat)
+		const dateCreated = moment(record.CREATED).format(config.defaultDateTimeFormat)
 		return (
 			<tr>
 				<td>
