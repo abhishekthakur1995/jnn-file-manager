@@ -129,7 +129,7 @@ class GetRecords extends React.Component {
   	    	layout: 'lightHorizontalLines', // optional
   	        table: {
   	            headerRows: 1,
-  	            widths: [ '15%', '15%', '15%', '15%', '15%', '15%', '15%', '15%' ],
+  	            widths: [ '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%' ],
   	            body: this.buildTableBody(data, columns)
   	        }
   	    }
@@ -139,7 +139,7 @@ class GetRecords extends React.Component {
   		var pdfLayout = {
   			pageSize: 'A2',
   		    content: [
-  		        this.table(this.state.downloadData, ['APPLICANT_NAME', 'APPLICANT_ADDRESS', 'APPLICANT_CONTACT', 'BUILDING_NAME', 'BUILDING_ADDRESS', 'BUILDING_AREA', 'FILE_NUMBER', 'FILE_STATUS'])
+  		        this.table(this.state.downloadData, ['APPLICANT_NAME', 'APPLICANT_ADDRESS', 'APPLICANT_CONTACT', 'BUILDING_NAME', 'BUILDING_ADDRESS', 'BUILDING_AREA', 'FILE_NUMBER', 'FILE_STATUS', 'CREATED', 'REMARK'])
   		    ]
   		}
   		pdfMake.createPdf(pdfLayout).download()
