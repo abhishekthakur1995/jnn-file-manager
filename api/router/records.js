@@ -126,15 +126,18 @@ records.post('/getFilteredData',
 			return helper.getFileStatusCodeFromName(status)
 		})
 
-		if(!_.isEmpty(searchFilters)) {
-			searchFilters = `${helper.getDbFieldCodeFromName(searchFilters.queryField)} LIKE '%${searchFilters.searchTerm}%'`
+		if(!_.isEmpty(searchFilters.searchTerm)) {
+			searchCriteria = `${helper.getDbFieldCodeFromName(searchFilters.queryField)} LIKE '%${searchFilters.searchTerm}%'`
 		}
 
 		if(!_.isEmpty(sortFilters)) {
-			sortCriteria = `FILE_STATUS IN (${sortFilters})`
+			if(!_.isEmpty(searchFilters.searchTerm)) {
+				sortCriteria = 'AND '
+			}
+			sortCriteria += `FILE_STATUS IN (${sortFilters})`
 		}
 
-		whereCriteria = `${searchFilters} AND ${sortCriteria}`
+		whereCriteria = `${searchCriteria} ${sortCriteria}`
 
 		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE ${whereCriteria}`, function(err, results, fields) {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
