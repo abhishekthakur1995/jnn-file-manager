@@ -7,12 +7,12 @@ const FILE_STATUS_CODE_MAPPING = {
 }
 
 const DB_FIELDS_CODE_MAPPING = {
-	'buildingName'  : 'BUILDING_NAME',
-	'applicantName'  : 'APPLICANT_NAME',
-	'applicantContact'  : 'APPLICANT_CONTACT',
-	'applicantAddress'  : 'APPLICANT_ADDRESS',
-	'fileNumber'  : 'FILE_NUMBER',
-	'dateCreated'  : 'CREATED'
+	'buildingName'		: 	'BUILDING_NAME',
+	'applicantName'		: 	'APPLICANT_NAME',
+	'applicantContact'	: 	'APPLICANT_CONTACT',
+	'applicantAddress'  : 	'APPLICANT_ADDRESS',
+	'fileNumber'  		: 	'FILE_NUMBER',
+	'dateCreated'  		: 	'CREATED'
 }
 
 class Helper {
