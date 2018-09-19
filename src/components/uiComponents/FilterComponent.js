@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Row, Col, Checkbox, Button, ControlLabel, FormControl } from 'react-bootstrap'
 import { SearchFilterOptions } from './CommonComponent'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
+import _ from 'lodash/core'
 
 class FilterComponent extends React.Component {
 	constructor(props) {

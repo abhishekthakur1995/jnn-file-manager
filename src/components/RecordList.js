@@ -6,7 +6,7 @@ import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase,
 import PaginationComponent from './uiComponents/PaginationComponent'
 import FilterComponent from './uiComponents/FilterComponent'
 import config from 'config'
-import _ from 'lodash'
+import _ from 'lodash/core'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 
 class RecordList extends React.Component {

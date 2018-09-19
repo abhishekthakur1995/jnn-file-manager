@@ -9,7 +9,7 @@ import { required, email } from './helpers/ValidationHelper'
 import { Redirect } from 'react-router-dom'
 import { userAuth } from './services/AuthService'
 import AlertComponent from './uiComponents/AlertComponent'
-import _ from 'lodash'
+import _ from 'lodash/core'
 import config from 'config'
 
 class LoginForm extends React.Component {
