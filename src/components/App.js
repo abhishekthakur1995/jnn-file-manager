@@ -11,16 +11,12 @@ class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.doRedirectToHome = this.doRedirectToHome.bind(this)
-		this.state = {
-			initRedirection:false
-		}
+		this.state = { initRedirection:false }
 	}
 
 	doRedirectToHome() {
 		// Used to redirect to home after logout is clicked in navbar
-		this.setState({
-			initRedirection:true
-		})
+		this.setState({ initRedirection:true })
 	}
 
 	render() {

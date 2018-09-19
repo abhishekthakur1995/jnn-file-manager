@@ -35,6 +35,12 @@ class LoginForm extends React.Component {
 		this.hideAlert = this.hideAlert.bind(this)
 	}
 
+	UNSAFE_componentWillMount() {
+		if (userAuth.isUserAuthenticated()) {
+			this.setState({redirectToReferrer: true})
+		}
+	}
+
 	handleChange(event) {
         const element = event.nativeEvent.target
         this.setState((prevState) => ({
