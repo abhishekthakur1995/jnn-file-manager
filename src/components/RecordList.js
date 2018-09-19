@@ -6,7 +6,7 @@ import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase,
 import PaginationComponent from './uiComponents/PaginationComponent'
 import FilterComponent from './uiComponents/FilterComponent'
 import config from 'config'
-import _ from 'lodash/core'
+import _ from 'underscore'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 
 class RecordList extends React.Component {
@@ -210,9 +210,11 @@ class RecordList extends React.Component {
 				this.markedRecord.push(id)
 			}
 		} else {
-			_.remove(this.markedRecord, function(recordId) {
-			    return recordId === id
-			})
+			this.markedRecord = _.without(this.markedRecord,
+				_.find(this.markedRecord, function(recordId) {
+					return recordId === id
+				}
+			))
 		}
 	}
 

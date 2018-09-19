@@ -9,8 +9,6 @@ module.exports = {
 		vendor: 
 		[
 			"axios",
-			"lodash/core",
-			"lodash.omit",
 			"pdfmake/build/pdfmake", 
 			"pdfmake/build/vfs_fonts", 
 			"react", 
@@ -28,6 +26,7 @@ module.exports = {
 			"react-validation/build/button",
 			"react-validation/build/select",
 			"react-validation/build/textarea",
+			"underscore"
 		],
 		app:
 		[

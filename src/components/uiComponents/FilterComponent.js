@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Row, Col, Checkbox, Button, ControlLabel, FormControl } from 'react-bootstrap'
 import { SearchFilterOptions } from './CommonComponent'
 import PropTypes from 'prop-types'
-import _ from 'lodash/core'
+import _ from 'underscore'
 
 class FilterComponent extends React.Component {
 	constructor(props) {
@@ -55,7 +55,8 @@ class FilterComponent extends React.Component {
 
 	handleFilterParams() {
 		const { formStatus } = this.state
-		const sortFilters = _.keys(_.pickBy(formStatus))
+		const sortFilters = _.keys(_.pick(formStatus, (status) =>  status === true ))
+
 		const searchFilters = {'searchTerm': this.state.searchTerm, 'queryField': this.state.queryField}
 
 		localStorage.setItem('sortFilters', JSON.stringify(sortFilters))
@@ -66,7 +67,7 @@ class FilterComponent extends React.Component {
 
 	resetAllFilters() {
 		let formStatus = this.state.formStatus
-		formStatus = _.mapValues(formStatus, () => false)
+		formStatus = _.mapObject(formStatus, () => false)
 		this.setState({
 			formStatus,
 			searchTerm: '',

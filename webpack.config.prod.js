@@ -6,6 +6,9 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 
 module.exports = merge(common, {
 	plugins: [
+		new BundleAnalyzerPlugin({
+			analyzerMode: 'server'
+		}),
 		new CleanWebpackPlugin(['dist']),
     	new AppCachePlugin({
     		exclude: ['.htaccess']
