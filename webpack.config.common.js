@@ -20,7 +20,6 @@ module.exports = {
 			"react-router-bootstrap/lib",
 			"react-chartjs-2",
 			"react-csv",
-			"react-icons/fa",
 			"react-breadcrumbs-dynamic", 
 			"react-datepicker",
 			"validator",
