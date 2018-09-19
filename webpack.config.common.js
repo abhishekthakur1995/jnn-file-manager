@@ -106,9 +106,6 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new BundleAnalyzerPlugin({
-			analyzerMode: 'server'
-		}),
 		new HTMLWebpackPlugin({
       		title: 'File Manager',
       		filename: 'index.html',
