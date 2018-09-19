@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Grid } from 'react-bootstrap'
-import { InfoBlock, ChartHolder, PageHead } from './uiComponents/CommonComponent'
+import { InfoBlock, ChartHolder, PageHead, LoadingSpinner } from './uiComponents/CommonComponent'
 import { Doughnut } from 'react-chartjs-2'
 import _ from 'underscore'
 import config from 'config'
@@ -14,26 +14,29 @@ class InfoBoard extends React.Component {
 		super(props)
 
 		this.state = {
-			dashboardData:{}
+			dashboardData:{},
+			showLoading: false
 		}
 	}
 
 	componentDidMount() {
+		this.setState({ showLoading:true })
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getDashboardData`, {headers})
       	.then(res => {
-	        this.setState({
-	        	dashboardData: res.data.data[0]
-	        })
+  			this.setState({
+  				dashboardData: res.data.data[0],
+  				showLoading: false
+  			})
       	})
 	}
 
 	render() {
 		const { dashboardData } = this.state
 
-		if (_.isEmpty(dashboardData)) {
-		  return <div>No data available</div>
-		}
+		// if (_.isEmpty(dashboardData)) {
+		//   return <div>No data available</div>
+		// }
 
 		const chartData = {
 			labels: ['Received', 'Approved', 'Pending'],
@@ -48,6 +51,7 @@ class InfoBoard extends React.Component {
 
 		return (
 			<Grid bsClass="width-10x pull-left">
+				{this.state.showLoading && <LoadingSpinner />}
 				<PageHead />
 				<Grid bsClass="width-10x pull-left">
 					<InfoBlock title="Received" img={received} value={dashboardData.RECEIVED} />
