@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Grid } from 'react-bootstrap'
 import { InfoBlock, ChartHolder, PageHead, LoadingSpinner } from './uiComponents/CommonComponent'
 import { Doughnut } from 'react-chartjs-2'
-import _ from 'underscore'
 import config from 'config'
 import approved from './../../public/img/approved.png'
 import received from './../../public/img/received.png'
@@ -33,10 +32,6 @@ class InfoBoard extends React.Component {
 
 	render() {
 		const { dashboardData } = this.state
-
-		// if (_.isEmpty(dashboardData)) {
-		//   return <div>No data available</div>
-		// }
 
 		const chartData = {
 			labels: ['Received', 'Approved', 'Pending'],
