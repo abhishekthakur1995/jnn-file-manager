@@ -3,6 +3,7 @@ const common = require('./webpack.config.common.js')
 const AppCachePlugin = require('appcache-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = merge(common, {
 	plugins: [
