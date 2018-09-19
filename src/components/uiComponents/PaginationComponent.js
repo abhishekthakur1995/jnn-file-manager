@@ -1,9 +1,18 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash/core'
 
 const LEFT_PAGE = 'LEFT'
 const RIGHT_PAGE = 'RIGHT'
+
+const range = (from, to, step = 1) => {
+    let i = from;
+    const range = [];
+    while (i <= to) {
+        range.push(i);
+        i += step;
+    }
+    return range;
+}
 
 class PaginationComponent extends Component {
 
@@ -73,7 +82,7 @@ class PaginationComponent extends Component {
             const startPage = leftBound > 2 ? leftBound : 2
             const endPage = rightBound < beforeLastPage ? rightBound : beforeLastPage
 
-            pages = _.range(startPage, endPage + 1)
+            pages = range(startPage, endPage)
 
             const pagesCount = pages.length
             const singleSpillOffset = totalNumbers - pagesCount - 1
@@ -85,10 +94,10 @@ class PaginationComponent extends Component {
             const rightSpillPage = RIGHT_PAGE
 
             if (leftSpill && !rightSpill) {
-                const extraPages = _.range(startPage - singleSpillOffset, startPage)
+                const extraPages = range(startPage - singleSpillOffset, startPage - 1)
                 pages = [leftSpillPage, ...extraPages, ...pages]
             } else if (!leftSpill && rightSpill) {
-                const extraPages = _.range(endPage + 1, endPage + singleSpillOffset + 1)
+                const extraPages = range(endPage + 1, endPage + singleSpillOffset)
                 pages = [...pages, ...extraPages, rightSpillPage]
             } else if (leftSpill && rightSpill) {
                 pages = [leftSpillPage, ...pages, rightSpillPage]
@@ -97,7 +106,7 @@ class PaginationComponent extends Component {
             return [1, ...pages, totalPages]
         }
 
-        return _.range(1, totalPages + 1)
+        return range(1, totalPages)
     }
 
     render() {

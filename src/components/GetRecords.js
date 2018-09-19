@@ -9,8 +9,8 @@ import _ from 'lodash/core'
 import axios from 'axios'
 import {CSVLink} from 'react-csv'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
+import pdfMake from "pdfmake/build/pdfmake"
+import pdfFonts from "pdfmake/build/vfs_fonts"
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 class GetRecords extends React.Component {

@@ -6,7 +6,30 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = {
 	entry: {
-		vendor: ["react", "react-dom", "react-bootstrap", "react-chartjs-2", "lodash/core"],
+		vendor: 
+		[
+			"axios",
+			"lodash/core",
+			"lodash.omit",
+			"pdfmake/build/pdfmake", 
+			"pdfmake/build/vfs_fonts", 
+			"react", 
+			"react-dom",
+			"react-bootstrap",
+			"react-router",
+			"react-router-bootstrap/lib",
+			"react-chartjs-2",
+			"react-csv",
+			"react-icons/fa",
+			"react-breadcrumbs-dynamic", 
+			"react-datepicker",
+			"validator",
+			"react-validation/build/form",
+			"react-validation/build/input",
+			"react-validation/build/button",
+			"react-validation/build/select",
+			"react-validation/build/textarea",
+		],
 		app:
 		[
 			"./src/index.js",
