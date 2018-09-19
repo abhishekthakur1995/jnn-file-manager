@@ -2,10 +2,11 @@ const webpack = require("webpack")
 const path = require("path")
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
 	entry: {
-		vendor: ["react", "react-dom", "react-bootstrap", "react-chartjs-2"],
+		vendor: ["react", "react-dom", "react-bootstrap", "react-chartjs-2", "lodash/core"],
 		app:
 		[
 			"./src/index.js",
@@ -84,6 +85,9 @@ module.exports = {
 		]
 	},
 	plugins: [
+		new BundleAnalyzerPlugin({
+			analyzerMode: 'server'
+		}),
 		new HTMLWebpackPlugin({
       		title: 'File Manager',
       		filename: 'index.html',
