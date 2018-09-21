@@ -79,13 +79,11 @@ class Import extends React.Component {
 
 				<Dropzone
 					className="dz-default"
-					acceptClassName="accept"
-					rejectClassName="dzreject"
 					accept=".xlsx"
 					multiple={false}
 					onDrop={(files) => this.onDrop(files)}>
 						<Grid bsClass="dzinfo">
-							<span>Try dropping some files here, or click to select files to upload.</span>
+							<span>Try dropping some files here, or click to select files to upload. <span className="highlight">Only valid excel files (.xlsx) will be accepted</span></span>
 							<Clearfix />
 
 							<Button bsStyle="default" className="dzuploadbtn">
