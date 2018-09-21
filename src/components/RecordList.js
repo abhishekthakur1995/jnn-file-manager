@@ -210,7 +210,7 @@ class RecordList extends React.Component {
 		// callback is used for removing all marked records when the select all checkbox is set to false
 		this.setState({ checkBoxDefaultStatus: !this.state.checkBoxDefaultStatus }, () => {
 			if (!this.state.checkBoxDefaultStatus) {
-				this.markedRecord = [];
+				this.markedRecord = []
 			}
 		})
 	}
