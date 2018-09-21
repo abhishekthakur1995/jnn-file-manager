@@ -2,10 +2,16 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
+const session = require('express-session')
 const server = express()
 require('dotenv').config()
 
 // USE BODY PARSER 
+server.use(session({
+	secret: 'bryanCranston',
+	resave: false,
+  	saveUninitialized: true
+}))
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: false }))
 server.use(fileUpload())

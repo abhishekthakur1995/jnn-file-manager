@@ -62,6 +62,7 @@ users.post('/login',
 						token = jwt.sign(JSON.parse(JSON.stringify(results[0])), process.env.SECRET_KEY, {
 				 			expiresIn: parseInt(process.env.TOKEN_EXPIRY_TIME)
 						})
+						req.session[token] = results[0].ROLE
 						return res.status(200).json({message : 'User verified', 'userRole': results[0].ROLE , token: token, validUpto : Date.now() + parseInt(process.env.TOKEN_EXPIRY_TIME), success : true})
 					} else {
 						return res.status(200).json({message : 'Email or Password does not match', token : token, success : false})
