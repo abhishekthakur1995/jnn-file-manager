@@ -59,6 +59,7 @@ class LoginForm extends React.Component {
 			password: this.state.fields.password
 		}).then(res => {
         	if (!_.isEmpty(res.data.token)) {
+        		localStorage.setItem('userType', res.data.userRole)
         		this.authenticate(res.data.token, res.data.validUpto)
         	} else {
         		this.setState({
@@ -75,16 +76,12 @@ class LoginForm extends React.Component {
 
   	authenticate(authToken, validUpto) {
   	    userAuth.authenticate(authToken, validUpto, () => {
-      		this.setState({
-  	        	redirectToReferrer: true
-  	      	})
+      		this.setState({ redirectToReferrer: true })
   	    })
   	}
 
   	hideAlert() {
-  		this.setState({
-        	showAlert: false
-      	})
+  		this.setState({ showAlert: false })
   	}
 
 	render() {

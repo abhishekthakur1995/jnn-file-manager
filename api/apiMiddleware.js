@@ -11,7 +11,7 @@ function checkAuth (req, res, next) {
             } else {
                 next();
             }
-        });
+        })
     } else {
         res.status(400).json({message : 'Please send a token'})
     }
