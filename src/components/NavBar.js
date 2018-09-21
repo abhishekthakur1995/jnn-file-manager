@@ -1,4 +1,6 @@
 import React from 'react'
+import axios from 'axios'
+import config from 'config'
 import { Navbar, NavItem, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { userAuth } from './services/AuthService'
@@ -13,8 +15,14 @@ class NavBar extends React.Component {
     }
 
     logout() {
-        localStorage.setItem('authToken', '')
-        this.props.doRedirectToHome()
+        axios.post(`${config.baseUrl}/logout`)
+        .then(res => {
+            if (res.data.success === true) {
+                localStorage.setItem('authToken', '')
+                localStorage.setItem('userRole', '')
+                this.props.doRedirectToHome()
+            }
+        })
     }
 
     render() {

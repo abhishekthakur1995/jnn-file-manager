@@ -75,6 +75,19 @@ users.post('/login',
 	}
 )
 
+/* 	path: /logout
+ *	type: POST 
+ */
+
+users.post('/logout', (req, res) => {
+	req.session.destroy(function(err) {
+	  	if (err) {
+    		return res.status(200).json({message : 'Unable to logout', err, success : false})
+    	}
+    	res.status(200).json({message : 'user successfully logout', success : true})
+	})
+})
+
  /*path: /downloadSampleExcel
   *type: GET
   */
