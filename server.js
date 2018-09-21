@@ -1,12 +1,14 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const fileUpload = require('express-fileupload')
 const server = express()
 require('dotenv').config()
 
 // USE BODY PARSER 
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: false }))
+server.use(fileUpload())
 
 // USE CORS
 server.use(cors())

@@ -337,3 +337,25 @@ SearchFilterOptions.propTypes = {
     onClick: PropTypes.func,
     value: PropTypes.string
 }
+
+export const ImportSummary = (props) => (
+    <section className="export-summary">
+        <h3 className="margin-top-0x margin-left-2x"> <u>Import Summary</u> </h3>
+        <ul>
+            <li> Total records in sheet: {props.totalRecords} </li>
+            <li> Number of records successfully inserted: {props.recordsInserted} </li>
+            <li> Number of records which were not inserted : {props.errorRecords.length} </li>
+
+            <ul className="error"> {props.errorRecords.map((errorRecord, index) => (
+                    <li className="no-margin-bottom-0x" key={index}>File Number: {errorRecord}</li>
+                ))}
+            </ul>
+        </ul>
+    </section>
+)
+
+ImportSummary.propTypes = {
+    totalRecords: PropTypes.number,
+    recordsInserted: PropTypes.number,
+    errorRecords: PropTypes.array
+}

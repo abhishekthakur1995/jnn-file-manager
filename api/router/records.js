@@ -3,7 +3,10 @@ const records = express.Router()
 const connection = require('../../db/dbConnection')
 const { check, validationResult } = require('express-validator/check')
 const helper = require('../helper/Helper.js')
+const excel = require('xlsx')
 const _ = require('lodash')
+const fs = require('fs')
+
 
 /* 	path: /register
  *	type: POST 
@@ -294,7 +297,7 @@ records.get('/getDashboardData', function(req, res) {
  *	type: GET
  */
 
- records.get('/getDataBasedOnSelectedMonth', 
+records.get('/getDataBasedOnSelectedMonth', 
  	[
  		check('month').not().isEmpty().withMessage('Please select a month'),
  		check('year').not().isEmpty().withMessage('Please select an year')
@@ -316,7 +319,7 @@ records.get('/getDashboardData', function(req, res) {
   *	type: GET
   */
 
-  records.get('/getDataBasedOnSelectedDuration', 
+records.get('/getDataBasedOnSelectedDuration', 
   	[
   		check('startDate').not().isEmpty().withMessage('Please select a to date'),
   		check('endDate').not().isEmpty().withMessage('Please select a from date')
@@ -333,6 +336,57 @@ records.get('/getDashboardData', function(req, res) {
  			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
  		})
  	}
+)
+
+
+
+ /*path: /getDataBasedOnSelectedDuration
+  *type: GET
+  */
+
+records.post('/upload', (req, res) => {
+	let uploadFile = req.files.file
+
+	uploadFile.mv(`${__dirname}/../../upload/${req.body.filename}`, function(err) {
+	    if (err) {
+      		return res.status(500).json({file: '', message : err, success : false})
+	    }
+
+	    // send response		
+	    res.status(200).json({file: `${req.body.filename}`, message : 'Records fetched successfully', success : true})
+  	})
+})
+
+ /*path: /importDataToDB
+  *type: GET
+  */
+
+records.post('/importDataToDB',
+	[
+		check('fileName').not().isEmpty().withMessage('No file name was sent')
+	],
+	(req, res) => {
+		var workbook = excel.readFileSync(`${__dirname}/../../upload/${req.body.fileName}`)
+  		workbook.SheetNames.forEach(function(sheetName) {
+    		var data = excel.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
+    		if (data.length > 0) {
+    			let errorRecords = []
+    			data.map((singleData, index) => {
+    				connection.query(`INSERT INTO ${process.env.FILE_RECORD_TBL} SET ?`, singleData, function(err, results, fields) {
+    					if (err) {
+    						errorRecords.push(singleData.FILE_NUMBER)
+    					}
+    					if(index === data.length - 1) {
+    						fs.unlink(`${__dirname}/../../upload/${req.body.fileName}`)
+    						const recordsInserted = data.length - errorRecords.length
+    						const totalRecords = data.length
+    						res.status(200).json({message : 'Record exported successfully', saved: true, totalRecords, recordsInserted, errorRecords})
+    					}
+    				})
+    			})
+	    	}
+	  	})
+	}
 )
 
 module.exports = records

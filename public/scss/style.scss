@@ -498,3 +498,45 @@ ul {
         }
     }
 }
+
+.import-records {
+    @mixin default {
+        width: 100%;
+        height: 150px;
+        border-width: 2px;
+        border-style: dashed;
+        border-radius: 5px;
+    }
+
+    .dz-default {
+        @include default
+    }
+    .dzaccept {
+        @include default
+        border-color: green;
+    }
+    .dzreject {
+        @include default
+        border-color: red;
+    }
+    .dzinfo {
+        margin-left: 25em;
+        margin-top: 3.5em;
+    }
+    .dzuploadbtn {
+        margin-top: 10px;
+        width: 20%;
+        margin-left: 8em;
+    }
+    .dzuploadedfilename {
+        margin-left: 10.8em;
+        margin-top: 3px;
+    }
+    .export-summary {
+        border: 1px solid #ccc;
+        width: 40%;
+        float: left;
+        margin-top: 20px;
+        padding: 10px;
+    }
+}

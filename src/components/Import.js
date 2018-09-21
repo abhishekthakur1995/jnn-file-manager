@@ -1,0 +1,107 @@
+import React from 'react'
+import { Grid, Button, Glyphicon, Clearfix } from 'react-bootstrap'
+import { PageHead, LoadingSpinner, ImportSummary } from './uiComponents/CommonComponent'
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import Dropzone from 'react-dropzone'
+import axios from 'axios'
+import config from 'config'
+
+class Import extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.totalRecords = 0
+		this.recordsInserted = 0
+		this.errorRecords = []
+
+		this.state = {
+			fileUpload: false,
+			uploadedFileName: '',
+			showImportSummary: false,
+			showLoading: false
+		}
+
+		this.onDrop = this.onDrop.bind(this)
+		this.onImport = this.onImport.bind(this)
+	}
+
+	onDrop(acceptedFiles) {
+	    let data = new FormData()
+	    data.append('file', acceptedFiles[0])
+	    data.append('filename', acceptedFiles[0].name)
+
+	    axios({
+	        method: 'post',
+	        url: `${config.baseUrl}/upload`,
+	        data: data,
+	        headers: {'Authorization': localStorage.getItem('authToken')},
+	        config: { headers: {'Content-Type': 'multipart/form-data' }}
+        }).then(res => {
+            if (res.data.success === true && res.data.file) {
+            	this.setState({
+            		fileUpload: true,
+            		uploadedFileName: res.data.file,
+            		showImportSummary: false
+            	})
+            }
+        })
+	}
+
+	onImport() {
+		this.setState({ showLoading: true })
+		const headers = { 'Authorization': localStorage.getItem('authToken') }
+		axios.post(`${config.baseUrl}/importDataToDB`, {fileName: this.state.uploadedFileName}, {headers})
+      	.then(res => {
+      		this.totalRecords = res.data.totalRecords
+      		this.recordsInserted = res.data.recordsInserted
+      		this.errorRecords = res.data.errorRecords
+
+      		this.setState({
+      			fileUpload: false,
+      			uploadedFileName: '',
+      			showImportSummary:true,
+      			showLoading: false
+      		})
+      	})
+	}
+
+	render() {
+		return (
+			<Grid bsClass="import-records">
+				<BreadcrumbsItem glyph='import' to={'/dashboard/import'}> Import </BreadcrumbsItem>
+				<PageHead title="Import" />
+				{this.state.showLoading && <LoadingSpinner />}
+
+				<Dropzone
+					className="dz-default"
+					acceptClassName="accept"
+					rejectClassName="dzreject"
+					accept=".xlsx"
+					multiple={false}
+					onDrop={(files) => this.onDrop(files)}>
+						<Grid bsClass="dzinfo">
+							<span>Try dropping some files here, or click to select files to upload.</span>
+							<Clearfix />
+
+							<Button bsStyle="default" className="dzuploadbtn">
+								<Glyphicon glyph="upload" /> Upload File
+							</Button>
+							<Clearfix />
+
+							<p className="dzuploadedfilename">{this.state.uploadedFileName}</p>
+						</Grid>
+				</Dropzone>
+
+				{this.state.showImportSummary && <ImportSummary totalRecords={this.totalRecords} recordsInserted={this.recordsInserted} errorRecords={this.errorRecords} />}
+
+				{this.state.fileUpload &&
+					<Button bsStyle="primary" className="margin-top-2x width-2x" onClick={this.onImport}>
+						<Glyphicon glyph="import" /> Import Data
+					</Button>
+				}
+			</Grid>
+		)
+	}
+}
+
+export default Import
