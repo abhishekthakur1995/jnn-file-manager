@@ -23,6 +23,7 @@ class Import extends React.Component {
 
 		this.onDrop = this.onDrop.bind(this)
 		this.onImport = this.onImport.bind(this)
+		this.downloadSampleExcel = this.downloadSampleExcel.bind(this)
 	}
 
 	onDrop(acceptedFiles) {
@@ -65,11 +66,15 @@ class Import extends React.Component {
       	})
 	}
 
+	downloadSampleExcel() {
+		window.open(`${config.baseUrl}/downloadSampleExcel`);
+	}
+
 	render() {
 		return (
 			<Grid bsClass="import-records">
 				<BreadcrumbsItem glyph='import' to={'/dashboard/import'}> Import </BreadcrumbsItem>
-				<PageHead title="Import" />
+				<PageHead title="Import" downloadSampleExcel={<span onClick={this.downloadSampleExcel}> Download Sample Excel<Glyphicon className="fs20" glyph="download" /></span>} />
 				{this.state.showLoading && <LoadingSpinner />}
 
 				<Dropzone

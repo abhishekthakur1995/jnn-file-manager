@@ -341,7 +341,7 @@ records.get('/getDataBasedOnSelectedDuration',
 
 
  /*path: /getDataBasedOnSelectedDuration
-  *type: GET
+  *type: POST
   */
 
 records.post('/upload', (req, res) => {
@@ -358,7 +358,7 @@ records.post('/upload', (req, res) => {
 })
 
  /*path: /importDataToDB
-  *type: GET
+  *type: POST
   */
 
 records.post('/importDataToDB',

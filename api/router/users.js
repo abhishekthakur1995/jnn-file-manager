@@ -74,4 +74,15 @@ users.post('/login',
 	}
 )
 
+ /*path: /downloadSampleExcel
+  *type: GET
+  */
+
+users.get('/downloadSampleExcel', (req, res) => {
+	const sampleExcel = `${__dirname}/../../upload/sampleExcel/data.xlsx`
+	res.setHeader('Content-disposition', 'attachment; filename=data.xlsx')
+	res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+	res.download(sampleExcel)
+})
+
 module.exports = users

@@ -22,6 +22,7 @@ export const PageHead = (props) => {
                     <Grid bsClass="pull-left padding-vert-5x">{props.filter}</Grid>
                     <Grid bsClass="pull-left padding-vert-7x">{props.quickSearch}</Grid>
                     <Grid bsClass="pull-left margin-top-2x">{props.pagination}</Grid>
+                    <Grid bsClass="pull-left margin-top-2x cursor-pointer" title="Download Sample Excel">{props.downloadSampleExcel}</Grid>
                 </Col>
             </Grid>
     	</Grid>
@@ -32,7 +33,8 @@ PageHead.propTypes = {
     title: PropTypes.string,
     pagination: PropTypes.object,
     quickSearch: PropTypes.object,
-    filter: PropTypes.object
+    filter: PropTypes.object,
+    downloadSampleExcel: PropTypes.element
 }
 
 export const InfoBlock = (props) => {
