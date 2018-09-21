@@ -240,13 +240,19 @@ export const TableFunctionalityBase = (props) => {
                 onClick={() => props.onReject('reject')} >
                 <Grid componentClass="span" bsClass="">Reject</Grid>
             </Glyphicon>
+
+            <FormControl bsClass="pageSize" componentClass="select" onChange={(e) => { props.onPageSizeChange(e.target.value) }}>
+                {[10, 20, 30, 40, 50].map((pageSize) => <option key={pageSize} value={pageSize}>{pageSize}</option>)}
+            </FormControl>
+            <span className="margin-left-1x">results per page</span>
         </Grid>
     )
 }
 
 TableFunctionalityBase.propTypes = {
     onApprove: PropTypes.func,
-    onReject: PropTypes.func
+    onReject: PropTypes.func,
+    onPageSizeChange: PropTypes.func
 }
 
 export const FilterButton = (props) => {

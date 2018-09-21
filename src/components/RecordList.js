@@ -26,10 +26,13 @@ class RecordList extends React.Component {
 			sortFilters: [],
 			searchFilters: {},
 			sortFieldCriteria: 'asc',
-			sortField: ''
+			sortField: '',
+			customPageSizeApplied: false,
+			pageSize: config.pagination.pageSize
 		}
 
 		this.markedRecord = []
+		this.appliedPageSize = 10
 
 		this.handleRecordUpdate = this.handleRecordUpdate.bind(this)
 		this.handleRecordDelete = this.handleRecordDelete.bind(this)
@@ -44,6 +47,7 @@ class RecordList extends React.Component {
 		this.toggleFilter = this.toggleFilter.bind(this)
 		this.applyFilter = this.applyFilter.bind(this)
 		this.sortField = this.sortField.bind(this)
+		this.handlePageSizeChange = this.handlePageSizeChange.bind(this)
 	}
 
 	componentDidMount() {
@@ -51,11 +55,18 @@ class RecordList extends React.Component {
 		localStorage.setItem('sortFilters', null)
 		localStorage.setItem('searchFilters', null)
 
+		this.appliedPageSize = this.state.pageSize
 		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		axios.get(`${config.baseUrl}/getCountOfAllRecords`, {headers})
       	.then(res => {
 	        this.setState({ totalRecords: res.data.data[0].count })
       	})
+	}
+
+	componentDidUpdate() {
+		if (this.state.customPageSizeApplied) {
+			this.appliedPageSize = this.state.pageSize
+		}
 	}
 
 	componentWillUnmount() {
@@ -148,7 +159,7 @@ class RecordList extends React.Component {
 			})
 		}
 		this.setState({sortField}, () => {
-			this.handleInitialLoad({currentPage: 1, pageLimit: config.pagination.pageSize})
+			this.handleInitialLoad({currentPage: 1, pageLimit: this.appliedPageSize})
 		})
 	}
 
@@ -157,7 +168,7 @@ class RecordList extends React.Component {
 			this.setState({ showLoading: true })
 			const page = data && data.currentPage || this.state.currentPage
 			const headers = { 'Authorization': localStorage.getItem('authToken') }
-			axios.post(`${config.baseUrl}/getSearchResults`, {searchTerm: searchTerm, page, limit: config.pagination.pageSize}, {headers})
+			axios.post(`${config.baseUrl}/getSearchResults`, {searchTerm: searchTerm, page, limit: this.appliedPageSize}, {headers})
 	      	.then(res => {
 		        this.setState({
 		        	totalRecords: res.data.totalCount,
@@ -172,7 +183,7 @@ class RecordList extends React.Component {
 
 	removeQuickSearch() {
 		this.setState({ quickSearchEnabled: false })
-		this.handleInitialLoad({currentPage: 1, pageLimit: config.pagination.pageSize})
+		this.handleInitialLoad({currentPage: 1, pageLimit: this.appliedPageSize})
 	}
 
 	applyFilter(sortFilters, searchFilters, data) {
@@ -180,7 +191,7 @@ class RecordList extends React.Component {
 			this.setState({ showLoading: true })
 			const page = data && data.currentPage || this.state.currentPage
 			const headers = { 'Authorization': localStorage.getItem('authToken') }
-			axios.post(`${config.baseUrl}/getFilteredData`, { page, limit: config.pagination.pageSize, sortFilters, searchFilters }, {headers})
+			axios.post(`${config.baseUrl}/getFilteredData`, { page, limit: this.appliedPageSize, sortFilters, searchFilters }, {headers})
 	      	.then(res => {
 		        this.setState({
 		        	totalRecords: res.data.totalCount,
@@ -238,6 +249,12 @@ class RecordList extends React.Component {
 		}
 	}
 
+	handlePageSizeChange(pageSize) {
+		this.setState({ customPageSizeApplied: true, pageSize: parseInt(pageSize) }, () => {
+			this.handleInitialLoad({currentPage: 1, pageLimit: this.appliedPageSize})
+		})
+	}
+
 	toggleFilter() {
 		this.setState({ showFilter: !this.state.showFilter })
 	}
@@ -267,7 +284,7 @@ class RecordList extends React.Component {
 			(
 				<PaginationComponent
 					totalRecords={this.state.totalRecords}
-            		pageLimit={config.pagination.pageSize}
+            		pageLimit={this.appliedPageSize}
             		pageNeighbours={config.pagination.neighbourSize}
             		onPageChanged={this.onPageChanged}
 				/>
@@ -334,6 +351,7 @@ class RecordList extends React.Component {
 				{this.state.totalRecords > 0 && <TableFunctionalityBase
 					onValidate={this.handleValidateAll}
 					onApprove={this.handleMultiAction}
+					onPageSizeChange={this.handlePageSizeChange}
 					onReject={this.handleMultiAction} /> }
 			</Grid>
 		)
