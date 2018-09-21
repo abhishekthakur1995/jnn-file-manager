@@ -380,10 +380,12 @@ records.post('/importDataToDB',
     						fs.unlink(`${__dirname}/../../upload/${req.body.fileName}`)
     						const recordsInserted = data.length - errorRecords.length
     						const totalRecords = data.length
-    						res.status(200).json({message : 'Record exported successfully', saved: true, totalRecords, recordsInserted, errorRecords})
+    						return res.status(200).json({message : 'Record exported successfully', saved: true, totalRecords, recordsInserted, errorRecords})
     					}
     				})
     			})
+	    	} else {
+	    		return res.status(200).json({message : 'File contained no data', saved: true, totalRecords: 0, recordsInserted: 0, errorRecords: []})
 	    	}
 	  	})
 	}
