@@ -8,6 +8,8 @@ import approved from './../../public/img/approved.png'
 import received from './../../public/img/received.png'
 import pending from './../../public/img/pending.png'
 
+axios.defaults.withCredentials = true
+
 class InfoBoard extends React.Component {
 	constructor(props) {
 		super(props)

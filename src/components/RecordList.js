@@ -9,6 +9,8 @@ import config from 'config'
 import _ from 'underscore'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 
+axios.defaults.withCredentials = true
+
 class RecordList extends React.Component {
 	constructor(props) {
 		super(props)

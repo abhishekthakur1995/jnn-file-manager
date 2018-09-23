@@ -9,7 +9,7 @@ function checkAuth (req, res, next) {
             if (err) {
                 res.status(400).json({message : err})
             } else {
-                next();
+                next()
             }
         })
     } else {

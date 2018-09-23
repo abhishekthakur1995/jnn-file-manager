@@ -17,7 +17,11 @@ server.use(bodyParser.urlencoded({ extended: false }))
 server.use(fileUpload())
 
 // USE CORS
-server.use(cors())
+server.use(cors({
+    origin:['http://localhost:8080'],
+    methods:['GET','POST'],
+    credentials: true
+}))
 
 // first callback invoked on every new request
 server.use((req, res, next) => {
