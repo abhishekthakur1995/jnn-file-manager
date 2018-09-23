@@ -178,7 +178,6 @@ records.post('/getSearchResults',
 
 		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%'`, function(err, results, fields) {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
-			console.log(results)
 			totalCount = results[0].totalCount
 
 			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%' LIMIT ${offset}, ${limit}`, function(err, results, fields) {
