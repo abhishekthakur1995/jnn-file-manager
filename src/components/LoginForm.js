@@ -1,16 +1,15 @@
 import React from 'react'
-import axios from 'axios'
+import _ from 'underscore'
 import PropTypes from 'prop-types'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Button from 'react-validation/build/button'
-import { Grid, FormGroup, ControlLabel, Row, Col, InputGroup, Glyphicon } from 'react-bootstrap'
-import { required, email } from './helpers/ValidationHelper'
 import { Redirect } from 'react-router-dom'
 import { userAuth } from './services/AuthService'
+import { LoginService } from './services/ApiServices'
 import AlertComponent from './uiComponents/AlertComponent'
-import _ from 'underscore'
-import config from 'config'
+import { required, email } from './helpers/ValidationHelper'
+import { Grid, FormGroup, ControlLabel, Row, Col, InputGroup, Glyphicon } from 'react-bootstrap'
 
 class LoginForm extends React.Component {
 	constructor(props) {
@@ -54,11 +53,12 @@ class LoginForm extends React.Component {
 
   	handleSubmit(event) {
 		event.preventDefault()
-		axios.post(`${config.baseUrl}/login`, {
+		const loginData = {
 			email: this.state.fields.email,
 			password: this.state.fields.password
-		}).then(res => {
-        	if (!_.isEmpty(res.data.token)) {
+		}
+		LoginService.login(loginData).then((res) => {
+			if (!_.isEmpty(res.data.token)) {
         		localStorage.setItem('userRole', res.data.userRole)
         		this.authenticate(res.data.token, res.data.validUpto)
         	} else {
@@ -71,7 +71,7 @@ class LoginForm extends React.Component {
         			showAlert: true
   	      		})
         	}
-      	})
+		})
   	}
 
   	authenticate(authToken, validUpto) {

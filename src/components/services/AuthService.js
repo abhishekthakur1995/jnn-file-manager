@@ -6,7 +6,7 @@ export const userAuth = {
   	authenticate(authToken, validUpto, cb) {
         localStorage.setItem('authToken', authToken)
         localStorage.setItem('tokenValidUpto', validUpto)
-    	setTimeout(cb, 100)
+    	cb()
   	},
   	signout(cb) {
         localStorage.setItem('authToken', null)
@@ -21,8 +21,14 @@ export const userAuth = {
         }
         return isAuthenticated
     },
+    getHeaders() {
+        return { 'Authorization': this.getUserAuthToken(), 'UserRole': this.getUserRole() }
+    },
     getUserRole() {
         return localStorage.getItem('userRole')
+    },
+    getUserAuthToken() {
+        return localStorage.getItem('authToken')
     }
 }
 

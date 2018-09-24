@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios'
 import { Grid } from 'react-bootstrap'
 import { Doughnut } from 'react-chartjs-2'
 import { DashboardService } from './services/ApiServices'
@@ -7,7 +6,6 @@ import { InfoBlock, ChartHolder, PageHead, LoadingSpinner } from './uiComponents
 import approved from './../../public/img/approved.png'
 import received from './../../public/img/received.png'
 import pending from './../../public/img/pending.png'
-axios.defaults.withCredentials = true
 
 class InfoBoard extends React.Component {
 	constructor(props) {

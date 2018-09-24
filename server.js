@@ -1,14 +1,25 @@
 const express = require('express')
+const server = express()
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const session = require('express-session')
-const server = express()
+const redis   = require("redis")
+const redisStore = require('connect-redis')(session)
+const client  = redis.createClient()
 require('dotenv').config()
+
+const redisOptions = {
+	host: 'localhost', 
+	port: 6379, 
+	client: client,
+	ttl :  260
+}
 
 // USE BODY PARSER 
 server.use(session({
 	secret: 'bryanCranston',
+	store: new redisStore(redisOptions),
 	resave: false,
   	saveUninitialized: true
 }))
