@@ -1,17 +1,17 @@
 import React from 'react'
-import { Grid, Radio, Table, Button, Clearfix } from 'react-bootstrap'
-import { PageHead, MonthDropDown, YearDropDown } from './uiComponents/CommonComponent'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
-import config from 'config'
-import 'react-datepicker/dist/react-datepicker.css'
 import _ from 'underscore'
-import axios from 'axios'
-import {CSVLink} from 'react-csv'
-import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import config from 'config'
+import moment from 'moment'
+import DatePicker from 'react-datepicker'
 import pdfMake from "pdfmake/build/pdfmake"
 import pdfFonts from "pdfmake/build/vfs_fonts"
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import 'react-datepicker/dist/react-datepicker.css'
+import { CSVLink } from 'react-csv'
+import { GetRecordsService } from './services/ApiServices'
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import { Grid, Radio, Table, Button, Clearfix } from 'react-bootstrap'
+import { PageHead, MonthDropDown, YearDropDown } from './uiComponents/CommonComponent'
+pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 class GetRecords extends React.Component {
 	constructor(props) {
@@ -92,17 +92,13 @@ class GetRecords extends React.Component {
   	}
 
   	getDataBasedOnMonth() {
-  		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.get(`${config.baseUrl}/getDataBasedOnSelectedMonth?month=${this.state.filter.month}&year=${this.state.filter.year}`, {headers})
-      	.then(res => {
+  		GetRecordsService.getDataBasedOnSelectedMonth(this.state.filter.month, this.state.filter.year).then((res) => {
 	        this.setState({downloadData : res.data.data})
       	})
   	}
 
   	getDataForSpecificPeriod() {
-  		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.get(`${config.baseUrl}/getDataBasedOnSelectedDuration?startDate=${this.state.filter.startDate}&endDate=${this.state.filter.endDate}`, {headers})
-      	.then(res => {
+  		GetRecordsService.getDataForSpecificPeriod(this.state.filter.startDate, this.state.filter.endDate).then((res) => {
 	        this.setState({downloadData : res.data.data})
       	})
   	}

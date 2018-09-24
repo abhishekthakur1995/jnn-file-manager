@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios'
 import _ from 'underscore'
 import config from 'config'
 import Record from './Record'
@@ -9,7 +8,6 @@ import { RecordsService } from './services/ApiServices'
 import { Grid, Table, Checkbox } from 'react-bootstrap'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase, FilterButton, NoData } from './uiComponents/CommonComponent'
-axios.defaults.withCredentials = true
 
 class RecordList extends React.Component {
 	constructor(props) {
@@ -106,19 +104,17 @@ class RecordList extends React.Component {
 	}
 
 	handleRecordStatus(rec, action) {
-		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		const newStatus = (action === 'approve') ? 1 : 2
-		axios.put(`${config.baseUrl}/updateRecordStatus/${rec.ID}`, {
-			status: newStatus
-		}, {headers}).then(res => {
-        	if (res.data.saved === true) {
-        		this.setState(prevState => ({
-        			records: prevState.records.map(
-        				record => (record.ID !== rec.ID) ? record : {...record, FILE_STATUS: newStatus }
-        			)
-        		}))
-        	}
-      	})
+		const data = { status: newStatus }
+		RecordsService.updateRecordStatus(rec.ID, data).then((res) => {
+			if (res.data.saved === true) {
+				this.setState(prevState => ({
+					records: prevState.records.map(
+						record => (record.ID !== rec.ID) ? record : {...record, FILE_STATUS: newStatus }
+					)
+				}))
+			}
+		})
 	}
 
 	onPageChanged(data) {
@@ -136,14 +132,13 @@ class RecordList extends React.Component {
 	handleInitialLoad(data) {
 		this.setState({ showLoading: true })
 		const { currentPage, pageLimit } = data
-		const headers = { 'Authorization': localStorage.getItem('authToken') }
 		let queryUrl = `${config.baseUrl}/getRecords?page=${currentPage}&limit=${pageLimit}`
 		if (this.state.sortField) {
 			queryUrl += `&sortField=${this.state.sortField}&orderBy=${this.state.sortFieldCriteria}`
 		}
-		axios.get(queryUrl, {headers})
-      	.then(res => {
-	        this.setState({
+
+      	RecordsService.getRecords(queryUrl).then((res) => {
+      		this.setState({
 	        	totalRecords: res.data.totalCount,
 	        	records: res.data.data,
 	        	showLoading: false,
@@ -167,17 +162,16 @@ class RecordList extends React.Component {
 		if (searchTerm) {
 			this.setState({ showLoading: true })
 			const page = data && data.currentPage || this.state.currentPage
-			const headers = { 'Authorization': localStorage.getItem('authToken') }
-			axios.post(`${config.baseUrl}/getSearchResults`, {searchTerm: searchTerm, page, limit: this.appliedPageSize}, {headers})
-	      	.then(res => {
-		        this.setState({
-		        	totalRecords: res.data.totalCount,
-		        	records: res.data.data,
-		        	quickSearchEnabled: true,
-		        	showLoading: false,
-		        	searchTerm
-		        })
-	      	})
+			const searchData = {searchTerm: searchTerm, page, limit: this.appliedPageSize}
+			RecordsService.getSearchResults(searchData).then((res) => {
+				this.setState({
+					totalRecords: res.data.totalCount,
+					records: res.data.data,
+					quickSearchEnabled: true,
+					showLoading: false,
+					searchTerm
+				})
+			})
 	    }
 	}
 
@@ -190,19 +184,18 @@ class RecordList extends React.Component {
 		if (!_.isEmpty(sortFilters) || !_.isEmpty(searchFilters)) {
 			this.setState({ showLoading: true })
 			const page = data && data.currentPage || this.state.currentPage
-			const headers = { 'Authorization': localStorage.getItem('authToken') }
-			axios.post(`${config.baseUrl}/getFilteredData`, { page, limit: this.appliedPageSize, sortFilters, searchFilters }, {headers})
-	      	.then(res => {
-		        this.setState({
-		        	totalRecords: res.data.totalCount,
-		        	records: res.data.data,
-		        	filterApplied: true,
-		        	showLoading: false,
-		        	showFilter: false,
-		        	sortFilters,
-		        	searchFilters
-		        })
-	      	})
+			const filterData = { page, limit: this.appliedPageSize, sortFilters, searchFilters }
+			RecordsService.getFilteredData(filterData).then((res) => {
+				this.setState({
+					totalRecords: res.data.totalCount,
+					records: res.data.data,
+					filterApplied: true,
+					showLoading: false,
+					showFilter: false,
+					sortFilters,
+					searchFilters
+				})
+			})
       	}
 	}
 
@@ -233,8 +226,8 @@ class RecordList extends React.Component {
 		if (!_.isEmpty(this.markedRecord)) {
 			this.setState({ showLoading: true })
 			const newStatus = action === 'approve' ? 1 : 2
-			const headers = { 'Authorization': localStorage.getItem('authToken') }
-			axios.put(`${config.baseUrl}/updateMultipleRecordStatus`, {markedRecords: this.markedRecord, status: newStatus}, {headers}).then(res => {
+			const data = {markedRecords: this.markedRecord, status: newStatus}
+			RecordsService.updateMultipleRecordStatus(data).then((res) => {
 				if (res.data.saved === true) {
 					this.markedRecord.map(markedRecordId => {
 						this.setState(prevState => ({

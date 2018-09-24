@@ -1,10 +1,9 @@
 import React from 'react'
+import { ImportService } from './services/ApiServices'
 import { Grid, Button, Glyphicon, Clearfix } from 'react-bootstrap'
 import { PageHead, LoadingSpinner, ImportSummary } from './uiComponents/CommonComponent'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import Dropzone from 'react-dropzone'
-import axios from 'axios'
-import config from 'config'
 
 class Import extends React.Component {
 	constructor(props) {
@@ -31,43 +30,36 @@ class Import extends React.Component {
 	    data.append('file', acceptedFiles[0])
 	    data.append('filename', acceptedFiles[0].name)
 
-	    axios({
-	        method: 'post',
-	        url: `${config.baseUrl}/upload`,
-	        data: data,
-	        headers: {'Authorization': localStorage.getItem('authToken')},
-	        config: { headers: {'Content-Type': 'multipart/form-data' }}
-        }).then(res => {
-            if (res.data.success === true && res.data.file) {
-            	this.setState({
-            		fileUpload: true,
-            		uploadedFileName: res.data.file,
-            		showImportSummary: false
-            	})
-            }
-        })
+	    ImportService.upload(data).then((res) => {
+	    	if (res.data.success === true && res.data.file) {
+	    		this.setState({
+	    			fileUpload: true,
+	    			uploadedFileName: res.data.file,
+	    			showImportSummary: false
+	    		})
+	    	}
+	    })
 	}
 
 	onImport() {
 		this.setState({ showLoading: true })
-		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.post(`${config.baseUrl}/importDataToDB`, {fileName: this.state.uploadedFileName}, {headers})
-      	.then(res => {
-      		this.totalRecords = res.data.totalRecords
-      		this.recordsInserted = res.data.recordsInserted
-      		this.errorRecords = res.data.errorRecords
+		const data = { fileName: this.state.uploadedFileName }
+		ImportService.importDataToDB(data).then((res) => {
+			this.totalRecords = res.data.totalRecords
+			this.recordsInserted = res.data.recordsInserted
+			this.errorRecords = res.data.errorRecords
 
-      		this.setState({
-      			fileUpload: false,
-      			uploadedFileName: '',
-      			showImportSummary:true,
-      			showLoading: false
-      		})
-      	})
+			this.setState({
+				fileUpload: false,
+				uploadedFileName: '',
+				showImportSummary:true,
+				showLoading: false
+			})
+		})
 	}
 
 	downloadSampleExcel() {
-		window.open(`${config.baseUrl}/downloadSampleExcel`);
+		ImportService.downloadExcelFile()
 	}
 
 	render() {

@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios'
 import config from 'config'
 import PropTypes from 'prop-types'
 import Form from 'react-validation/build/form'
@@ -8,11 +7,11 @@ import Select from 'react-validation/build/select'
 import Button from 'react-validation/build/button'
 import Textarea from 'react-validation/build/textarea'
 import AlertComponent from './uiComponents/AlertComponent'
+import { EntryFormService } from './services/ApiServices'
 import { PageHead } from './uiComponents/CommonComponent'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { required, phoneNumber } from './helpers/ValidationHelper'
 import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon } from 'react-bootstrap'
-
 
 class EntryForm extends React.Component {
     constructor(props) {
@@ -77,23 +76,20 @@ class EntryForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        const apiUrl = this.props.mode === 'edit' ? `${config.baseUrl}/updateRecord/${this.props.record.ID}` : `${config.baseUrl}/addNewRecord`
-        axios({
-            method: this.props.mode === 'edit' ? 'put' : 'post',
-            url: apiUrl,
-            data: {
-                applicant_name: this.state.fields.applicantName,
-                applicant_type: this.state.fields.applicantType,
-                applicant_address: this.state.fields.applicantAddress,
-                applicant_contact: this.state.fields.applicantContact,
-                building_name: this.state.fields.buildingName,
-                building_address: this.state.fields.buildingAddress,
-                building_area: this.state.fields.buildingArea,
-                file_number: this.state.fields.fileNumber,
-                remark: this.state.fields.remark
-            },
-            headers: {'Authorization': localStorage.getItem('authToken')}
-        }).then(res => {
+        const url = this.props.mode === 'edit' ? `${config.baseUrl}/updateRecord/${this.props.record.ID}` : `${config.baseUrl}/addNewRecord`
+        const method = this.props.mode === 'edit' ? 'put' : 'post'
+        const data = {
+            applicant_name: this.state.fields.applicantName,
+            applicant_type: this.state.fields.applicantType,
+            applicant_address: this.state.fields.applicantAddress,
+            applicant_contact: this.state.fields.applicantContact,
+            building_name: this.state.fields.buildingName,
+            building_address: this.state.fields.buildingAddress,
+            building_area: this.state.fields.buildingArea,
+            file_number: this.state.fields.fileNumber,
+            remark: this.state.fields.remark
+        }
+        EntryFormService.addNewRecord(method, url, data).then((res) => {
             this.setState({
                 showAlert: true,
                 alertOptions: {

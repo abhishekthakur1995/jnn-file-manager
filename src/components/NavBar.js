@@ -1,8 +1,7 @@
 import React from 'react'
-import axios from 'axios'
-import config from 'config'
-import { Navbar, NavItem, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { NavBarService } from './services/ApiServices'
+import { Navbar, NavItem, Nav } from 'react-bootstrap'
 import { userAuth } from './services/AuthService'
 import PropTypes from 'prop-types'
 import '../../public/scss/style.scss'
@@ -15,12 +14,11 @@ class NavBar extends React.Component {
     }
 
     logout() {
-        axios.post(`${config.baseUrl}/logout`)
-        .then(res => {
+        NavBarService.logout().then((res) => {
             if (res.data.success === true) {
-                localStorage.setItem('authToken', '')
-                localStorage.setItem('userRole', '')
-                this.props.doRedirectToHome()
+               localStorage.setItem('authToken', '')
+               localStorage.setItem('userRole', '')
+               this.props.doRedirectToHome()
             }
         })
     }
