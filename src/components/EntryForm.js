@@ -123,7 +123,7 @@ class EntryForm extends React.Component {
         const btnText = this.props.mode === 'edit' ? 'Update' : 'Save'
         return (
             <Grid bsClass="entry-form">
-                <BreadcrumbsItem glyph='user' to={'/dashboard/addNewRecord'}> Add New Record </BreadcrumbsItem>
+                <BreadcrumbsItem glyph='file' to={'/dashboard/addNewRecord'}> Add New Record </BreadcrumbsItem>
                 <PageHead title="Add New Record"/>
                 <Row className="margin-0x">
                     <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>

@@ -166,7 +166,7 @@ class GetRecords extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="get-records">
-				<BreadcrumbsItem glyph='user' to={'/dashboard/getRecords'}> Get Records </BreadcrumbsItem>
+				<BreadcrumbsItem glyph='download' to={'/dashboard/getRecords'}> Get Records </BreadcrumbsItem>
 				<PageHead title="Get Records" />
 
 				<Table bordered className="table" width="100%">
