@@ -4,12 +4,18 @@ const jwt = require('jsonwebtoken')
 
 function checkAuth (req, res, next) {
     const token = req.headers.authorization
+    const userRole = req.headers.userrole
+
     if (token) {
         jwt.verify(token, process.env.SECRET_KEY, function(err) {
             if (err) {
-                res.status(400).json({message : err})
+                return res.status(400).json({message : err})
             } else {
-                next()
+                if(req.session[token] === userRole) {
+                    next()
+                } else {
+                    return res.status(400).json({message : 'Unauthorized user'})
+                }
             }
         })
     } else {

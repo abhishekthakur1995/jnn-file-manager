@@ -1,13 +1,12 @@
 import React from 'react'
 import axios from 'axios'
 import { Grid } from 'react-bootstrap'
-import { InfoBlock, ChartHolder, PageHead, LoadingSpinner } from './uiComponents/CommonComponent'
 import { Doughnut } from 'react-chartjs-2'
-import config from 'config'
+import { DashboardService } from './services/ApiServices'
+import { InfoBlock, ChartHolder, PageHead, LoadingSpinner } from './uiComponents/CommonComponent'
 import approved from './../../public/img/approved.png'
 import received from './../../public/img/received.png'
 import pending from './../../public/img/pending.png'
-
 axios.defaults.withCredentials = true
 
 class InfoBoard extends React.Component {
@@ -22,13 +21,11 @@ class InfoBoard extends React.Component {
 
 	componentDidMount() {
 		this.setState({ showLoading:true })
-		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.get(`${config.baseUrl}/getDashboardData`, {headers})
-      	.then(res => {
-  			this.setState({
-  				dashboardData: res.data.data[0],
-  				showLoading: false
-  			})
+      	DashboardService.getDashboardData().then((res) => {
+      		this.setState({
+      			dashboardData: res.data.data[0],
+      			showLoading: false
+      		})
       	})
 	}
 

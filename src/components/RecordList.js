@@ -1,14 +1,14 @@
 import React from 'react'
-import { Grid, Table, Checkbox } from 'react-bootstrap'
 import axios from 'axios'
-import Record from './Record'
-import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase, FilterButton, NoData } from './uiComponents/CommonComponent'
-import PaginationComponent from './uiComponents/PaginationComponent'
-import FilterComponent from './uiComponents/FilterComponent'
-import config from 'config'
 import _ from 'underscore'
+import config from 'config'
+import Record from './Record'
+import FilterComponent from './uiComponents/FilterComponent'
+import PaginationComponent from './uiComponents/PaginationComponent'
+import { RecordsService } from './services/ApiServices'
+import { Grid, Table, Checkbox } from 'react-bootstrap'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-
+import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase, FilterButton, NoData } from './uiComponents/CommonComponent'
 axios.defaults.withCredentials = true
 
 class RecordList extends React.Component {
@@ -58,11 +58,10 @@ class RecordList extends React.Component {
 		localStorage.setItem('searchFilters', null)
 
 		this.appliedPageSize = this.state.pageSize
-		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.get(`${config.baseUrl}/getCountOfAllRecords`, {headers})
-      	.then(res => {
-	        this.setState({ totalRecords: res.data.data[0].count })
-      	})
+		RecordsService.getCountOfAllRecords().then((res) => {
+			this.setState({ totalRecords: res.data.data[0].count })
+		})
+
 	}
 
 	componentDidUpdate() {
@@ -97,8 +96,7 @@ class RecordList extends React.Component {
 	}
 
 	handleRecordDelete(deletedRecordId) {
-		const headers = { 'Authorization': localStorage.getItem('authToken') }
-		axios.delete(`${config.baseUrl}/deleteRecord/${deletedRecordId}`, {headers}).then(res => {
+		RecordsService.deleteRecord(deletedRecordId).then((res) => {
 			if (res.data.success === true) {
 				this.setState(prevState => ({
 					records: prevState.records.filter(record => record.ID !== deletedRecordId)

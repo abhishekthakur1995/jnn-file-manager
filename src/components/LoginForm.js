@@ -59,7 +59,7 @@ class LoginForm extends React.Component {
 			password: this.state.fields.password
 		}).then(res => {
         	if (!_.isEmpty(res.data.token)) {
-        		localStorage.setItem('userType', res.data.userRole)
+        		localStorage.setItem('userRole', res.data.userRole)
         		this.authenticate(res.data.token, res.data.validUpto)
         	} else {
         		this.setState({

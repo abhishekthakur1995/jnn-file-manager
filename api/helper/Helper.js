@@ -28,6 +28,12 @@ class Helper {
 	static getDbFieldCodeFromName(codeName) {
 	    return DB_FIELDS_CODE_MAPPING[codeName];
 	}
+
+	static log(value, helpText="logger") {
+		console.log(`================${helpText}===============`)
+		console.log(value)
+		console.log(`================END===============`)
+	}
 	
 }
 

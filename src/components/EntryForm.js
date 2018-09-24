@@ -1,17 +1,17 @@
 import React from 'react'
 import axios from 'axios'
+import config from 'config'
 import PropTypes from 'prop-types'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
-import Button from 'react-validation/build/button'
 import Select from 'react-validation/build/select'
+import Button from 'react-validation/build/button'
 import Textarea from 'react-validation/build/textarea'
 import AlertComponent from './uiComponents/AlertComponent'
-import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon } from 'react-bootstrap'
-import { required, phoneNumber } from './helpers/ValidationHelper'
 import { PageHead } from './uiComponents/CommonComponent'
-import config from 'config'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import { required, phoneNumber } from './helpers/ValidationHelper'
+import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon } from 'react-bootstrap'
 
 
 class EntryForm extends React.Component {
@@ -128,7 +128,7 @@ class EntryForm extends React.Component {
         return (
             <Grid bsClass="entry-form">
                 <BreadcrumbsItem glyph='user' to={'/dashboard/addNewRecord'}> Add New Record </BreadcrumbsItem>
-                { (this.props.showPageHead) && <PageHead title="Add New Record"/> }
+                <PageHead title="Add New Record"/>
                 <Row className="margin-0x">
                     <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
                     <Grid componentClass="section" bsClass="col-xs-12">
@@ -286,7 +286,6 @@ class EntryForm extends React.Component {
 }
 
 EntryForm.propTypes = {
-    showPageHead: PropTypes.bool,
     record: PropTypes.object,
     mode: PropTypes.string,
     onUpdate: PropTypes.func
