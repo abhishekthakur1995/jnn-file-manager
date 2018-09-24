@@ -4,11 +4,12 @@ import EntryForm from './EntryForm'
 import RecordList from './RecordList'
 import InfoBoard from './InfoBoard'
 import GetRecords from './GetRecords'
+import ManageSystemInputs from './ManageSystemInputs'
 import Import from './Import'
 import ErrorPage from './ErrorPage'
 import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { Link, Route, Switch } from 'react-router-dom'
-import { userAuth, SystemUserRoute } from './services/AuthService'
+import { userAuth, SystemUserRoute, SystemAdminRoute } from './services/AuthService'
 
 class SideBar extends React.Component {
 	constructor(props) {
@@ -45,9 +46,20 @@ class SideBar extends React.Component {
 				        	<ListGroupItem className={`${this.props.location.pathname == '/dashboard/import' ? 'active' : ''}`} bsClass="list">
 				    	        <Link to={`${this.props.match.url}/import`}>
 				                 	<i className="glyphicon glyphicon-import"></i>
-				    	            Import
+				    	            Import Excel
 				    	        </Link>
 				    	    </ListGroupItem>
+						</ListGroup>
+					}
+
+					{userAuth.getUserRole() === 'SYSTEMADMIN' &&
+						<ListGroup componentClass="ul" className="list-unstyled components">
+						    <ListGroupItem className={`${this.props.location.pathname == '/dashboard/manageSystemInputs' ? 'active' : ''}`} bsClass="list">
+						        <Link to={`${this.props.match.url}/manageSystemInputs`}>
+						            <i className="glyphicon glyphicon-cog"></i>
+						            Manage System Inputs
+						        </Link>
+						    </ListGroupItem>
 						</ListGroup>
 					}
 				</nav>
@@ -58,6 +70,7 @@ class SideBar extends React.Component {
 						<SystemUserRoute exact path={`${this.props.match.path}/manageRecords`} component={RecordList} />
 						<SystemUserRoute exact path={`${this.props.match.path}/getRecords`} component={GetRecords} />
 						<SystemUserRoute exact path={`${this.props.match.path}/import`} component={Import} />
+						<SystemAdminRoute exact path={`${this.props.match.path}/manageSystemInputs`} component={ManageSystemInputs} />
 						<Route exact path={`${this.props.match.path}`} component={InfoBoard} />
 						<Route component={ErrorPage} />
 					</Switch>

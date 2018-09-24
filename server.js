@@ -13,7 +13,7 @@ const redisOptions = {
 	host: 'localhost', 
 	port: 6379, 
 	client: client,
-	ttl :  260
+	ttl :  26000
 }
 
 // USE BODY PARSER 
