@@ -15,7 +15,7 @@ class ManageSystemInputs extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="manage-system-inputs">
-				<BreadcrumbsItem glyph='cog' to={'/dashboard/ManageSystemInputs'}> Manage System Inputs </BreadcrumbsItem>
+				<BreadcrumbsItem glyph='cog' to={'/servicePanel/fileManager/ManageSystemInputs'}> Manage System Inputs </BreadcrumbsItem>
 				<PageHead title="Import" />
 				{this.state.showLoading && <LoadingSpinner />}
 			</Grid>

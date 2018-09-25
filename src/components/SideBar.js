@@ -22,28 +22,28 @@ class SideBar extends React.Component {
 				<nav className="active" id="sidebar">
 					{userAuth.getUserRole() === 'SYSTEMUSER' &&
 						<ListGroup componentClass="ul" className="list-unstyled components">
-						    <ListGroupItem className={`${this.props.location.pathname == '/dashboard/addNewRecord' ? 'active' : ''}`} bsClass="list">
+						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/fileManager/addNewRecord' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/addNewRecord`}>
 						            <i className="glyphicon glyphicon-file"></i>
 						            Add New Record
 						        </Link>
 						    </ListGroupItem>
 
-						   	<ListGroupItem className={`${this.props.location.pathname == '/dashboard/manageRecords' ? 'active' : ''}`} bsClass="list">
+						   	<ListGroupItem className={`${this.props.location.pathname == '/servicePanel/fileManager/manageRecords' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/manageRecords`}>
 						            <i className="glyphicon glyphicon-lock"></i>
 						            Manage Records
 						        </Link>
 						    </ListGroupItem>
 
-					    	<ListGroupItem className={`${this.props.location.pathname == '/dashboard/getRecords' ? 'active' : ''}`} bsClass="list">
+					    	<ListGroupItem className={`${this.props.location.pathname == '/servicePanel/fileManager/getRecords' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/getRecords`}>
 					             	<i className="glyphicon glyphicon-download"></i>
 						            Get Records
 						        </Link>
 						    </ListGroupItem>
 
-				        	<ListGroupItem className={`${this.props.location.pathname == '/dashboard/import' ? 'active' : ''}`} bsClass="list">
+				        	<ListGroupItem className={`${this.props.location.pathname == '/servicePanel/fileManager/import' ? 'active' : ''}`} bsClass="list">
 				    	        <Link to={`${this.props.match.url}/import`}>
 				                 	<i className="glyphicon glyphicon-import"></i>
 				    	            Import Excel
@@ -54,7 +54,7 @@ class SideBar extends React.Component {
 
 					{userAuth.getUserRole() === 'SYSTEMADMIN' &&
 						<ListGroup componentClass="ul" className="list-unstyled components">
-						    <ListGroupItem className={`${this.props.location.pathname == '/dashboard/manageSystemInputs' ? 'active' : ''}`} bsClass="list">
+						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/fileManager/manageSystemInputs' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/manageSystemInputs`}>
 						            <i className="glyphicon glyphicon-cog"></i>
 						            Manage System Inputs

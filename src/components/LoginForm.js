@@ -87,7 +87,7 @@ class LoginForm extends React.Component {
 	render() {
 		const { redirectToReferrer } = this.state
 	    if (redirectToReferrer === true) {
-	      	return <Redirect to='/dashboard' />
+	      	return <Redirect to='/servicePanel' />
 	    }
 		return (
 			<Grid id="login-form" className="mt50">
