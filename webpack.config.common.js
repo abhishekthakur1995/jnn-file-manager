@@ -42,6 +42,9 @@ module.exports = {
 			"./src/components/Record.js",
 			"./src/components/GetRecords.js",
 			"./src/components/Import.js",
+			"./src/components/letterTracking/LetterTrackingDashboard.js",
+			"./src/components/letterTracking/SideBar.js",
+			"./src/components/letterTracking/ComposeLetter.js",
 			"./src/components/ServicePanel.js",
 			"./src/components/ManageSystemInputs.js",
 			"./src/components/uiComponents/AlertComponent.js",
@@ -99,7 +102,7 @@ module.exports = {
 	            use: [{
 	                loader: 'url-loader',
 	                options: {
-	                    limit: 8196,
+	                    limit: 819600,
 	                    name: 'public/img/[name].[ext]',
 	                    fallback: 'file-loader'
 	                }
