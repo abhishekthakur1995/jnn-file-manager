@@ -543,3 +543,19 @@ ul {
         padding: 10px;
     }
 }
+
+.compose-letter {
+    .editor-class {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        height: 450px;
+    }
+    .rdw-option-wrapper {
+        &[title="Superscript"], &[title="Subscript"], &[title="Embedded"], &[title="Remove"], &[title="Image"], &[title="Strikethrough"] {
+            display: none;
+        }
+    }
+    .rdw-link-wrapper, .rdw-emoji-wrapper, .rdw-colorpicker-wrapper, .rdw-fontfamily-wrapper, .rdw-block-wrapper {
+        display: none;
+    }
+}

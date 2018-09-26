@@ -65,7 +65,7 @@ module.exports = {
 		        enforce: "pre",
 		        test: /\.js$/,
 		        exclude: /(node_modules)/,
-		        loader: "eslint-loader"
+		        //loader: "eslint-loader"
 	      	},
 			{
 				test: /\.js$/,
@@ -81,7 +81,8 @@ module.exports = {
 				test: /\.css$/,
 				include : [
 					path.resolve(__dirname, "src"),
-				    path.resolve(__dirname, "node_modules/react-datepicker/dist")
+				    path.resolve(__dirname, "node_modules/react-datepicker/dist"),
+				    path.resolve(__dirname, "node_modules/react-draft-wysiwyg/dist")
 				],
 				use: [
 					{loader: "style-loader"},
