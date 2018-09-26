@@ -8,7 +8,8 @@ import jnnLogo from './../../../public/img/logo.png'
 import { Editor } from 'react-draft-wysiwyg'
 import { EditorState, convertToRaw } from 'draft-js'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import draftToHtml from 'draftjs-to-html';
+import draftToHtml from 'draftjs-to-html'
+import { letterTracking } from './../helpers/CommonHelper'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
@@ -252,30 +253,10 @@ class ComposeLetter extends React.Component {
 	}
 
 	handleSaveDraft() {
-		console.log('draft')
+		localStorage.setItem('letterData', letterTracking.getLetterData(this.state.editorState))
 	}
 
   	handlePdfGeneration() {
-  		pdfMake.fonts = {
-  		   	karma: {
-	     		normal: 'karma.ttf',
-	     		bold: 'karma.ttf',
-  		     	italics: 'karma.ttf',
-  		     	bolditalics: 'karma.ttf'
-  		   	},
-  		   	utsaah: {
-	     		normal: 'utsaah.ttf',
-	     		bold: 'utsaah.ttf',
-  		     	italics: 'utsaah.ttf',
-  		     	bolditalics: 'utsaah.ttf'
-  		   	},
-  		   	roboto: {
-	     		normal: 'roboto.ttf',
-	     		bold: 'roboto.ttf',
-  		     	italics: 'roboto.ttf',
-  		     	bolditalics: 'roboto.ttf'
-  		   	}
-	   	}
   		var pdfLayout = {
   			pageSize: 'A4',
   		    content: [
