@@ -4,6 +4,7 @@ import { Doughnut } from 'react-chartjs-2'
 import received from './../../../public/img/received_mail.png'
 import incoming from './../../../public/img/incoming_mail.png'
 import outgoing from './../../../public/img/outgoing_mail.png'
+import { LETTERBOARD } from './../helpers/Constants'
 import { LetterBoardService } from './../services/ApiServices'
 import { InfoBlock, ChartHolder, PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
 
@@ -34,8 +35,8 @@ class LetterBoard extends React.Component {
 			labels: ['Received', 'Incoming', 'Outgoing'],
 			datasets: [{
 				data: [dashboardData.RECEIVED, dashboardData.INCOMING, dashboardData.OUTGOING],
-				backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-				hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+				backgroundColor: [LETTERBOARD.CHART_COLOR.RECEIVED, LETTERBOARD.CHART_COLOR.INCOMING, LETTERBOARD.CHART_COLOR.OUTGOING],
+				hoverBackgroundColor: [LETTERBOARD.HOVER_COLOR.RECEIVED, LETTERBOARD.HOVER_COLOR.INCOMING, LETTERBOARD.HOVER_COLOR.OUTGOING],
 			}]
 		}
 
@@ -47,7 +48,7 @@ class LetterBoard extends React.Component {
 				<PageHead />
 				<Grid bsClass="width-10x pull-left">
 					<InfoBlock title="Received" img={received} value={dashboardData.RECEIVED} />
-					<InfoBlock title="Incoming"  img={incoming} value={dashboardData.INCOMING} />
+					<InfoBlock title="Incoming" img={incoming} value={dashboardData.INCOMING} />
 					<InfoBlock title="Outgoing" img={outgoing} value={dashboardData.OUTGOING} />
 				</Grid>
 				<ChartHolder title="Letter Status" chart={chart}/>
