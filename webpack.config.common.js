@@ -45,6 +45,7 @@ module.exports = {
 			"./src/components/letterTracking/LetterTrackingDashboard.js",
 			"./src/components/letterTracking/SideBar.js",
 			"./src/components/letterTracking/ComposeLetter.js",
+			"./src/components/letterTracking/LetterBoard.js",
 			"./src/components/ServicePanel.js",
 			"./src/components/ManageSystemInputs.js",
 			"./src/components/uiComponents/AlertComponent.js",

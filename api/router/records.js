@@ -8,7 +8,7 @@ const _ = require('lodash')
 const fs = require('fs')
 
 
-/* 	path: /register
+/* 	path: /addNewRecord
  *	type: POST 
  */
 

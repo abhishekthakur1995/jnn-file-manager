@@ -151,3 +151,14 @@ export const ImportService = {
 		window.open(`${config.baseUrl}/downloadSampleExcel`)
 	}
 }
+
+export const LetterBoardService = {
+	getDashboardData() {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.get(`${config.baseUrl}/getLetterBoardData`, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(Error(err)))
+      	})
+	}
+}

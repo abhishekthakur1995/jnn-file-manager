@@ -25,5 +25,6 @@ function checkAuth (req, res, next) {
 
 apiRouter.use(require('./router/users'))
 apiRouter.use(checkAuth, require('./router/records'))
+apiRouter.use(checkAuth, require('./router/letters'))
 
 module.exports = apiRouter
