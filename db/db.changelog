@@ -23,10 +23,29 @@ CREATE TABLE `tbl_file_records` (
 	`REMARK` text COLLATE utf8_unicode_ci DEFAULT NULL,
 	`STATUS` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
 	`CREATED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP,
-	`MODIFIED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP )
-ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+	`MODIFIED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `tbl_letter_records` (
+	`ID` int(11) COLLATE utf8_unicode_ci NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`DEPARTMENT_NAME` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+	`ASSIGNED_OFFICER` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+	`LETTER_TYPE` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+	`LETTER_TAG` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+	`LETTER_ADDRESS` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+	`LETTER_SUBJECT` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
+	`LETTER_STATUS` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
+	`REMARK` text COLLATE utf8_unicode_ci DEFAULT NULL,
+	`STATUS` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
+	`CREATED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP,
+	`MODIFIED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 // FILE STATUS LEGEND
 // 0 = PENDING
 // 1 = APPROVED
 // 2 = REJECTED
+
+// LETTER STATUS LEGEND
+// 1 = INCOMING
+// 2 = OUTGOING
