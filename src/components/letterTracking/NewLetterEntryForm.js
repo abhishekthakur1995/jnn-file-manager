@@ -12,7 +12,7 @@ import AlertComponent from './../uiComponents/AlertComponent'
 import { NewLetterEntryFormService } from './../services/ApiServices'
 import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import { required, phoneNumber } from './..//helpers/ValidationHelper'
+import { required } from './..//helpers/ValidationHelper'
 import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon } from 'react-bootstrap'
 import 'react-datepicker/dist/react-datepicker.css'
 

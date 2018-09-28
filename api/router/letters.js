@@ -11,7 +11,7 @@ const moment = require('moment')
  *	type: POST 
  */
 
- letters.post('/addNewLetterRecord',
+letters.post('/addNewLetterRecord',
 	[
 		check('DEPARTMENT_NAME').not().isEmpty().withMessage('Please select a department').trim().escape(),
 		check('ASSIGNED_OFFICER').not().isEmpty().withMessage('Please select an assigned officer').trim().escape(),
@@ -40,6 +40,34 @@ const moment = require('moment')
 			}
 			res.status(200).json({message : 'Letter record saved successfully', saved : true})
 		})
+	}
+)
+
+/* 	path: /addNewDepartment
+ *	type: POST
+ */
+
+ letters.post('/addNewDepartment',
+	[
+		check('DEPARTMENT_NAME').not().isEmpty().withMessage('No name found').trim().escape(),
+		check('CODE').not().isEmpty().withMessage('No code found').trim().escape(),
+	],
+	(req, res) => {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+
+	  	const data = {
+	  		'TITLE' : req.body.DEPARTMENT_NAME.toUpperCase(),
+	  		'NAME' : req.body.DEPARTMENT_NAME.toLowerCase(),
+	  		'TYPE' : helper.getDepartmentTypeFromCode(req.body.CODE)
+	  	}
+
+	  	connection.query(`INSERT INTO ${process.env.INPUTS_TBL} SET ?`, data, function(err, results, fields) {
+	  		if (err) { return res.status(400).json({data: [], message : err, success : false}) }
+  			res.status(200).json({message : 'Setting added successfully', success : true})
+	  	})
 	}
 )
 

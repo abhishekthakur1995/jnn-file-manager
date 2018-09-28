@@ -15,6 +15,13 @@ const DB_FIELDS_CODE_MAPPING = {
 	'dateCreated'  		: 	'CREATED'
 }
 
+const LETTER_FIELDS_CODE_MAPPING = {
+	'DEPARTMENT' : 	'DEPARTMENT_NAME',
+	'TAG'		 : 	'LETTER_TAG',
+	'OFFICER'	 : 	'ASSIGNED_OFFICER',
+	'TYPE'       :  'LETTER_TYPE'
+}
+
 class Helper {
 
 	static getFileStatusCodeFromName(codeName) {
@@ -27,6 +34,10 @@ class Helper {
 
 	static getDbFieldCodeFromName(codeName) {
 	    return DB_FIELDS_CODE_MAPPING[codeName];
+	}
+
+	static getDepartmentTypeFromCode(codeName) {
+		return LETTER_FIELDS_CODE_MAPPING[codeName];
 	}
 
 	static log(value, helpText="logger") {
