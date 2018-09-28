@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ComposeLetter from './ComposeLetter'
+import NewLetterEntryForm from './NewLetterEntryForm'
 import LetterBoard from './LetterBoard'
 import ErrorPage from './../ErrorPage'
 import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
@@ -30,7 +30,7 @@ class SideBar extends React.Component {
 
 				<Grid bsClass="container padding-2x">
 					<Switch>
-						<SystemUserRoute exact path={`${this.props.match.path}/composeLetter`} component={ComposeLetter} />
+						<SystemUserRoute exact path={`${this.props.match.path}/addNewEntry`} component={NewLetterEntryForm} />
 						<SystemUserRoute exact path={`${this.props.match.path}`} component={LetterBoard} />
 						<Route component={ErrorPage} />
 					</Switch>

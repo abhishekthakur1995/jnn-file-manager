@@ -162,3 +162,22 @@ export const LetterBoardService = {
       	})
 	}
 }
+
+export const NewLetterEntryFormService = {
+	getInputFieldsData() {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.get(`${config.baseUrl}/getInputFieldsData`, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(Error(err)))
+      	})
+	},
+	addNewLetterRecord(method, url, data) {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios({ method, url, data, headers })
+			.then(res => resolves(res))
+			.catch(err => rejects(Error(err)))
+		})
+	}
+}

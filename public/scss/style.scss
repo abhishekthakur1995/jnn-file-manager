@@ -559,3 +559,15 @@ ul {
         display: none;
     }
 }
+
+.custom-fieldset {
+    border: solid 1px #DDD !important;
+    padding: 0 10px 10px 10px;
+    border-bottom: none;
+}
+
+.custom-legend {
+    width: inherit;
+    padding: 0 10px;
+    border-bottom: none;
+}
