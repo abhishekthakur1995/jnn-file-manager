@@ -183,12 +183,12 @@ export const NewLetterEntryFormService = {
 }
 
 export const ManageLetterBoardInputsService = {
-	addNewDepartment(data) {
+	addNewSettings(data) {
 		return new Promise((resolves, rejects) => {
 			const headers = userAuth.getHeaders()
-			axios.post(`${config.baseUrl}/addNewDepartment`, data, {headers})
+			axios.post(`${config.baseUrl}/addNewSettings`, data, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	}
 }

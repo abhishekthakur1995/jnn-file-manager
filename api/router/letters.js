@@ -43,14 +43,14 @@ letters.post('/addNewLetterRecord',
 	}
 )
 
-/* 	path: /addNewDepartment
+/* 	path: /addNewSettings
  *	type: POST
  */
 
- letters.post('/addNewDepartment',
+ letters.post('/addNewSettings',
 	[
-		check('DEPARTMENT_NAME').not().isEmpty().withMessage('No name found').trim().escape(),
-		check('CODE').not().isEmpty().withMessage('No code found').trim().escape(),
+		check('SETTING_NAME').not().isEmpty().withMessage('Setting name found').trim().escape(),
+		check('DEPARTMENT_CODE').not().isEmpty().withMessage('Setting code found').trim().escape(),
 	],
 	(req, res) => {
 		const errors = validationResult(req)
@@ -59,14 +59,19 @@ letters.post('/addNewLetterRecord',
 	  	}
 
 	  	const data = {
-	  		'TITLE' : req.body.DEPARTMENT_NAME.toUpperCase(),
-	  		'NAME' : req.body.DEPARTMENT_NAME.toLowerCase(),
-	  		'TYPE' : helper.getDepartmentTypeFromCode(req.body.CODE)
+	  		'NAME' : req.body.SETTING_NAME.toUpperCase(),
+	  		'CODE' : req.body.SETTING_NAME.toLowerCase(),
+	  		'TYPE' : helper.getDepartmentTypeFromCode(req.body.DEPARTMENT_CODE)
 	  	}
 
 	  	connection.query(`INSERT INTO ${process.env.INPUTS_TBL} SET ?`, data, function(err, results, fields) {
-	  		if (err) { return res.status(400).json({data: [], message : err, success : false}) }
-  			res.status(200).json({message : 'Setting added successfully', success : true})
+	  		if (err) {
+	  			if(err.code === 'ER_DUP_ENTRY') {
+					return res.status(400).json({message : `This setting (${req.body.SETTING_NAME}) already exists.`, saved : false})
+				}
+	  			return res.status(400).json({message : err, saved : false})
+	  		}
+  			res.status(200).json({message : 'Setting added successfully', saved : true})
 	  	})
 	}
 )
@@ -88,19 +93,19 @@ letters.get('/getLetterBoardData', function(req, res) {
 
 letters.get('/getInputFieldsData', function(req, res) {
 	var inputFieldData = {}
-	connection.query(`SELECT NAME, TITLE FROM ${process.env.INPUTS_TBL} WHERE STATUS = ? AND TYPE = ?`, [1, 'DEPARTMENT_NAME'], (err, results, fields) => {
+	connection.query(`SELECT NAME, CODE FROM ${process.env.INPUTS_TBL} WHERE STATUS = ? AND TYPE = ?`, [1, 'DEPARTMENT_NAME'], (err, results, fields) => {
 		if (err) { return res.status(400).json({data: [], message : err, success : false}) }
 		inputFieldData['DEPARTMENT_NAME'] = results
 
-		connection.query(`SELECT NAME, TITLE FROM ${process.env.INPUTS_TBL} WHERE STATUS = ? AND TYPE = ?`, [1, 'LETTER_TYPE'], (err, results, fields) => {
+		connection.query(`SELECT NAME, CODE FROM ${process.env.INPUTS_TBL} WHERE STATUS = ? AND TYPE = ?`, [1, 'LETTER_TYPE'], (err, results, fields) => {
 			if (err) { return res.status(400).json({data: [], message : err, success : false}) }
 			inputFieldData['LETTER_TYPE'] = results
 
-			connection.query(`SELECT NAME, TITLE FROM ${process.env.INPUTS_TBL} WHERE STATUS = ? AND TYPE = ?`, [1, 'ASSIGNED_OFFICER'], (err, results, fields) => {
+			connection.query(`SELECT NAME, CODE FROM ${process.env.INPUTS_TBL} WHERE STATUS = ? AND TYPE = ?`, [1, 'ASSIGNED_OFFICER'], (err, results, fields) => {
 				if (err) { return res.status(400).json({data: [], message : err, success : false}) }
 				inputFieldData['ASSIGNED_OFFICER'] = results
 
-				connection.query(`SELECT NAME, TITLE FROM ${process.env.INPUTS_TBL} WHERE STATUS = ? AND TYPE = ?`, [1, 'LETTER_TAG'], (err, results, fields) => {
+				connection.query(`SELECT NAME, CODE FROM ${process.env.INPUTS_TBL} WHERE STATUS = ? AND TYPE = ?`, [1, 'LETTER_TAG'], (err, results, fields) => {
 					if (err) { return res.status(400).json({data: [], message : err, success : false}) }
 					inputFieldData['LETTER_TAG'] = results
 

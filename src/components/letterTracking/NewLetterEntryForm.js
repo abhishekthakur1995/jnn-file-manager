@@ -211,7 +211,7 @@ class NewLetterEntryForm extends React.Component {
                                         className="form-control"
                                         onChange={this.handleChange}>
                                             <option value="">Select</option>
-                                            {this.departmentList.map((dept) => <option key={dept.NAME} value={dept.NAME}>{dept.TITLE}</option>)}
+                                            {this.departmentList.map((dept) => <option key={dept.CODE} value={dept.CODE}>{dept.NAME}</option>)}
                                         </Select>
                                     </FormGroup>
                                 </Col>
@@ -226,7 +226,7 @@ class NewLetterEntryForm extends React.Component {
                                         className="form-control"
                                         onChange={this.handleChange}>
                                             <option value="">Select</option>
-                                            {this.letterTypeList.map((letter) => <option key={letter.NAME} value={letter.NAME}>{letter.TITLE}</option>)}
+                                            {this.letterTypeList.map((letter) => <option key={letter.CODE} value={letter.CODE}>{letter.NAME}</option>)}
                                         </Select>
                                     </FormGroup>
                                 </Col>
@@ -241,7 +241,7 @@ class NewLetterEntryForm extends React.Component {
                                         className="form-control"
                                         onChange={this.handleChange}>
                                             <option value="">Select</option>
-                                            {this.letterTagList.map((tag) => <option key={tag.NAME} value={tag.NAME}>{tag.TITLE}</option>)}
+                                            {this.letterTagList.map((tag) => <option key={tag.CODE} value={tag.CODE}>{tag.NAME}</option>)}
                                         </Select>
                                     </FormGroup>
                                 </Col>
@@ -256,7 +256,7 @@ class NewLetterEntryForm extends React.Component {
                                         className="form-control"
                                         onChange={this.handleChange}>
                                             <option value="">Select</option>
-                                            {this.assignedOfficerList.map((officer) => <option key={officer.NAME} value={officer.NAME}>{officer.TITLE}</option>)}
+                                            {this.assignedOfficerList.map((officer) => <option key={officer.CODE} value={officer.CODE}>{officer.NAME}</option>)}
                                         </Select>
                                     </FormGroup>
                                 </Col>

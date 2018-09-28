@@ -45,8 +45,8 @@ CREATE TABLE `tbl_letter_records` (
 
 CREATE TABLE `tbl_input_fields` (
 	`ID` int(11) COLLATE utf8_unicode_ci NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`TITLE` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-	`NAME` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+	`NAME` varchar(30) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
+	`CODE` varchar(30) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
 	`TYPE` ENUM('DEPARTMENT_NAME', 'ASSIGNED_OFFICER', 'LETTER_TYPE', 'LETTER_TAG') COLLATE utf8_unicode_ci NOT NULL,
 	`STATUS` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
 	`CREATED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP,
