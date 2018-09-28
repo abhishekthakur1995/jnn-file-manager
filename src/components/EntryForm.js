@@ -129,146 +129,149 @@ class EntryForm extends React.Component {
                     <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
                     <Grid componentClass="section" bsClass="col-xs-12">
                         <Form onSubmit={this.handleSubmit}>
-                            <Col md={4}>
-                                <FormGroup md={4} bsSize="large" >
-                                    <ControlLabel htmlFor="applicantName">Applicant Name</ControlLabel>
-                                    <Input
-                                        type="text"
-                                        autoComplete="on"
-                                        name="applicantName"
+                            <fieldset className="custom-fieldset margin-bottom-2x">
+                            <legend className="custom-legend">New Entry</legend>
+                                <Col md={4}>
+                                    <FormGroup md={4} bsSize="large" >
+                                        <ControlLabel htmlFor="applicantName">Applicant Name</ControlLabel>
+                                        <Input
+                                            type="text"
+                                            autoComplete="on"
+                                            name="applicantName"
+                                            validations={[required]}
+                                            className="form-control"
+                                            value={this.state.fields.applicantName}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
+
+                                <Col md={4}>
+                                    <FormGroup bsSize="large" >
+                                        <ControlLabel htmlFor="applicantAddress">Applicant Address</ControlLabel>
+                                        <Input
+                                            type="text"
+                                            autoComplete="on"
+                                            name="applicantAddress"
+                                            validations={[required]}
+                                            className="form-control"
+                                            value={this.state.fields.applicantAddress}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
+
+                                <Col md={4}>
+                                    <FormGroup bsSize="large" >
+                                        <ControlLabel htmlFor="applicantContact">Applicant Contact</ControlLabel>
+                                        <Input
+                                            type="text"
+                                            autoComplete="on"
+                                            name="applicantContact"
+                                            validations={[required, phoneNumber]}
+                                            className="form-control"
+                                            value={this.state.fields.applicantContact}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Clearfix />
+
+                                <Col md={4}>
+                                    <FormGroup bsSize="large" >
+                                        <ControlLabel htmlFor="buildingName">Building Name</ControlLabel>
+                                        <Input
+                                            type="text"
+                                            autoComplete="on"
+                                            name="buildingName"
+                                            validations={[required]}
+                                            className="form-control"
+                                            value={this.state.fields.buildingName}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
+
+                                <Col md={4}>
+                                    <FormGroup bsSize="large" >
+                                        <ControlLabel htmlFor="buildingAddress">Building Address</ControlLabel>
+                                        <Input
+                                            type="text"
+                                            autoComplete="on"
+                                            name="buildingAddress"
+                                            validations={[required]}
+                                            className="form-control"
+                                            value={this.state.fields.buildingAddress}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
+
+                                <Col md={4}>
+                                    <FormGroup bsSize="large" >
+                                        <ControlLabel htmlFor="buildingArea">Area</ControlLabel>
+                                        <Select
+                                        name="buildingArea"
+                                        value={this.state.fields.buildingArea}
                                         validations={[required]}
                                         className="form-control"
-                                        value={this.state.fields.applicantName}
-                                        onChange={this.handleChange}
-                                    />
-                                </FormGroup>
-                            </Col>
+                                        onChange={this.handleChange}>
+                                            <option value="">Select</option>
+                                            <option value="urban">Urban</option>
+                                            <option value="rural">Rural</option>
+                                        </Select>
+                                    </FormGroup>
+                                </Col>
+                                <Clearfix />
 
-                            <Col md={4}>
-                                <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="applicantAddress">Applicant Address</ControlLabel>
-                                    <Input
-                                        type="text"
-                                        autoComplete="on"
-                                        name="applicantAddress"
-                                        validations={[required]}
+                                <Col md={4}>
+                                    <FormGroup bsSize="large" >
+                                        <ControlLabel htmlFor="applicantType">Applicant Type</ControlLabel>
+                                        <Select
+                                        name="applicantType"
+                                        value={this.state.fields.applicantType}
                                         className="form-control"
-                                        value={this.state.fields.applicantAddress}
-                                        onChange={this.handleChange}
-                                    />
-                                </FormGroup>
-                            </Col>
+                                        onChange={this.handleChange}>
+                                            <option value="">Select</option>
+                                            <option value="permanent">Permanent</option>
+                                            <option value="temporary">Temporary</option>
+                                        </Select>
+                                    </FormGroup>
+                                </Col>
 
-                            <Col md={4}>
-                                <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="applicantContact">Applicant Contact</ControlLabel>
-                                    <Input
-                                        type="text"
-                                        autoComplete="on"
-                                        name="applicantContact"
-                                        validations={[required, phoneNumber]}
-                                        className="form-control"
-                                        value={this.state.fields.applicantContact}
-                                        onChange={this.handleChange}
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Clearfix />
+                                <Col md={4}>
+                                    <FormGroup bsSize="large" >
+                                        <ControlLabel htmlFor="fileNumber">File Number</ControlLabel>
+                                        <Input
+                                            type="text"
+                                            autoComplete="on"
+                                            name="fileNumber"
+                                            className="form-control"
+                                            validations={[required]}
+                                            value={this.state.fields.fileNumber}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Clearfix />
 
-                            <Col md={4}>
-                                <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="buildingName">Building Name</ControlLabel>
-                                    <Input
-                                        type="text"
-                                        autoComplete="on"
-                                        name="buildingName"
-                                        validations={[required]}
-                                        className="form-control"
-                                        value={this.state.fields.buildingName}
-                                        onChange={this.handleChange}
-                                    />
-                                </FormGroup>
-                            </Col>
-
-                            <Col md={4}>
-                                <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="buildingAddress">Building Address</ControlLabel>
-                                    <Input
-                                        type="text"
-                                        autoComplete="on"
-                                        name="buildingAddress"
-                                        validations={[required]}
-                                        className="form-control"
-                                        value={this.state.fields.buildingAddress}
-                                        onChange={this.handleChange}
-                                    />
-                                </FormGroup>
-                            </Col>
-
-                            <Col md={4}>
-                                <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="buildingArea">Area</ControlLabel>
-                                    <Select
-                                    name="buildingArea"
-                                    value={this.state.fields.buildingArea}
-                                    validations={[required]}
-                                    className="form-control"
-                                    onChange={this.handleChange}>
-                                        <option value="">Select</option>
-                                        <option value="urban">Urban</option>
-                                        <option value="rural">Rural</option>
-                                    </Select>
-                                </FormGroup>
-                            </Col>
-                            <Clearfix />
-
-                            <Col md={4}>
-                                <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="applicantType">Applicant Type</ControlLabel>
-                                    <Select
-                                    name="applicantType"
-                                    value={this.state.fields.applicantType}
-                                    className="form-control"
-                                    onChange={this.handleChange}>
-                                        <option value="">Select</option>
-                                        <option value="permanent">Permanent</option>
-                                        <option value="temporary">Temporary</option>
-                                    </Select>
-                                </FormGroup>
-                            </Col>
-
-                            <Col md={4}>
-                                <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="fileNumber">File Number</ControlLabel>
-                                    <Input
-                                        type="text"
-                                        autoComplete="on"
-                                        name="fileNumber"
-                                        className="form-control"
-                                        validations={[required]}
-                                        value={this.state.fields.fileNumber}
-                                        onChange={this.handleChange}
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Clearfix />
-
-                            <Col md={12}>
-                                <FormGroup bsSize="large" >
-                                    <ControlLabel htmlFor="remark">Remark</ControlLabel>
-                                    <Textarea
-                                        autoComplete="on"
-                                        name="remark"
-                                        className="form-control"
-                                        validations={[required]}
-                                        value={this.state.fields.remark}
-                                        onChange={this.handleChange}
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Clearfix />
-
-                            <Col md={12}>
+                                <Col md={12}>
+                                    <FormGroup bsSize="large" >
+                                        <ControlLabel htmlFor="remark">Remark</ControlLabel>
+                                        <Textarea
+                                            autoComplete="on"
+                                            name="remark"
+                                            className="form-control"
+                                            validations={[required]}
+                                            value={this.state.fields.remark}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Clearfix />
+                            </fieldset>
+                            
+                            <Col className="padding-0x" md={12}>
                                 <Button type="submit" className="btn btn-default">
                                     <Glyphicon className="padding-right-1x" glyph="saved" />{btnText}
                                 </Button>
