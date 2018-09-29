@@ -8,12 +8,13 @@ import Input from 'react-validation/build/input'
 import Select from 'react-validation/build/select'
 import Button from 'react-validation/build/button'
 import Textarea from 'react-validation/build/textarea'
+import { letterTracking } from './../helpers/CommonHelper'
 import AlertComponent from './../uiComponents/AlertComponent'
 import { NewLetterEntryFormService } from './../services/ApiServices'
 import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { required } from './..//helpers/ValidationHelper'
-import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon } from 'react-bootstrap'
+import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label } from 'react-bootstrap'
 import 'react-datepicker/dist/react-datepicker.css'
 
 class NewLetterEntryForm extends React.Component {
@@ -135,16 +136,14 @@ class NewLetterEntryForm extends React.Component {
     }
 
     hideAlert() {
-        this.setState({
-            showAlert: false
-        })
+        this.setState({ showAlert: false })
     }
 
     render() {
         const btnText = this.props.mode === 'edit' ? 'Update' : 'Save'
         return (
             <Grid bsClass="entry-form">
-                <BreadcrumbsItem glyph='file' to={'/servicePanel/fileManager/addNewRecord'}> Add New Record </BreadcrumbsItem>
+                <BreadcrumbsItem glyph='file' to={letterTracking.getLetterTrackingAbsolutePath('addNewEntry')}> Add New Entry </BreadcrumbsItem>
                 <PageHead title="Add New Record"/>
                 {this.state.showLoading && <LoadingSpinner />}
 
@@ -153,7 +152,9 @@ class NewLetterEntryForm extends React.Component {
                     <Grid componentClass="section" bsClass="col-xs-12">
                         <Form onSubmit={this.handleSubmit}>
                             <fieldset className="custom-fieldset margin-bottom-2x">
-                                <legend className="custom-legend">New Entry</legend>
+                                <legend className="custom-legend">
+                                    <Label bsStyle="primary" className="padding-2x">New Entry</Label>
+                                </legend>
                                 <Col md={3}>
                                     <FormGroup className="required" >
                                         <ControlLabel htmlFor="LETTER_REG_NO">LETTER_REG_NO</ControlLabel>

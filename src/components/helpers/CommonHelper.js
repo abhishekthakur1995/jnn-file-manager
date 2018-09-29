@@ -7,5 +7,8 @@ export const letterTracking = {
 	},
 	getHtmlFormattedLetterData(dataObj) {
 		return draftToHtml(convertToRaw(dataObj.getCurrentContent())).replace(/<(?:.|\n)*?>/gm, '')
+	},
+	getLetterTrackingAbsolutePath(relativePath) {
+		return `/servicePanel/letterTracking/${relativePath}`
 	}
 }
