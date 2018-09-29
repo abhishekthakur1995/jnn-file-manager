@@ -45,7 +45,7 @@ class NewLetterEntryForm extends React.Component {
                 type: 'danger',
                 autoHide: false
             },
-            showLOading: false,
+            showLoading: false,
             showAlert: false
         }
 
@@ -136,7 +136,10 @@ class NewLetterEntryForm extends React.Component {
     }
 
     hideAlert() {
-        this.setState({ showAlert: false })
+        this.setState({ 
+            showAlert: false ,
+            alertOptions: {'autoHide': false}
+        })
     }
 
     render() {

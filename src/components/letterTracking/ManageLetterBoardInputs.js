@@ -37,7 +37,10 @@ class ManageLetterBoardInputs extends React.Component {
 	}
 
 	hideAlert() {
-        this.setState({ showAlert: false })
+        this.setState({ 
+            showAlert: false ,
+            alertOptions: {'autoHide': false}
+        })
     }
 
 	handleSelect(key) {
