@@ -11,7 +11,7 @@ import { EntryFormService } from './services/ApiServices'
 import { PageHead } from './uiComponents/CommonComponent'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { required, phoneNumber } from './helpers/ValidationHelper'
-import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon } from 'react-bootstrap'
+import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label } from 'react-bootstrap'
 
 class EntryForm extends React.Component {
     constructor(props) {
@@ -124,14 +124,17 @@ class EntryForm extends React.Component {
         const btnText = this.props.mode === 'edit' ? 'Update' : 'Save'
         return (
             <Grid bsClass="entry-form">
-                <BreadcrumbsItem glyph='file' to={'/servicePanel/fileManager/addNewRecord'}> Add New Record </BreadcrumbsItem>
-                <PageHead title="Add New Record"/>
+            {this.props.mode !== 'edit' && <BreadcrumbsItem glyph='file' to={'/servicePanel/fileManager/addNewRecord'}> Add New Record </BreadcrumbsItem>}
+            {this.props.mode !== 'edit' && <PageHead />}
+            
                 <Row className="margin-0x">
                     <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
                     <Grid componentClass="section" bsClass="col-xs-12">
                         <Form onSubmit={this.handleSubmit}>
                             <fieldset className="custom-fieldset margin-bottom-2x">
-                            <legend className="custom-legend">New Entry</legend>
+                            <legend className="custom-legend">
+                                <Label bsStyle="primary" className="padding-2x">{this.props.mode === 'edit' ? 'Update Entry' : 'New Entry'}</Label>
+                            </legend>
                                 <Col md={4}>
                                     <FormGroup md={4} bsSize="large" >
                                         <ControlLabel htmlFor="applicantName">Applicant Name</ControlLabel>
@@ -288,7 +291,7 @@ class EntryForm extends React.Component {
 EntryForm.propTypes = {
     record: PropTypes.object,
     mode: PropTypes.string,
-    onUpdate: PropTypes.func
+    onUpdate: PropTypes.func,
 }
 
 export default EntryForm

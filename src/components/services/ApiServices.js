@@ -156,7 +156,7 @@ export const LetterBoardService = {
 	getDashboardData() {
 		return new Promise((resolves, rejects) => {
 			const headers = userAuth.getHeaders()
-			axios.get(`${config.baseUrl}/getLetterBoardData`, {headers})
+			axios.get(`${config.baseUrl}/letters/getLetterBoardData`, {headers})
 	      	.then(res => resolves(res))
 	      	.catch(err => rejects(Error(err)))
       	})
@@ -167,7 +167,7 @@ export const NewLetterEntryFormService = {
 	getInputFieldsData() {
 		return new Promise((resolves, rejects) => {
 			const headers = userAuth.getHeaders()
-			axios.get(`${config.baseUrl}/getInputFieldsData`, {headers})
+			axios.get(`${config.baseUrl}/letters/getInputFieldsData`, {headers})
 	      	.then(res => resolves(res))
 	      	.catch(err => rejects(Error(err)))
       	})
@@ -186,9 +186,45 @@ export const ManageLetterBoardInputsService = {
 	addNewSettings(data) {
 		return new Promise((resolves, rejects) => {
 			const headers = userAuth.getHeaders()
-			axios.post(`${config.baseUrl}/addNewSettings`, data, {headers})
+			axios.post(`${config.baseUrl}/letters/addNewSettings`, data, {headers})
 	      	.then(res => resolves(res))
 	      	.catch(err => rejects(err))
+      	})
+	}
+}
+
+export const LettersService = {
+	getCountOfAllLetters() {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.get(`${config.baseUrl}/letters/getCountOfAllLetters`, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(Error(err)))
+      	})
+	},
+	getRecords(url) {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.get(url, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(Error(err)))
+      	})
+	},
+	getSearchResults(data) {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.post(`${config.baseUrl}/letters/getSearchResults`, data, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(Error(err)))
+      	})
+	},
+	getFilteredData(data) {
+		console.log("data", data);
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.post(`${config.baseUrl}/letters/getFilteredData`, data, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(Error(err)))
       	})
 	}
 }

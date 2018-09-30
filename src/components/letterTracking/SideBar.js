@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ErrorPage from './../ErrorPage'
 import LetterBoard from './LetterBoard'
+import LettersList from './LettersList'
 import ManageLetterBoardInputs from './ManageLetterBoardInputs'
 import NewLetterEntryForm from './NewLetterEntryForm'
 import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
@@ -25,6 +26,13 @@ class SideBar extends React.Component {
 						            Add New Entry
 						        </Link>
 						    </ListGroupItem>
+
+						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/manageLetters' ? 'active' : ''}`} bsClass="list">
+						        <Link to={`${this.props.match.url}/manageLetters`}>
+						            <i className="glyphicon glyphicon-pencil"></i>
+						            Manage Letters
+						        </Link>
+						    </ListGroupItem>
 						</ListGroup>
 					}
 
@@ -43,6 +51,7 @@ class SideBar extends React.Component {
 				<Grid bsClass="container padding-2x">
 					<Switch>
 						<SystemUserRoute  exact path={`${this.props.match.path}/addNewEntry`} component={NewLetterEntryForm} />
+						<SystemUserRoute  exact path={`${this.props.match.path}/manageLetters`} component={LettersList} />
 						<SystemAdminRoute exact path={`${this.props.match.path}/manageApp`} component={ManageLetterBoardInputs} />
 						<Route exact path={`${this.props.match.path}`} component={LetterBoard} />
 						<Route component={ErrorPage} />

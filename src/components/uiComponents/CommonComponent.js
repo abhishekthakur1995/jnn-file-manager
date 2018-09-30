@@ -1,14 +1,16 @@
 import React from 'react'
-import EntryForm from './../EntryForm'
-import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup, Breadcrumb } from 'react-bootstrap'
-import PropTypes from 'prop-types'
+import _ from 'underscore'
 import moment from 'moment'
+import PropTypes from 'prop-types'
+import EntryForm from './../EntryForm'
 import { Breadcrumbs } from 'react-breadcrumbs-dynamic'
 import { CrumbIconItem } from './CustomBreadCrumbsComponent'
+import { Common, FileRecord, LetterTracking } from './../helpers/CommonHelper'
+import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup, Breadcrumb } from 'react-bootstrap'
 
 export const PageHead = (props) => {
 	return (
-		<Grid bsClass="navbar">
+		<Grid bsClass="navbar page-head">
             <Grid bsClass="container-fluid">
                 <Grid bsClass="navbar-header">
                     <Breadcrumbs
@@ -18,7 +20,7 @@ export const PageHead = (props) => {
                         duplicateProps={{to:"href"}}
                     />
                 </Grid>
-                <Col sm={12} md={7} className="pull-right width-auto">
+                <Col sm={12} md={7} className="filter-container">
                     <Grid bsClass="pull-left padding-vert-5x">{props.filter}</Grid>
                     <Grid bsClass="pull-left padding-vert-7x">{props.quickSearch}</Grid>
                     <Grid bsClass="pull-left margin-top-2x">{props.pagination}</Grid>
@@ -30,7 +32,6 @@ export const PageHead = (props) => {
 }
 
 PageHead.propTypes = {
-    title: PropTypes.string,
     pagination: PropTypes.object,
     quickSearch: PropTypes.object,
     filter: PropTypes.object,
@@ -80,6 +81,7 @@ ChartHolder.propTypes = {
 }
 
 export const EditRecordModal = (props) => {
+    const ChildComponent = props.component
     return (
         <Modal show={props.show} onHide={props.onHide} dialogClassName={props.dialogClassName}>
             <Modal.Header closeButton>
@@ -87,7 +89,7 @@ export const EditRecordModal = (props) => {
             </Modal.Header>
 
             <Modal.Body>
-                <EntryForm showPageHead={false} mode="edit" record={props.record} onUpdate={props.onUpdate}/>
+                <ChildComponent mode="edit" record={props.record} onUpdate={props.onUpdate} />
             </Modal.Body>
 
             <Modal.Footer>
@@ -104,7 +106,8 @@ EditRecordModal.propTypes = {
     onUpdate: PropTypes.func,
     modalTitle: PropTypes.string,
     record: PropTypes.object,
-    handleModalClose: PropTypes.func
+    handleModalClose: PropTypes.func,
+    component: PropTypes.func
 }
 
 export const DeleteRecordModal = (props) => {
@@ -142,7 +145,7 @@ export const ManageRecordModal = (props) => {
             </Modal.Header>
 
             <Modal.Body>
-                <RecordDetails record={props.record} handleApproveBtnClick={props.onApprove} handleRejectBtnClick={props.onReject} />
+                <RecordDetails record={props.record} showActionButtons={props.showActionButtons} handleApproveBtnClick={props.onApprove} handleRejectBtnClick={props.onReject} />
             </Modal.Body>
         </Modal>
     )
@@ -155,34 +158,44 @@ ManageRecordModal.propTypes = {
     record: PropTypes.object,
     onApprove: PropTypes.func,
     onReject: PropTypes.func,
-    handleModalClose: PropTypes.func
+    handleModalClose: PropTypes.func,
+    showActionButtons:PropTypes.bool
 }
 
 export const RecordDetails = (props) => {
     const { record } = props
+
+    var rows = [];
+    for (var key in record) {
+        if (record.hasOwnProperty(key)) {
+            if(!_.contains(['CREATED', 'MODIFIED', 'ID', 'STATUS'], key)) {
+                let val = ''
+                if(key === 'FILE_STATUS') {
+                    val = FileRecord.getFileStatusFromCode(record[key])
+                } else if(key === 'LETTER_STATUS') {
+                    val = LetterTracking.getLetterStatusFromCode(record[key])
+                } else if(key === 'LETTER_DATE') {
+                    val = Common.getDisplayFormatDate(record[key])
+                } else {
+                    val = record[key]
+                }
+                rows.push(<tr key={key}><td>{key}: {val}</td></tr>)
+            }
+        }
+    }
+
     return (
         <Grid bsClass="record-details">
             <Table>
-                <thead>
-                    <tr><th>File Number: {record.FILE_NUMBER}</th></tr>
-                    <tr><th>Current State: {record.FILE_STATUS == 1 ? 'Approved' : (record.FILE_STATUS == 2 ? 'Rejected' : 'Pending')}</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>Applicant Name: {record.APPLICANT_NAME}</td></tr>
-                    <tr><td>Applicant Type: {record.APPLICANT_TYPE}</td></tr>
-                    <tr><td>Applicant Address: {record.APPLICANT_ADDRESS}</td></tr>
-                    <tr><td>Applicant Contact: {record.APPLICANT_CONTACT}</td></tr>
-                    <tr><td>Building Name: {record.BUILDING_NAME}</td></tr>
-                    <tr><td>Building Address: {record.BUILDING_ADDRESS}</td></tr>
-                    <tr><td>Building Area: {record.BUILDING_AREA}</td></tr>
-                    <tr><td>Remark: {record.REMARK}</td></tr>
-                </tbody>
+                <tbody>{rows}</tbody>
             </Table>
 
-            <Grid bsClass="width-10x display-inline">
-                <Button className="btn-success pull-right margin-left-1x" onClick={props.handleApproveBtnClick}> Approve </Button>
-                <Button className="btn-danger pull-right" onClick={props.handleRejectBtnClick}> Reject </Button>
-            </Grid>
+            {props.showActionButtons &&
+                <Grid bsClass="width-10x display-inline">
+                    <Button className="btn-success pull-right margin-left-1x" onClick={props.handleApproveBtnClick}> Approve </Button>
+                    <Button className="btn-danger pull-right" onClick={props.handleRejectBtnClick}> Reject </Button>
+                </Grid>
+            }
         </Grid>
     )
 }
@@ -190,7 +203,8 @@ export const RecordDetails = (props) => {
 RecordDetails.propTypes = {
     record: PropTypes.object,
     handleApproveBtnClick: PropTypes.func,
-    handleRejectBtnClick: PropTypes.func
+    handleRejectBtnClick: PropTypes.func,
+    showActionButtons:PropTypes.bool
 }
 
 export const LoadingSpinner = () => (
@@ -226,25 +240,25 @@ QuickSearchComponent.propTypes = {
 export const TableFunctionalityBase = (props) => {
     return (
         <Grid bsClass="table-base">
-            <Glyphicon
+            {props.onApprove && <Glyphicon
                 glyph="ok"
                 title="Approve"
                 onClick={() => props.onApprove('approve')}
                 className="margin-right-2x">
                 <Grid componentClass="span" bsClass="">Approve</Grid>
-            </Glyphicon>
+            </Glyphicon>}
 
-            <Glyphicon
+            {props.onApprove && <Glyphicon
                 glyph="remove"
                 title="Reject"
                 onClick={() => props.onReject('reject')} >
                 <Grid componentClass="span" bsClass="">Reject</Grid>
-            </Glyphicon>
+            </Glyphicon>}
 
-            <FormControl bsClass="pageSize" componentClass="select" onChange={(e) => { props.onPageSizeChange(e.target.value) }}>
+            {props.onPageSizeChange && <FormControl bsClass="pageSize" componentClass="select" onChange={(e) => { props.onPageSizeChange(e.target.value) }}>
                 {[10, 20, 30, 40, 50].map((pageSize) => <option key={pageSize} value={pageSize}>{pageSize}</option>)}
-            </FormControl>
-            <span className="margin-left-1x">results per page</span>
+            </FormControl>}
+            {props.onPageSizeChange && <span className="margin-left-1x">results per page</span>}
         </Grid>
     )
 }

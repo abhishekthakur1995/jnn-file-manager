@@ -6,13 +6,21 @@ const FILE_STATUS_CODE_MAPPING = {
 	'rejected' : 2
 }
 
+const LETTER_STATUS_CODE_MAPPING = {
+	'incoming'  : 1,
+	'outgoing' : 2
+}
+
 const DB_FIELDS_CODE_MAPPING = {
 	'buildingName'		: 	'BUILDING_NAME',
 	'applicantName'		: 	'APPLICANT_NAME',
 	'applicantContact'	: 	'APPLICANT_CONTACT',
 	'applicantAddress'  : 	'APPLICANT_ADDRESS',
 	'fileNumber'  		: 	'FILE_NUMBER',
-	'dateCreated'  		: 	'CREATED'
+	'dateCreated'  		: 	'CREATED',
+	'DEPARTMENT_NAME'   :   'DEPARTMENT_NAME',
+	'ASSIGNED_OFFICER'  :   'ASSIGNED_OFFICER',
+	'CREATED'           :   'CREATED'
 }
 
 const LETTER_FIELDS_CODE_MAPPING = {

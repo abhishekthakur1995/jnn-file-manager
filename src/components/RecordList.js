@@ -287,7 +287,7 @@ class RecordList extends React.Component {
 
 		const filterBtn = <FilterButton onClick={this.toggleFilter} upCheveron={this.state.showFilter} />
 
-		const filterComponent = <FilterComponent onApply={this.applyFilter} />
+		const filterComponent = <FilterComponent for={'fileManager'} onApply={this.applyFilter} />
 
 		return (
 			<Grid bsClass="record-list">
@@ -342,10 +342,9 @@ class RecordList extends React.Component {
 
 				</Table>
 				{this.state.totalRecords > 0 && <TableFunctionalityBase
-					onValidate={this.handleValidateAll}
 					onApprove={this.handleMultiAction}
-					onPageSizeChange={this.handlePageSizeChange}
-					onReject={this.handleMultiAction} /> }
+					onReject={this.handleMultiAction}
+					onPageSizeChange={this.handlePageSizeChange} /> }
 			</Grid>
 		)
 	}

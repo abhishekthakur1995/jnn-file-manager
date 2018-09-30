@@ -10,10 +10,15 @@ class FilterComponent extends React.Component {
 
 		this.state = {
 			formStatus : {
-				approved : true,
-				rejected : true,
-				pending  : true
+				approved : false,
+				rejected : false,
+				pending  : false,
 			},
+			letterStatus: {},
+			letterType: {},
+			letterTag: {},
+			departmentName: {},
+			assignedOfficer: {},
 			searchTerm: '',
 			queryField: ''
 		}
@@ -25,40 +30,45 @@ class FilterComponent extends React.Component {
 		this.setSearchTerm = this.setSearchTerm.bind(this)
 	}
 
-	componentDidMount() {
-		// need to maintain filter state of components
-		// get the filters from localStorageService and set them
-		const sortFilters = JSON.parse(localStorage.getItem('sortFilters'))
-		const searchFilters = JSON.parse(localStorage.getItem('searchFilters'))
-		if (sortFilters) {
-			this.setState(prevState => ({
-		  		formStatus: Object.keys(prevState.formStatus).reduce((newState, item) => ({
-		    		...newState,
-		    	    [item]: sortFilters.includes(item)
-		    	}), {})
-			}))
-		}
+	// componentDidMount() {
+	// 	// need to maintain filter state of components
+	// 	// get the filters from localStorageService and set them
+	// 	const sortFilters = JSON.parse(localStorage.getItem('sortFilters'))
+	// 	const searchFilters = JSON.parse(localStorage.getItem('searchFilters'))
+	// 	if (sortFilters) {
+	// 		this.setState(prevState => ({
+	// 	  		formStatus: Object.keys(prevState.formStatus).reduce((newState, item) => ({
+	// 	    		...newState,
+	// 	    	    [item]: sortFilters.includes(item)
+	// 	    	}), {})
+	// 		}))
+	// 	}
 
-		if (searchFilters) {
-			this.setState({
-				searchTerm: searchFilters.searchTerm,
-				queryField: searchFilters.queryField
-			})
-		}
-	}
+	// 	if (searchFilters) {
+	// 		this.setState({
+	// 			searchTerm: searchFilters.searchTerm,
+	// 			queryField: searchFilters.queryField
+	// 		})
+	// 	}
+	// }
 
-	handleCheckBoxClick(action) {
-		let { formStatus } = this.state
-		formStatus[action] = !formStatus[action]
-		this.setState({ formStatus })
+	handleCheckBoxClick(action, stateList) {
+		let { formStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer } = this.state
+		stateList[action] = !stateList[action]
+		this.setState({ formStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer })
 	}
 
 	handleFilterParams() {
-		const { formStatus } = this.state
-		const sortFilters = _.keys(_.pick(formStatus, (status) =>  status === true ))
+		const { formStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer } = this.state
+		const sortFilters = {}
+		sortFilters['formStatus'] = _.keys(_.pick(formStatus, (status) =>  status === true ))
+		sortFilters['letterStatus'] = _.keys(_.pick(letterStatus, (status) =>  status === true ))
+		sortFilters['letterTag'] = _.keys(_.pick(letterTag, (status) =>  status === true ))
+		sortFilters['letterTag'] = _.keys(_.pick(letterType, (status) =>  status === true ))
+		sortFilters['departmentName'] = _.keys(_.pick(departmentName, (status) =>  status === true ))
+		sortFilters['assignedOfficer'] = _.keys(_.pick(assignedOfficer, (status) =>  status === true ))
 
 		const searchFilters = {'searchTerm': this.state.searchTerm, 'queryField': this.state.queryField}
-
 		localStorage.setItem('sortFilters', JSON.stringify(sortFilters))
 		localStorage.setItem('searchFilters', JSON.stringify(searchFilters))
 
@@ -93,61 +103,145 @@ class FilterComponent extends React.Component {
 			<Grid bsClass="filter-advanced">
 				<Grid bsClass="margin-1x">
 					<Row className="show-grid padding-0x margin-0x">
-						<Col sm={12} md={6} lg={6}>
+						<Col sm={12} md={12} lg={12}>
 							<Col sm={12} className="pull-left">
-								<Grid bsClass="margin-1x filter-group small-12">
-									<Grid bsClass="columns">
+								<Grid bsClass="pull-left margin-1x filter-group col-sm-12 padding-0x">
+									<Grid bsClass="pull-left col-sm-12 columns padding-0x">
 							            <h5 className="bold margin-left-3x">Filter By</h5>
-				                        <ul rel="sort" className="small-12 no-bullet list-style-type-none">
-			                                <li className="margin-vert-1x">
-		                                		<Checkbox
-		                                			name="approved"
-		                                			checked={this.state.formStatus.approved}
-		                                			onChange={() => { this.handleCheckBoxClick('approved') }} > Accepted
-		                                		</Checkbox>
+							            <div className="pull-left col-sm-12 padding-0x">
+							            	{this.props.for === 'fileManager' &&
+						                        <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+					                                <li className="margin-vert-1x">
+				                                		{[{NAME:'Approved', CODE: 'approved'}, {NAME:'Rejected', CODE: 'rejected'}, {NAME:'Pending', CODE: 'pending'}].map((data) => {
+					                            			const code = data.CODE
+					                            			const name = data.NAME
+					                            			return (
+						                            			<Checkbox
+						                            				name={code}
+						                            				key={code}
+						                            				checked={this.state.formStatus.code}
+						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.formStatus) }}>{name}</Checkbox>
+					                            			)})
+					                            		}
+								                	</li>
+					                            </ul>
+				                            }
 
-		                                		<Checkbox
-		                                			name="rejected"
-		                                			checked={this.state.formStatus.rejected}
-		                                			onChange={() => { this.handleCheckBoxClick('rejected') }} > Rejected
-		                                		</Checkbox>
+				                            {this.props.for === 'letterManager' &&
+				                            	<div className="pull-left">
+						                            <ul rel="sort" className=" pull-left small-12 no-bullet list-style-type-none">
+						                                <li className="margin-vert-1x">
+					                                		{[{NAME:'Incoming', CODE: 'incoming'}, {NAME:'Outgoing', CODE: 'outgoing'}].map((data) => {
+						                            			const code = data.CODE
+						                            			const name = data.NAME
+						                            			return (
+							                            			<Checkbox
+							                            				name={code}
+							                            				key={code}
+							                            				checked={this.state.letterStatus.code}
+							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterStatus) }}>{name}</Checkbox>
+						                            			)})
+						                            		}
+									                	</li>
+						                            </ul>
 
-		                                		<Checkbox
-		                                			name="pending"
-		                                			checked={this.state.formStatus.pending}
-		                                			onChange={() => { this.handleCheckBoxClick('pending') }} > Pending
-		                                		</Checkbox>
-						                	</li>
-			                            </ul>
+						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<li className="margin-vert-1x">
+						                            		{this.props.inputFieldsData.DEPARTMENT_NAME.map((data) => {
+						                            			const code = data.CODE
+						                            			const name = data.NAME
+						                            			return (
+							                            			<Checkbox
+							                            				name={code}
+							                            				key={code}
+							                            				checked={this.state.departmentName.code}
+							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.departmentName) }}>{name}</Checkbox>
+						                            			)})
+						                            		}
+						                            	</li>
+						                            </ul>
+
+						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<li className="margin-vert-1x">
+						                            		{this.props.inputFieldsData.LETTER_TYPE.map((data) => {
+						                            			const code = data.CODE
+						                            			const name = data.NAME
+						                            			return (
+							                            			<Checkbox
+							                            				name={code}
+							                            				key={code}
+							                            				checked={this.state.letterType.code}
+							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterType) }}>{name}</Checkbox>
+						                            			)})
+						                            		}
+						                            	</li>
+						                            </ul>
+
+						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<li className="margin-vert-1x">
+						                            		{this.props.inputFieldsData.LETTER_TAG.map((data) => {
+						                            			const code = data.CODE
+						                            			const name = data.NAME
+						                            			return (
+							                            			<Checkbox
+							                            				name={code}
+							                            				key={code}
+							                            				checked={this.state.letterTag.code}
+							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterTag) }}>{name}</Checkbox>
+						                            			)})
+						                            		}
+						                            	</li>
+						                            </ul>
+
+						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<li className="margin-vert-1x">
+						                            		{this.props.inputFieldsData.ASSIGNED_OFFICER.map((data) => {
+						                            			const code = data.CODE
+						                            			const name = data.NAME
+						                            			return (
+							                            			<Checkbox
+							                            				name={code}
+							                            				key={code}
+							                            				checked={this.state.assignedOfficer.code}
+							                            				onChange={() => { this.handleCheckBoxClick(code,this.state.assignedOfficer) }}>{name}</Checkbox>
+						                            			)})
+						                            		}
+						                            	</li>
+						                            </ul>
+						                        </div>
+				                        	}
+				                        </div>
 							        </Grid>
 							    </Grid>
 							</Col>
 						</Col>
 
-						<Col sm={12} md={6} lg={6}>
-							<Col sm={12} className="pull-left">
-								<Grid bsClass="margin-1x filter-group small-12">
-									<Grid bsClass="columns">
-							            <h5 className="bold margin-left-3x">Search By</h5>
-				                        <ul rel="sort" className="small-12 no-bullet list-style-type-none padding-vert-2x">
-			                                <li className="margin-vert-1x">
+						{this.props.for === 'fileManager' && 
+							<Col sm={12} md={6} lg={6}>
+								<Col sm={12} className="pull-left">
+									<Grid bsClass="margin-1x filter-group small-12">
+										<Grid bsClass="columns">
+								            <h5 className="bold margin-left-3x">Search By</h5>
+					                        <ul rel="sort" className="small-12 no-bullet list-style-type-none padding-vert-2x">
+				                                <li className="margin-vert-1x">
 
-			                                	<SearchFilterOptions onClick={this.getSearchQueryField} value={this.state.queryField}/>
+				                                	<SearchFilterOptions onClick={this.getSearchQueryField} value={this.state.queryField}/>
 
-			                                	<ControlLabel htmlFor="searchTerm">Search Query</ControlLabel>
-			                                	<FormControl
-			                                		type="text"
-			                                		name="searchTerm"
-			                                		value={this.state.searchTerm}
-			                                		onChange={this.setSearchTerm}
-			                                		placeholder="Enter your query to search"
-		                                		/>
-						                	</li>
-			                            </ul>
-							        </Grid>
-							    </Grid>
+				                                	<ControlLabel htmlFor="searchTerm">Search Query</ControlLabel>
+				                                	<FormControl
+				                                		type="text"
+				                                		name="searchTerm"
+				                                		value={this.state.searchTerm}
+				                                		onChange={this.setSearchTerm}
+				                                		placeholder="Enter your query to search"
+			                                		/>
+							                	</li>
+				                            </ul>
+								        </Grid>
+								    </Grid>
+								</Col>
 							</Col>
-						</Col>
+						}
 					</Row>
 				</Grid>
 
@@ -162,7 +256,9 @@ class FilterComponent extends React.Component {
 }
 
 FilterComponent.propTypes = {
-	onApply: PropTypes.func
+	for: PropTypes.string,
+	onApply: PropTypes.func,
+	inputFieldsData: PropTypes.object
 }
 
 export default FilterComponent

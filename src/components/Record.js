@@ -1,9 +1,9 @@
 import React from 'react'
-import { SplitButton, MenuItem, Checkbox } from 'react-bootstrap'
-import { EditRecordModal, DeleteRecordModal, ManageRecordModal } from './uiComponents/CommonComponent'
-import PropTypes from 'prop-types'
 import moment from 'moment'
 import config from 'config'
+import PropTypes from 'prop-types'
+import { SplitButton, MenuItem, Checkbox } from 'react-bootstrap'
+import { EditRecordModal, DeleteRecordModal, ManageRecordModal } from './uiComponents/CommonComponent'
 
 class Record extends React.Component {
 	constructor(props) {
@@ -155,7 +155,8 @@ class Record extends React.Component {
 					record={record}
 					onApprove={this.handleApproveStatus}
 					onReject={this.handleRejectStatus}
-					modalTitle="Manage record">
+					modalTitle="Manage record"
+					showActionButtons={true}>
 				</ManageRecordModal>
 			</tr>
 		)

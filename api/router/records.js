@@ -113,6 +113,11 @@ records.post('/getFilteredData',
 		check('sortFilters').not().isEmpty().withMessage('No filter data was sent')
 	],
 	function(req, res) {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+	  	
 		const page = req.body.page
 		const limit = req.body.limit
 		const offset = (page - 1) * limit
@@ -158,7 +163,7 @@ records.post('/getFilteredData',
 )
 
 /* 	path: /getSearchResults
- *	type: GET
+ *	type: POST
  */
 
 records.post('/getSearchResults',

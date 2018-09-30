@@ -8,12 +8,12 @@ import Input from 'react-validation/build/input'
 import Select from 'react-validation/build/select'
 import Button from 'react-validation/build/button'
 import Textarea from 'react-validation/build/textarea'
-import { letterTracking } from './../helpers/CommonHelper'
+import { required } from './..//helpers/ValidationHelper'
+import { LetterTracking } from './../helpers/CommonHelper'
+import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import AlertComponent from './../uiComponents/AlertComponent'
 import { NewLetterEntryFormService } from './../services/ApiServices'
 import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
-import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import { required } from './..//helpers/ValidationHelper'
 import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label } from 'react-bootstrap'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -71,15 +71,16 @@ class NewLetterEntryForm extends React.Component {
             const record = this.props.record
             this.setState({
                 fields: {
-                    applicantName: record.APPLICANT_NAME,
-                    applicantType: record.APPLICANT_TYPE,
-                    applicantAddress: record.APPLICANT_ADDRESS,
-                    applicantContact: record.APPLICANT_CONTACT,
-                    buildingName: record.BUILDING_NAME,
-                    buildingAddress: record.BUILDING_ADDRESS,
-                    buildingArea: record.BUILDING_AREA,
-                    fileNumber: record.FILE_NUMBER,
-                    remark: record.REMARK,
+                    DEPARTMENT_NAME: record.DEPARTMENT_NAME,
+                    ASSIGNED_OFFICER: record.ASSIGNED_OFFICER,
+                    LETTER_TYPE: record.LETTER_TYPE,
+                    LETTER_TAG: record.LETTER_TAG,
+                    LETTER_ADDRESS: record.LETTER_ADDRESS,
+                    LETTER_SUBJECT: record.LETTER_SUBJECT,
+                    LETTER_REG_NO: record.LETTER_REG_NO,
+                    LETTER_DATE: moment(record.LETTER_DATE),
+                    LETTER_STATUS: record.LETTER_STATUS,
+                    REMARK: record.REMARK
                 }
             })
         }
@@ -108,7 +109,7 @@ class NewLetterEntryForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        const url = this.props.mode === 'edit' ? `${config.baseUrl}/updateRecord/${this.props.record.ID}` : `${config.baseUrl}/addNewLetterRecord`
+        const url = this.props.mode === 'edit' ? `${config.baseUrl}/letters/updateRecord/${this.props.record.ID}` : `${config.baseUrl}/letters/addNewLetterRecord`
         const method = this.props.mode === 'edit' ? 'put' : 'post'
         const data = this.state.fields
         NewLetterEntryFormService.addNewLetterRecord(method, url, data).then((res) => {
@@ -131,8 +132,8 @@ class NewLetterEntryForm extends React.Component {
             })
         })
 
-        // // to update the record list when a record is updated
-        // if (this.props.mode === 'edit') this.props.onUpdate(this.state.fields)
+        // to update the record list when a record is updated
+        if (this.props.mode === 'edit') this.props.onUpdate(this.state.fields)
     }
 
     hideAlert() {
@@ -146,8 +147,8 @@ class NewLetterEntryForm extends React.Component {
         const btnText = this.props.mode === 'edit' ? 'Update' : 'Save'
         return (
             <Grid bsClass="entry-form">
-                <BreadcrumbsItem glyph='file' to={letterTracking.getLetterTrackingAbsolutePath('addNewEntry')}> Add New Entry </BreadcrumbsItem>
-                <PageHead title="Add New Record"/>
+                {this.props.mode !== 'edit' && <BreadcrumbsItem glyph='file' to={LetterTracking.getLetterTrackingAbsolutePath('addNewEntry')}> Add New Entry </BreadcrumbsItem>}
+                {this.props.mode !== 'edit' && <PageHead />}
                 {this.state.showLoading && <LoadingSpinner />}
 
                 <Row className="margin-0x">
@@ -156,7 +157,7 @@ class NewLetterEntryForm extends React.Component {
                         <Form onSubmit={this.handleSubmit}>
                             <fieldset className="custom-fieldset margin-bottom-2x">
                                 <legend className="custom-legend">
-                                    <Label bsStyle="primary" className="padding-2x">New Entry</Label>
+                                    <Label bsStyle="primary" className="padding-2x">{this.props.mode === 'edit' ? 'Update Entry' : 'New Entry'}</Label>
                                 </legend>
                                 <Col md={3}>
                                     <FormGroup className="required" >
@@ -326,9 +327,9 @@ class NewLetterEntryForm extends React.Component {
 }
 
 NewLetterEntryForm.propTypes = {
-    record: PropTypes.object,
     mode: PropTypes.string,
-    onUpdate: PropTypes.func
+    onUpdate: PropTypes.func,
+    record: PropTypes.object
 }
 
 export default NewLetterEntryForm
