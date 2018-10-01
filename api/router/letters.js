@@ -38,7 +38,7 @@ letters.post('/addNewLetterRecord',
 				}
 				return res.status(400).json({message : 'Unable to save letter data. Please try again', saved : false})
 			}
-			res.status(200).json({message : 'Letter record saved successfully', saved : true})
+			res.status(200).json({message : 'Letter record saved successfully', saved : true, regNo: req.body.LETTER_REG_NO})
 		})
 	}
 )
@@ -299,5 +299,25 @@ letters.post('/getFilteredData',
 		})
 	}
 )
+
+ /*path: /upload
+  *type: POST
+  */
+
+letters.post('/upload', (req, res) => {
+	let uploadFile = req.files.file
+	const regNo = req.body.regNo
+	console.log(regNo)
+	const fileName = helper.constructUniqueFileName(regNo)
+
+	uploadFile.mv(`${__dirname}/../../upload/letters/${fileName}`, function(err) {
+	    if (err) {
+      		return res.status(500).json({file: '', message : err, success : false})
+	    }
+
+	    // send response		
+	    res.status(200).json({file: `${req.body.filename}`, message : 'Letter uploaded successfully', success : true})
+  	})
+})
 
 module.exports = letters

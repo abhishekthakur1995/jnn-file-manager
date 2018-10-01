@@ -177,6 +177,20 @@ export const NewLetterEntryFormService = {
 			const headers = userAuth.getHeaders()
 			axios({ method, url, data, headers })
 			.then(res => resolves(res))
+			.catch(err => rejects(err))
+		})
+	},
+	uploadLetterFile(data) {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios({
+				method: 'post',
+				url: `${config.baseUrl}/letters/upload`,
+				data: data,
+				headers,
+				config: { headers: {'Content-Type': 'multipart/form-data' }}
+			})
+			.then(res => resolves(res))
 			.catch(err => rejects(Error(err)))
 		})
 	}

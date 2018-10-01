@@ -502,7 +502,7 @@ ul {
     }
 }
 
-.import-records {
+.import-records, .entry-form {
     @mixin default {
         width: 100%;
         height: 150px;
@@ -522,10 +522,6 @@ ul {
         @include default
         border-color: red;
     }
-    .dzinfo {
-        margin-left: 20em;
-        margin-top: 3.5em;
-    }
     .dzuploadbtn {
         margin-top: 10px;
         width: 20%;
@@ -541,6 +537,20 @@ ul {
         float: left;
         margin-top: 20px;
         padding: 10px;
+    }
+}
+
+.entry-form {
+    .dzinfo {
+       margin-left: 15em;
+       margin-top: 3.5em;
+   }
+}
+
+.import-records {
+    .dzinfo {
+        margin-left: 20em;
+        margin-top: 3.5em;
     }
 }
 

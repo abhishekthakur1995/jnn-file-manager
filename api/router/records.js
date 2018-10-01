@@ -344,7 +344,7 @@ records.get('/getDataBasedOnSelectedDuration',
 
 
 
- /*path: /getDataBasedOnSelectedDuration
+ /*path: /upload
   *type: POST
   */
 

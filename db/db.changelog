@@ -37,6 +37,7 @@ CREATE TABLE `tbl_letter_records` (
 	`LETTER_REG_NO` varchar(30) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
 	`LETTER_STATUS` tinyint(1) COLLATE utf8_unicode_ci NOT NULL,
 	`LETTER_DATE` datetime COLLATE utf8_unicode_ci NOT NULL,
+	`LETTER_FILE` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL UNIQUE,
 	`REMARK` text COLLATE utf8_unicode_ci DEFAULT NULL,
 	`STATUS` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
 	`CREATED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP,

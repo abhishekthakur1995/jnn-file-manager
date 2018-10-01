@@ -1,4 +1,5 @@
 'use strict'
+const moment = require('moment')
 
 const FILE_STATUS_CODE_MAPPING = {
 	'pending'  : 0,
@@ -62,6 +63,10 @@ class Helper {
 
 	static createCodeFromSettingsName(settingsName) {
 		return settingsName.toLowerCase().trim().replace(/\s\s+/g, ' ').replace(/ /g,"_")
+	}
+
+	static constructUniqueFileName(regNo) {
+		return `${moment().format('DDMMYYYY')}_${regNo}`
 	}
 
 	static log(value, helpText="logger") {

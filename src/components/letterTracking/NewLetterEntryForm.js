@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import config from 'config'
 import PropTypes from 'prop-types'
+import Dropzone from 'react-dropzone'
 import DatePicker from 'react-datepicker'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
@@ -14,7 +15,7 @@ import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import AlertComponent from './../uiComponents/AlertComponent'
 import { NewLetterEntryFormService } from './../services/ApiServices'
 import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
-import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label } from 'react-bootstrap'
+import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label, Button as Btn } from 'react-bootstrap'
 import 'react-datepicker/dist/react-datepicker.css'
 
 class NewLetterEntryForm extends React.Component {
@@ -25,6 +26,7 @@ class NewLetterEntryForm extends React.Component {
         this.letterTypeList = []
         this.letterTagList = []
         this.assignedOfficerList = []
+        this.acceptedFiles = ''
 
         // state
         this.state = {
@@ -46,10 +48,12 @@ class NewLetterEntryForm extends React.Component {
                 autoHide: false
             },
             showLoading: false,
-            showAlert: false
+            showAlert: false,
+            uploadedFileName: ''
         }
 
         // functions binding
+        this.onDrop = this.onDrop.bind(this)
         this.hideAlert = this.hideAlert.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -107,12 +111,29 @@ class NewLetterEntryForm extends React.Component {
         }))
     }
 
+    onDrop(acceptedFiles) {
+        this.acceptedFiles = acceptedFiles
+        this.setState({ uploadedFileName: acceptedFiles[0].name })
+    }
+
     handleSubmit(event) {
         event.preventDefault()
         const url = this.props.mode === 'edit' ? `${config.baseUrl}/letters/updateRecord/${this.props.record.ID}` : `${config.baseUrl}/letters/addNewLetterRecord`
         const method = this.props.mode === 'edit' ? 'put' : 'post'
-        const data = this.state.fields
+        let data = this.state.fields
+
         NewLetterEntryFormService.addNewLetterRecord(method, url, data).then((res) => {
+            if(this.acceptedFiles) {
+                let data = new FormData()
+                data.append('file', this.acceptedFiles[0])
+                data.append('filename', this.acceptedFiles[0].name)
+                data.append('regNo', res.data.regNo)
+                NewLetterEntryFormService.uploadLetterFile(data).then((response) => {
+                    if (response.data.success === true && response.data.file) {
+                        this.setState({ uploadedFileName: response.data.file })
+                    }
+                })
+            }
             this.setState({
                 showAlert: true,
                 alertOptions: {
@@ -125,7 +146,7 @@ class NewLetterEntryForm extends React.Component {
             this.setState({
                 showAlert: true,
                 alertOptions: {
-                    text: err.response.data.message,
+                    text: err.response.data.message || 'Some error occured. Please try again',
                     type: 'danger',
                     autoHide: true
                 }
@@ -310,6 +331,27 @@ class NewLetterEntryForm extends React.Component {
                                             onChange={this.handleChange}
                                         />
                                     </FormGroup>
+                                </Col>
+
+                                <Col md={12}>
+                                    <Dropzone
+                                        className="dz-default"
+                                        multiple={false}
+                                        accept={".jpg, .png, .doc"}
+                                        maxSize={500000}
+                                        onDrop={(files) => this.onDrop(files)}>
+                                            <Grid bsClass="dzinfo">
+                                                <span> Upload your letter here. File size limit is 500KB. <span className="highlight">Only valid doc (.doc) and image files (.jpg, .png) will be accepted</span></span>
+                                                <Clearfix />
+
+                                                <Btn bsStyle="default" className="dzuploadbtn">
+                                                    <Glyphicon glyph="upload" /> Upload File
+                                                </Btn>
+                                                <Clearfix />
+
+                                                <p className="dzuploadedfilename">{this.state.uploadedFileName}</p>
+                                            </Grid>
+                                    </Dropzone>
                                 </Col>
                             </fieldset>
 
