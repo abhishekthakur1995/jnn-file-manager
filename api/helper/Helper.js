@@ -33,19 +33,23 @@ const LETTER_FIELDS_CODE_MAPPING = {
 class Helper {
 
 	static getFileStatusCodeFromName(codeName) {
-	    return FILE_STATUS_CODE_MAPPING[codeName];
+	    return FILE_STATUS_CODE_MAPPING[codeName]
 	}
 
 	static convertTimestampToUnixTimestamp(timestamp) {
-	    return timestamp/1000;
+	    return timestamp/1000
 	}
 
 	static getDbFieldCodeFromName(codeName) {
-	    return DB_FIELDS_CODE_MAPPING[codeName];
+	    return DB_FIELDS_CODE_MAPPING[codeName]
 	}
 
 	static getDepartmentTypeFromCode(codeName) {
-		return LETTER_FIELDS_CODE_MAPPING[codeName];
+		return LETTER_FIELDS_CODE_MAPPING[codeName]
+	}
+
+	static createCodeFromSettingsName(settingsName) {
+		return settingsName.toLowerCase().trim().replace(/\s\s+/g, ' ').replace(/ /g,"_")
 	}
 
 	static log(value, helpText="logger") {

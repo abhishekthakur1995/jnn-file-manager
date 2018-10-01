@@ -2,6 +2,7 @@ import React from 'react'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Button from 'react-validation/build/button'
+import { LetterTracking } from './../helpers/CommonHelper'
 import AlertComponent from './../uiComponents/AlertComponent'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { NewLetterEntryFormService, ManageLetterBoardInputsService } from './../services/ApiServices'
@@ -56,14 +57,14 @@ class ManageLetterBoardInputs extends React.Component {
   		e.preventDefault()
   		this.setState({showLoading: true})
   		ManageLetterBoardInputsService.addNewSettings({SETTING_NAME: this.state.settingName, DEPARTMENT_CODE: code}).then(res => {
-			if(code === 'DEPT') {
-				this.departmentList.push({NAME: this.state.settingName, CODE: this.state.settingName.toLowerCase()})
+			if(code === 'DEPARTMENT') {
+				this.departmentList.push({NAME: this.state.settingName, CODE: LetterTracking.createCodeFromSettingsName(this.state.settingName)})
 			} else if (code === 'TYPE') {
-				this.letterTypeList.push({NAME: this.state.settingName, CODE: this.state.settingName.toLowerCase()})
+				this.letterTypeList.push({NAME: this.state.settingName, CODE: LetterTracking.createCodeFromSettingsName(this.state.settingName)})
 			} else if(code === 'TAG') {
-				this.letterTagList.push({NAME: this.state.settingName, CODE: this.state.settingName.toLowerCase()})
+				this.letterTagList.push({NAME: this.state.settingName, CODE: LetterTracking.createCodeFromSettingsName(this.state.settingName)})
 			} else {
-				this.assignedOfficerList.push({NAME: this.state.settingName, CODE: this.state.settingName.toLowerCase()})
+				this.assignedOfficerList.push({NAME: this.state.settingName, CODE: LetterTracking.createCodeFromSettingsName(this.state.settingName)})
 			}
 
 			this.setState({
@@ -138,7 +139,6 @@ class ManageLetterBoardInputs extends React.Component {
 						<ListGroup className="margin-top-4x">
 							{this.departmentList.map((dept) => 
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={dept.CODE} value={dept.CODE}>{dept.NAME}
-									<Glyphicon title="Remove this department" className="pull-right" glyph="remove"></Glyphicon>
 								</ListGroupItem>
 							)}
 						</ListGroup>
@@ -173,7 +173,6 @@ class ManageLetterBoardInputs extends React.Component {
 						<ListGroup className="margin-top-4x">
 							{this.assignedOfficerList.map((officer) => 
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={officer.CODE} value={officer.CODE}>{officer.NAME}
-									<Glyphicon title="Remove this department" className="pull-right" glyph="remove"></Glyphicon>
 								</ListGroupItem>
 							)}
 						</ListGroup>
@@ -208,7 +207,6 @@ class ManageLetterBoardInputs extends React.Component {
 						<ListGroup className="margin-top-4x">
 							{this.letterTypeList.map((letterType) => 
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={letterType.CODE} value={letterType.CODE}>{letterType.NAME}
-									<Glyphicon title="Remove this department" className="pull-right" glyph="remove"></Glyphicon>
 								</ListGroupItem>
 							)}
 						</ListGroup>
@@ -243,7 +241,6 @@ class ManageLetterBoardInputs extends React.Component {
 						<ListGroup className="margin-top-4x">
 							{this.letterTagList.map((letterTag) => 
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={letterTag.CODE} value={letterTag.CODE}>{letterTag.NAME}
-									<Glyphicon title="Remove this department" className="pull-right" glyph="remove"></Glyphicon>
 								</ListGroupItem>
 							)}
 						</ListGroup>

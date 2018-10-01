@@ -88,7 +88,7 @@ letters.put('/updateRecord/:id',
 
 	  	const data = {
 	  		'NAME' : req.body.SETTING_NAME.toUpperCase(),
-	  		'CODE' : req.body.SETTING_NAME.toLowerCase(),
+	  		'CODE' : helper.createCodeFromSettingsName(req.body.SETTING_NAME),
 	  		'TYPE' : helper.getDepartmentTypeFromCode(req.body.DEPARTMENT_CODE)
 	  	}
 

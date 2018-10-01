@@ -32,6 +32,9 @@ export const LetterTracking = {
 	},
 	getLetterStatusFromCode(code) {
 		return LETTER_STATUS_CODE_MAPPING[code]
+	},
+	createCodeFromSettingsName(settingsName) {
+		return settingsName.toLowerCase().trim().replace(/\s\s+/g, ' ').replace(/ /g,"_")
 	}
 }
 
