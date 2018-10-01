@@ -66,7 +66,7 @@ letters.put('/updateRecord/:id',
 			if (err) {
 				return res.status(400).json({message : err, saved : false})
 			}
-			res.status(200).json({message : 'Letter data updated successfully', saved : true})
+			res.status(200).json({message : 'Letter data updated successfully', saved : true, regNo: req.body.LETTER_REG_NO})
 		})
 	}
 )
