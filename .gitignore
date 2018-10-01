@@ -1,4 +1,5 @@
 node_modules/
+upload/
 npm-debug.log
 upload/*.xlsx
 dump.rdb

@@ -65,8 +65,13 @@ class Helper {
 		return settingsName.toLowerCase().trim().replace(/\s\s+/g, ' ').replace(/ /g,"_")
 	}
 
-	static constructUniqueFileName(regNo) {
-		return `${moment().format('DDMMYYYY')}_${regNo}`
+	static getFileExtension(fileName) {
+		const re = /(?:\.([^.]+))?$/
+		return re.exec(fileName)[1]
+	}
+
+	static constructUniqueFileName(regNo, ext) {
+		return `${moment().format('DDMMYYYY')}_${regNo}.${ext}`
 	}
 
 	static log(value, helpText="logger") {

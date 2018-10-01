@@ -1,11 +1,11 @@
+const fs = require('fs')
 const express = require('express')
 const letters = express.Router()
 const connection = require('../../db/dbConnection')
-const { check, validationResult } = require('express-validator/check')
 const helper = require('../helper/Helper.js')
 const _ = require('lodash')
-const fs = require('fs')
 const moment = require('moment')
+const { check, validationResult } = require('express-validator/check')
 
 /* 	path: /addNewLetterRecord
  *	type: POST 
@@ -62,7 +62,7 @@ letters.put('/updateRecord/:id',
 		check('id').not().isEmpty().withMessage('No record id was sent')
 	],
 	(req, res) => {
-		connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET DEPARTMENT_NAME = ?, ASSIGNED_OFFICER = ?, LETTER_TYPE = ?, LETTER_TAG = ?, LETTER_ADDRESS = ?, LETTER_SUBJECT = ?, LETTER_REG_NO = ?, LETTER_DATE = ?, LETTER_STATUS = ?, REMARK = ? WHERE ID = ?`, [req.body.DEPARTMENT_NAME, req.body.ASSIGNED_OFFICER, req.body.LETTER_TYPE, req.body.LETTER_TAG, req.body.LETTER_ADDRESS, req.body.LETTER_SUBJECT, req.body.LETTER_REG_NO, req.body.LETTER_DATE, req.body.LETTER_STATUS, req.body.REMARK,req.params.id], function(err, results, fields) {
+		connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET DEPARTMENT_NAME = ?, ASSIGNED_OFFICER = ?, LETTER_TYPE = ?, LETTER_TAG = ?, LETTER_ADDRESS = ?, LETTER_SUBJECT = ?, LETTER_REG_NO = ?, LETTER_DATE = ?, LETTER_STATUS = ?, REMARK = ? WHERE ID = ?`, [req.body.DEPARTMENT_NAME, req.body.ASSIGNED_OFFICER, req.body.LETTER_TYPE, req.body.LETTER_TAG, req.body.LETTER_ADDRESS, req.body.LETTER_SUBJECT, req.body.LETTER_REG_NO, req.body.LETTER_DATE, req.body.LETTER_STATUS, req.body.REMARK, req.params.id], function(err, results, fields) {
 			if (err) {
 				return res.status(400).json({message : err, saved : false})
 			}
@@ -307,17 +307,21 @@ letters.post('/getFilteredData',
 letters.post('/upload', (req, res) => {
 	let uploadFile = req.files.file
 	const regNo = req.body.regNo
-	console.log(regNo)
-	const fileName = helper.constructUniqueFileName(regNo)
+	const extension = helper.getFileExtension(req.body.filename)
+	const fileName = helper.constructUniqueFileName(regNo, extension)
 
-	uploadFile.mv(`${__dirname}/../../upload/letters/${fileName}`, function(err) {
-	    if (err) {
-      		return res.status(500).json({file: '', message : err, success : false})
-	    }
+	if(!fs.existsSync(`${__dirname}/../../upload/letters/${fileName}`)) {
+		uploadFile.mv(`${__dirname}/../../upload/letters/${fileName}`, function(err) {
+	    	if (err) { return res.status(400).json({message : 'Error uploading file', success : false}) }
 
-	    // send response		
-	    res.status(200).json({file: `${req.body.filename}`, message : 'Letter uploaded successfully', success : true})
-  	})
+		  	connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET LETTER_FILE = ? WHERE LETTER_REG_NO = ?`, [fileName, regNo], function(err, results, fields) {
+		  		if (err) { return res.status(400).json({message : 'Error saving file path to db', success : false})}
+		  	})
+	    	return res.status(200).json({message : 'Letter uploaded successfully', success : true})
+  		})
+	} else {
+		return res.status(400).json({message : 'File already exists', success : true})
+	}
 })
 
 module.exports = letters
