@@ -267,11 +267,20 @@ letters.post('/getFilteredData',
 
 		for (var key in sortFilters) {
 			if (!_.isEmpty(sortFilters[key])) {
-				sortFiltersData = sortFilters[key].map(val => val)
+				sortFiltersData = sortFilters[key].map(val => `'${val}'`)
+
 				if (_.isEmpty(whereCriteria)) {
-					whereCriteria += `WHERE ${key} IN (${sortFiltersData})`
+					if(sortFiltersData.length > 1) {
+						whereCriteria += `WHERE ${helper.getFilterFieldFromKey(key)} IN (${sortFiltersData})`
+					} else {
+						whereCriteria += `WHERE ${helper.getFilterFieldFromKey(key)} = ${sortFiltersData}`
+					}
 				} else {
-					whereCriteria += ` AND ${key} IN (${sortFiltersData})`
+					if(sortFiltersData.length > 1) {
+						whereCriteria += ` AND ${helper.getFilterFieldFromKey(key)} IN (${sortFiltersData})`
+					} else {
+						whereCriteria += ` AND ${helper.getFilterFieldFromKey(key)} = ${sortFiltersData}`
+					}
 				}
 			}
 		}

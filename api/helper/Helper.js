@@ -30,6 +30,14 @@ const LETTER_FIELDS_CODE_MAPPING = {
 	'TYPE'       :  'LETTER_TYPE'
 }
 
+const FILTER_FIELDS_CODE_MAPPING = {
+	'departmentName'    :   'DEPARTMENT_NAME',
+	'letterTag'         :	'LETTER_TAG',
+	'letterType'        :	'LETTER_TYPE',
+	'letterStatus'		:	'LETTER_STATUS',
+	'assignedOfficer'	:   'ASSIGNED_OFFICER',
+}
+
 class Helper {
 
 	static getFileStatusCodeFromName(codeName) {
@@ -46,6 +54,10 @@ class Helper {
 
 	static getDepartmentTypeFromCode(codeName) {
 		return LETTER_FIELDS_CODE_MAPPING[codeName]
+	}
+
+	static getFilterFieldFromKey(codeName) {
+		return FILTER_FIELDS_CODE_MAPPING[codeName]
 	}
 
 	static createCodeFromSettingsName(settingsName) {

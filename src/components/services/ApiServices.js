@@ -219,7 +219,6 @@ export const LettersService = {
       	})
 	},
 	getFilteredData(data) {
-		console.log("data", data);
 		return new Promise((resolves, rejects) => {
 			const headers = userAuth.getHeaders()
 			axios.post(`${config.baseUrl}/letters/getFilteredData`, data, {headers})

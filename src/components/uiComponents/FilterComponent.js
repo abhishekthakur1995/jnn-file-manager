@@ -1,8 +1,8 @@
 import React from 'react'
-import { Grid, Row, Col, Checkbox, Button, ControlLabel, FormControl } from 'react-bootstrap'
-import { SearchFilterOptions } from './CommonComponent'
-import PropTypes from 'prop-types'
 import _ from 'underscore'
+import PropTypes from 'prop-types'
+import { SearchFilterOptions } from './CommonComponent'
+import { Grid, Row, Col, Checkbox, Button, ControlLabel, FormControl } from 'react-bootstrap'
 
 class FilterComponent extends React.Component {
 	constructor(props) {
@@ -64,7 +64,7 @@ class FilterComponent extends React.Component {
 		sortFilters['formStatus'] = _.keys(_.pick(formStatus, (status) =>  status === true ))
 		sortFilters['letterStatus'] = _.keys(_.pick(letterStatus, (status) =>  status === true ))
 		sortFilters['letterTag'] = _.keys(_.pick(letterTag, (status) =>  status === true ))
-		sortFilters['letterTag'] = _.keys(_.pick(letterType, (status) =>  status === true ))
+		sortFilters['letterType'] = _.keys(_.pick(letterType, (status) =>  status === true ))
 		sortFilters['departmentName'] = _.keys(_.pick(departmentName, (status) =>  status === true ))
 		sortFilters['assignedOfficer'] = _.keys(_.pick(assignedOfficer, (status) =>  status === true ))
 
@@ -107,7 +107,7 @@ class FilterComponent extends React.Component {
 							<Col sm={12} className="pull-left">
 								<Grid bsClass="pull-left margin-1x filter-group col-sm-12 padding-0x">
 									<Grid bsClass="pull-left col-sm-12 columns padding-0x">
-							            <h5 className="bold margin-left-3x">Filter By</h5>
+							            <h4 className="bold margin-left-3x">Filter By</h4>
 							            <div className="pull-left col-sm-12 padding-0x">
 							            	{this.props.for === 'fileManager' &&
 						                        <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
@@ -130,6 +130,7 @@ class FilterComponent extends React.Component {
 				                            {this.props.for === 'letterManager' &&
 				                            	<div className="pull-left">
 						                            <ul rel="sort" className=" pull-left small-12 no-bullet list-style-type-none">
+						                            	<span className="bold underline">Letter Status</span>
 						                                <li className="margin-vert-1x">
 					                                		{[{NAME:'Incoming', CODE: 'incoming'}, {NAME:'Outgoing', CODE: 'outgoing'}].map((data) => {
 						                            			const code = data.CODE
@@ -146,6 +147,7 @@ class FilterComponent extends React.Component {
 						                            </ul>
 
 						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<span className="bold underline">Department Name</span>
 						                            	<li className="margin-vert-1x">
 						                            		{this.props.inputFieldsData.DEPARTMENT_NAME.map((data) => {
 						                            			const code = data.CODE
@@ -162,6 +164,7 @@ class FilterComponent extends React.Component {
 						                            </ul>
 
 						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<span className="bold underline">Letter Type</span>
 						                            	<li className="margin-vert-1x">
 						                            		{this.props.inputFieldsData.LETTER_TYPE.map((data) => {
 						                            			const code = data.CODE
@@ -178,6 +181,7 @@ class FilterComponent extends React.Component {
 						                            </ul>
 
 						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<span className="bold underline">Letter Tag</span>
 						                            	<li className="margin-vert-1x">
 						                            		{this.props.inputFieldsData.LETTER_TAG.map((data) => {
 						                            			const code = data.CODE
@@ -194,6 +198,7 @@ class FilterComponent extends React.Component {
 						                            </ul>
 
 						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<span className="bold underline">Assigned Officer</span>
 						                            	<li className="margin-vert-1x">
 						                            		{this.props.inputFieldsData.ASSIGNED_OFFICER.map((data) => {
 						                            			const code = data.CODE
