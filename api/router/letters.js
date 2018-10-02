@@ -223,11 +223,11 @@ letters.post('/getSearchResults',
 		let totalCount = 0
 		let results = ''
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} WHERE DEPARTMENT_NAME LIKE '%${query}%'`, function(err, results, fields) {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} WHERE LETTER_REG_NO LIKE '%${query}%'`, function(err, results, fields) {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE DEPARTMENT_NAME LIKE '%${query}%' LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+			connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE LETTER_REG_NO LIKE '%${query}%' LIMIT ${offset}, ${limit}`, function(err, results, fields) {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
