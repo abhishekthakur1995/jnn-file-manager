@@ -6,14 +6,15 @@ import { CSVLink } from 'react-csv'
 import DatePicker from 'react-datepicker'
 import pdfMake from "pdfmake/build/pdfmake"
 import pdfFonts from "pdfmake/build/vfs_fonts"
-import { ExportLetterData } from './services/ApiServices'
+import { LetterTracking } from './../helpers/CommonHelper'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import { ExportLetterDataService } from './../services/ApiServices'
 import { Grid, Radio, Table, Button, Clearfix } from 'react-bootstrap'
-import { PageHead, MonthDropDown, YearDropDown } from './uiComponents/CommonComponent'
+import { PageHead, MonthDropDown, YearDropDown } from './../uiComponents/CommonComponent'
 import 'react-datepicker/dist/react-datepicker.css'
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
-class GetRecords extends React.Component {
+class ExportLetterData extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -92,13 +93,13 @@ class GetRecords extends React.Component {
   	}
 
   	getDataBasedOnMonth() {
-  		GetRecordsService.getDataBasedOnSelectedMonth(this.state.filter.month, this.state.filter.year).then((res) => {
+  		ExportLetterDataService.exportDataByMonth(this.state.filter.month, this.state.filter.year).then((res) => {
 	        this.setState({downloadData : res.data.data})
       	})
   	}
 
   	getDataForSpecificPeriod() {
-  		GetRecordsService.getDataForSpecificPeriod(this.state.filter.startDate, this.state.filter.endDate).then((res) => {
+  		ExportLetterDataService.exportDataBySpecificPeriod(this.state.filter.startDate, this.state.filter.endDate).then((res) => {
 	        this.setState({downloadData : res.data.data})
       	})
   	}
@@ -136,38 +137,32 @@ class GetRecords extends React.Component {
 
   	handlePdfGeneration() {
   		pdfMake.fonts = {
-  		   	mangal: {
-	     		normal: 'mangal.ttf',
-	     		bold: 'mangal.ttf',
-  		     	italics: 'mangal.ttf',
-  		     	bolditalics: 'mangal.ttf'
-  		   	},
-  		   	roboto: {
-	     		normal: 'roboto.ttf',
-	     		bold: 'roboto.ttf',
-  		     	italics: 'roboto.ttf',
-  		     	bolditalics: 'roboto.ttf'
+  		   	times: {
+	     		normal: 'times.ttf',
+	     		bold: 'times.ttf',
+  		     	italics: 'times.ttf',
+  		     	bolditalics: 'times.ttf'
   		   	}
 	   	}
   		var pdfLayout = {
-  			pageSize: 'A2',
+  			pageSize: 'A4',
   		    content: [
-  		        this.table(this.state.downloadData, ['APPLICANT_NAME', 'APPLICANT_ADDRESS', 'APPLICANT_CONTACT', 'BUILDING_NAME', 'BUILDING_ADDRESS', 'BUILDING_AREA', 'FILE_NUMBER', 'FILE_STATUS', 'CREATED', 'REMARK'])
+  		        this.table(this.state.downloadData, ['DEPARTMENT_NAME', 'ASSIGNED_OFFICER', 'LETTER_TYPE', 'LETTER_TAG', 'LETTER_ADDRESS', 'LETTER_SUBJECT', 'LETTER_REG_NO', 'LETTER_STATUS', 'LETTER_DATE', 'REMARK'])
   		    ],
   		    defaultStyle: {
-  		        font: 'roboto',
-  		        fontSize: 12,
+  		        font: 'times',
+  		        fontSize: 8,
   		        alignment: 'center'
 		    }
   		}
-  		pdfMake.createPdf(pdfLayout).download()
+  		pdfMake.createPdf(pdfLayout).open()
   	}
 
 	render() {
 		return (
 			<Grid bsClass="get-records">
-				<BreadcrumbsItem glyph='download' to={'/servicePanel/fileManager/getRecords'}> Get Records </BreadcrumbsItem>
-				<PageHead title="Get Records" />
+				<BreadcrumbsItem glyph='download' to={LetterTracking.getLetterTrackingAbsolutePath('exportData')}> Get Records </BreadcrumbsItem>
+				<PageHead title="Get Records" />   
 
 				<Table bordered className="table" width="100%">
 					<tbody>
@@ -300,4 +295,4 @@ class GetRecords extends React.Component {
 	}
 }
 
-export default GetRecords
+export default ExportLetterData

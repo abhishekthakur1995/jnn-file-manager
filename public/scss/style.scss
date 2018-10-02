@@ -497,6 +497,11 @@ ul {
                 vertical-align: middle;
                 text-align: left;
                 color: #666666;
+
+                input[type="radio"] {
+                    margin-left: -15px;
+                    margin-top: -8px;
+                }
             }
         }
     }

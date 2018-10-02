@@ -1,14 +1,14 @@
 import React from 'react'
+import Import from './Import'
 import PropTypes from 'prop-types'
 import EntryForm from './EntryForm'
-import RecordList from './RecordList'
 import InfoBoard from './InfoBoard'
+import ErrorPage from './ErrorPage'
+import RecordList from './RecordList'
 import GetRecords from './GetRecords'
 import ManageSystemInputs from './ManageSystemInputs'
-import Import from './Import'
-import ErrorPage from './ErrorPage'
-import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { Link, Route, Switch } from 'react-router-dom'
+import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { userAuth, SystemUserRoute, SystemAdminRoute } from './services/AuthService'
 
 class SideBar extends React.Component {

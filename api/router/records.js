@@ -307,6 +307,11 @@ records.get('/getDataBasedOnSelectedMonth',
  		check('year').not().isEmpty().withMessage('Please select an year')
  	],
  	function(req, res) {
+ 		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+
 		const month = req.query.month
 		const year = req.query.year
 
@@ -329,6 +334,11 @@ records.get('/getDataBasedOnSelectedDuration',
   		check('endDate').not().isEmpty().withMessage('Please select a from date')
   	],
   	function(req, res) {
+  		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+	  	
  		let { startDate, endDate } = req.query
  		startDate = helper.convertTimestampToUnixTimestamp(startDate)
  		endDate = helper.convertTimestampToUnixTimestamp(endDate)

@@ -241,3 +241,22 @@ export const LettersService = {
       	})
 	}
 }
+
+export const ExportLetterDataService = {
+	exportDataByMonth(month, year) {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.get(`${config.baseUrl}/letters/getDataBasedOnSelectedMonth?month=${month}&year=${year}`, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(Error(err)))
+      	})
+	},
+	exportDataBySpecificPeriod(startDate, endDate) {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.get(`${config.baseUrl}/letters/getDataBasedOnSelectedDuration?startDate=${startDate}&endDate=${endDate}`, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(Error(err)))
+	  	})
+	}
+}
