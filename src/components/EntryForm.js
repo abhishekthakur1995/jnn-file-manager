@@ -136,7 +136,7 @@ class EntryForm extends React.Component {
                                 <Label bsStyle="primary" className="padding-2x">{this.props.mode === 'edit' ? 'Update Entry' : 'New Entry'}</Label>
                             </legend>
                                 <Col md={4}>
-                                    <FormGroup md={4} bsSize="large" >
+                                    <FormGroup>
                                         <ControlLabel htmlFor="applicantName">Applicant Name</ControlLabel>
                                         <Input
                                             type="text"
@@ -151,7 +151,7 @@ class EntryForm extends React.Component {
                                 </Col>
 
                                 <Col md={4}>
-                                    <FormGroup bsSize="large" >
+                                    <FormGroup>
                                         <ControlLabel htmlFor="applicantAddress">Applicant Address</ControlLabel>
                                         <Input
                                             type="text"
@@ -166,7 +166,7 @@ class EntryForm extends React.Component {
                                 </Col>
 
                                 <Col md={4}>
-                                    <FormGroup bsSize="large" >
+                                    <FormGroup>
                                         <ControlLabel htmlFor="applicantContact">Applicant Contact</ControlLabel>
                                         <Input
                                             type="text"
@@ -182,7 +182,7 @@ class EntryForm extends React.Component {
                                 <Clearfix />
 
                                 <Col md={4}>
-                                    <FormGroup bsSize="large" >
+                                    <FormGroup>
                                         <ControlLabel htmlFor="buildingName">Building Name</ControlLabel>
                                         <Input
                                             type="text"
@@ -197,7 +197,7 @@ class EntryForm extends React.Component {
                                 </Col>
 
                                 <Col md={4}>
-                                    <FormGroup bsSize="large" >
+                                    <FormGroup>
                                         <ControlLabel htmlFor="buildingAddress">Building Address</ControlLabel>
                                         <Input
                                             type="text"
@@ -212,7 +212,7 @@ class EntryForm extends React.Component {
                                 </Col>
 
                                 <Col md={4}>
-                                    <FormGroup bsSize="large" >
+                                    <FormGroup>
                                         <ControlLabel htmlFor="buildingArea">Area</ControlLabel>
                                         <Select
                                         name="buildingArea"
@@ -229,7 +229,7 @@ class EntryForm extends React.Component {
                                 <Clearfix />
 
                                 <Col md={4}>
-                                    <FormGroup bsSize="large" >
+                                    <FormGroup>
                                         <ControlLabel htmlFor="applicantType">Applicant Type</ControlLabel>
                                         <Select
                                         name="applicantType"
@@ -244,7 +244,7 @@ class EntryForm extends React.Component {
                                 </Col>
 
                                 <Col md={4}>
-                                    <FormGroup bsSize="large" >
+                                    <FormGroup>
                                         <ControlLabel htmlFor="fileNumber">File Number</ControlLabel>
                                         <Input
                                             type="text"
