@@ -491,17 +491,17 @@ ul {
                 border-radius: 3px;
             }
 
+            input[type="radio"], input[type="checkbox"] {
+                margin-left: -15px;
+                margin-top: -8px;
+            }
+
             .data-left-aligned {
                 font-weight: normal;
                 font-size: 13px;
                 vertical-align: middle;
                 text-align: left;
                 color: #666666;
-
-                input[type="radio"] {
-                    margin-left: -15px;
-                    margin-top: -8px;
-                }
             }
         }
     }

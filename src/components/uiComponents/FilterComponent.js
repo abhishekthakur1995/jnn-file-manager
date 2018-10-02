@@ -129,10 +129,10 @@ class FilterComponent extends React.Component {
 
 				                            {this.props.for === 'letterManager' &&
 				                            	<div className="pull-left">
-						                            <ul rel="sort" className=" pull-left small-12 no-bullet list-style-type-none">
+						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
 						                            	<span className="bold underline">Letter Status</span>
 						                                <li className="margin-vert-1x">
-					                                		{[{NAME:'Incoming', CODE: 'incoming'}, {NAME:'Outgoing', CODE: 'outgoing'}].map((data) => {
+					                                		{[{NAME:'Incoming', CODE: '1'}, {NAME:'Outgoing', CODE: '2'}].map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
 						                            			return (

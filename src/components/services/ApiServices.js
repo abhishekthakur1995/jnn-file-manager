@@ -258,5 +258,13 @@ export const ExportLetterDataService = {
 	      	.then(res => resolves(res))
 	      	.catch(err => rejects(Error(err)))
 	  	})
+	},
+	exportDataBySelectedTags(data) {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.post(`${config.baseUrl}/letters/getDataBasedOnSelectedTags`, data, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(Error(err)))
+      	})
 	}
 }

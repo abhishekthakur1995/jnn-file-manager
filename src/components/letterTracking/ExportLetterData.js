@@ -8,15 +8,20 @@ import pdfMake from "pdfmake/build/pdfmake"
 import pdfFonts from "pdfmake/build/vfs_fonts"
 import { LetterTracking } from './../helpers/CommonHelper'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import { ExportLetterDataService } from './../services/ApiServices'
-import { Grid, Radio, Table, Button, Clearfix } from 'react-bootstrap'
-import { PageHead, MonthDropDown, YearDropDown } from './../uiComponents/CommonComponent'
+import { ExportLetterDataService, NewLetterEntryFormService } from './../services/ApiServices'
+import { Grid, Radio, Table, Button, Clearfix, Checkbox } from 'react-bootstrap'
+import { PageHead, MonthDropDown, YearDropDown, LoadingSpinner } from './../uiComponents/CommonComponent'
 import 'react-datepicker/dist/react-datepicker.css'
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 class ExportLetterData extends React.Component {
 	constructor(props) {
 		super(props)
+
+		this.departmentList = []
+		this.letterTypeList = []
+		this.letterTagList = []
+		this.assignedOfficerList = []
 
 		this.state = {
 			downloadData: '',
@@ -32,9 +37,16 @@ class ExportLetterData extends React.Component {
 				emptyDownloadFormat: false,
 				monthError: false,
 				specificPeriodError: false
-			}
+			},
+			letterStatus: {},
+			letterType: {},
+			letterTag: {},
+			departmentName: {},
+			assignedOfficer: {},
+			showLoading: false
 		}
 
+		this.handleCheckBoxClick = this.handleCheckBoxClick.bind(this)
 		this.handleRadioChange = this.handleRadioChange.bind(this)
 		this.handleFilterParams = this.handleFilterParams.bind(this)
 		this.downloadData = this.downloadData.bind(this)
@@ -43,6 +55,24 @@ class ExportLetterData extends React.Component {
 		this.handlePdfGeneration = this.handlePdfGeneration.bind(this)
 		this.buildTableBody = this.buildTableBody.bind(this)
 		this.table = this.table.bind(this)
+	}
+
+	componentDidMount() {
+		this.setState({showLoading: true})
+		NewLetterEntryFormService.getInputFieldsData().then(res => {
+            const inputFieldsData = res.data.data
+  		    this.departmentList = inputFieldsData.DEPARTMENT_NAME
+  		    this.letterTypeList = inputFieldsData.LETTER_TYPE
+  		    this.letterTagList = inputFieldsData.LETTER_TAG
+  		    this.assignedOfficerList = inputFieldsData.ASSIGNED_OFFICER
+  		    this.setState({ showLoading: false })
+        })
+	}
+
+	handleCheckBoxClick(action, stateList) {
+		let { letterStatus, departmentName, letterType, letterTag, assignedOfficer } = this.state
+		stateList[action] = !stateList[action]
+		this.setState({ letterStatus, departmentName, letterType, letterTag, assignedOfficer })
 	}
 
 	handleRadioChange(type) {
@@ -63,7 +93,7 @@ class ExportLetterData extends React.Component {
   				[paramType] : value
   			}
   		}))
-  	}
+  	}	
 
   	downloadData() {
   		if (_.isEmpty(this.state.filter.type)) {
@@ -90,6 +120,14 @@ class ExportLetterData extends React.Component {
   			}
   			this.getDataForSpecificPeriod()
   		}
+
+  		if (this.state.filter.type === 'byTags') {
+  			// if (_.isEmpty(this.state.filter.startDate) || _.isEmpty(this.state.filter.endDate)) {
+  			// 	this.setState({ error : { specificPeriodError: true } })
+  			// 	return
+  			// }
+  			this.getDataBasedOnSelectedTags()
+  		}
   	}
 
   	getDataBasedOnMonth() {
@@ -100,6 +138,21 @@ class ExportLetterData extends React.Component {
 
   	getDataForSpecificPeriod() {
   		ExportLetterDataService.exportDataBySpecificPeriod(this.state.filter.startDate, this.state.filter.endDate).then((res) => {
+	        this.setState({downloadData : res.data.data})
+      	})
+  	}
+
+  	getDataBasedOnSelectedTags() {
+  		const { formStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer } = this.state
+		const selectedTags = {}
+		selectedTags['formStatus'] = _.keys(_.pick(formStatus, (status) =>  status === true ))
+		selectedTags['letterStatus'] = _.keys(_.pick(letterStatus, (status) =>  status === true ))
+		selectedTags['letterTag'] = _.keys(_.pick(letterTag, (status) =>  status === true ))
+		selectedTags['letterType'] = _.keys(_.pick(letterType, (status) =>  status === true ))
+		selectedTags['departmentName'] = _.keys(_.pick(departmentName, (status) =>  status === true ))
+		selectedTags['assignedOfficer'] = _.keys(_.pick(assignedOfficer, (status) =>  status === true ))
+
+  		ExportLetterDataService.exportDataBySelectedTags({selectedTags}).then((res) => {
 	        this.setState({downloadData : res.data.data})
       	})
   	}
@@ -163,6 +216,7 @@ class ExportLetterData extends React.Component {
 			<Grid bsClass="get-records">
 				<BreadcrumbsItem glyph='download' to={LetterTracking.getLetterTrackingAbsolutePath('exportData')}> Get Records </BreadcrumbsItem>
 				<PageHead title="Get Records" />   
+				{this.state.showLoading && <LoadingSpinner />}
 
 				<Table bordered className="table" width="100%">
 					<tbody>
@@ -244,6 +298,101 @@ class ExportLetterData extends React.Component {
 
 										<tr align="left" valign="middle">
 											<td className="data-left-aligned" width="20%">
+												<Radio
+													name="tagsType"
+													inline={true}
+													onChange={() => { this.handleRadioChange('byTags') }} >By Tags 
+												</Radio>
+											</td>
+											<td width="80%">
+												<ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+					                            	<span className="bold underline">Letter Status</span>
+					                                <li className="margin-vert-1x">
+				                                		{[{NAME:'Incoming', CODE: '1'}, {NAME:'Outgoing', CODE: '2'}].map((data) => {
+					                            			const code = data.CODE
+					                            			const name = data.NAME
+					                            			return (
+						                            			<Checkbox
+						                            				name={code}
+						                            				key={code}
+						                            				checked={this.state.letterStatus.code}
+						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterStatus) }}>{name}</Checkbox>
+					                            			)})
+					                            		}
+								                	</li>
+					                            </ul>
+												<ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+				                            		<span className="bold underline">Department Name</span>
+					                            	<li className="margin-vert-1x">
+					                            		{this.departmentList.map((data) => {
+					                            			const code = data.CODE
+					                            			const name = data.NAME
+					                            			return (
+						                            			<Checkbox
+						                            				name={code}
+						                            				key={code}
+						                            				checked={this.state.departmentName.code}
+						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.departmentName) }}>{name}</Checkbox>
+					                            			)})
+					                            		}
+					                            	</li>
+					                            </ul>
+
+					                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+					                            	<span className="bold underline">Letter Type</span>
+					                            	<li className="margin-vert-1x">
+					                            		{this.letterTypeList.map((data) => {
+					                            			const code = data.CODE
+					                            			const name = data.NAME
+					                            			return (
+						                            			<Checkbox
+						                            				name={code}
+						                            				key={code}
+						                            				checked={this.state.letterType.code}
+						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterType) }}>{name}</Checkbox>
+					                            			)})
+					                            		}
+					                            	</li>
+					                            </ul>
+
+					                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+					                            	<span className="bold underline">Letter Tag</span>
+					                            	<li className="margin-vert-1x">
+					                            		{this.letterTagList.map((data) => {
+					                            			const code = data.CODE
+					                            			const name = data.NAME
+					                            			return (
+						                            			<Checkbox
+						                            				name={code}
+						                            				key={code}
+						                            				checked={this.state.letterTag.code}
+						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterTag) }}>{name}</Checkbox>
+					                            			)})
+					                            		}
+					                            	</li>
+					                            </ul>
+
+					                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+					                            	<span className="bold underline">Assigned Officer</span>
+					                            	<li className="margin-vert-1x">
+					                            		{this.assignedOfficerList.map((data) => {
+					                            			const code = data.CODE
+					                            			const name = data.NAME
+					                            			return (
+						                            			<Checkbox
+						                            				name={code}
+						                            				key={code}
+						                            				checked={this.state.assignedOfficer.code}
+						                            				onChange={() => { this.handleCheckBoxClick(code,this.state.assignedOfficer) }}>{name}</Checkbox>
+					                            			)})
+					                            		}
+					                            	</li>
+					                            </ul>
+											</td>
+										</tr>
+
+										<tr align="left" valign="middle">
+											<td className="data-left-aligned" width="20%">
 												Select a format
 											</td>
 											<td width="80%" className="data-left-aligned">
@@ -289,7 +438,6 @@ class ExportLetterData extends React.Component {
 						</tr>
 					</tbody>
 				</Table>
-
 			</Grid>
 		)
 	}

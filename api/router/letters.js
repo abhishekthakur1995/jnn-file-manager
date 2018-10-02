@@ -200,7 +200,7 @@ letters.get('/getRecords',
 )
 
 /* 	path: /getSearchResults
- *	type: post
+ *	type: POST
  */
 
 letters.post('/getSearchResults',
@@ -377,6 +377,56 @@ letters.get('/getDataBasedOnSelectedDuration',
  			res.status(200).json({data : results, message : 'Data fetched successfully', success : true})
  		})
  	}
+)
+
+/* 	path: /getDataBasedOnSelectedTags
+ *	type: POST
+ */
+
+letters.post('/getDataBasedOnSelectedTags', 
+	[
+		check('selectedTags').not().isEmpty().withMessage('No data was sent')
+	],
+	function(req, res) {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+
+	  	let whereCriteria = ''
+		let selectedTagsData = ''
+
+		let { selectedTags } = req.body
+
+	  	for (var key in selectedTags) {
+			if (!_.isEmpty(selectedTags[key])) {
+				selectedTagsData = selectedTags[key].map(val => `'${val}'`)
+
+				if (_.isEmpty(whereCriteria)) {
+					if(selectedTagsData.length > 1) {
+						whereCriteria += `WHERE ${helper.getFilterFieldFromKey(key)} IN (${selectedTagsData})`
+					} else {
+						whereCriteria += `WHERE ${helper.getFilterFieldFromKey(key)} = ${selectedTagsData}`
+					}
+				} else {
+					if(selectedTagsData.length > 1) {
+						whereCriteria += ` AND ${helper.getFilterFieldFromKey(key)} IN (${selectedTagsData})`
+					} else {
+						whereCriteria += ` AND ${helper.getFilterFieldFromKey(key)} = ${selectedTagsData}`
+					}
+				}
+			}
+		}
+
+		console.log(whereCriteria)
+
+		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria}`, function(err, results, fields) {
+			if (err) return res.status(400).json({data: [], message : err, success : false})
+
+			// send response
+			res.status(200).json({data : results, message : 'Data fetched successfully', success : true})	
+		})
+  	}
 )
 
 module.exports = letters
