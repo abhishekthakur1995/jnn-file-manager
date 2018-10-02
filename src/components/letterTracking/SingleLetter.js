@@ -62,7 +62,7 @@ class SingleLetter extends React.Component {
 			    <td title={letterStatus}>{letterStatus}</td>
 			    <td title={dateCreated}>{dateCreated}</td>
 			    <td>
-			    	<SplitButton title="Manage" data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
+			    	<SplitButton title="View" data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
   						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>Edit</MenuItem>
 					</SplitButton>
 				</td>
@@ -83,7 +83,8 @@ class SingleLetter extends React.Component {
 					onHide={this.handleModalClose}
 					handleModalClose={this.handleModalClose}
 					record={letter}
-					modalTitle="Manage data"
+					dialogClassName="width-5x"
+					modalTitle="View data"
 					showActionButtons={false} >
 				</ManageRecordModal>
 			</tr>

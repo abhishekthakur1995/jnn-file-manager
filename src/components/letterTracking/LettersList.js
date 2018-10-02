@@ -213,7 +213,7 @@ class LettersList extends React.Component {
 					filter={filterBtn}
 				/>
 				{this.state.showFilter && filterComponent}
-				<Table hover bordered className="record-table margin-bottom-0x">
+				<Table hover bordered responsive className="record-table margin-bottom-0x">
                     <thead>
                         <tr>
                         	<th

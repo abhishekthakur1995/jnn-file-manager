@@ -139,7 +139,7 @@ DeleteRecordModal.propTypes = {
 
 export const ManageRecordModal = (props) => {
     return (
-        <Modal show={props.show} onHide={props.onHide}>
+        <Modal show={props.show} onHide={props.onHide} dialogClassName={props.dialogClassName}>
             <Modal.Header closeButton>
                 <Modal.Title bsClass="bold fs22">{props.modalTitle}</Modal.Title>
             </Modal.Header>
@@ -159,7 +159,8 @@ ManageRecordModal.propTypes = {
     onApprove: PropTypes.func,
     onReject: PropTypes.func,
     handleModalClose: PropTypes.func,
-    showActionButtons:PropTypes.bool
+    showActionButtons:PropTypes.bool,
+    dialogClassName: PropTypes.string,
 }
 
 export const RecordDetails = (props) => {
@@ -168,7 +169,7 @@ export const RecordDetails = (props) => {
     var rows = [];
     for (var key in record) {
         if (record.hasOwnProperty(key)) {
-            if(!_.contains(['CREATED', 'MODIFIED', 'ID', 'STATUS'], key)) {
+            if(!_.contains(['CREATED', 'MODIFIED', 'ID', 'STATUS', 'LETTER_FILE'], key)) {
                 let val = ''
                 if(key === 'FILE_STATUS') {
                     val = FileRecord.getFileStatusFromCode(record[key])
@@ -179,14 +180,14 @@ export const RecordDetails = (props) => {
                 } else {
                     val = record[key]
                 }
-                rows.push(<tr key={key}><td>{key}: {val}</td></tr>)
+                rows.push(<tr key={key}><td><span className="bold">{key}:</span> {val}</td></tr>)
             }
         }
     }
 
     return (
         <Grid bsClass="record-details">
-            <Table>
+            <Table responsive striped bordered condensed hover>
                 <tbody>{rows}</tbody>
             </Table>
 
