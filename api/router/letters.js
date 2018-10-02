@@ -38,7 +38,7 @@ letters.post('/addNewLetterRecord',
 				}
 				return res.status(400).json({message : 'Unable to save letter data. Please try again', saved : false})
 			}
-			res.status(200).json({message : 'Letter record saved successfully', saved : true, regNo: req.body.LETTER_REG_NO})
+			res.status(200).json({message : 'Letter record saved successfully', saved : true, id: results.insertId})
 		})
 	}
 )
@@ -66,7 +66,7 @@ letters.put('/updateRecord/:id',
 			if (err) {
 				return res.status(400).json({message : err, saved : false})
 			}
-			res.status(200).json({message : 'Letter data updated successfully', saved : true, regNo: req.body.LETTER_REG_NO})
+			res.status(200).json({message : 'Letter data updated successfully', saved : true, id: req.params.id})
 		})
 	}
 )
@@ -306,15 +306,15 @@ letters.post('/getFilteredData',
 
 letters.post('/upload', (req, res) => {
 	let uploadFile = req.files.file
-	const regNo = req.body.regNo
+	const { id } = req.body
 	const extension = helper.getFileExtension(req.body.filename)
-	const fileName = helper.constructUniqueFileName(regNo, extension)
+	const fileName = helper.constructUniqueFileName(id, extension)
 
 	if(!fs.existsSync(`${__dirname}/../../upload/letters/${fileName}`)) {
 		uploadFile.mv(`${__dirname}/../../upload/letters/${fileName}`, function(err) {
 	    	if (err) { return res.status(400).json({message : 'Error uploading file', success : false}) }
 
-		  	connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET LETTER_FILE = ? WHERE LETTER_REG_NO = ?`, [fileName, regNo], function(err, results, fields) {
+		  	connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET LETTER_FILE = ? WHERE ID = ?`, [fileName, id], function(err, results, fields) {
 		  		if (err) { return res.status(400).json({message : 'Error saving file path to db', success : false})}
 		  	})
 	    	return res.status(200).json({message : 'Letter uploaded successfully', success : true})
@@ -417,8 +417,6 @@ letters.post('/getDataBasedOnSelectedTags',
 				}
 			}
 		}
-
-		console.log(whereCriteria)
 
 		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria}`, function(err, results, fields) {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
