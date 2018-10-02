@@ -2,7 +2,6 @@ import React from 'react'
 import _ from 'underscore'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import EntryForm from './../EntryForm'
 import { Breadcrumbs } from 'react-breadcrumbs-dynamic'
 import { CrumbIconItem } from './CustomBreadCrumbsComponent'
 import { Common, FileRecord, LetterTracking } from './../helpers/CommonHelper'
@@ -169,13 +168,13 @@ export const RecordDetails = (props) => {
     var rows = [];
     for (var key in record) {
         if (record.hasOwnProperty(key)) {
-            if(!_.contains(['CREATED', 'MODIFIED', 'ID', 'STATUS', 'LETTER_FILE'], key)) {
+            if (!_.contains(['CREATED', 'MODIFIED', 'ID', 'STATUS', 'LETTER_FILE'], key)) {
                 let val = ''
-                if(key === 'FILE_STATUS') {
+                if (key === 'FILE_STATUS') {
                     val = FileRecord.getFileStatusFromCode(record[key])
-                } else if(key === 'LETTER_STATUS') {
+                } else if (key === 'LETTER_STATUS') {
                     val = LetterTracking.getLetterStatusFromCode(record[key])
-                } else if(key === 'LETTER_DATE') {
+                } else if (key === 'LETTER_DATE') {
                     val = Common.getDisplayFormatDate(record[key])
                 } else {
                     val = record[key]

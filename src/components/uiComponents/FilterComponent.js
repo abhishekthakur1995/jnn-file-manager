@@ -220,8 +220,7 @@ class FilterComponent extends React.Component {
 							    </Grid>
 							</Col>
 						</Col>
-
-						{this.props.for === 'fileManager' && 
+						{this.props.for === 'fileManager' &&
 							<Col sm={12} md={6} lg={6}>
 								<Col sm={12} className="pull-left">
 									<Grid bsClass="margin-1x filter-group small-12">

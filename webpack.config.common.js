@@ -44,7 +44,6 @@ module.exports = {
 			"./src/components/Import.js",
 			"./src/components/letterTracking/LetterTrackingDashboard.js",
 			"./src/components/letterTracking/SideBar.js",
-			"./src/components/letterTracking/ComposeLetter.js",
 			"./src/components/letterTracking/LetterBoard.js",
 			"./src/components/letterTracking/NewLetterEntryForm.js",
 			"./src/components/letterTracking/ManageLetterBoardInputs.js",
@@ -69,7 +68,7 @@ module.exports = {
 		        enforce: "pre",
 		        test: /\.js$/,
 		        exclude: /(node_modules)/,
-		        //loader: "eslint-loader"
+		        loader: "eslint-loader"
 	      	},
 			{
 				test: /\.js$/,

@@ -7,7 +7,7 @@ import AlertComponent from './../uiComponents/AlertComponent'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { NewLetterEntryFormService, ManageLetterBoardInputsService } from './../services/ApiServices'
 import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
-import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label, Tabs, Tab, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Grid, FormGroup, ControlLabel, Col, Glyphicon, Label, Tabs, Tab, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { required } from './..//helpers/ValidationHelper'
 
 class ManageLetterBoardInputs extends React.Component {
@@ -38,7 +38,7 @@ class ManageLetterBoardInputs extends React.Component {
 	}
 
 	hideAlert() {
-        this.setState({ 
+        this.setState({
             showAlert: false ,
             alertOptions: {'autoHide': false}
         })
@@ -57,11 +57,11 @@ class ManageLetterBoardInputs extends React.Component {
   		e.preventDefault()
   		this.setState({showLoading: true})
   		ManageLetterBoardInputsService.addNewSettings({SETTING_NAME: this.state.settingName, DEPARTMENT_CODE: code}).then(res => {
-			if(code === 'DEPARTMENT') {
+			if (code === 'DEPARTMENT') {
 				this.departmentList.push({NAME: this.state.settingName, CODE: LetterTracking.createCodeFromSettingsName(this.state.settingName)})
 			} else if (code === 'TYPE') {
 				this.letterTypeList.push({NAME: this.state.settingName, CODE: LetterTracking.createCodeFromSettingsName(this.state.settingName)})
-			} else if(code === 'TAG') {
+			} else if (code === 'TAG') {
 				this.letterTagList.push({NAME: this.state.settingName, CODE: LetterTracking.createCodeFromSettingsName(this.state.settingName)})
 			} else {
 				this.assignedOfficerList.push({NAME: this.state.settingName, CODE: LetterTracking.createCodeFromSettingsName(this.state.settingName)})
@@ -98,7 +98,7 @@ class ManageLetterBoardInputs extends React.Component {
   		    this.letterTagList = inputFieldsData.LETTER_TAG
   		    this.assignedOfficerList = inputFieldsData.ASSIGNED_OFFICER
   		    this.setState({ showLoading: false })
-  		}).catch(err => { console.log(err) })
+  		})
   	}
 
 	render() {
@@ -137,7 +137,7 @@ class ManageLetterBoardInputs extends React.Component {
 
 						<Label bsStyle="primary" className="padding-2x">Department List</Label>
 						<ListGroup className="margin-top-4x">
-							{this.departmentList.map((dept) => 
+							{this.departmentList.map((dept) =>
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={dept.CODE} value={dept.CODE}>{dept.NAME}
 								</ListGroupItem>
 							)}
@@ -171,7 +171,7 @@ class ManageLetterBoardInputs extends React.Component {
 
 						<Label bsStyle="primary" className="padding-2x">Officer List</Label>
 						<ListGroup className="margin-top-4x">
-							{this.assignedOfficerList.map((officer) => 
+							{this.assignedOfficerList.map((officer) =>
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={officer.CODE} value={officer.CODE}>{officer.NAME}
 								</ListGroupItem>
 							)}
@@ -205,7 +205,7 @@ class ManageLetterBoardInputs extends React.Component {
 
 						<Label bsStyle="primary" className="padding-2x">Letter Type List</Label>
 						<ListGroup className="margin-top-4x">
-							{this.letterTypeList.map((letterType) => 
+							{this.letterTypeList.map((letterType) =>
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={letterType.CODE} value={letterType.CODE}>{letterType.NAME}
 								</ListGroupItem>
 							)}
@@ -239,7 +239,7 @@ class ManageLetterBoardInputs extends React.Component {
 
 						<Label bsStyle="primary" className="padding-2x">Letter Tag List</Label>
 						<ListGroup className="margin-top-4x">
-							{this.letterTagList.map((letterTag) => 
+							{this.letterTagList.map((letterTag) =>
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={letterTag.CODE} value={letterTag.CODE}>{letterTag.NAME}
 								</ListGroupItem>
 							)}

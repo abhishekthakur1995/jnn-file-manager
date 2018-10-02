@@ -69,7 +69,7 @@ class NewLetterEntryForm extends React.Component {
             this.letterTagList = inputFieldsData.LETTER_TAG
             this.assignedOfficerList = inputFieldsData.ASSIGNED_OFFICER
             this.setState({ showLoading: false })
-        }).catch(err => { console.log(err) })
+        })
 
         if (this.props.record) {
             const record = this.props.record
@@ -123,7 +123,7 @@ class NewLetterEntryForm extends React.Component {
         let data = this.state.fields
 
         NewLetterEntryFormService.addNewLetterRecord(method, url, data).then((res) => {
-            if(this.acceptedFiles) {
+            if (this.acceptedFiles) {
                 let data = new FormData()
                 data.append('file', this.acceptedFiles[0])
                 data.append('filename', this.acceptedFiles[0].name)
@@ -158,8 +158,8 @@ class NewLetterEntryForm extends React.Component {
     }
 
     hideAlert() {
-        this.setState({ 
-            showAlert: false ,
+        this.setState({
+            showAlert: false,
             alertOptions: {'autoHide': false}
         })
     }

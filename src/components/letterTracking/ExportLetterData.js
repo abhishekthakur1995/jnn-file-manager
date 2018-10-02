@@ -93,7 +93,7 @@ class ExportLetterData extends React.Component {
   				[paramType] : value
   			}
   		}))
-  	}	
+  	}
 
   	downloadData() {
   		if (_.isEmpty(this.state.filter.type)) {
@@ -215,7 +215,7 @@ class ExportLetterData extends React.Component {
 		return (
 			<Grid bsClass="get-records">
 				<BreadcrumbsItem glyph='download' to={LetterTracking.getLetterTrackingAbsolutePath('exportData')}> Get Records </BreadcrumbsItem>
-				<PageHead title="Get Records" />   
+				<PageHead title="Get Records" />
 				{this.state.showLoading && <LoadingSpinner />}
 
 				<Table bordered className="table" width="100%">
@@ -301,7 +301,7 @@ class ExportLetterData extends React.Component {
 												<Radio
 													name="tagsType"
 													inline={true}
-													onChange={() => { this.handleRadioChange('byTags') }} >By Tags 
+													onChange={() => { this.handleRadioChange('byTags') }} >By Tags
 												</Radio>
 											</td>
 											<td width="80%">

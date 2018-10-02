@@ -81,7 +81,7 @@ class LoginForm extends React.Component {
   	}
 
   	hideAlert() {
-        this.setState({ 
+        this.setState({
             showAlert: false ,
             alertOptions: {'autoHide': false}
         })

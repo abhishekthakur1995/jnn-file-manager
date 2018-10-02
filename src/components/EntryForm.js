@@ -114,7 +114,7 @@ class EntryForm extends React.Component {
     }
 
     hideAlert() {
-        this.setState({ 
+        this.setState({
             showAlert: false ,
             alertOptions: {'autoHide': false}
         })
@@ -126,7 +126,6 @@ class EntryForm extends React.Component {
             <Grid bsClass="entry-form">
             {this.props.mode !== 'edit' && <BreadcrumbsItem glyph='file' to={'/servicePanel/fileManager/addNewRecord'}> Add New Record </BreadcrumbsItem>}
             {this.props.mode !== 'edit' && <PageHead />}
-            
                 <Row className="margin-0x">
                     <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
                     <Grid componentClass="section" bsClass="col-xs-12">
@@ -274,7 +273,6 @@ class EntryForm extends React.Component {
                                 </Col>
                                 <Clearfix />
                             </fieldset>
-                            
                             <Col className="padding-0x" md={12}>
                                 <Button type="submit" className="btn btn-default">
                                     <Glyphicon className="padding-right-1x" glyph="saved" />{btnText}

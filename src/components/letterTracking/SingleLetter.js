@@ -1,11 +1,9 @@
 import React from 'react'
-import moment from 'moment'
-import config from 'config'
 import PropTypes from 'prop-types'
 import NewLetterEntryForm from './NewLetterEntryForm'
-import { SplitButton, MenuItem, Checkbox } from 'react-bootstrap'
-import { Common, FileRecord, LetterTracking } from './../helpers/CommonHelper'
-import { EditRecordModal, DeleteRecordModal, ManageRecordModal } from './../uiComponents/CommonComponent'
+import { SplitButton, MenuItem } from 'react-bootstrap'
+import { Common, LetterTracking } from './../helpers/CommonHelper'
+import { EditRecordModal, ManageRecordModal } from './../uiComponents/CommonComponent'
 
 class SingleLetter extends React.Component {
 	constructor(props) {
@@ -74,7 +72,7 @@ class SingleLetter extends React.Component {
 					dialogClassName="width-9x"
 					modalTitle="Edit data"
 					onUpdate={this.handleUpdate}
-					record={letter} 
+					record={letter}
 					component={NewLetterEntryForm} >
 				</EditRecordModal>
 
@@ -94,6 +92,7 @@ class SingleLetter extends React.Component {
 
 SingleLetter.propTypes = {
 	index: PropTypes.number,
+	onUpdate: PropTypes.function,
     singleLetter: PropTypes.object
 }
 

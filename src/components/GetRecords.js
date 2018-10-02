@@ -6,7 +6,7 @@ import { CSVLink } from 'react-csv'
 import DatePicker from 'react-datepicker'
 import pdfMake from "pdfmake/build/pdfmake"
 import pdfFonts from "pdfmake/build/vfs_fonts"
-import { ExportLetterData } from './services/ApiServices'
+import { GetRecordsService } from './services/ApiServices'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { Grid, Radio, Table, Button, Clearfix } from 'react-bootstrap'
 import { PageHead, MonthDropDown, YearDropDown } from './uiComponents/CommonComponent'
