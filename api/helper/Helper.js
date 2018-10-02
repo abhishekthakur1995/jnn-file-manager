@@ -70,8 +70,8 @@ class Helper {
 		return re.exec(fileName)[1]
 	}
 
-	static constructUniqueFileName(regNo, ext) {
-		return `${moment().format('DDMMYYYY')}_${regNo}.${ext}`
+	static constructUniqueFileName(id, ext) {
+		return `${id}.${ext}`
 	}
 
 	static log(value, helpText="logger") {
