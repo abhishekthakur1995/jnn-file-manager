@@ -106,7 +106,7 @@ module.exports = {
 	            use: [{
 	                loader: 'url-loader',
 	                options: {
-	                    limit: 819600,
+	                    limit: 8196,
 	                    name: 'public/img/[name].[ext]',
 	                    fallback: 'file-loader'
 	                }
