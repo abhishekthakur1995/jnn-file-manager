@@ -116,7 +116,7 @@ module.exports = {
 	},
 	plugins: [
 		new HTMLWebpackPlugin({
-      		title: 'File Manager',
+      		title: 'Record Management System',
       		filename: 'index.html',
       		template: 'public/index.html'
     	}),
