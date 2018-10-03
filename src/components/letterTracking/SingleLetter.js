@@ -92,7 +92,7 @@ class SingleLetter extends React.Component {
 
 SingleLetter.propTypes = {
 	index: PropTypes.number,
-	onUpdate: PropTypes.function,
+	onUpdate: PropTypes.func,
     singleLetter: PropTypes.object
 }
 
