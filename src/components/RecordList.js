@@ -291,7 +291,7 @@ class RecordList extends React.Component {
 
 		return (
 			<Grid bsClass="record-list">
-				<BreadcrumbsItem glyph='lock' to={'/servicePanel/fileManager/manageRecords'}> Manage Records </BreadcrumbsItem>
+				<BreadcrumbsItem to={'/servicePanel/fileManager/manageRecords'}> Manage Records </BreadcrumbsItem>
 				{this.state.showLoading && <LoadingSpinner />}
 				<PageHead
 					title="Manage Record Status"
