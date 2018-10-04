@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import config from 'config'
 import PropTypes from 'prop-types'
+import EntryForm from './EntryForm'
 import { SplitButton, MenuItem, Checkbox } from 'react-bootstrap'
 import { EditRecordModal, DeleteRecordModal, ManageRecordModal } from './uiComponents/CommonComponent'
 
@@ -137,7 +138,8 @@ class Record extends React.Component {
 					dialogClassName="width-9x"
 					modalTitle="Edit record"
 					onUpdate={this.handleUpdate}
-					record={record}>
+					record={record}
+					component={EntryForm} >
 				</EditRecordModal>
 
 				<DeleteRecordModal
