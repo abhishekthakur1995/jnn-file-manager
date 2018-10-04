@@ -14,11 +14,11 @@ addLocaleData([...en, ...hi])
 let locale = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage || 'en-HI'
 
 ReactDOM.render((
-	<Router>
 		<IntlProvider locale={locale} messages={flattenMessages(messages[locale])}>
+		<Router>
 			<BreadcrumbsProvider>
 	    		<App />
 	    	</BreadcrumbsProvider>
-	    </IntlProvider>
-  	</Router>
+  		</Router>
+  	</IntlProvider>
 ), document.getElementById('root'))
