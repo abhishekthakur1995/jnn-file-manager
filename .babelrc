@@ -1,3 +1,11 @@
 {
-	"presets": ["env", "stage-0", "react"]
+	"presets": ["env", "stage-0", "react"],
+	"plugins": [
+	  	[
+	    	"react-intl", {
+      			"messagesDir": "./dist/messages",
+	      		"enforceDescriptions": false
+	    	}
+	  	]
+	]
 }
