@@ -65,7 +65,7 @@ class Import extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="import-records">
-				<BreadcrumbsItem glyph='import' to={'/servicePanel/fileManager/import'}> Import </BreadcrumbsItem>
+				<BreadcrumbsItem to={'/servicePanel/fileManager/import'}> Import </BreadcrumbsItem>
 				<PageHead title="Import" downloadSampleExcel={<span onClick={this.downloadSampleExcel}> Download Sample Excel<Glyphicon className="fs20" glyph="download" /></span>} />
 				{this.state.showLoading && <LoadingSpinner />}
 

@@ -98,7 +98,7 @@ class EntryForm extends React.Component {
         const btnText = this.props.mode === 'edit' ? 'Update' : 'Save'
         return (
             <Grid bsClass="entry-form">
-            {this.props.mode !== 'edit' && <BreadcrumbsItem glyph='file' to={'/servicePanel/fileManager/addNewRecord'}> Add New Record </BreadcrumbsItem>}
+            {this.props.mode !== 'edit' && <BreadcrumbsItem to={'/servicePanel/fileManager/addNewRecord'}> Add New Record </BreadcrumbsItem>}
             {this.props.mode !== 'edit' && <PageHead />}
                 <Row className="margin-0x">
                     <Alert stack={{limit: 3}} html={true} />

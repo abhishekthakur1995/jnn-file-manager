@@ -30,14 +30,14 @@ class SideBar extends React.Component {
 
 						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/manageLetters' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/manageLetters`}>
-						            <i className="glyphicon glyphicon-pencil"></i>
+						            <i className="glyphicon glyphicon-briefcase"></i>
 						            Manage Letters
 						        </Link>
 						    </ListGroupItem>
 
 						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/exportData' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/exportData`}>
-						            <i className="glyphicon glyphicon-pencil"></i>
+						            <i className="glyphicon glyphicon-export"></i>
 						            Export Data
 						        </Link>
 						    </ListGroupItem>

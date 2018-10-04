@@ -4,12 +4,12 @@ import Alert from 'react-s-alert'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Button from 'react-validation/build/button'
+import { required } from './..//helpers/ValidationHelper'
 import { LetterTracking } from './../helpers/CommonHelper'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import { NewLetterEntryFormService, ManageLetterBoardInputsService } from './../services/ApiServices'
 import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
+import { NewLetterEntryFormService, ManageLetterBoardInputsService } from './../services/ApiServices'
 import { Grid, FormGroup, ControlLabel, Col, Glyphicon, Label, Tabs, Tab, ListGroup, ListGroupItem } from 'react-bootstrap'
-import { required } from './..//helpers/ValidationHelper'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/slide.css'
 
@@ -78,7 +78,7 @@ class ManageLetterBoardInputs extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="manage-letter-system-inputs">
-				<BreadcrumbsItem glyph='cog' to={'/servicePanel/letterTracking/manageApp'}> Manage Letter Board Inputs </BreadcrumbsItem>
+				<BreadcrumbsItem to={'/servicePanel/letterTracking/manageApp'}> Manage Letter Board Inputs </BreadcrumbsItem>
 				<PageHead title="Import" />
 				{this.state.showLoading && <LoadingSpinner />}
             	<Alert stack={{limit: 3}} html={true} />
