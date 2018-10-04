@@ -1,14 +1,17 @@
 import React from 'react'
+import config from 'config'
+import Alert from 'react-s-alert'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Button from 'react-validation/build/button'
 import { LetterTracking } from './../helpers/CommonHelper'
-import AlertComponent from './../uiComponents/AlertComponent'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { NewLetterEntryFormService, ManageLetterBoardInputsService } from './../services/ApiServices'
 import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
 import { Grid, FormGroup, ControlLabel, Col, Glyphicon, Label, Tabs, Tab, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { required } from './..//helpers/ValidationHelper'
+import 'react-s-alert/dist/s-alert-default.css'
+import 'react-s-alert/dist/s-alert-css-effects/slide.css'
 
 class ManageLetterBoardInputs extends React.Component {
 	constructor(props) {
@@ -22,27 +25,13 @@ class ManageLetterBoardInputs extends React.Component {
 		this.state = {
 			settingName: '',
 			showLoading: false,
-			showAlert: false,
-			alertOptions: {
-                text: '',
-                type: 'danger',
-                autoHide: false
-            },
 			key:1
 		}
 
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
-		this.hideAlert = this.hideAlert.bind(this)
 	}
-
-	hideAlert() {
-        this.setState({
-            showAlert: false ,
-            alertOptions: {'autoHide': false}
-        })
-    }
 
 	handleSelect(key) {
 	    this.setState({ settingName: '', key })
@@ -66,26 +55,11 @@ class ManageLetterBoardInputs extends React.Component {
 			} else {
 				this.assignedOfficerList.push({NAME: this.state.settingName, CODE: LetterTracking.createCodeFromSettingsName(this.state.settingName)})
 			}
-
-			this.setState({
-				showAlert: true,
-				showLoading: false,
-				alertOptions: {
-            		text: res.data.message,
-            		type: 'success',
-            		autoHide: true
-        		}
-			})
+			Alert.success(res.data.message, config.alertGlobalSettings)
+			this.setState({ showLoading: false })
   		}).catch(err => {
-            this.setState({
-                showAlert: true,
-                showLoading: false,
-                alertOptions: {
-                    text: err.response.data.message,
-                    type: 'danger',
-                    autoHide: true
-                }
-            })
+  			Alert.error(err.response.data.message, config.alertGlobalSettings)
+            this.setState({ showLoading: false })
         })
   	}
 
@@ -107,7 +81,7 @@ class ManageLetterBoardInputs extends React.Component {
 				<BreadcrumbsItem glyph='cog' to={'/servicePanel/letterTracking/manageApp'}> Manage Letter Board Inputs </BreadcrumbsItem>
 				<PageHead title="Import" />
 				{this.state.showLoading && <LoadingSpinner />}
-            	<AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
+            	<Alert stack={{limit: 3}} html={true} />
 				<Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="controlled-tab-example" >
 			  		<Tab eventKey={1} title="Manage Department">
 						<fieldset className="custom-fieldset margin-bottom-6x">

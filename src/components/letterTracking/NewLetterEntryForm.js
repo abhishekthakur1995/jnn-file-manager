@@ -16,8 +16,8 @@ import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { NewLetterEntryFormService } from './../services/ApiServices'
 import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
 import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label, Button as Btn } from 'react-bootstrap'
-import 'react-s-alert/dist/s-alert-default.css'
 import 'react-datepicker/dist/react-datepicker.css'
+import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/slide.css'
 
 class NewLetterEntryForm extends React.Component {
