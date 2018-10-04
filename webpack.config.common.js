@@ -17,15 +17,16 @@ module.exports = {
 			"react-router-bootstrap/lib",
 			"react-chartjs-2",
 			"react-csv",
+			"react-s-alert"
 			"react-breadcrumbs-dynamic", 
 			"react-datepicker",
-			"validator",
 			"react-validation/build/form",
 			"react-validation/build/input",
 			"react-validation/build/button",
 			"react-validation/build/select",
 			"react-validation/build/textarea",
-			"underscore"
+			"validator",
+			"underscore",
 		],
 		app:
 		[
@@ -85,7 +86,8 @@ module.exports = {
 				include : [
 					path.resolve(__dirname, "src"),
 				    path.resolve(__dirname, "node_modules/react-datepicker/dist"),
-				    path.resolve(__dirname, "node_modules/react-draft-wysiwyg/dist")
+				    path.resolve(__dirname, "node_modules/react-draft-wysiwyg/dist"),
+				    path.resolve(__dirname, "node_modules/react-s-alert/dist")
 				],
 				use: [
 					{loader: "style-loader"},

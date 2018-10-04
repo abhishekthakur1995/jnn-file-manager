@@ -8,5 +8,9 @@
 	},
 	"datePicker" : {
 		"dateFormat" : "DD/MM/YYYY"
+	},
+	"alertGlobalSettings": {
+		"position": "top-right",
+		"effect": "slide"
 	}
 }

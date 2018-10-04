@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import config from 'config'
+import Alert from 'react-s-alert'
 import PropTypes from 'prop-types'
 import Dropzone from 'react-dropzone'
 import DatePicker from 'react-datepicker'
@@ -12,11 +13,12 @@ import Textarea from 'react-validation/build/textarea'
 import { required } from './..//helpers/ValidationHelper'
 import { LetterTracking } from './../helpers/CommonHelper'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import AlertComponent from './../uiComponents/AlertComponent'
 import { NewLetterEntryFormService } from './../services/ApiServices'
 import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
 import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label, Button as Btn } from 'react-bootstrap'
+import 'react-s-alert/dist/s-alert-default.css'
 import 'react-datepicker/dist/react-datepicker.css'
+import 'react-s-alert/dist/s-alert-css-effects/slide.css'
 
 class NewLetterEntryForm extends React.Component {
     constructor(props) {
@@ -42,19 +44,12 @@ class NewLetterEntryForm extends React.Component {
                 LETTER_STATUS: '',
                 REMARK: '',
             },
-            alertOptions: {
-                text: '',
-                type: 'danger',
-                autoHide: false
-            },
             showLoading: false,
-            showAlert: false,
             uploadedFileName: ''
         }
 
         // functions binding
         this.onDrop = this.onDrop.bind(this)
-        this.hideAlert = this.hideAlert.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this)
@@ -134,34 +129,14 @@ class NewLetterEntryForm extends React.Component {
                     }
                 })
             }
-            this.setState({
-                showAlert: true,
-                alertOptions: {
-                    text: res.data.message,
-                    type: 'success',
-                    autoHide: true
-                }
-            })
+            Alert.success(res.data.message, config.alertGlobalSettings)
         }).catch(err => {
-            this.setState({
-                showAlert: true,
-                alertOptions: {
-                    text: err.response.data.message || 'Some error occured. Please try again',
-                    type: 'danger',
-                    autoHide: true
-                }
-            })
+            const errMsg = err.response.data.message || 'Some error occured. Please try again'
+            Alert.error(errMsg, config.alertGlobalSettings)
         })
 
         // to update the record list when a record is updated
         if (this.props.mode === 'edit') this.props.onUpdate(this.state.fields)
-    }
-
-    hideAlert() {
-        this.setState({
-            showAlert: false,
-            alertOptions: {'autoHide': false}
-        })
     }
 
     render() {
@@ -173,7 +148,7 @@ class NewLetterEntryForm extends React.Component {
                 {this.state.showLoading && <LoadingSpinner />}
 
                 <Row className="margin-0x">
-                    <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
+                    <Alert stack={{limit: 3}} html={true} />
                     <Grid componentClass="section" bsClass="col-xs-12">
                         <Form onSubmit={this.handleSubmit}>
                             <fieldset className="custom-fieldset margin-bottom-2x">
