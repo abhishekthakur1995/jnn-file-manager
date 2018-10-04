@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'underscore'
 import moment from 'moment'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { Breadcrumbs } from 'react-breadcrumbs-dynamic'
 import { CrumbIconItem } from './CustomBreadCrumbsComponent'
 import { Common, FileRecord, LetterTracking } from './../helpers/CommonHelper'
@@ -380,4 +381,25 @@ ImportSummary.propTypes = {
     totalRecords: PropTypes.number,
     recordsInserted: PropTypes.number,
     errorRecords: PropTypes.array
+}
+
+export const GetModuleLogo = (props) => {
+    return (
+        <Grid bsClass="col-md-4 col-sm-6" title={props.title}>
+            <Grid bsClass="thumbnail margin-bottom-0x">
+                <Link to={props.moduleUrl}>
+                    <img src={props.logo} alt="Lights" className="width-10x" />
+                    <Grid bsClass="caption">
+                        <p className="text-align-center bold">{props.title}</p>
+                    </Grid>
+                </Link>
+            </Grid>
+        </Grid>
+    )
+}
+
+GetModuleLogo.propTypes = {
+    logo: PropTypes.string,
+    title: PropTypes.string,
+    moduleUrl: PropTypes.string
 }
