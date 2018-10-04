@@ -8,7 +8,7 @@ export const LoginService = {
 		return new Promise((resolves, rejects) => {
 			axios.post(`${config.baseUrl}/login`, data)
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	}
 }
@@ -18,7 +18,7 @@ export const NavBarService = {
 		return new Promise((resolves, rejects) => {
 			axios.post(`${config.baseUrl}/logout`)
 			.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	}
 }
@@ -29,7 +29,7 @@ export const GetRecordsService = {
 			const headers = userAuth.getHeaders()
 			axios.get(`${config.baseUrl}/getDataBasedOnSelectedMonth?month=${month}&year=${year}`, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	getDataForSpecificPeriod(startDate, endDate) {
@@ -37,7 +37,7 @@ export const GetRecordsService = {
 			const headers = userAuth.getHeaders()
 			axios.get(`${config.baseUrl}/getDataBasedOnSelectedDuration?startDate=${startDate}&endDate=${endDate}`, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
 	  	})
 	}
 }
@@ -48,7 +48,7 @@ export const RecordsService = {
 			const headers = userAuth.getHeaders()
 			axios.get(`${config.baseUrl}/getCountOfAllRecords`, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	getRecords(url) {
@@ -56,7 +56,7 @@ export const RecordsService = {
 			const headers = userAuth.getHeaders()
 			axios.get(url, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	getSearchResults(data) {
@@ -64,7 +64,7 @@ export const RecordsService = {
 			const headers = userAuth.getHeaders()
 			axios.post(`${config.baseUrl}/getSearchResults`, data, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	getFilteredData(data) {
@@ -72,7 +72,7 @@ export const RecordsService = {
 			const headers = userAuth.getHeaders()
 			axios.post(`${config.baseUrl}/getFilteredData`, data, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	updateRecordStatus(recordId, data) {
@@ -80,7 +80,7 @@ export const RecordsService = {
 			const headers = userAuth.getHeaders()
 			axios.put(`${config.baseUrl}/updateRecordStatus/${recordId}`, data, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	updateMultipleRecordStatus(data) {
@@ -88,7 +88,7 @@ export const RecordsService = {
 			const headers = userAuth.getHeaders()
 			axios.put(`${config.baseUrl}/updateMultipleRecordStatus`, data, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	deleteRecord(deletedRecordId) {
@@ -96,7 +96,7 @@ export const RecordsService = {
 			const headers = userAuth.getHeaders()
 			axios.get(`${config.baseUrl}/deleteRecord/${deletedRecordId}`, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	}
 
@@ -108,7 +108,7 @@ export const DashboardService = {
 			const headers = userAuth.getHeaders()
 			axios.get(`${config.baseUrl}/getDashboardData`, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	}
 }
@@ -119,7 +119,7 @@ export const EntryFormService = {
 			const headers = userAuth.getHeaders()
 			axios({ method, url, data, headers })
 			.then(res => resolves(res))
-			.catch(err => rejects(Error(err)))
+			.catch(err => rejects(err))
 		})
 	}
 }
@@ -136,7 +136,7 @@ export const ImportService = {
 				config: { headers: {'Content-Type': 'multipart/form-data' }}
 			})
 			.then(res => resolves(res))
-			.catch(err => rejects(Error(err)))
+			.catch(err => rejects(err))
 		})
 	},
 	importDataToDB(data) {
@@ -144,7 +144,7 @@ export const ImportService = {
 			const headers = userAuth.getHeaders()
 			axios.post(`${config.baseUrl}/importDataToDB`, data, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	downloadExcelFile() {
@@ -158,7 +158,7 @@ export const LetterBoardService = {
 			const headers = userAuth.getHeaders()
 			axios.get(`${config.baseUrl}/letters/getLetterBoardData`, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	}
 }
@@ -169,7 +169,7 @@ export const NewLetterEntryFormService = {
 			const headers = userAuth.getHeaders()
 			axios.get(`${config.baseUrl}/letters/getInputFieldsData`, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	addNewLetterRecord(method, url, data) {
@@ -191,7 +191,7 @@ export const NewLetterEntryFormService = {
 				config: { headers: {'Content-Type': 'multipart/form-data' }}
 			})
 			.then(res => resolves(res))
-			.catch(err => rejects(Error(err)))
+			.catch(err => rejects(err))
 		})
 	}
 }
@@ -213,7 +213,7 @@ export const LettersService = {
 			const headers = userAuth.getHeaders()
 			axios.get(`${config.baseUrl}/letters/getCountOfAllLetters`, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	getRecords(url) {
@@ -221,7 +221,7 @@ export const LettersService = {
 			const headers = userAuth.getHeaders()
 			axios.get(url, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	getSearchResults(data) {
@@ -229,7 +229,7 @@ export const LettersService = {
 			const headers = userAuth.getHeaders()
 			axios.post(`${config.baseUrl}/letters/getSearchResults`, data, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	getFilteredData(data) {
@@ -237,7 +237,7 @@ export const LettersService = {
 			const headers = userAuth.getHeaders()
 			axios.post(`${config.baseUrl}/letters/getFilteredData`, data, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	}
 }
@@ -248,7 +248,7 @@ export const ExportLetterDataService = {
 			const headers = userAuth.getHeaders()
 			axios.get(`${config.baseUrl}/letters/getDataBasedOnSelectedMonth?month=${month}&year=${year}`, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	},
 	exportDataBySpecificPeriod(startDate, endDate) {
@@ -256,7 +256,7 @@ export const ExportLetterDataService = {
 			const headers = userAuth.getHeaders()
 			axios.get(`${config.baseUrl}/letters/getDataBasedOnSelectedDuration?startDate=${startDate}&endDate=${endDate}`, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
 	  	})
 	},
 	exportDataBySelectedTags(data) {
@@ -264,7 +264,7 @@ export const ExportLetterDataService = {
 			const headers = userAuth.getHeaders()
 			axios.post(`${config.baseUrl}/letters/getDataBasedOnSelectedTags`, data, {headers})
 	      	.then(res => resolves(res))
-	      	.catch(err => rejects(Error(err)))
+	      	.catch(err => rejects(err))
       	})
 	}
 }
