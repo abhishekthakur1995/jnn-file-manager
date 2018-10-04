@@ -1,17 +1,19 @@
 import React from 'react'
 import config from 'config'
+import Alert from 'react-s-alert'
 import PropTypes from 'prop-types'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Select from 'react-validation/build/select'
 import Button from 'react-validation/build/button'
 import Textarea from 'react-validation/build/textarea'
-import AlertComponent from './uiComponents/AlertComponent'
 import { EntryFormService } from './services/ApiServices'
 import { PageHead } from './uiComponents/CommonComponent'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { required, phoneNumber } from './helpers/ValidationHelper'
 import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label } from 'react-bootstrap'
+import 'react-s-alert/dist/s-alert-default.css'
+import 'react-s-alert/dist/s-alert-css-effects/slide.css'
 
 class EntryForm extends React.Component {
     constructor(props) {
@@ -29,19 +31,12 @@ class EntryForm extends React.Component {
                 buildingArea: '',
                 fileNumber: '',
                 remark: '',
-            },
-            alertOptions: {
-                text: '',
-                type: 'danger',
-                autoHide: false
-            },
-            showAlert: false
+            }
         }
 
         // functions binding
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.hideAlert = this.hideAlert.bind(this)
     }
 
     componentDidMount() {
@@ -90,34 +85,13 @@ class EntryForm extends React.Component {
             remark: this.state.fields.remark
         }
         EntryFormService.addNewRecord(method, url, data).then((res) => {
-            this.setState({
-                showAlert: true,
-                alertOptions: {
-                    text: res.data.message,
-                    type: 'success',
-                    autoHide: true
-                }
-            })
+            Alert.success(res.data.message, config.alertGlobalSettings)
         }).catch(err => {
-            this.setState({
-                showAlert: true,
-                alertOptions: {
-                    text: err.response.data.message,
-                    type: 'danger',
-                    autoHide: true
-                }
-            })
+            Alert.error(err.response.data.message, config.alertGlobalSettings)
         })
 
         // to update the record list when a record is updated
         if (this.props.mode === 'edit') this.props.onUpdate(this.state.fields)
-    }
-
-    hideAlert() {
-        this.setState({
-            showAlert: false ,
-            alertOptions: {'autoHide': false}
-        })
     }
 
     render() {
@@ -127,7 +101,7 @@ class EntryForm extends React.Component {
             {this.props.mode !== 'edit' && <BreadcrumbsItem glyph='file' to={'/servicePanel/fileManager/addNewRecord'}> Add New Record </BreadcrumbsItem>}
             {this.props.mode !== 'edit' && <PageHead />}
                 <Row className="margin-0x">
-                    <AlertComponent options={this.state.alertOptions} showAlert={this.state.showAlert} hideAlert={this.hideAlert}/>
+                    <Alert stack={{limit: 3}} html={true} />
                     <Grid componentClass="section" bsClass="col-xs-12">
                         <Form onSubmit={this.handleSubmit}>
                             <fieldset className="custom-fieldset margin-bottom-2x">
