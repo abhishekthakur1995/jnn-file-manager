@@ -30,27 +30,35 @@ class FilterComponent extends React.Component {
 		this.setSearchTerm = this.setSearchTerm.bind(this)
 	}
 
-	// componentDidMount() {
-	// 	// need to maintain filter state of components
-	// 	// get the filters from localStorageService and set them
-	// 	const sortFilters = JSON.parse(localStorage.getItem('sortFilters'))
-	// 	const searchFilters = JSON.parse(localStorage.getItem('searchFilters'))
-	// 	if (sortFilters) {
-	// 		this.setState(prevState => ({
-	// 	  		formStatus: Object.keys(prevState.formStatus).reduce((newState, item) => ({
-	// 	    		...newState,
-	// 	    	    [item]: sortFilters.includes(item)
-	// 	    	}), {})
-	// 		}))
-	// 	}
+	componentDidMount() {
+		const sortFilters = JSON.parse(localStorage.getItem('sortFilters'))
+		const searchFilters = JSON.parse(localStorage.getItem('searchFilters'))
 
-	// 	if (searchFilters) {
-	// 		this.setState({
-	// 			searchTerm: searchFilters.searchTerm,
-	// 			queryField: searchFilters.queryField
-	// 		})
-	// 	}
-	// }
+		if (sortFilters) {
+			let newState = Object.keys(sortFilters).reduce(function(prev, current) {
+		  		let val = sortFilters[current]
+			  	if (!val) {
+				    prev[current] = sortFilters[current]
+			  	} else {
+			    	prev[current] = Object.keys(val).reduce(function(p, c) {
+		      			p[val[c]] = true
+			      		return p
+			    	}, {})
+			  	}
+			  	return prev
+			}, {})
+
+			console.log(this.state)
+
+			this.setState(prevState => ({
+				...prevState.searchTerm,
+				...prevState.queryField,
+				...newState
+			}), () => {
+				console.log(this.state)
+			})
+		}
+	}
 
 	handleCheckBoxClick(action, stateList) {
 		let { formStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer } = this.state

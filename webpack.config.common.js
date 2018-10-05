@@ -17,7 +17,7 @@ module.exports = {
 			"react-router-bootstrap/lib",
 			"react-chartjs-2",
 			"react-csv",
-			"react-s-alert"
+			"react-s-alert",
 			"react-breadcrumbs-dynamic", 
 			"react-datepicker",
 			"react-validation/build/form",
