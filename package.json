@@ -52,7 +52,7 @@
     "dependencies": {
         "appcache-webpack-plugin": "^1.4.0",
         "axios": "^0.18.0",
-        "bcrypt": "^3.0.0",
+        "bcrypt": "^3.0.1",
         "body-parser": "^1.18.3",
         "chart.js": "^2.7.2",
         "connect-redis": "^3.3.3",
