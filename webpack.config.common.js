@@ -86,7 +86,6 @@ module.exports = {
 				include : [
 					path.resolve(__dirname, "src"),
 				    path.resolve(__dirname, "node_modules/react-datepicker/dist"),
-				    path.resolve(__dirname, "node_modules/react-draft-wysiwyg/dist"),
 				    path.resolve(__dirname, "node_modules/react-s-alert/dist")
 				],
 				use: [
