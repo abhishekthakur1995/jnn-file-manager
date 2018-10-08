@@ -48,15 +48,11 @@ class FilterComponent extends React.Component {
 			  	return prev
 			}, {})
 
-			console.log(this.state)
-
 			this.setState(prevState => ({
 				...prevState.searchTerm,
 				...prevState.queryField,
 				...newState
-			}), () => {
-				console.log(this.state)
-			})
+			}))
 		}
 	}
 
