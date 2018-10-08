@@ -30,7 +30,7 @@ letters.post('/addNewLetterRecord',
 		    return res.status(400).json({message: errors.array(), saved : false})
 	  	}
 		const letterRecordData = req.body
-		req.body.LETTER_DATE = moment(req.body.LETTER_DATE).format("YYYY-MM-DD HH:mm:ss")
+		req.body.LETTER_DATE = helper.convertDateTimeToMysqlFormat(req.body.LETTER_DATE)
 		connection.query(`INSERT INTO ${process.env.LETTER_RECORD_TBL} SET ?`, letterRecordData, function(err, results, fields) {
 			if (err) {
 				if(err.code === 'ER_DUP_ENTRY') {
@@ -62,6 +62,7 @@ letters.put('/updateRecord/:id',
 		check('id').not().isEmpty().withMessage('No record id was sent')
 	],
 	(req, res) => {
+		req.body.LETTER_DATE = helper.convertDateTimeToMysqlFormat(req.body.LETTER_DATE)
 		connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET DEPARTMENT_NAME = ?, ASSIGNED_OFFICER = ?, LETTER_TYPE = ?, LETTER_TAG = ?, LETTER_ADDRESS = ?, LETTER_SUBJECT = ?, LETTER_REG_NO = ?, LETTER_DATE = ?, LETTER_STATUS = ?, REMARK = ? WHERE ID = ?`, [req.body.DEPARTMENT_NAME, req.body.ASSIGNED_OFFICER, req.body.LETTER_TYPE, req.body.LETTER_TAG, req.body.LETTER_ADDRESS, req.body.LETTER_SUBJECT, req.body.LETTER_REG_NO, req.body.LETTER_DATE, req.body.LETTER_STATUS, req.body.REMARK, req.params.id], function(err, results, fields) {
 			if (err) {
 				return res.status(400).json({message : err, saved : false})
@@ -345,7 +346,7 @@ letters.get('/getDataBasedOnSelectedMonth',
 		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], function(err, results, fields) {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 
-			// send response		
+			// send response
 			res.status(200).json({data : results, message : 'Data fetched successfully', success : true})
 		})
 	}

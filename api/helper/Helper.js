@@ -39,6 +39,8 @@ const FILTER_FIELDS_CODE_MAPPING = {
 	'assignedOfficer'	:   'ASSIGNED_OFFICER',
 }
 
+const MYSQL_DTM_FORMAT = 'YYYY-MM-DD HH:mm:ss'
+
 class Helper {
 
 	static getFileStatusCodeFromName(codeName) {
@@ -72,6 +74,10 @@ class Helper {
 
 	static constructUniqueFileName(id, ext) {
 		return `${id}.${ext}`
+	}
+
+	static convertDateTimeToMysqlFormat(dateTime) {
+		return moment(dateTime).format(MYSQL_DTM_FORMAT)
 	}
 
 	static log(value, helpText="logger") {
