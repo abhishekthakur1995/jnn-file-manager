@@ -168,133 +168,133 @@ class GetRecords extends React.Component {
 			<Grid bsClass="get-records">
 				<BreadcrumbsItem to={'/servicePanel/fileManager/getRecords'}> Get Records </BreadcrumbsItem>
 				<PageHead title="Get Records" />
+				<Grid bsClass="green-top bg-white">
+					<Table bordered className="table" width="100%">
+						<tbody>
+							<tr width="100%">
+								<td width="80%">
+									<Table className="formtable" border="0" cellSpacing="0" cellPadding="2" width="100%">
+										<tbody>
+											<tr>
+												<td width="20%" className="data-left-aligned">
+													<Radio
+														name="periodType"
+														inline={true}
+														onChange={() => { this.handleRadioChange('monthType') }} >By Month
+													</Radio>
+												</td>
 
-				<Table bordered className="table" width="100%">
-					<tbody>
-						<tr width="100%">
-							<td width="80%">
-								<Table className="formtable" border="0" cellSpacing="0" cellPadding="2" width="100%">
-									<tbody>
-										<tr>
-											<td width="20%" className="data-left-aligned">
-												<Radio
-													name="periodType"
-													inline={true}
-													onChange={() => { this.handleRadioChange('monthType') }} >By Month
-												</Radio>
-											</td>
+												<td width="80%">
+													<Grid bsClass="pull-left">Year:<br />
+														<YearDropDown
+															onClick={this.handleFilterParams}
+														/>
+													</Grid>
 
-											<td width="80%">
-												<Grid bsClass="pull-left">Year:<br />
-													<YearDropDown
-														onClick={this.handleFilterParams}
-													/>
-												</Grid>
+													<Clearfix />
 
-												<Clearfix />
+													<Grid bsClass="pull-left">Month:<br />
+														<MonthDropDown
+															onClick={this.handleFilterParams}
+														/>
+													</Grid>
 
-												<Grid bsClass="pull-left">Month:<br />
-													<MonthDropDown
-														onClick={this.handleFilterParams}
-													/>
-												</Grid>
+													<Clearfix />
 
-												<Clearfix />
+													{this.state.error.monthError && <span className="error">Please select both year and month</span>}
 
-												{this.state.error.monthError && <span className="error">Please select both year and month</span>}
+												</td>
+											</tr>
 
-											</td>
-										</tr>
+											<tr align="left" valign="middle">
+												<td className="data-left-aligned" width="20%">
+													<Radio
+														name="periodType"
+														inline={true}
+														onChange={() => { this.handleRadioChange('specificPeriodType') }} >Specific Period
+													</Radio>
+												</td>
 
-										<tr align="left" valign="middle">
-											<td className="data-left-aligned" width="20%">
-												<Radio
-													name="periodType"
-													inline={true}
-													onChange={() => { this.handleRadioChange('specificPeriodType') }} >Specific Period
-												</Radio>
-											</td>
+												<td width="80%">
+													<div>From:
+														<DatePicker
+															dateFormat={config.datePicker.dateFormat}
+															placeholderText="Click to select a date"
+															maxDate={moment()}
+															selected={this.state.filter.startDate}
+															startDate={this.state.filter.startDate}
+															endDate={this.state.filter.endDate}
+															onChange={(date) => { this.handleFilterParams('startDate', date) }}
+														/>
+													</div>
 
-											<td width="80%">
-												<div>From:
-													<DatePicker
-														dateFormat={config.datePicker.dateFormat}
-														placeholderText="Click to select a date"
-														maxDate={moment()}
-														selected={this.state.filter.startDate}
-														startDate={this.state.filter.startDate}
-														endDate={this.state.filter.endDate}
-														onChange={(date) => { this.handleFilterParams('startDate', date) }}
-													/>
-												</div>
+													<br />
 
-												<br />
+													<div>To:
+														<DatePicker
+														   	dateFormat={config.datePicker.dateFormat}
+														   	placeholderText="Click to select a date"
+														   	maxDate={moment()}
+														   	selected={this.state.filter.endDate}
+														    startDate={this.state.filter.startDate}
+														    endDate={this.state.filter.endDate}
+														    onChange={(date) => { this.handleFilterParams('endDate', date) }}
+														/>
+													</div>
 
-												<div>To:
-													<DatePicker
-													   	dateFormat={config.datePicker.dateFormat}
-													   	placeholderText="Click to select a date"
-													   	maxDate={moment()}
-													   	selected={this.state.filter.endDate}
-													    startDate={this.state.filter.startDate}
-													    endDate={this.state.filter.endDate}
-													    onChange={(date) => { this.handleFilterParams('endDate', date) }}
-													/>
-												</div>
+													{this.state.error.specificPeriodError && <span className="error">Please select both start date and end date</span>}
 
-												{this.state.error.specificPeriodError && <span className="error">Please select both start date and end date</span>}
+												</td>
+											</tr>
 
-											</td>
-										</tr>
+											<tr align="left" valign="middle">
+												<td className="data-left-aligned" width="20%">
+													Select a format
+												</td>
+												<td width="80%" className="data-left-aligned">
+													<Radio
+														name="downloadFormat"
+														inline={true}
+														onChange={() => { this.handleFilterParams('downloadFormat', 'excel') }} >Excel
+													</Radio>
+													<Radio
+														name="downloadFormat"
+														inline={true}
+														onChange={() => { this.handleFilterParams('downloadFormat', 'pdf') }} >PDF
+													</Radio>
 
-										<tr align="left" valign="middle">
-											<td className="data-left-aligned" width="20%">
-												Select a format
-											</td>
-											<td width="80%" className="data-left-aligned">
-												<Radio
-													name="downloadFormat"
-													inline={true}
-													onChange={() => { this.handleFilterParams('downloadFormat', 'excel') }} >Excel
-												</Radio>
-												<Radio
-													name="downloadFormat"
-													inline={true}
-													onChange={() => { this.handleFilterParams('downloadFormat', 'pdf') }} >PDF
-												</Radio>
+													{this.state.error.emptyDownloadFormat && <span className="error margin-left-5x">Please select a download format</span>}
+												</td>
+											</tr>
 
-												{this.state.error.emptyDownloadFormat && <span className="error margin-left-5x">Please select a download format</span>}
-											</td>
-										</tr>
+											<tr align="left" valign="middle">
+												<td width="20%" className="data-left-aligned">
+													<Button className="green-btn" onClick={this.downloadData}>Fetch Data</Button>
+												</td>
 
-										<tr align="left" valign="middle">
-											<td width="20%" className="data-left-aligned">
-												<Button bsStyle="primary" onClick={this.downloadData}>Fetch Data</Button>
-											</td>
+												<td width="80%" className="data-left-aligned">
+												{this.state.downloadData && this.state.filter.downloadFormat === 'excel' &&
+													<CSVLink
+														data={this.state.downloadData}
+												  		filename={`${this.state.filter.month}.csv`}
+												  		target="_blank"
+												  		className="traditional-link"> Download Excel
+													</CSVLink>
+												}
 
-											<td width="80%" className="data-left-aligned">
-											{this.state.downloadData && this.state.filter.downloadFormat === 'excel' &&
-												<CSVLink
-													data={this.state.downloadData}
-											  		filename={`${this.state.filter.month}.csv`}
-											  		target="_blank"
-											  		className="traditional-link"> Download Excel
-												</CSVLink>
-											}
+												{this.state.downloadData && this.state.filter.downloadFormat === 'pdf' &&
+													<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>Download Pdf</span>
+												}
+												</td>
+											</tr>
 
-											{this.state.downloadData && this.state.filter.downloadFormat === 'pdf' &&
-												<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>Download Pdf</span>
-											}
-											</td>
-										</tr>
-
-									</tbody>
-								</Table>
-							</td>
-						</tr>
-					</tbody>
-				</Table>
-
+										</tbody>
+									</Table>
+								</td>
+							</tr>
+						</tbody>
+					</Table>
+				</Grid>
 			</Grid>
 		)
 	}

@@ -69,28 +69,30 @@ class Import extends React.Component {
 				<PageHead title="Import" downloadSampleExcel={<span onClick={this.downloadSampleExcel}> Download Sample Excel<Glyphicon className="fs20" glyph="download" /></span>} />
 				{this.state.showLoading && <LoadingSpinner />}
 
-				<Dropzone
-					className="dz-default"
-					accept=".xlsx"
-					multiple={false}
-					onDrop={(files) => this.onDrop(files)}>
-						<Grid bsClass="dzinfo">
-							<span>Try dropping some files here, or click to select files to upload. <span className="highlight">Only valid excel files (.xlsx) will be accepted</span></span>
-							<Clearfix />
+				<Grid bsClass="bg-white padding-2x green-top">
+					<Dropzone
+						className="dz-default"
+						accept=".xlsx"
+						multiple={false}
+						onDrop={(files) => this.onDrop(files)}>
+							<Grid bsClass="dzinfo">
+								<span>Try dropping some files here, or click to select files to upload. <span className="highlight">Only valid excel files (.xlsx) will be accepted</span></span>
+								<Clearfix />
 
-							<Button bsStyle="default" className="dzuploadbtn">
-								<Glyphicon glyph="upload" /> Upload File
-							</Button>
-							<Clearfix />
+								<Button bsStyle="default" className="dzuploadbtn">
+									<Glyphicon glyph="file" /> Select File
+								</Button>
+								<Clearfix />
 
-							<p className="dzuploadedfilename">{this.state.uploadedFileName}</p>
-						</Grid>
-				</Dropzone>
+								<p className="dzuploadedfilename">{this.state.uploadedFileName}</p>
+							</Grid>
+					</Dropzone>
+				</Grid>
 
 				{this.state.showImportSummary && <ImportSummary totalRecords={this.totalRecords} recordsInserted={this.recordsInserted} errorRecords={this.errorRecords} />}
 
 				{this.state.fileUpload &&
-					<Button bsStyle="primary" className="margin-top-2x width-2x" onClick={this.onImport}>
+					<Button className="margin-top-2x width-2x green-btn" onClick={this.onImport}>
 						<Glyphicon glyph="import" /> Import Data
 					</Button>
 				}

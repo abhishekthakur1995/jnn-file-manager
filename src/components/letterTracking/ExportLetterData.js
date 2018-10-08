@@ -217,227 +217,228 @@ class ExportLetterData extends React.Component {
 				<BreadcrumbsItem to={LetterTracking.getLetterTrackingAbsolutePath('exportData')}> Get Records </BreadcrumbsItem>
 				<PageHead title="Get Records" />
 				{this.state.showLoading && <LoadingSpinner />}
+				<Grid bsClass="green-top bg-white">
+					<Table bordered className="table" width="100%">
+						<tbody>
+							<tr width="100%">
+								<td width="80%">
+									<Table className="formtable" border="0" cellSpacing="0" cellPadding="2" width="100%">
+										<tbody>
+											<tr>
+												<td width="20%" className="data-left-aligned">
+													<Radio
+														name="periodType"
+														inline={true}
+														onChange={() => { this.handleRadioChange('monthType') }} >By Month
+													</Radio>
+												</td>
 
-				<Table bordered className="table" width="100%">
-					<tbody>
-						<tr width="100%">
-							<td width="80%">
-								<Table className="formtable" border="0" cellSpacing="0" cellPadding="2" width="100%">
-									<tbody>
-										<tr>
-											<td width="20%" className="data-left-aligned">
-												<Radio
-													name="periodType"
-													inline={true}
-													onChange={() => { this.handleRadioChange('monthType') }} >By Month
-												</Radio>
-											</td>
+												<td width="80%">
+													<Grid bsClass="pull-left">Year:<br />
+														<YearDropDown
+															onClick={this.handleFilterParams}
+														/>
+													</Grid>
 
-											<td width="80%">
-												<Grid bsClass="pull-left">Year:<br />
-													<YearDropDown
-														onClick={this.handleFilterParams}
-													/>
-												</Grid>
+													<Clearfix />
 
-												<Clearfix />
+													<Grid bsClass="pull-left">Month:<br />
+														<MonthDropDown
+															onClick={this.handleFilterParams}
+														/>
+													</Grid>
 
-												<Grid bsClass="pull-left">Month:<br />
-													<MonthDropDown
-														onClick={this.handleFilterParams}
-													/>
-												</Grid>
+													<Clearfix />
 
-												<Clearfix />
+													{this.state.error.monthError && <span className="error">Please select both year and month</span>}
 
-												{this.state.error.monthError && <span className="error">Please select both year and month</span>}
+												</td>
+											</tr>
 
-											</td>
-										</tr>
+											<tr align="left" valign="middle">
+												<td className="data-left-aligned" width="20%">
+													<Radio
+														name="periodType"
+														inline={true}
+														onChange={() => { this.handleRadioChange('specificPeriodType') }} >Specific Period
+													</Radio>
+												</td>
 
-										<tr align="left" valign="middle">
-											<td className="data-left-aligned" width="20%">
-												<Radio
-													name="periodType"
-													inline={true}
-													onChange={() => { this.handleRadioChange('specificPeriodType') }} >Specific Period
-												</Radio>
-											</td>
+												<td width="80%">
+													<div>From:
+														<DatePicker
+															dateFormat={config.datePicker.dateFormat}
+															placeholderText="Click to select a date"
+															maxDate={moment()}
+															selected={this.state.filter.startDate}
+															startDate={this.state.filter.startDate}
+															endDate={this.state.filter.endDate}
+															onChange={(date) => { this.handleFilterParams('startDate', date) }}
+														/>
+													</div>
 
-											<td width="80%">
-												<div>From:
-													<DatePicker
-														dateFormat={config.datePicker.dateFormat}
-														placeholderText="Click to select a date"
-														maxDate={moment()}
-														selected={this.state.filter.startDate}
-														startDate={this.state.filter.startDate}
-														endDate={this.state.filter.endDate}
-														onChange={(date) => { this.handleFilterParams('startDate', date) }}
-													/>
-												</div>
+													<br />
 
-												<br />
+													<div>To:
+														<DatePicker
+														   	dateFormat={config.datePicker.dateFormat}
+														   	placeholderText="Click to select a date"
+														   	maxDate={moment()}
+														   	selected={this.state.filter.endDate}
+														    startDate={this.state.filter.startDate}
+														    endDate={this.state.filter.endDate}
+														    onChange={(date) => { this.handleFilterParams('endDate', date) }}
+														/>
+													</div>
 
-												<div>To:
-													<DatePicker
-													   	dateFormat={config.datePicker.dateFormat}
-													   	placeholderText="Click to select a date"
-													   	maxDate={moment()}
-													   	selected={this.state.filter.endDate}
-													    startDate={this.state.filter.startDate}
-													    endDate={this.state.filter.endDate}
-													    onChange={(date) => { this.handleFilterParams('endDate', date) }}
-													/>
-												</div>
+													{this.state.error.specificPeriodError && <span className="error">Please select both start date and end date</span>}
 
-												{this.state.error.specificPeriodError && <span className="error">Please select both start date and end date</span>}
+												</td>
+											</tr>
 
-											</td>
-										</tr>
+											<tr align="left" valign="middle">
+												<td className="data-left-aligned" width="20%">
+													<Radio
+														name="tagsType"
+														inline={true}
+														onChange={() => { this.handleRadioChange('byTags') }} >By Tags
+													</Radio>
+												</td>
+												<td width="80%">
+													<ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<span className="bold underline">Letter Status</span>
+						                                <li className="margin-vert-1x">
+					                                		{[{NAME:'Incoming', CODE: '1'}, {NAME:'Outgoing', CODE: '2'}].map((data) => {
+						                            			const code = data.CODE
+						                            			const name = data.NAME
+						                            			return (
+							                            			<Checkbox
+							                            				name={code}
+							                            				key={code}
+							                            				checked={this.state.letterStatus.code}
+							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterStatus) }}>{name}</Checkbox>
+						                            			)})
+						                            		}
+									                	</li>
+						                            </ul>
+													<ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+					                            		<span className="bold underline">Department Name</span>
+						                            	<li className="margin-vert-1x">
+						                            		{this.departmentList.map((data) => {
+						                            			const code = data.CODE
+						                            			const name = data.NAME
+						                            			return (
+							                            			<Checkbox
+							                            				name={code}
+							                            				key={code}
+							                            				checked={this.state.departmentName.code}
+							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.departmentName) }}>{name}</Checkbox>
+						                            			)})
+						                            		}
+						                            	</li>
+						                            </ul>
 
-										<tr align="left" valign="middle">
-											<td className="data-left-aligned" width="20%">
-												<Radio
-													name="tagsType"
-													inline={true}
-													onChange={() => { this.handleRadioChange('byTags') }} >By Tags
-												</Radio>
-											</td>
-											<td width="80%">
-												<ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-					                            	<span className="bold underline">Letter Status</span>
-					                                <li className="margin-vert-1x">
-				                                		{[{NAME:'Incoming', CODE: '1'}, {NAME:'Outgoing', CODE: '2'}].map((data) => {
-					                            			const code = data.CODE
-					                            			const name = data.NAME
-					                            			return (
-						                            			<Checkbox
-						                            				name={code}
-						                            				key={code}
-						                            				checked={this.state.letterStatus.code}
-						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterStatus) }}>{name}</Checkbox>
-					                            			)})
-					                            		}
-								                	</li>
-					                            </ul>
-												<ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-				                            		<span className="bold underline">Department Name</span>
-					                            	<li className="margin-vert-1x">
-					                            		{this.departmentList.map((data) => {
-					                            			const code = data.CODE
-					                            			const name = data.NAME
-					                            			return (
-						                            			<Checkbox
-						                            				name={code}
-						                            				key={code}
-						                            				checked={this.state.departmentName.code}
-						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.departmentName) }}>{name}</Checkbox>
-					                            			)})
-					                            		}
-					                            	</li>
-					                            </ul>
+						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<span className="bold underline">Letter Type</span>
+						                            	<li className="margin-vert-1x">
+						                            		{this.letterTypeList.map((data) => {
+						                            			const code = data.CODE
+						                            			const name = data.NAME
+						                            			return (
+							                            			<Checkbox
+							                            				name={code}
+							                            				key={code}
+							                            				checked={this.state.letterType.code}
+							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterType) }}>{name}</Checkbox>
+						                            			)})
+						                            		}
+						                            	</li>
+						                            </ul>
 
-					                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-					                            	<span className="bold underline">Letter Type</span>
-					                            	<li className="margin-vert-1x">
-					                            		{this.letterTypeList.map((data) => {
-					                            			const code = data.CODE
-					                            			const name = data.NAME
-					                            			return (
-						                            			<Checkbox
-						                            				name={code}
-						                            				key={code}
-						                            				checked={this.state.letterType.code}
-						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterType) }}>{name}</Checkbox>
-					                            			)})
-					                            		}
-					                            	</li>
-					                            </ul>
+						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<span className="bold underline">Letter Tag</span>
+						                            	<li className="margin-vert-1x">
+						                            		{this.letterTagList.map((data) => {
+						                            			const code = data.CODE
+						                            			const name = data.NAME
+						                            			return (
+							                            			<Checkbox
+							                            				name={code}
+							                            				key={code}
+							                            				checked={this.state.letterTag.code}
+							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterTag) }}>{name}</Checkbox>
+						                            			)})
+						                            		}
+						                            	</li>
+						                            </ul>
 
-					                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-					                            	<span className="bold underline">Letter Tag</span>
-					                            	<li className="margin-vert-1x">
-					                            		{this.letterTagList.map((data) => {
-					                            			const code = data.CODE
-					                            			const name = data.NAME
-					                            			return (
-						                            			<Checkbox
-						                            				name={code}
-						                            				key={code}
-						                            				checked={this.state.letterTag.code}
-						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterTag) }}>{name}</Checkbox>
-					                            			)})
-					                            		}
-					                            	</li>
-					                            </ul>
+						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
+						                            	<span className="bold underline">Assigned Officer</span>
+						                            	<li className="margin-vert-1x">
+						                            		{this.assignedOfficerList.map((data) => {
+						                            			const code = data.CODE
+						                            			const name = data.NAME
+						                            			return (
+							                            			<Checkbox
+							                            				name={code}
+							                            				key={code}
+							                            				checked={this.state.assignedOfficer.code}
+							                            				onChange={() => { this.handleCheckBoxClick(code,this.state.assignedOfficer) }}>{name}</Checkbox>
+						                            			)})
+						                            		}
+						                            	</li>
+						                            </ul>
+												</td>
+											</tr>
 
-					                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-					                            	<span className="bold underline">Assigned Officer</span>
-					                            	<li className="margin-vert-1x">
-					                            		{this.assignedOfficerList.map((data) => {
-					                            			const code = data.CODE
-					                            			const name = data.NAME
-					                            			return (
-						                            			<Checkbox
-						                            				name={code}
-						                            				key={code}
-						                            				checked={this.state.assignedOfficer.code}
-						                            				onChange={() => { this.handleCheckBoxClick(code,this.state.assignedOfficer) }}>{name}</Checkbox>
-					                            			)})
-					                            		}
-					                            	</li>
-					                            </ul>
-											</td>
-										</tr>
+											<tr align="left" valign="middle">
+												<td className="data-left-aligned" width="20%">
+													Select a format
+												</td>
+												<td width="80%" className="data-left-aligned">
+													<Radio
+														name="downloadFormat"
+														inline={true}
+														onChange={() => { this.handleFilterParams('downloadFormat', 'excel') }} >Excel
+													</Radio>
+													<Radio
+														name="downloadFormat"
+														inline={true}
+														onChange={() => { this.handleFilterParams('downloadFormat', 'pdf') }} >PDF
+													</Radio>
 
-										<tr align="left" valign="middle">
-											<td className="data-left-aligned" width="20%">
-												Select a format
-											</td>
-											<td width="80%" className="data-left-aligned">
-												<Radio
-													name="downloadFormat"
-													inline={true}
-													onChange={() => { this.handleFilterParams('downloadFormat', 'excel') }} >Excel
-												</Radio>
-												<Radio
-													name="downloadFormat"
-													inline={true}
-													onChange={() => { this.handleFilterParams('downloadFormat', 'pdf') }} >PDF
-												</Radio>
+													{this.state.error.emptyDownloadFormat && <span className="error margin-left-5x">Please select a download format</span>}
+												</td>
+											</tr>
 
-												{this.state.error.emptyDownloadFormat && <span className="error margin-left-5x">Please select a download format</span>}
-											</td>
-										</tr>
+											<tr align="left" valign="middle">
+												<td width="20%" className="data-left-aligned">
+													<Button className="green-btn" onClick={this.downloadData}>Fetch Data</Button>
+												</td>
 
-										<tr align="left" valign="middle">
-											<td width="20%" className="data-left-aligned">
-												<Button bsStyle="primary" onClick={this.downloadData}>Fetch Data</Button>
-											</td>
+												<td width="80%" className="data-left-aligned">
+												{this.state.downloadData && this.state.filter.downloadFormat === 'excel' &&
+													<CSVLink
+														data={this.state.downloadData}
+												  		filename={`${this.state.filter.month}.csv`}
+												  		target="_blank"
+												  		className="traditional-link"> Download Excel
+													</CSVLink>
+												}
 
-											<td width="80%" className="data-left-aligned">
-											{this.state.downloadData && this.state.filter.downloadFormat === 'excel' &&
-												<CSVLink
-													data={this.state.downloadData}
-											  		filename={`${this.state.filter.month}.csv`}
-											  		target="_blank"
-											  		className="traditional-link"> Download Excel
-												</CSVLink>
-											}
+												{this.state.downloadData && this.state.filter.downloadFormat === 'pdf' &&
+													<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>Download Pdf</span>
+												}
+												</td>
+											</tr>
 
-											{this.state.downloadData && this.state.filter.downloadFormat === 'pdf' &&
-												<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>Download Pdf</span>
-											}
-											</td>
-										</tr>
-
-									</tbody>
-								</Table>
-							</td>
-						</tr>
-					</tbody>
-				</Table>
+										</tbody>
+									</Table>
+								</td>
+							</tr>
+						</tbody>
+					</Table>
+				</Grid>
 			</Grid>
 		)
 	}

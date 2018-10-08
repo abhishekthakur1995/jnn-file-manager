@@ -100,7 +100,7 @@ class EntryForm extends React.Component {
             <Grid bsClass="entry-form">
             {this.props.mode !== 'edit' && <BreadcrumbsItem to={'/servicePanel/fileManager/addNewRecord'}> Add New Record </BreadcrumbsItem>}
             {this.props.mode !== 'edit' && <PageHead />}
-                <Row className="margin-0x bg-white">
+                <Row className="margin-0x bg-white green-top padding-top-2x">
                     <Alert stack={{limit: 3}} html={true} />
                     <Grid componentClass="section" bsClass="col-xs-12">
                         <Form onSubmit={this.handleSubmit}>
@@ -248,7 +248,7 @@ class EntryForm extends React.Component {
                                 <Clearfix />
                             </fieldset>
                             <Col className="padding-0x" md={12}>
-                                <Button type="submit" className="btn btn-default">
+                                <Button type="submit" className="btn btn-default green-btn">
                                     <Glyphicon className="padding-right-1x" glyph="saved" />{btnText}
                                 </Button>
                             </Col>

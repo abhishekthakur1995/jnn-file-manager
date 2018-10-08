@@ -213,7 +213,7 @@ class LettersList extends React.Component {
 					filter={filterBtn}
 				/>
 				{this.state.showFilter && filterComponent}
-				<Grid bsClass="bg-white padding-2x">
+				<Grid bsClass="bg-white green-top padding-2x">
 					<Table hover bordered className="record-table margin-bottom-0x">
 		                <thead>
 		                    <tr>

@@ -300,7 +300,7 @@ class RecordList extends React.Component {
 					filter={filterBtn}
 				/>
 				{this.state.showFilter && filterComponent}
-				<Grid bsClass="bg-white padding-2x">
+				<Grid bsClass="bg-white padding-2x green-top">
 					<Table hover bordered className="record-table margin-bottom-0x">
 	                    <thead>
 	                        <tr>
