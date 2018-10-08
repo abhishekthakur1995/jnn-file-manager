@@ -239,6 +239,20 @@ export const LettersService = {
 	      	.then(res => resolves(res))
 	      	.catch(err => rejects(err))
       	})
+	},
+	downloadAttachment(data) {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios({
+				method: 'post',
+				url: `${config.baseUrl}/letters/downloadAttachment`,
+				data: data,
+				responseType: 'blob',
+				headers,
+			})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(err))
+      	})
 	}
 }
 

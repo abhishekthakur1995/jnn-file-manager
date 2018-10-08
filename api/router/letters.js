@@ -428,4 +428,16 @@ letters.post('/getDataBasedOnSelectedTags',
   	}
 )
 
+/* path: /downloadAttachment
+ * type: POST
+ */
+
+letters.post('/downloadAttachment', (req, res) => {
+	const sampleExcel = `${__dirname}/../../upload/sampleExcel/data.xlsx`
+	res.header('Access-Control-Expose-Headers', 'X-My-Custom-Header');
+	res.setHeader('X-My-Custom-Header', 'test')
+	res.download(sampleExcel)
+
+})
+
 module.exports = letters
