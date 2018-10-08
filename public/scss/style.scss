@@ -1,7 +1,7 @@
 .wrapper {
     display: flex;
     align-items: stretch;
-    background: #fafafa;
+    background: #F1F2F4;
     min-height: calc(100vh - 52px);
 
     p {
@@ -28,7 +28,6 @@
         border-radius: 0;
         margin-bottom: 20px;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
 
         .breadcrumb {
             margin-bottom: 10px !important;
@@ -231,12 +230,6 @@
     }
 }
 
-.boxes {
-    width: 25%;
-    margin: 10px;
-    float: left;
-}
-
 .info-box {
     display: block;
     min-height: 90px;
@@ -244,7 +237,6 @@
     width: 100%;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
-    margin-bottom: 15px;
 }
 
 .info-box-icon {
@@ -260,7 +252,6 @@
     font-size: 45px;
     line-height: 90px;
     background: rgba(0, 0, 0, 0.2);
-    padding-top: 17px;
 }
 
 .bg-green {
@@ -288,17 +279,12 @@
 }
 
 .chart-holder {
-    position: relative;
-    margin-bottom: 20px;
-    background: rgb(255, 255, 255);
-    border-radius: 8px;
-    border-width: 3px;
-    border-style: solid;
-    border-color: rgb(51, 122, 183);
+    margin-top: 30px;
+    border-top-style: solid;
+    border-color: #6A9D4F;
     border-image: initial;
-    .chart-holder-body {
-        padding: 15px;
-    }
+    border-width: 3px;
+    background-color: white;
     .chart-holder-heading {
         color: rgb(255, 255, 255);
         background-color: rgb(51, 122, 183);
@@ -430,7 +416,7 @@ ul {
         cursor: pointer;
     }
     .pageSize {
-        margin-left: 30em;
+        margin-left: 35em;
     }
 }
 

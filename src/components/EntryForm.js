@@ -100,7 +100,7 @@ class EntryForm extends React.Component {
             <Grid bsClass="entry-form">
             {this.props.mode !== 'edit' && <BreadcrumbsItem to={'/servicePanel/fileManager/addNewRecord'}> Add New Record </BreadcrumbsItem>}
             {this.props.mode !== 'edit' && <PageHead />}
-                <Row className="margin-0x">
+                <Row className="margin-0x bg-white">
                     <Alert stack={{limit: 3}} html={true} />
                     <Grid componentClass="section" bsClass="col-xs-12">
                         <Form onSubmit={this.handleSubmit}>

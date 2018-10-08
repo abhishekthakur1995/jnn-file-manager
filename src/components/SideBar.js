@@ -64,7 +64,7 @@ class SideBar extends React.Component {
 					}
 				</nav>
 
-				<Grid bsClass="container padding-2x">
+				<Grid bsClass="app-background">
 					<Switch>
 						<SystemUserRoute exact path={`${this.props.match.path}/addNewRecord`} component={EntryForm} />
 						<SystemUserRoute exact path={`${this.props.match.path}/manageRecords`} component={RecordList} />

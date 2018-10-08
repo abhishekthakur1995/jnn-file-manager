@@ -40,36 +40,33 @@ PageHead.propTypes = {
 
 export const InfoBlock = (props) => {
     return (
-        <Grid bsClass="boxes">
+        <Col md={4} sm={12} className={`padding-0x ${props.customClass}`}>
             <Grid bsClass="info-box">
                 <Grid componentClass="span" bsClass="info-box-icon bg-green">
-                    <img className="margin-bottom-8x" title={props.title} src={props.img}></img>
+                    <img title={props.title} src={props.img}></img>
                 </Grid>
                 <Grid bsClass="info-box-content">
                     <Grid componentClass="span" bsClass="info-box-text">{props.title}</Grid>
                     <Grid componentClass="span" bsClass="info-box-number">{props.value}</Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </Col>
     )
 }
 
 InfoBlock.propTypes = {
     title: PropTypes.string,
     value: PropTypes.number,
-    img: PropTypes.string
+    img: PropTypes.string,
+    customClass: PropTypes.string
 }
 
 export const ChartHolder = (props) => {
     return (
-        <Col md={4}>
-            <Grid bsClass="chart-holder">
-                <Grid bsClass="chart-holder-heading" align="center">
-                   {props.title}
-                </Grid>
-                <Grid bsClass="chart-holder-body">
-                    {props.chart}
-                </Grid>
+        <Col xs={12} className="chart-holder">
+            <p className="bold">{props.title}</p>
+            <Grid bsClass="padding-horiz-2x">
+                {props.chart}
             </Grid>
         </Col>
     )

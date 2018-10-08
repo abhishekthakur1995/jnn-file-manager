@@ -213,34 +213,36 @@ class LettersList extends React.Component {
 					filter={filterBtn}
 				/>
 				{this.state.showFilter && filterComponent}
-				<Table hover bordered className="record-table margin-bottom-0x">
-                    <thead>
-                        <tr>
-                        	<th
-                            	className={`cursor-pointer ${this.state.sortField === 'DEPARTMENT_NAME' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-                            	onClick={() => this.sortField('DEPARTMENT_NAME')}>DEPARTMENT_NAME
-                        	</th>
-                        	<th
-                            	className={`cursor-pointer ${this.state.sortField === 'ASSIGNED_OFFICER' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-                            	onClick={() => this.sortField('ASSIGNED_OFFICER')}>ASSIGNED_OFFICER
-                        	</th>
-                    		<th>LETTER_TYPE</th>
-                            <th>LETTER_TAG</th>
-                            <th>LETTER_SUBJECT</th>
-                            <th>LETTER_REG_NO</th>
-                            <th>LETTER_STATUS</th>
-                            <th
-                           		className={`cursor-pointer ${this.state.sortField === 'CREATED' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-                        		onClick={() => this.sortField('CREATED')}>CREATED
-                    		</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+				<Grid bsClass="bg-white padding-2x">
+					<Table hover bordered className="record-table margin-bottom-0x">
+		                <thead>
+		                    <tr>
+		                    	<th
+		                        	className={`cursor-pointer ${this.state.sortField === 'DEPARTMENT_NAME' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+		                        	onClick={() => this.sortField('DEPARTMENT_NAME')}>DEPTNAME
+		                    	</th>
+		                    	<th
+		                        	className={`cursor-pointer ${this.state.sortField === 'ASSIGNED_OFFICER' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+		                        	onClick={() => this.sortField('ASSIGNED_OFFICER')}>OFFICER
+		                    	</th>
+		                		<th>TYPE</th>
+		                        <th>TAG</th>
+		                        <th>SUBJECT</th>
+		                        <th>REG_NO</th>
+		                        <th>STATUS</th>
+		                        <th
+		                       		className={`cursor-pointer ${this.state.sortField === 'CREATED' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+		                    		onClick={() => this.sortField('CREATED')}>CREATED
+		                		</th>
+		                        <th>Action</th>
+		                    </tr>
+		                </thead>
 
-                    <tbody>
-						{filteredRecords}
-					</tbody>
-				</Table>
+		                <tbody>
+							{filteredRecords}
+						</tbody>
+					</Table>
+				</Grid>
 				{this.state.totalLetters > 0 && <TableFunctionalityBase
 					onPageSizeChange={this.handlePageSizeChange} />
 				}

@@ -300,47 +300,49 @@ class RecordList extends React.Component {
 					filter={filterBtn}
 				/>
 				{this.state.showFilter && filterComponent}
-				<Table hover bordered className="record-table margin-bottom-0x">
-                    <thead>
-                        <tr>
-                        	<th>
-                        		<Checkbox
-                        			inline={true}
-                        			onChange={this.handleMultiSelect}
-                        			checked={this.state.checkBoxDefaultStatus} >
-                    			</Checkbox>
-                    		</th>
-                            <th
-                            	className={`cursor-pointer ${this.state.sortField === 'applicantName' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-                            	onClick={() => this.sortField('applicantName')}>Applicant Name
-                        	</th>
-                            <th
-                            	className={`cursor-pointer ${this.state.sortField === 'applicantAddress' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-                            	onClick={() => this.sortField('applicantAddress')}>Applicant Address
-                        	</th>
-                            <th
-                            	className={`cursor-pointer ${this.state.sortField === 'applicantContact' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-                            	onClick={() => this.sortField('applicantContact')}>Applicant Contact
-                        	</th>
-                            <th
-                            	className={`cursor-pointer ${this.state.sortField === 'buildingName' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-                         		onClick={() => this.sortField('buildingName')}>Building Name
-                     		</th>
-                            <th>File Number</th>
-                            <th>Current State</th>
-                           	<th
-                           		className={`cursor-pointer ${this.state.sortField === 'dateCreated' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-                        		onClick={() => this.sortField('dateCreated')}>Date Created
-                    		</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+				<Grid bsClass="bg-white padding-2x">
+					<Table hover bordered className="record-table margin-bottom-0x">
+	                    <thead>
+	                        <tr>
+	                        	<th>
+	                        		<Checkbox
+	                        			inline={true}
+	                        			onChange={this.handleMultiSelect}
+	                        			checked={this.state.checkBoxDefaultStatus} >
+	                    			</Checkbox>
+	                    		</th>
+	                            <th
+	                            	className={`cursor-pointer ${this.state.sortField === 'applicantName' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+	                            	onClick={() => this.sortField('applicantName')}>Applicant Name
+	                        	</th>
+	                            <th
+	                            	className={`cursor-pointer ${this.state.sortField === 'applicantAddress' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+	                            	onClick={() => this.sortField('applicantAddress')}>Applicant Address
+	                        	</th>
+	                            <th
+	                            	className={`cursor-pointer ${this.state.sortField === 'applicantContact' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+	                            	onClick={() => this.sortField('applicantContact')}>Applicant Contact
+	                        	</th>
+	                            <th
+	                            	className={`cursor-pointer ${this.state.sortField === 'buildingName' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+	                         		onClick={() => this.sortField('buildingName')}>Building Name
+	                     		</th>
+	                            <th>File Number</th>
+	                            <th>Current State</th>
+	                           	<th
+	                           		className={`cursor-pointer ${this.state.sortField === 'dateCreated' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+	                        		onClick={() => this.sortField('dateCreated')}>Date Created
+	                    		</th>
+	                            <th>Action</th>
+	                        </tr>
+	                    </thead>
 
-                    <tbody>
-						{filteredRecords}
-					</tbody>
+	                    <tbody>
+							{filteredRecords}
+						</tbody>
 
-				</Table>
+					</Table>
+				</Grid>
 				{this.state.totalRecords > 0 && <TableFunctionalityBase
 					onApprove={this.handleMultiAction}
 					onReject={this.handleMultiAction}

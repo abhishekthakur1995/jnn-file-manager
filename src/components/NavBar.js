@@ -32,7 +32,7 @@ class NavBar extends React.Component {
     		<Navbar className="margin-0x">
 				<Navbar.Header>
 					<Navbar.Brand>
-                        <Link to="/servicePanel">JNN</Link>
+                        <Link to="/servicePanel" className="bold">JNN</Link>
 					</Navbar.Brand>
 				</Navbar.Header>
 

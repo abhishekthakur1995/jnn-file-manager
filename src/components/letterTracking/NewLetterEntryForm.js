@@ -147,7 +147,7 @@ class NewLetterEntryForm extends React.Component {
                 {this.props.mode !== 'edit' && <PageHead />}
                 {this.state.showLoading && <LoadingSpinner />}
 
-                <Row className="margin-0x">
+                <Row className="margin-0x bg-white">
                     <Alert stack={{limit: 3}} html={true} />
                     <Grid componentClass="section" bsClass="col-xs-12">
                         <Form onSubmit={this.handleSubmit}>
