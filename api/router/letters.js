@@ -4,7 +4,7 @@ const express = require('express')
 const letters = express.Router()
 const connection = require('../../db/dbConnection')
 const helper = require('../helper/Helper.js')
-const _ = require('lodash')
+const _ = require('underscore')
 const moment = require('moment')
 const { check, validationResult } = require('express-validator/check')
 
@@ -413,15 +413,15 @@ letters.post('/upload', (req, res) => {
 	let uploadFile = req.files.file
 	const { id } = req.body
 	const fileExtension = path.extname(req.files.file.name)
+	console.log('fileExtension', fileExtension);
 
-	// const extArr = ['.pdf', '.jpg', '.png', '.doc', '.docx']
+	if(req.files.file.data.length > helper.getFileUploadsizeLimit()) {
+		return res.status(400).json({message : 'File size limit exceeded', success : false})
+	}
 
-	// extArr.forEach(function(ext) {
-	// 	let file = helper.constructUniqueFileName(id, ext)
-	// 	if(fs.existsSync(`${__dirname}/../../upload/letters/${file}`)) {
-	// 		fs.unlinkSync(`${__dirname}/../../upload/letters/${file}`)
-	// 	}
-	// })
+	if(!_.contains(helper.getUploadFileValidExtensions(), fileExtension)) {
+		return res.status(400).json({message : 'Invalid extension file uploaded', success : false})
+	}
 
 	uploadFile.mv(`${__dirname}/../../upload/letters/${id}`, function(err) {
     	if (err) { return res.status(400).json({message : 'Error uploading file', success : false}) }
@@ -429,7 +429,7 @@ letters.post('/upload', (req, res) => {
 	  	connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET LETTER_FILE = ?, LETTER_FILE_EXT = ? WHERE ID = ?`, [id, fileExtension, id], function(err, results, fields) {
 	  		if (err) { return res.status(400).json({message : 'Error saving file path to db', success : false}) }
 	  	})
-    	res.status(200).json({message : 'Letter uploaded successfully', success : true})
+    	return res.status(200).json({message : 'Letter uploaded successfully', success : true})
 	})
 })
 

@@ -40,6 +40,8 @@ const FILTER_FIELDS_CODE_MAPPING = {
 }
 
 const MYSQL_DTM_FORMAT = 'YYYY-MM-DD HH:mm:ss'
+const UPLOAD_FILE_SIZE_LIMIT = 102400   //100 kb in bytes
+const UPLOAD_FILE_VALID_EXTENSIONS = ['.jpg', '.png', '.doc', '.docx', '.pdf']
 
 class Helper {
 
@@ -73,6 +75,14 @@ class Helper {
 
 	static convertDateTimeToMysqlFormat(dateTime) {
 		return moment(dateTime).format(MYSQL_DTM_FORMAT)
+	}
+
+	static getFileUploadsizeLimit() {
+		return UPLOAD_FILE_SIZE_LIMIT
+	}
+
+	static getUploadFileValidExtensions() {
+		return UPLOAD_FILE_VALID_EXTENSIONS
 	}
 
 	static log(value, helpText="logger") {

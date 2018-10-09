@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'underscore'
 import moment from 'moment'
 import config from 'config'
 import Alert from 'react-s-alert'
@@ -45,8 +46,11 @@ class NewLetterEntryForm extends React.Component {
                 REMARK: '',
             },
             showLoading: false,
-            uploadedFileName: ''
+            uploadedFileName: '',
+            uploadError: ''
         }
+
+        this.uploadFileErrorMsg = 'Error uploading file. Please try again.'
 
         // functions binding
         this.onDrop = this.onDrop.bind(this)
@@ -106,9 +110,23 @@ class NewLetterEntryForm extends React.Component {
         }))
     }
 
-    onDrop(acceptedFiles) {
-        this.acceptedFiles = acceptedFiles
-        this.setState({ uploadedFileName: acceptedFiles[0].name })
+    onDrop(acceptedFiles, rejectedFiles) {
+        if (!_.isEmpty(acceptedFiles)) {
+            this.acceptedFiles = acceptedFiles
+            this.setState({ uploadedFileName: acceptedFiles[0].name, uploadError: false })
+        }
+        if (!_.isEmpty(rejectedFiles)) {
+            if (rejectedFiles[0].size > config.uploadFileSizeLimit) {
+                this.uploadFileErrorMsg = 'File size is greater then 100 KB. Please upload a smaller file.'
+            }
+
+            const fileExtension = LetterTracking.getFileExtensionFromName(rejectedFiles[0].name)
+            if (!_.contains(LetterTracking.getUploadFileValidExtensions(), fileExtension)) {
+                this.uploadFileErrorMsg = `${fileExtension} is not an accepted extension.`
+            }
+
+            this.setState({ uploadedFileName:'', uploadError: true })
+        }
     }
 
     handleSubmit(event) {
@@ -125,10 +143,13 @@ class NewLetterEntryForm extends React.Component {
                 NewLetterEntryFormService.uploadLetterFile(data).then((response) => {
                     if (response.data.success === true && response.data.file) {
                         this.setState({ uploadedFileName: response.data.file })
+                        Alert.success(res.data.message, config.alertGlobalSettings)
                     }
+                }).catch(err => {
+                    Alert.error(err.response.data.message || this.uploadFileErrorMsg, config.alertGlobalSettings)
+                    return
                 })
             }
-            Alert.success(res.data.message, config.alertGlobalSettings)
         }).catch(err => {
             const errMsg = err.response.data.message || 'Some error occured. Please try again'
             Alert.error(errMsg, config.alertGlobalSettings)
@@ -310,12 +331,13 @@ class NewLetterEntryForm extends React.Component {
                                 <Col md={12}>
                                     <Dropzone
                                         className="dz-default"
+                                        rejectClassName="error"
+                                        accept={`"${LetterTracking.getUploadFileValidExtensions().join(', ')}"`}
+                                        maxSize={config.uploadFileSizeLimit}
                                         multiple={false}
-                                        accept={".jpg, .png, .doc"}
-                                        maxSize={500000}
-                                        onDrop={(files) => this.onDrop(files)}>
+                                        onDrop={this.onDrop}>
                                             <Grid bsClass="dzinfo">
-                                                <span> Upload your letter here. File size limit is 500KB. <span className="highlight">Only valid doc (.doc) and image files (.jpg, .png) will be accepted</span></span>
+                                                <span> Upload your letter here. File size limit is 100KB. <span className="highlight">Supported File extensions are .pdf, .doc, .docx, .jpg, .png</span></span>
                                                 <Clearfix />
 
                                                 <Btn bsStyle="default" className="dzuploadbtn">
@@ -326,6 +348,7 @@ class NewLetterEntryForm extends React.Component {
                                                 <p className="dzuploadedfilename">{this.state.uploadedFileName}</p>
                                             </Grid>
                                     </Dropzone>
+                                    {this.state.uploadError && <p className="margin-top-1x error">{this.uploadFileErrorMsg}</p>}
                                 </Col>
                             </fieldset>
 

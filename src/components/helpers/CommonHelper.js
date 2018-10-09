@@ -12,6 +12,8 @@ const LETTER_STATUS_CODE_MAPPING = {
 	'2' : 'Outgoing'
 }
 
+const UPLOAD_FILE_VALID_EXTENSIONS = ['.jpg', '.png', '.doc', '.docx', '.pdf']
+
 export const Common = {
 	getDisplayFormatDate(date) {
 		return moment(date).format(config.defaultDateTimeFormat)
@@ -30,6 +32,13 @@ export const LetterTracking = {
 	},
 	createAttachmentName(ext) {
 		return `${Math.floor((Math.random() * 10000000000) + 1)}${ext}`
+	},
+	getFileExtensionFromName(fileName) {
+		const re = /(?:\.([^.]+))?$/
+		return re.exec(fileName)[0]
+	},
+	getUploadFileValidExtensions() {
+		return UPLOAD_FILE_VALID_EXTENSIONS
 	}
 }
 

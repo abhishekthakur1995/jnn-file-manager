@@ -12,5 +12,6 @@
 	"alertGlobalSettings": {
 		"position": "top-right",
 		"effect": "slide"
-	}
+	},
+	"uploadFileSizeLimit": 102400
 }
