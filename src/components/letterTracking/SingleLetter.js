@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import NewLetterEntryForm from './NewLetterEntryForm'
 import { SplitButton, MenuItem } from 'react-bootstrap'
-import { LettersService } from './../services/ApiServices'
 import { Common, LetterTracking } from './../helpers/CommonHelper'
 import { EditRecordModal, ManageRecordModal } from './../uiComponents/CommonComponent'
 
@@ -18,7 +17,6 @@ class SingleLetter extends React.Component {
 		this.showModal = this.showModal.bind(this)
 		this.handleModalClose = this.handleModalClose.bind(this)
 		this.handleUpdate = this.handleUpdate.bind(this)
-		this.downloadAttachment = this.downloadAttachment.bind(this)
 	}
 
 	showModal(e) {
@@ -31,19 +29,6 @@ class SingleLetter extends React.Component {
 				this.setState({showManageModal: true})
 			break
 		}
-	}
-
-	downloadAttachment() {
-		const letterId = this.props.singleLetter.ID
-		LettersService.downloadAttachment({ letterId }).then((response) => {
-			console.log('response', response);
-			const url = window.URL.createObjectURL(new Blob([response.data]));
-		  	const link = document.createElement('a');
-		  	link.href = url
-		  	link.setAttribute('download', 'data.xlsx')
-		  	document.body.appendChild(link)
-		  	link.click()
-		})
 	}
 
 	handleModalClose() {
@@ -77,7 +62,7 @@ class SingleLetter extends React.Component {
 			    <td>
 			    	<SplitButton title="View" data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
   						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>Edit</MenuItem>
-  						<MenuItem data-id="attachment" eventKey="2" onClick={this.downloadAttachment}>View Attachment</MenuItem>
+  						{letter.LETTER_FILE_EXT && <MenuItem data-id="attachment" eventKey="2" onClick={() => this.props.onDownload(letter.ID)}>View Attachment</MenuItem>}
 					</SplitButton>
 				</td>
 
@@ -109,6 +94,7 @@ class SingleLetter extends React.Component {
 SingleLetter.propTypes = {
 	index: PropTypes.number,
 	onUpdate: PropTypes.func,
+	onDownload: PropTypes.func,
     singleLetter: PropTypes.object
 }
 

@@ -67,13 +67,8 @@ class Helper {
 		return settingsName.toLowerCase().trim().replace(/\s\s+/g, ' ').replace(/ /g,"_")
 	}
 
-	static getFileExtension(fileName) {
-		const re = /(?:\.([^.]+))?$/
-		return re.exec(fileName)[1]
-	}
-
 	static constructUniqueFileName(id, ext) {
-		return `${id}.${ext}`
+		return `${id}${ext}`
 	}
 
 	static convertDateTimeToMysqlFormat(dateTime) {

@@ -27,6 +27,9 @@ export const LetterTracking = {
 	},
 	createCodeFromSettingsName(settingsName) {
 		return settingsName.toLowerCase().trim().replace(/\s\s+/g, ' ').replace(/ /g,"_")
+	},
+	createAttachmentName(ext) {
+		return `${Math.floor((Math.random() * 10000000000) + 1)}${ext}`
 	}
 }
 

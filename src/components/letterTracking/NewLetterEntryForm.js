@@ -121,7 +121,6 @@ class NewLetterEntryForm extends React.Component {
             if (this.acceptedFiles) {
                 let data = new FormData()
                 data.append('file', this.acceptedFiles[0])
-                data.append('filename', this.acceptedFiles[0].name)
                 data.append('id', res.data.id)
                 NewLetterEntryFormService.uploadLetterFile(data).then((response) => {
                     if (response.data.success === true && response.data.file) {

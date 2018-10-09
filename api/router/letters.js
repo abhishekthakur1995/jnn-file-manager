@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 const express = require('express')
 const letters = express.Router()
 const connection = require('../../db/dbConnection')
@@ -301,30 +302,6 @@ letters.post('/getFilteredData',
 	}
 )
 
- /*path: /upload
-  *type: POST
-  */
-
-letters.post('/upload', (req, res) => {
-	let uploadFile = req.files.file
-	const { id } = req.body
-	const extension = helper.getFileExtension(req.body.filename)
-	const fileName = helper.constructUniqueFileName(id, extension)
-
-	if(!fs.existsSync(`${__dirname}/../../upload/letters/${fileName}`)) {
-		uploadFile.mv(`${__dirname}/../../upload/letters/${fileName}`, function(err) {
-	    	if (err) { return res.status(400).json({message : 'Error uploading file', success : false}) }
-
-		  	connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET LETTER_FILE = ? WHERE ID = ?`, [fileName, id], function(err, results, fields) {
-		  		if (err) { return res.status(400).json({message : 'Error saving file path to db', success : false})}
-		  	})
-	    	return res.status(200).json({message : 'Letter uploaded successfully', success : true})
-  		})
-	} else {
-		return res.status(400).json({message : 'File already exists', success : true})
-	}
-})
-
 /* 	path: /getDataBasedOnSelectedMonth
  *	type: GET
  */
@@ -428,16 +405,55 @@ letters.post('/getDataBasedOnSelectedTags',
   	}
 )
 
+ /*path: /upload
+  *type: POST
+  */
+
+letters.post('/upload', (req, res) => {
+	let uploadFile = req.files.file
+	const { id } = req.body
+	const fileExtension = path.extname(req.files.file.name)
+
+	// const extArr = ['.pdf', '.jpg', '.png', '.doc', '.docx']
+
+	// extArr.forEach(function(ext) {
+	// 	let file = helper.constructUniqueFileName(id, ext)
+	// 	if(fs.existsSync(`${__dirname}/../../upload/letters/${file}`)) {
+	// 		fs.unlinkSync(`${__dirname}/../../upload/letters/${file}`)
+	// 	}
+	// })
+
+	uploadFile.mv(`${__dirname}/../../upload/letters/${id}`, function(err) {
+    	if (err) { return res.status(400).json({message : 'Error uploading file', success : false}) }
+
+	  	connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET LETTER_FILE = ?, LETTER_FILE_EXT = ? WHERE ID = ?`, [id, fileExtension, id], function(err, results, fields) {
+	  		if (err) { return res.status(400).json({message : 'Error saving file path to db', success : false}) }
+	  	})
+    	res.status(200).json({message : 'Letter uploaded successfully', success : true})
+	})
+})
+
 /* path: /downloadAttachment
  * type: POST
  */
 
-letters.post('/downloadAttachment', (req, res) => {
-	const sampleExcel = `${__dirname}/../../upload/sampleExcel/data.xlsx`
-	res.header('Access-Control-Expose-Headers', 'X-My-Custom-Header');
-	res.setHeader('X-My-Custom-Header', 'test')
-	res.download(sampleExcel)
+letters.post('/downloadAttachment', 
+	[
+		check('letterId').not().isEmpty().withMessage('No id was sent')
+	],
+	(req, res) => {
+		const { letterId } = req.body
 
-})
+		connection.query(`SELECT LETTER_FILE_EXT FROM ${process.env.LETTER_RECORD_TBL} WHERE ID = ?`, [letterId], function(err, results) {
+			console.log('results', results);
+			if (err) { return res.status(400).json({message : 'No file found', success : false}) }
+			
+			const attachmentFile = `${__dirname}/../../upload/letters/${letterId}`
+			res.header('Access-Control-Expose-Headers', 'X-FILE-EXTENSION')
+			res.setHeader('X-FILE-EXTENSION', results[0].LETTER_FILE_EXT)
+			res.download(attachmentFile)
+		})
+	}
+)
 
 module.exports = letters

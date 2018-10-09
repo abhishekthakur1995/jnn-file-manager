@@ -43,6 +43,7 @@ class LettersList extends React.Component {
 		this.applyFilter = this.applyFilter.bind(this)
 		this.sortField = this.sortField.bind(this)
 		this.handlePageSizeChange = this.handlePageSizeChange.bind(this)
+		this.downloadAttachment = this.downloadAttachment.bind(this)
 	}
 
 	componentDidMount() {
@@ -170,10 +171,23 @@ class LettersList extends React.Component {
 		this.setState({ showFilter: !this.state.showFilter })
 	}
 
+	downloadAttachment(letterId) {
+		this.setState({ showLoading: true })
+		LettersService.downloadAttachment({ letterId }).then((response) => {
+			const url = window.URL.createObjectURL(new Blob([response.data]));
+		  	const link = document.createElement('a');
+		  	link.href = url
+		  	link.setAttribute('download', LetterTracking.createAttachmentName(response.headers['x-file-extension']))
+		  	document.body.appendChild(link)
+		  	link.click()
+		  	this.setState({ showLoading: false })
+		})
+	}
+
 	render() {
 		let filteredRecords = this.state.letters
 		if (_.isEmpty(filteredRecords)) {
-			filteredRecords = <NoData colSpan={8} />
+			filteredRecords = <NoData colSpan={9} />
 		} else {
 			filteredRecords = filteredRecords.map(function(letter, index) {
 				return (
@@ -181,7 +195,8 @@ class LettersList extends React.Component {
 						key={index}
 						index={index}
 						singleLetter={letter}
-						onUpdate={this.handleRecordUpdate} />
+						onUpdate={this.handleRecordUpdate}
+						onDownload={this.downloadAttachment} />
 				)
 			}.bind(this))
 		}
