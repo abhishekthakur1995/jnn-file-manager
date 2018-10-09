@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { NavBarService } from './services/ApiServices'
-import { Navbar, NavItem, Nav } from 'react-bootstrap'
+import { Navbar, NavItem, Nav, Glyphicon, NavDropdown, MenuItem, Grid } from 'react-bootstrap'
 import { userAuth } from './services/AuthService'
 import PropTypes from 'prop-types'
 import '../../public/scss/style.scss'
@@ -24,10 +24,6 @@ class NavBar extends React.Component {
     }
 
     render() {
-        const navBtn = userAuth.isUserAuthenticated()
-        ? <NavItem onClick={this.logout}>Logout</NavItem>
-        : <NavItem componentClass={Link} href="/login" to="/login">Login</NavItem>
-
     	return (
     		<Navbar className="margin-0x">
 				<Navbar.Header>
@@ -37,8 +33,16 @@ class NavBar extends React.Component {
 				</Navbar.Header>
 
 				<Nav pullRight>
-                    {navBtn}
+                    {userAuth.isUserAuthenticated() && <Glyphicon className="pull-left" glyph="user" />}
+                    {userAuth.isUserAuthenticated() && 
+                        <NavDropdown eventKey={3} title={localStorage.getItem('userRole')} id="basic-nav-dropdown">
+                            <MenuItem eventKey={3.2} onClick={this.logout}><Glyphicon glyph="log-out" />Logout</MenuItem>
+                        </NavDropdown>
+                    }
+
+                    {!userAuth.isUserAuthenticated() && <NavItem componentClass={Link} href="/login" to="/login"><Glyphicon glyph="log-in" /> Login</NavItem>}
  				</Nav>
+
     		</Navbar>
 		)
     }

@@ -663,3 +663,15 @@ ul {
         }
     }
 }
+
+.navbar-right {
+    .glyphicon-log-in, .glyphicon-log-out {
+        top: 2px;
+        margin-right: 5px;
+    }
+    .glyphicon-user {
+        top: 17px;
+        margin-right: -10px;
+        z-index: 1;
+    }
+}
