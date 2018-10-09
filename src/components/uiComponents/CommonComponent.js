@@ -166,7 +166,7 @@ export const RecordDetails = (props) => {
     var rows = [];
     for (var key in record) {
         if (record.hasOwnProperty(key)) {
-            if (!_.contains(['CREATED', 'MODIFIED', 'ID', 'STATUS', 'LETTER_FILE'], key)) {
+            if (!_.contains(['CREATED', 'MODIFIED', 'ID', 'STATUS', 'LETTER_FILE', 'LETTER_FILE_EXT'], key)) {
                 let val = ''
                 if (key === 'FILE_STATUS') {
                     val = FileRecord.getFileStatusFromCode(record[key])

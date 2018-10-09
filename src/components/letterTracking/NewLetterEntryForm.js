@@ -57,6 +57,7 @@ class NewLetterEntryForm extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleDatePickerChange = this.handleDatePickerChange.bind(this)
+        this.removeUploadedFile = this.removeUploadedFile.bind(this)
     }
 
     componentDidMount() {
@@ -110,6 +111,12 @@ class NewLetterEntryForm extends React.Component {
         }))
     }
 
+    removeUploadedFile(event) {
+        event.stopPropagation()
+        this.acceptedFiles = []
+        this.setState({ uploadedFileName: '' })
+    }
+
     onDrop(acceptedFiles, rejectedFiles) {
         if (!_.isEmpty(acceptedFiles)) {
             this.acceptedFiles = acceptedFiles
@@ -136,7 +143,7 @@ class NewLetterEntryForm extends React.Component {
         let data = this.state.fields
 
         NewLetterEntryFormService.addNewLetterRecord(method, url, data).then((res) => {
-            if (this.acceptedFiles) {
+            if (!_.isEmpty(this.acceptedFiles)) {
                 let data = new FormData()
                 data.append('file', this.acceptedFiles[0])
                 data.append('id', res.data.id)
@@ -345,7 +352,9 @@ class NewLetterEntryForm extends React.Component {
                                                 </Btn>
                                                 <Clearfix />
 
-                                                <p className="dzuploadedfilename">{this.state.uploadedFileName}</p>
+                                                <p className="dzuploadedfilename">{this.state.uploadedFileName}
+                                                    {this.state.uploadedFileName && <Glyphicon title="Remove File" glyph="remove" className="margin-left-1x cursor-pointer" onClick={this.removeUploadedFile}></Glyphicon>}
+                                                </p>
                                             </Grid>
                                     </Dropzone>
                                     {this.state.uploadError && <p className="margin-top-1x error">{this.uploadFileErrorMsg}</p>}
