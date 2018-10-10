@@ -53,7 +53,7 @@ users.post('/login',
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array()})
 	  	}
-	  	
+
 		const email = req.body.email;
 	    const password = req.body.password;
 	    var token = '';
@@ -111,6 +111,7 @@ users.post('/resetPassword',
 	[
 		check('currentPassword').not().isEmpty().withMessage('currentPassword cannot be empty'),
 		check('newPassword').not().isEmpty().withMessage('newPassword cannot be empty'),
+		check('newPassword').isLength({ min: 8 }).withMessage('New password must be atleast 8 characters in length'),
 		check('confirmNewPassword').not().isEmpty().withMessage('confirmNewPassword cannot be empty')
 	],
 	(req,res) => {
