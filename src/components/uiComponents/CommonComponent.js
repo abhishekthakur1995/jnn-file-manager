@@ -10,7 +10,7 @@ import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup, Bre
 
 export const PageHead = (props) => {
 	return (
-		<Grid bsClass="navbar page-head">
+		<Grid bsClass="page-head">
             <Grid bsClass="container-fluid">
                 <Grid bsClass="navbar-header">
                     <Breadcrumbs

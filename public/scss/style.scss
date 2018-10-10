@@ -559,14 +559,6 @@ ul {
     }
 }
 
-.page-head {
-    .filter-container {
-        margin-top: 0.34em;
-        width: auto;
-        float: right;
-    }
-}
-
 .error-page {
     #notfound {
         position: relative;
@@ -655,5 +647,25 @@ ul {
         top: 17px;
         z-index: 1;
         right: 10em;
+    }
+}
+
+.page-head {
+    padding: 5px;
+    background: #e6e6e6;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 20px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+
+    .breadcrumb {
+        margin-bottom: 10px !important;
+        margin-top: 10px !important;
+    }
+
+    .filter-container {
+        margin-top: 0.34em;
+        width: auto;
+        float: right;
     }
 }
