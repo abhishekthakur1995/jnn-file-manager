@@ -247,7 +247,7 @@ class EntryForm extends React.Component {
                                 </Col>
                                 <Clearfix />
                             </fieldset>
-                            <Col className="padding-0x" md={12}>
+                            <Col className="padding-0x margin-bottom-2x" md={12}>
                                 <Button type="submit" className="btn btn-default green-btn">
                                     <Glyphicon className="padding-right-1x" glyph="saved" />{btnText}
                                 </Button>
