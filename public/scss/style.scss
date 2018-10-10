@@ -21,26 +21,6 @@
         display: inline-block;
     }
 
-    .navbar {
-        padding: 5px;
-        background: #e6e6e6;
-        border: none;
-        border-radius: 0;
-        margin-bottom: 20px;
-        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-
-        .breadcrumb {
-            margin-bottom: 10px !important;
-            margin-top: 10px !important;
-        }
-    }
-
-    .navbar-btn {
-        box-shadow: none;
-        outline: none !important;
-        border: none;
-    }
-
     #sidebar {
         min-width: 200px;
         max-width: 200px;
@@ -664,14 +644,16 @@ ul {
     }
 }
 
-.navbar-right {
-    .glyphicon-log-in, .glyphicon-log-out {
-        top: 2px;
-        margin-right: 5px;
+.navbar {
+    .navbar-right {
+        .glyphicon-log-in, .glyphicon-log-out {
+            top: 2px;
+            margin-right: 5px;
+        }
     }
     .glyphicon-user {
         top: 17px;
-        margin-right: -10px;
         z-index: 1;
+        right: 10em;
     }
 }

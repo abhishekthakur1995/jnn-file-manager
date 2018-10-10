@@ -32,8 +32,9 @@ class NavBar extends React.Component {
 					</Navbar.Brand>
 				</Navbar.Header>
 
+                {userAuth.isUserAuthenticated() && <Glyphicon className="pull-right" glyph="user" />}
+
 				<Nav pullRight>
-                    {userAuth.isUserAuthenticated() && <Glyphicon className="pull-left" glyph="user" />}
                     {userAuth.isUserAuthenticated() && 
                         <NavDropdown eventKey={3} title={localStorage.getItem('userRole')} id="basic-nav-dropdown">
                             <MenuItem eventKey={3.2} onClick={this.logout}><Glyphicon glyph="log-out" />Logout</MenuItem>
