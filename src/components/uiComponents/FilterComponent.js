@@ -254,8 +254,8 @@ class FilterComponent extends React.Component {
 				</Grid>
 
 				<Grid bsClass="clear full-width filter-action">
-					<Button bsStyle="primary" className="primary pull-right margin-1x" onClick={this.handleFilterParams}>Filter</Button>
-					<Button bsStyle="primary" className="primary pull-right margin-1x" onClick={this.resetAllFilters}>Reset</Button>
+					<Button className="primary green-btn pull-right margin-1x" onClick={this.handleFilterParams}>Filter</Button>
+					<Button className="primary green-btn pull-right margin-1x" onClick={this.resetAllFilters}>Reset</Button>
 				    <Grid bsClass="clear"></Grid>
 				</Grid>
 			</Grid>
