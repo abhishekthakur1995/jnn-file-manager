@@ -49,13 +49,17 @@ users.post('/login',
 		check('password').not().isEmpty().withMessage('password cannot be empty')
 	],
 	function(req, res) {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array()})
+	  	}
+	  	
 		const email = req.body.email;
 	    const password = req.body.password;
 	    var token = '';
 		connection.query(`SELECT * FROM ${process.env.USER_TBL} WHERE EMAIL = ? AND STATUS = 1`, [email], function(err, results, fields) {
-			if (err) {
-				return res.status(400).json({message : err, token : token, success : false})
-			}
+			if (err) { return res.status(400).json({message : err, token : token, success : false}) }
+
 			if (results.length > 0) {
 				bcrypt.compare(password, results[0].PASSWORD).then(function(match) {
 					if (match == true) {
@@ -88,9 +92,9 @@ users.post('/logout', (req, res) => {
 	})
 })
 
- /*path: /downloadSampleExcel
-  *type: GET
-  */
+/*	path: /downloadSampleExcel
+ *	type: GET
+ */
 
 users.get('/downloadSampleExcel', (req, res) => {
 	const sampleExcel = `${__dirname}/../../upload/sampleExcel/data.xlsx`
@@ -98,5 +102,51 @@ users.get('/downloadSampleExcel', (req, res) => {
 	res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 	res.download(sampleExcel)
 })
+
+/*	path: /userAuth/resetPassword
+ *	type: POST
+ */
+
+users.post('/resetPassword', 
+	[
+		check('currentPassword').not().isEmpty().withMessage('currentPassword cannot be empty'),
+		check('newPassword').not().isEmpty().withMessage('newPassword cannot be empty'),
+		check('confirmNewPassword').not().isEmpty().withMessage('confirmNewPassword cannot be empty')
+	],
+	(req,res) => {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array()})
+	  	}
+
+	  	const { currentPassword, newPassword, confirmNewPassword } = req.body
+	  	const userRole = req.headers.userrole
+
+	  	if(newPassword === confirmNewPassword) {
+		  	connection.query(`SELECT PASSWORD FROM ${process.env.USER_TBL} WHERE ROLE = ? AND STATUS = 1`, [userRole], (err, results, fields) => {
+				if (err) { return res.status(400).json({message : 'Unable to reset password. Please try again', success : false}) }
+
+				if (results.length > 0) {
+					bcrypt.compare(currentPassword, results[0].PASSWORD).then(function(match) {
+						if (match == true) {
+							bcrypt.hash(newPassword, parseInt(process.env.SALT_ROUNDS)).then(function(hashedPassword) {
+								connection.query(`UPDATE ${process.env.USER_TBL} SET PASSWORD = ?`, [hashedPassword], (err, results, fields) => {
+									if (err) { return res.status(400).json({message : 'Unable to reset password. Please try again', success : false}) }
+									res.status(200).json({message : 'User password resetted successfully', success: true})	
+								})
+							})
+						} else {
+							return res.status(400).json({message : 'Incorrect password sent. Please enter the correct password', success : false})
+						}
+					})
+				} else {
+					return res.status(400).json({message : 'No user exists', success : false})
+				}
+		  	})
+	  	} else {
+	  		res.status(400).json({message : 'Password and confirm password do not match. Please try again', success : false})
+	  	}
+	}
+)
 
 module.exports = users

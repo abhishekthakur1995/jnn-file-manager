@@ -282,3 +282,14 @@ export const ExportLetterDataService = {
       	})
 	}
 }
+
+export const ResetPasswordService = {
+	resetPassword(data) {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.post(`${config.baseUrl}/userAuth/resetPassword`, data, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(err))
+      	})
+	}
+}

@@ -17,6 +17,13 @@ const UPLOAD_FILE_VALID_EXTENSIONS = ['.jpg', '.png', '.doc', '.docx', '.pdf']
 export const Common = {
 	getDisplayFormatDate(date) {
 		return moment(date).format(config.defaultDateTimeFormat)
+	},
+	clearLocalStorageData() {
+		localStorage.removeItem('authToken')
+		localStorage.removeItem('userRole')
+		localStorage.removeItem('tokenValidUpto')
+		localStorage.removeItem('searchFilters')
+		localStorage.removeItem('sortFilters')
 	}
 }
 

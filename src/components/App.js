@@ -3,6 +3,7 @@ import NavBar from './NavBar'
 import LoginForm from './LoginForm'
 import ErrorPage from './ErrorPage'
 import ServicePanel from './ServicePanel'
+import ResetPassword from './ResetPassword'
 import Dashboard from './Dashboard'
 import LettertrackingDashboard from './letterTracking/LetterTrackingDashboard'
 import { PrivateRoute } from './services/AuthService'
@@ -31,6 +32,7 @@ class App extends React.Component {
                     <PrivateRoute path={'/servicePanel/fileManager'} component={Dashboard} />
                     <PrivateRoute path={'/servicePanel/letterTracking'} component={LettertrackingDashboard} />
                     <PrivateRoute path="/servicePanel" component={ServicePanel} />
+                    <PrivateRoute path="/resetPassword" component={ResetPassword} />
                     <Route component={ErrorPage} />
 				</Switch>
 			</Grid>

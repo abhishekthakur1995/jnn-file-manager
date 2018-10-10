@@ -639,7 +639,7 @@ ul {
 
 .navbar {
     .navbar-right {
-        .glyphicon-log-in, .glyphicon-log-out {
+        .glyphicon-log-in, .glyphicon-log-out, .glyphicon-refresh {
             top: 2px;
             margin-right: 5px;
         }
@@ -668,5 +668,20 @@ ul {
         margin-top: 0.34em;
         width: auto;
         float: right;
+    }
+}
+
+.reset-password {
+    margin: 0px 50px 0px 50px;
+    padding: 30px;
+
+    .nest {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .reset-password-container {
+        margin-left: 50px;
+        margin-right: 50px;
     }
 }

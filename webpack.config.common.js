@@ -50,6 +50,7 @@ module.exports = {
 			"./src/components/letterTracking/ManageLetterBoardInputs.js",
 			"./src/components/letterTracking/ExportLetterData.js",
 			"./src/components/ServicePanel.js",
+			"./src/components/ResetPassword.js",
 			"./src/components/ManageSystemInputs.js",
 			"./src/components/uiComponents/AlertComponent.js",
 			"./src/components/uiComponents/CommonComponent.js",
