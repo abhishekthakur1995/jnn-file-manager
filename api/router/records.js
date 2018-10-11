@@ -24,7 +24,7 @@ records.post('/addNewRecord',
 		check('file_number').not().isEmpty().withMessage('File number cannot be empty').trim().escape(),
 		check('remark').trim().escape()
 	],
-	function(req, res) {
+	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
@@ -40,7 +40,7 @@ records.post('/addNewRecord',
 	        "FILE_NUMBER": req.body.file_number,
 	        "REMARK": req.body.remark,
 	    }
-		connection.query(`INSERT INTO ${process.env.FILE_RECORD_TBL} SET ?`, fileRecordData, function(err, results, fields) {
+		connection.query(`INSERT INTO ${process.env.FILE_RECORD_TBL} SET ?`, fileRecordData, (err, results, fields) => {
 			if (err) {
 				if(err.code === 'ER_DUP_ENTRY') {
 					return res.status(400).json({message : `This file number (${req.body.file_number}) already exists. Kindly give a new file number.`, saved : false})
@@ -56,8 +56,8 @@ records.post('/addNewRecord',
  *	type: GET
  */
 
-records.get('/getCountOfAllRecords', function(req, res) {
-	connection.query(`SELECT COUNT(*) as count FROM ${process.env.FILE_RECORD_TBL}`, function(err, results, fields) {
+records.get('/getCountOfAllRecords', (req, res) => {
+	connection.query(`SELECT COUNT(*) as count FROM ${process.env.FILE_RECORD_TBL}`, (err, results, fields) => {
 		if (err) {
 			return res.status(400).json({data: [], message : err, success : false})
 		}
@@ -74,7 +74,12 @@ records.get('/getRecords',
 		check('page').not().isEmpty().withMessage('No page number was sent'),
 		check('limit').not().isEmpty().withMessage('No limit was sent')
 	],
-	function(req, res) {
+	(req, res) => {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+
 		const page = req.query.page
 		const limit = req.query.limit
 		const offset = (page - 1) * limit
@@ -87,11 +92,11 @@ records.get('/getRecords',
 			dataQuery = `SELECT * FROM ${process.env.FILE_RECORD_TBL} ORDER BY ${helper.getDbFieldCodeFromName(req.query.sortField)} ${_.upperCase(req.query.orderBy)} LIMIT ${offset}, ${limit}`
 		}
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL}`, function(err, results, fields) {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL}`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(dataQuery, function(err, results, fields) {
+			connection.query(dataQuery, (err, results, fields) => {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
@@ -112,7 +117,7 @@ records.post('/getFilteredData',
 		check('limit').not().isEmpty().withMessage('No limit was sent'),
 		check('sortFilters').not().isEmpty().withMessage('No filter data was sent')
 	],
-	function(req, res) {
+	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
@@ -147,11 +152,11 @@ records.post('/getFilteredData',
 
 		whereCriteria = `WHERE ${searchCriteria} ${sortCriteria}`
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} ${whereCriteria}`, function(err, results, fields) {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} ${whereCriteria}`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} ${whereCriteria} LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} ${whereCriteria} LIMIT ${offset}, ${limit}`, (err, results, fields) => {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
@@ -172,7 +177,12 @@ records.post('/getSearchResults',
 		check('page').not().isEmpty().withMessage('No page number was sent'),
 		check('limit').not().isEmpty().withMessage('No limit was sent')
 	],
-	function(req, res) {	
+	(req, res) => {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+
 		const query = req.body.searchTerm
 		const page = req.body.page
 		const limit = req.body.limit
@@ -181,11 +191,11 @@ records.post('/getSearchResults',
 		let totalCount = 0
 		let results = ''
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%'`, function(err, results, fields) {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%'`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%' LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%' LIMIT ${offset}, ${limit}`, (err, results, fields) => {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
@@ -215,7 +225,12 @@ records.put('/updateRecord/:id',
 		check('id').not().isEmpty().withMessage('No record id was sent')
 	],
 	(req, res) => {
-		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET APPLICANT_NAME = ?, APPLICANT_TYPE = ?, APPLICANT_ADDRESS = ?, APPLICANT_CONTACT = ?, BUILDING_NAME = ?, BUILDING_ADDRESS = ?, BUILDING_AREA = ?, FILE_NUMBER = ?, REMARK = ? WHERE ID = ?`, [req.body.applicant_name, req.body.applicant_type, req.body.applicant_address, req.body.applicant_contact, req.body.building_name, req.body.building_address, req.body.building_area, req.body.file_number, req.body.remark, req.params.id], function(err, results, fields) {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+
+		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET APPLICANT_NAME = ?, APPLICANT_TYPE = ?, APPLICANT_ADDRESS = ?, APPLICANT_CONTACT = ?, BUILDING_NAME = ?, BUILDING_ADDRESS = ?, BUILDING_AREA = ?, FILE_NUMBER = ?, REMARK = ? WHERE ID = ?`, [req.body.applicant_name, req.body.applicant_type, req.body.applicant_address, req.body.applicant_contact, req.body.building_name, req.body.building_address, req.body.building_area, req.body.file_number, req.body.remark, req.params.id], (err, results, fields) => {
 			if (err) {
 				return res.status(400).json({message : err, saved : false})
 			}
@@ -233,10 +248,15 @@ records.put('/updateRecordStatus/:id',
 		check('id').not().isEmpty().withMessage('No record id was sent'),
 		check('status').not().isEmpty().withMessage('Status cannot be empty')
 	], 
-	function(req, res) {
+	(req, res) => {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+
 		const id = req.params.id
 		const status = req.body.status
-		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET FILE_STATUS = ? WHERE ID = ?`, [status, id], function(err, results, fields) {
+		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET FILE_STATUS = ? WHERE ID = ?`, [status, id], (err, results, fields) => {
 			if (err) {
 				return res.status(400).json({message : err, saved : false})
 			}
@@ -254,10 +274,14 @@ records.put('/updateMultipleRecordStatus',
 		check('markedRecords').not().isEmpty().withMessage('No record id was sent'),
 		check('status').not().isEmpty().withMessage('Status cannot be empty')
 	], 
-	function(req, res) {
+	(req, res) => {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
 		const markedRecords = req.body.markedRecords
 		const status = req.body.status
-		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET FILE_STATUS = ? WHERE ID IN (${markedRecords})`, [status], function(err, results, fields) {
+		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET FILE_STATUS = ? WHERE ID IN (${markedRecords})`, [status], (err, results, fields) => {
 			if (err) {
 				return res.status(400).json({message : err, saved : false})
 			}
@@ -275,7 +299,12 @@ records.delete('/deleteRecord/:id',
 		check('id').not().isEmpty().withMessage('No record id was sent'),
 	],
 	(req, res) => {
-		connection.query(`DELETE FROM ${process.env.FILE_RECORD_TBL} WHERE ID = ${req.params.id}`, function(err, results, fields) {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+
+		connection.query(`DELETE FROM ${process.env.FILE_RECORD_TBL} WHERE ID = ${req.params.id}`, (err, results, fields) => {
 			if (err) {
 				return res.status(400).json({message : err, saved : false})
 			}
@@ -288,8 +317,8 @@ records.delete('/deleteRecord/:id',
  *	type: GET
  */
 
-records.get('/getDashboardData', function(req, res) {
-	connection.query(`SELECT COUNT(*) AS RECEIVED, COUNT(CASE WHEN FILE_STATUS = 0 THEN 1 END) AS PENDING, COUNT(CASE WHEN FILE_STATUS = 1 THEN 1 END) AS APPROVED FROM ${process.env.FILE_RECORD_TBL}`, function(err, results, fields) {
+records.get('/getDashboardData', (req, res) => {
+	connection.query(`SELECT COUNT(*) AS RECEIVED, COUNT(CASE WHEN FILE_STATUS = 0 THEN 1 END) AS PENDING, COUNT(CASE WHEN FILE_STATUS = 1 THEN 1 END) AS APPROVED FROM ${process.env.FILE_RECORD_TBL}`, (err, results, fields) => {
 		if (err) {
 			return res.status(400).json({data: [], message : err, success : false})
 		}
@@ -306,7 +335,7 @@ records.get('/getDataBasedOnSelectedMonth',
  		check('month').not().isEmpty().withMessage('Please select a month'),
  		check('year').not().isEmpty().withMessage('Please select an year')
  	],
- 	function(req, res) {
+ 	(req, res) => {
  		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
@@ -315,7 +344,7 @@ records.get('/getDataBasedOnSelectedMonth',
 		const month = req.query.month
 		const year = req.query.year
 
-		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], function(err, results, fields) {
+		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 
 			// send response		
@@ -333,7 +362,7 @@ records.get('/getDataBasedOnSelectedDuration',
   		check('startDate').not().isEmpty().withMessage('Please select a to date'),
   		check('endDate').not().isEmpty().withMessage('Please select a from date')
   	],
-  	function(req, res) {
+  	(req, res) => {
   		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
@@ -343,7 +372,7 @@ records.get('/getDataBasedOnSelectedDuration',
  		startDate = helper.convertTimestampToUnixTimestamp(startDate)
  		endDate = helper.convertTimestampToUnixTimestamp(endDate)
 
- 		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, function(err, results, fields) {
+ 		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, (err, results, fields) => {
  			if (err) return res.status(400).json({data: [], message : err, success : false})
 
  			// send response		
@@ -361,7 +390,7 @@ records.get('/getDataBasedOnSelectedDuration',
 records.post('/upload', (req, res) => {
 	let uploadFile = req.files.file
 
-	uploadFile.mv(`${__dirname}/../../upload/${req.body.filename}`, function(err) {
+	uploadFile.mv(`${__dirname}/../../upload/${req.body.filename}`, (err) => {
 	    if (err) {
       		return res.status(500).json({file: '', message : err, success : false})
 	    }
@@ -380,13 +409,18 @@ records.post('/importDataToDB',
 		check('fileName').not().isEmpty().withMessage('No file name was sent')
 	],
 	(req, res) => {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+
 		var workbook = excel.readFileSync(`${__dirname}/../../upload/${req.body.fileName}`)
-  		workbook.SheetNames.forEach(function(sheetName) {
+  		workbook.SheetNames.forEach((sheetName) => {
     		var data = excel.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
     		if (data.length > 0) {
     			let errorRecords = []
     			data.map((singleData, index) => {
-    				connection.query(`INSERT INTO ${process.env.FILE_RECORD_TBL} SET ?`, singleData, function(err, results, fields) {
+    				connection.query(`INSERT INTO ${process.env.FILE_RECORD_TBL} SET ?`, singleData, (err, results, fields) => {
     					if (err) {
     						errorRecords.push(singleData.FILE_NUMBER)
     					}

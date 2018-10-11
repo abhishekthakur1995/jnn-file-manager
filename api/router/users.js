@@ -16,20 +16,20 @@ users.post('/register',
 		check('password').isLength({ min: 8 }).withMessage('password must be atleast 8 characters in length'),
 		check('role').not().isEmpty().withMessage('role cannot be empty').trim().escape()
 	],
-	function(req, res) {
+	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array()})
 	  	}
 
-		bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS)).then(function(hash) {
+		bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS)).then((hash) => {
 			const userData = {
 		        "USER_NAME": req.body.user_name,
 		        "EMAIL": req.body.email,
 		        "PASSWORD": hash,
 		        "ROLE": req.body.role,
 		    }
-			connection.query(`INSERT INTO ${process.env.USER_TBL} SET ?`, userData, function(err, results, fields) {
+			connection.query(`INSERT INTO ${process.env.USER_TBL} SET ?`, userData, (err, results, fields) => {
 				if (err) {
 					return res.status(400).json({message : err})
 				}
@@ -48,7 +48,7 @@ users.post('/login',
 		check('email').not().isEmpty().withMessage('email cannot be empty'),
 		check('password').not().isEmpty().withMessage('password cannot be empty')
 	],
-	function(req, res) {
+	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array()})
@@ -57,11 +57,11 @@ users.post('/login',
 		const email = req.body.email;
 	    const password = req.body.password;
 	    var token = '';
-		connection.query(`SELECT * FROM ${process.env.USER_TBL} WHERE EMAIL = ? AND STATUS = 1`, [email], function(err, results, fields) {
+		connection.query(`SELECT * FROM ${process.env.USER_TBL} WHERE EMAIL = ? AND STATUS = 1`, [email], (err, results, fields) => {
 			if (err) { return res.status(400).json({message : err, token : token, success : false}) }
 
 			if (results.length > 0) {
-				bcrypt.compare(password, results[0].PASSWORD).then(function(match) {
+				bcrypt.compare(password, results[0].PASSWORD).then((match) => {
 					if (match == true) {
 						token = jwt.sign(JSON.parse(JSON.stringify(results[0])), process.env.SECRET_KEY, {
 				 			expiresIn: parseInt(process.env.TOKEN_EXPIRY_TIME)
@@ -84,10 +84,8 @@ users.post('/login',
  */
 
 users.post('/logout', (req, res) => {
-	req.session.destroy(function(err) {
-	  	if (err) {
-    		return res.status(200).json({message : 'Unable to logout', err, success : false})
-    	}
+	req.session.destroy((err) => {
+	  	if (err) { return res.status(200).json({message : 'Unable to logout', err, success : false}) }
     	res.status(200).json({message : 'user successfully logout', success : true})
 	})
 })
@@ -128,9 +126,9 @@ users.post('/resetPassword',
 				if (err) { return res.status(400).json({message : 'Unable to reset password. Please try again', success : false}) }
 
 				if (results.length > 0) {
-					bcrypt.compare(currentPassword, results[0].PASSWORD).then(function(match) {
+					bcrypt.compare(currentPassword, results[0].PASSWORD).then((match) => {
 						if (match == true) {
-							bcrypt.hash(newPassword, parseInt(process.env.SALT_ROUNDS)).then(function(hashedPassword) {
+							bcrypt.hash(newPassword, parseInt(process.env.SALT_ROUNDS)).then((hashedPassword) => {
 								connection.query(`UPDATE ${process.env.USER_TBL} SET PASSWORD = ?`, [hashedPassword], (err, results, fields) => {
 									if (err) { return res.status(400).json({message : 'Unable to reset password. Please try again', success : false}) }
 									res.status(200).json({message : 'User password resetted successfully', success: true})	

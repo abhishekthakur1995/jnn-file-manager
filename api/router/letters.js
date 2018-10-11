@@ -25,14 +25,14 @@ letters.post('/addNewLetterRecord',
 		check('LETTER_STATUS').not().isEmpty().withMessage('Letter status cannot be empty').trim().escape(),
 		check('REMARK').trim().escape()
 	],
-	function(req, res) {
+	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
 	  	}
 		const letterRecordData = req.body
 		req.body.LETTER_DATE = helper.convertDateTimeToMysqlFormat(req.body.LETTER_DATE)
-		connection.query(`INSERT INTO ${process.env.LETTER_RECORD_TBL} SET ?`, letterRecordData, function(err, results, fields) {
+		connection.query(`INSERT INTO ${process.env.LETTER_RECORD_TBL} SET ?`, letterRecordData, (err, results, fields) => {
 			if (err) {
 				if(err.code === 'ER_DUP_ENTRY') {
 					return res.status(400).json({message : `This registration number (${req.body.LETTER_REG_NO}) already exists. Kindly give a new registration number.`, saved : false})
@@ -63,8 +63,13 @@ letters.put('/updateRecord/:id',
 		check('id').not().isEmpty().withMessage('No record id was sent')
 	],
 	(req, res) => {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
+
 		req.body.LETTER_DATE = helper.convertDateTimeToMysqlFormat(req.body.LETTER_DATE)
-		connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET DEPARTMENT_NAME = ?, ASSIGNED_OFFICER = ?, LETTER_TYPE = ?, LETTER_TAG = ?, LETTER_ADDRESS = ?, LETTER_SUBJECT = ?, LETTER_REG_NO = ?, LETTER_DATE = ?, LETTER_STATUS = ?, REMARK = ? WHERE ID = ?`, [req.body.DEPARTMENT_NAME, req.body.ASSIGNED_OFFICER, req.body.LETTER_TYPE, req.body.LETTER_TAG, req.body.LETTER_ADDRESS, req.body.LETTER_SUBJECT, req.body.LETTER_REG_NO, req.body.LETTER_DATE, req.body.LETTER_STATUS, req.body.REMARK, req.params.id], function(err, results, fields) {
+		connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET DEPARTMENT_NAME = ?, ASSIGNED_OFFICER = ?, LETTER_TYPE = ?, LETTER_TAG = ?, LETTER_ADDRESS = ?, LETTER_SUBJECT = ?, LETTER_REG_NO = ?, LETTER_DATE = ?, LETTER_STATUS = ?, REMARK = ? WHERE ID = ?`, [req.body.DEPARTMENT_NAME, req.body.ASSIGNED_OFFICER, req.body.LETTER_TYPE, req.body.LETTER_TAG, req.body.LETTER_ADDRESS, req.body.LETTER_SUBJECT, req.body.LETTER_REG_NO, req.body.LETTER_DATE, req.body.LETTER_STATUS, req.body.REMARK, req.params.id], (err, results, fields) => {
 			if (err) {
 				return res.status(400).json({message : err, saved : false})
 			}
@@ -94,7 +99,7 @@ letters.put('/updateRecord/:id',
 	  		'TYPE' : helper.getDepartmentTypeFromCode(req.body.DEPARTMENT_CODE)
 	  	}
 
-	  	connection.query(`INSERT INTO ${process.env.INPUTS_TBL} SET ?`, data, function(err, results, fields) {
+	  	connection.query(`INSERT INTO ${process.env.INPUTS_TBL} SET ?`, data, (err, results, fields) => {
 	  		if (err) {
 	  			if(err.code === 'ER_DUP_ENTRY') {
 					return res.status(400).json({message : `This setting (${req.body.SETTING_NAME}) already exists.`, saved : false})
@@ -110,8 +115,8 @@ letters.put('/updateRecord/:id',
  *	type: GET
  */
 
-letters.get('/getLetterBoardData', function(req, res) {
-	connection.query(`SELECT COUNT(*) AS RECEIVED, COUNT(CASE WHEN LETTER_STATUS = 1 THEN 1 END) AS INCOMING, COUNT(CASE WHEN LETTER_STATUS = 2 THEN 1 END) AS OUTGOING FROM ${process.env.LETTER_RECORD_TBL}`, function(err, results, fields) {
+letters.get('/getLetterBoardData', (req, res) => {
+	connection.query(`SELECT COUNT(*) AS RECEIVED, COUNT(CASE WHEN LETTER_STATUS = 1 THEN 1 END) AS INCOMING, COUNT(CASE WHEN LETTER_STATUS = 2 THEN 1 END) AS OUTGOING FROM ${process.env.LETTER_RECORD_TBL}`, (err, results, fields) => {
 		if (err) { return res.status(400).json({data: [], message : err, success : false}) }
 		res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
 	})
@@ -121,7 +126,7 @@ letters.get('/getLetterBoardData', function(req, res) {
  *	type: GET
 */
 
-letters.get('/getInputFieldsData', function(req, res) {
+letters.get('/getInputFieldsData', (req, res) => {
 	var inputFieldData = {}
 	connection.query(`SELECT NAME, CODE FROM ${process.env.INPUTS_TBL} WHERE STATUS = ? AND TYPE = ?`, [1, 'DEPARTMENT_NAME'], (err, results, fields) => {
 		if (err) { return res.status(400).json({data: [], message : err, success : false}) }
@@ -150,8 +155,8 @@ letters.get('/getInputFieldsData', function(req, res) {
  *	type: GET
  */
 
-letters.get('/getCountOfAllLetters', function(req, res) {
-	connection.query(`SELECT COUNT(*) as count FROM ${process.env.LETTER_RECORD_TBL}`, function(err, results, fields) {
+letters.get('/getCountOfAllLetters', (req, res) => {
+	connection.query(`SELECT COUNT(*) as count FROM ${process.env.LETTER_RECORD_TBL}`, (err, results, fields) => {
 		if (err) {
 			return res.status(400).json({data: [], message : err, success : false})
 		}
@@ -168,7 +173,7 @@ letters.get('/getRecords',
 		check('page').not().isEmpty().withMessage('No page number was sent'),
 		check('limit').not().isEmpty().withMessage('No limit was sent')
 	],
-	function(req, res) {
+	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
@@ -186,11 +191,11 @@ letters.get('/getRecords',
 			dataQuery = `SELECT * FROM ${process.env.LETTER_RECORD_TBL} ORDER BY ${helper.getDbFieldCodeFromName(req.query.sortField)} ${_.upperCase(req.query.orderBy)} LIMIT ${offset}, ${limit}`
 		}
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL}`, function(err, results, fields) {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL}`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(dataQuery, function(err, results, fields) {
+			connection.query(dataQuery, (err, results, fields) => {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
@@ -211,7 +216,7 @@ letters.post('/getSearchResults',
 		check('page').not().isEmpty().withMessage('No page number was sent'),
 		check('limit').not().isEmpty().withMessage('No limit was sent')
 	],
-	function(req, res) {
+	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
@@ -225,11 +230,11 @@ letters.post('/getSearchResults',
 		let totalCount = 0
 		let results = ''
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} WHERE LETTER_REG_NO LIKE '%${query}%'`, function(err, results, fields) {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} WHERE LETTER_REG_NO LIKE '%${query}%'`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE LETTER_REG_NO LIKE '%${query}%' LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+			connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE LETTER_REG_NO LIKE '%${query}%' LIMIT ${offset}, ${limit}`, (err, results, fields) => {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
@@ -250,7 +255,7 @@ letters.post('/getFilteredData',
 		check('limit').not().isEmpty().withMessage('No limit was sent'),
 		check('sortFilters').not().isEmpty().withMessage('No filter data was sent')
 	],
-	function(req, res) {
+	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
@@ -287,11 +292,11 @@ letters.post('/getFilteredData',
 			}
 		}
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria}`, function(err, results, fields) {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria}`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria} LIMIT ${offset}, ${limit}`, function(err, results, fields) {
+			connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria} LIMIT ${offset}, ${limit}`, (err, results, fields) => {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
@@ -311,7 +316,7 @@ letters.get('/getDataBasedOnSelectedMonth',
  		check('month').not().isEmpty().withMessage('Please select a month'),
  		check('year').not().isEmpty().withMessage('Please select an year')
  	],
- 	function(req, res) {
+ 	(req, res) => {
  		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
@@ -320,7 +325,7 @@ letters.get('/getDataBasedOnSelectedMonth',
 		const month = req.query.month
 		const year = req.query.year
 
-		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], function(err, results, fields) {
+		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 
 			// send response
@@ -338,7 +343,7 @@ letters.get('/getDataBasedOnSelectedDuration',
   		check('startDate').not().isEmpty().withMessage('Please select a to date'),
   		check('endDate').not().isEmpty().withMessage('Please select a from date')
   	],
-  	function(req, res) {
+  	(req, res) => {
   		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
@@ -348,7 +353,7 @@ letters.get('/getDataBasedOnSelectedDuration',
  		startDate = helper.convertTimestampToUnixTimestamp(startDate)
  		endDate = helper.convertTimestampToUnixTimestamp(endDate)
 
- 		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, function(err, results, fields) {
+ 		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, (err, results, fields) => {
  			if (err) return res.status(400).json({data: [], message : err, success : false})
 
  			// send response		
@@ -365,7 +370,7 @@ letters.post('/getDataBasedOnSelectedTags',
 	[
 		check('selectedTags').not().isEmpty().withMessage('No data was sent')
 	],
-	function(req, res) {
+	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array(), saved : false})
@@ -396,7 +401,7 @@ letters.post('/getDataBasedOnSelectedTags',
 			}
 		}
 
-		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria}`, function(err, results, fields) {
+		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria}`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 
 			// send response
@@ -413,7 +418,6 @@ letters.post('/upload', (req, res) => {
 	let uploadFile = req.files.file
 	const { id } = req.body
 	const fileExtension = path.extname(req.files.file.name)
-	console.log('fileExtension', fileExtension);
 
 	if(req.files.file.data.length > helper.getFileUploadsizeLimit()) {
 		return res.status(400).json({message : 'File size limit exceeded', success : false})
@@ -423,10 +427,10 @@ letters.post('/upload', (req, res) => {
 		return res.status(400).json({message : 'Invalid extension file uploaded', success : false})
 	}
 
-	uploadFile.mv(`${__dirname}/../../upload/letters/${id}`, function(err) {
+	uploadFile.mv(`${__dirname}/../../upload/letters/${id}`, (err) => {
     	if (err) { return res.status(400).json({message : 'Error uploading file', success : false}) }
 
-	  	connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET LETTER_FILE = ?, LETTER_FILE_EXT = ? WHERE ID = ?`, [id, fileExtension, id], function(err, results, fields) {
+	  	connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET LETTER_FILE = ?, LETTER_FILE_EXT = ? WHERE ID = ?`, [id, fileExtension, id], (err, results, fields) => {
 	  		if (err) { return res.status(400).json({message : 'Error saving file path to db', success : false}) }
 	  	})
     	return res.status(200).json({message : 'Letter uploaded successfully', success : true})
@@ -442,10 +446,13 @@ letters.post('/downloadAttachment',
 		check('letterId').not().isEmpty().withMessage('No id was sent')
 	],
 	(req, res) => {
-		const { letterId } = req.body
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+		    return res.status(400).json({message: errors.array(), saved : false})
+	  	}
 
-		connection.query(`SELECT LETTER_FILE_EXT FROM ${process.env.LETTER_RECORD_TBL} WHERE ID = ?`, [letterId], function(err, results) {
-			console.log('results', results);
+		const { letterId } = req.body
+		connection.query(`SELECT LETTER_FILE_EXT FROM ${process.env.LETTER_RECORD_TBL} WHERE ID = ?`, [letterId], (err, results) => {
 			if (err) { return res.status(400).json({message : 'No file found', success : false}) }
 			
 			const attachmentFile = `${__dirname}/../../upload/letters/${letterId}`
