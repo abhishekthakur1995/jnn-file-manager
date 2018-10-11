@@ -39,7 +39,7 @@ class ResetPassword extends React.Component {
 		ResetPasswordService.resetPassword(data).then((res) => {
 			Alert.success(res.data.message, {
 				...config.alertGlobalSettings,
-				timeout: 1000,
+				timeout: 3000,
 				onClose: function() {
 					this.logoutUser()
 				}.bind(this)

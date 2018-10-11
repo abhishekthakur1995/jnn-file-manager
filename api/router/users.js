@@ -56,7 +56,7 @@ users.post('/login',
 
 		const email = req.body.email;
 	    const password = req.body.password;
-	    var token = '';
+	    let token = '';
 		connection.query(`SELECT * FROM ${process.env.USER_TBL} WHERE EMAIL = ? AND STATUS = 1`, [email], (err, results, fields) => {
 			if (err) { return res.status(400).json({message : err, token : token, success : false}) }
 
@@ -67,13 +67,13 @@ users.post('/login',
 				 			expiresIn: parseInt(process.env.TOKEN_EXPIRY_TIME)
 						})
 						req.session[token] = results[0].ROLE
-						return res.status(200).json({message : 'User verified', 'userRole': results[0].ROLE , token: token, validUpto : Date.now() + parseInt(process.env.TOKEN_EXPIRY_TIME), success : true})
+						return res.status(200).json({message : 'Login Successful. You will be redirected to the dashboard.', 'userRole': results[0].ROLE , token: token, validUpto : Date.now() + parseInt(process.env.TOKEN_EXPIRY_TIME), success : true})
 					} else {
-						return res.status(200).json({message : 'Email or Password does not match', token : token, success : false})
+						return res.status(400).json({message : 'Email or Password is incorrect', success : false})
 					}
 				})
 			} else {
-				res.status(200).json({message : 'Email does not exists', token : token, success : false})
+				res.status(400).json({message : 'Email does not exists', success : false})
 			}
 		})
 	}
