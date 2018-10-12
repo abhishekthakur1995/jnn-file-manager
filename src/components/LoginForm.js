@@ -29,7 +29,6 @@ class LoginForm extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
-		this.redirectUserToDashboard = this.redirectUserToDashboard.bind(this)
 	}
 
 	UNSAFE_componentWillMount() {
@@ -59,22 +58,12 @@ class LoginForm extends React.Component {
 			if (!_.isEmpty(res.data.token)) {
 			    userAuth.authenticate(res.data.token, res.data.validUpto, () => {
 			    	localStorage.setItem('userRole', res.data.userRole)
-			    	Alert.success(res.data.message, {
-			    		...config.alertGlobalSettings,
-			    		timeout: 3000,
-			    		onClose: function() {
-			    			this.redirectUserToDashboard()
-			    		}.bind(this)
-			    	})
+			    	this.setState({ redirectToReferrer: true })
 			    })
         	}
 		}).catch(err => {
 			Alert.error(err.response.data.message, config.alertGlobalSettings)
 		})
-  	}
-
-  	redirectUserToDashboard() {
-  		this.setState({ redirectToReferrer: true })
   	}
 
 	render() {
