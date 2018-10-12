@@ -45,8 +45,8 @@ export const InfoBlock = (props) => {
                 <Grid componentClass="span" bsClass="info-box-icon bg-green">
                     <img title={props.title} src={props.img}></img>
                 </Grid>
-                <Grid bsClass="info-box-content">
-                    <Grid componentClass="span" bsClass="info-box-text">{props.title}</Grid>
+                <Grid bsClass="info-box-content green-top">
+                    <Grid componentClass="span" bsClass="info-box-text fs20">{props.title}</Grid>
                     <Grid componentClass="span" bsClass="info-box-number">{props.value}</Grid>
                 </Grid>
             </Grid>
