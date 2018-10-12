@@ -15,9 +15,7 @@ class ServicePanel extends React.Component {
 		return (
 			<Panel bsStyle="primary" id="service-panel">
 	    		<Panel.Heading>
-	    			<Panel.Title componentClass="h3">
-	    				<img className="margin-right-1x" src={dashboardIcon} /> Service Dashboard
-	    			</Panel.Title>
+	    			<Panel.Title componentClass="h3" className="text-align-center fs33">Service Dashboard</Panel.Title>
 	    		</Panel.Heading>
 			    <Panel.Body>
 			    		<Col xs={6}>
