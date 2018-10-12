@@ -53,6 +53,13 @@ class FilterComponent extends React.Component {
 				...prevState.queryField,
 				...newState
 			}))
+
+			if (searchFilters) {
+				this.setState({
+					searchTerm: searchFilters.searchTerm,
+					queryField: searchFilters.queryField
+				})
+			}
 		}
 	}
 
