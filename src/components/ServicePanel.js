@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Panel, Row, Col } from 'react-bootstrap'
+import { Panel, Col } from 'react-bootstrap'
 import { GetModuleLogo } from './uiComponents/CommonComponent'
-import dashboardIcon from './../../public/img/dashboard.png'
 import fileRecordModuleLogo from './../../public/img/FileRecord.png'
 import letterTrackingModuleLogo from './../../public/img/LetterTracking.png'
 
