@@ -56,3 +56,7 @@ const PORT = process.env.PORT || 8080      //8080 for openshift
 server.listen(PORT, () => {
 	console.info('Express listening on port', PORT)
 })
+
+process.on('unhandledRejection', (reason, promise) => {
+	console.log('Unhandled Rejection at:', reason.stack || reason)
+})
