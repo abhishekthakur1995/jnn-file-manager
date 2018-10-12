@@ -617,7 +617,13 @@ ul {
         outline: none;
     }
     img {
-        width: 69%;
+        width: 60%;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        
+        &:hover {
+            background-color: #eeeeee;
+        }
     }
 
     .logo-box {

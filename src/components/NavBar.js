@@ -7,7 +7,7 @@ import { NavBarService } from './services/ApiServices'
 import { Glyphicon, NavDropdown, MenuItem, Grid, ListGroup } from 'react-bootstrap'
 import '../../public/scss/style.scss'
 import '../../public/scss/generic.scss'
-import logo from '../../public/img/jnnLogo.jpg'
+import logo from '../../public/img/jnnLogoTransparent.png'
 
 class NavBar extends React.Component {
     constructor(props) {
