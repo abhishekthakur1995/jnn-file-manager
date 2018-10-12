@@ -31,13 +31,10 @@ class NavBar extends React.Component {
                     <div className="navbar-collapse clearfix collapse no-height" aria-expanded="false">
                         <div className="logo-box">
                             <div className="logo">
-                                <a href="#">
+                                <Link to="/servicePanel">
                                     <img src={logo} alt="logo" />
-                                </a>
+                                </Link>
                             </div>
-                        </div>
-                        <div className="navbar-header">
-                            <Link to="/servicePanel" className="bold navbar-brand">JNN</Link>
                         </div>
                         <ul className="nav navbar-nav navbar-right">
                             {userAuth.isUserAuthenticated() &&
