@@ -38,7 +38,7 @@ class NavBar extends React.Component {
                         </Grid>
                         <ListGroup componentClass="ul" bsClass="nav navbar-nav navbar-right">
                             {userAuth.isUserAuthenticated() &&
-                                <NavDropdown eventKey={3} title={localStorage.getItem('userRole')} id="basic-nav-dropdown">
+                                <NavDropdown eventKey={3} title={`Welcome, ${localStorage.getItem('userRole')}`} id="basic-nav-dropdown">
                                     <MenuItem eventKey={3.1} componentClass={Link} href="/resetPassword" to="/resetPassword">
                                         <Glyphicon glyph="refresh"></Glyphicon> Reset Password
                                     </MenuItem>
