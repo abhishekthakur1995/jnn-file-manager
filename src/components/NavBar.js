@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Common } from './helpers/CommonHelper'
 import { userAuth } from './services/AuthService'
 import { NavBarService } from './services/ApiServices'
-import { Navbar, NavItem, Nav, Glyphicon, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Navbar, NavItem, Nav, Glyphicon, NavDropdown, MenuItem, Grid, ListGroup } from 'react-bootstrap'
 import '../../public/scss/style.scss'
 import '../../public/scss/generic.scss'
 import logo from '../../public/img/jnnLogoSm.jpg'
@@ -26,17 +26,17 @@ class NavBar extends React.Component {
 
     render() {
     	return (
-    		<header id="header">
-                <div className="container">
-                    <div className="navbar-collapse clearfix collapse no-height" aria-expanded="false">
-                        <div className="logo-box">
-                            <div className="logo">
+    		<Grid componentClass="header" id="header" bsClass="custom-navbar">
+                <Grid bsClass="container">
+                    <Grid bsClass="navbar-collapse clearfix collapse no-height" aria-expanded="false">
+                        <Grid bsClass="logo-box">
+                            <Grid bsClass="logo">
                                 <Link to="/servicePanel">
                                     <img src={logo} alt="logo" />
                                 </Link>
-                            </div>
-                        </div>
-                        <ul className="nav navbar-nav navbar-right">
+                            </Grid>
+                        </Grid>
+                        <ListGroup componentClass="ul" bsClass="nav navbar-nav navbar-right">
                             {userAuth.isUserAuthenticated() &&
                                 <NavDropdown eventKey={3} title={localStorage.getItem('userRole')} id="basic-nav-dropdown">
                                     <MenuItem eventKey={3.1} componentClass={Link} href="/resetPassword" to="/resetPassword">
@@ -47,10 +47,10 @@ class NavBar extends React.Component {
                                     </MenuItem>
                                 </NavDropdown>
                             }
-                        </ul>
-                    </div>
-                </div>
-            </header>
+                        </ListGroup>
+                    </Grid>
+                </Grid>
+            </Grid>
 		)
     }
 }
