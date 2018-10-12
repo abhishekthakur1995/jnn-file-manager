@@ -7,7 +7,7 @@ import { NavBarService } from './services/ApiServices'
 import { Glyphicon, NavDropdown, MenuItem, Grid, ListGroup } from 'react-bootstrap'
 import '../../public/scss/style.scss'
 import '../../public/scss/generic.scss'
-import logo from '../../public/img/jnnLogoSm.jpg'
+import logo from '../../public/img/jnnLogo.jpg'
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class NavBar extends React.Component {
     render() {
     	return (
     		<Grid componentClass="header" id="header" bsClass="custom-navbar">
-                <Grid bsClass="container">
+                <Grid bsClass="container-fluid">
                     <Grid bsClass="navbar-collapse clearfix collapse no-height" aria-expanded="false">
                         <Grid bsClass="logo-box">
                             <Grid bsClass="logo">
