@@ -382,16 +382,19 @@ ImportSummary.propTypes = {
 
 export const GetModuleLogo = (props) => {
     return (
-        <Grid bsClass="col-md-4 col-sm-6" title={props.title}>
+        <Col xs={12} title={props.title}>
             <Grid bsClass="thumbnail margin-bottom-0x">
                 <Link to={props.moduleUrl}>
-                    <img src={props.logo} alt="Lights" className="width-10x" />
+                    <img src={props.logo} alt="Lights" className="width-10x image" />
+                    <Grid bsClass="middle">
+                        <Grid bsClass="text">{props.title}</Grid>
+                      </Grid>
                     <Grid bsClass="caption">
                         <p className="text-align-center bold">{props.title}</p>
                     </Grid>
                 </Link>
             </Grid>
-        </Grid>
+        </Col>
     )
 }
 

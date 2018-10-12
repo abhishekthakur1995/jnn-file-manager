@@ -620,7 +620,7 @@ ul {
         width: 60%;
         padding-top: 4px;
         padding-bottom: 4px;
-        
+
         &:hover {
             background-color: #eeeeee;
         }
@@ -670,5 +670,43 @@ ul {
         background-color: #fff !important;
         border-top: 1px solid #d7d7d7;
         padding: 25px;
+    }
+}
+
+#service-panel {
+    margin: 10px 15px 0px 10px;
+    .image {
+      opacity: 1;
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: .5s ease;
+      backface-visibility: hidden;
+    }
+
+    .middle {
+      transition: .5s ease;
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .thumbnail:hover .image {
+      opacity: 0.3;
+    }
+
+    .thumbnail:hover .middle {
+      opacity: 1;
+    }
+
+    .text {
+      background-color: #6da252;
+      color: white;
+      font-size: 16px;
+      padding: 16px 32px;
     }
 }
