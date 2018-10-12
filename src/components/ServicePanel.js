@@ -21,7 +21,7 @@ class ServicePanel extends React.Component {
 	    		</Panel.Heading>
 			    <Panel.Body>
 			    		<Col xs={6}>
-	    					<GetModuleLogo title="File Record Manger" logo={fileRecordModuleLogo} moduleUrl={`${this.props.match.url}/fileManager`} />
+	    					<GetModuleLogo title="File Record Manager" logo={fileRecordModuleLogo} moduleUrl={`${this.props.match.url}/fileManager`} />
 	    				</Col>
 
 	    				<Col xs={6}>
