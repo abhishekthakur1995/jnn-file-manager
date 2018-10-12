@@ -1,3 +1,5 @@
+$bigBoundaryClr: #31708f;
+
 .wrapper {
     display: flex;
     align-items: stretch;
@@ -658,7 +660,7 @@ ul {
         width: 75%;
     }
     .login-title {
-        background: #31708f;
+        background: $bigBoundaryClr;
         height: 50px;
         color: #fff;
     }
@@ -674,7 +676,12 @@ ul {
 }
 
 #service-panel {
-    margin: 10px 15px 0px 10px;
+    margin: 0;
+    border-color: #fff;
+    .panel-heading {
+        background-color: $bigBoundaryClr;
+        border-color: $bigBoundaryClr;
+    }
     .image {
       opacity: 1;
       display: block;
