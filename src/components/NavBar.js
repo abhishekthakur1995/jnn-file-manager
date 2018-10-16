@@ -36,8 +36,13 @@ class NavBar extends React.Component {
                                 </Link>
                             </Grid>
                         </Grid>
-                        <ListGroup componentClass="ul" bsClass="nav navbar-nav navbar-right">
-                            {userAuth.isUserAuthenticated() &&
+                        {userAuth.isUserAuthenticated() &&
+                            <ListGroup componentClass="ul" bsClass="nav navbar-nav navbar-right">
+                                <li>
+                                    <Link to="/servicePanel">Service Panel
+                                    </Link>
+                                </li>
+
                                 <NavDropdown eventKey={3} title={`Welcome, ${localStorage.getItem('userRole')}`} id="basic-nav-dropdown">
                                     <MenuItem eventKey={3.1} componentClass={Link} href="/resetPassword" to="/resetPassword">
                                         <Glyphicon glyph="refresh"></Glyphicon> Reset Password
@@ -46,8 +51,8 @@ class NavBar extends React.Component {
                                         <Glyphicon glyph="log-out margin-right-1x" />Logout
                                     </MenuItem>
                                 </NavDropdown>
-                            }
-                        </ListGroup>
+                            </ListGroup>
+                        }
                     </Grid>
                 </Grid>
             </Grid>
