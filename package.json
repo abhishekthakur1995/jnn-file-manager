@@ -56,6 +56,7 @@
         "body-parser": "^1.18.3",
         "chart.js": "^2.7.2",
         "connect-redis": "^3.3.3",
+        "copy-webpack-plugin": "^4.5.3",
         "cors": "^2.8.4",
         "dotenv": "^6.0.0",
         "express": "^4.16.3",

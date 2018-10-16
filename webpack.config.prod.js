@@ -4,9 +4,13 @@ const AppCachePlugin = require('appcache-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = merge(common, {
 	plugins: [
+    	new CopyWebpackPlugin([{ 
+    		from: './public/favicon.ico'
+	  	}]),
 		new BundleAnalyzerPlugin({
 			analyzerMode: 'server'
 		}),
