@@ -53,7 +53,7 @@ CREATE TABLE `tbl_input_fields` (
 	`STATUS` tinyint(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT 1,
 	`CREATED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP,
 	`MODIFIED` datetime COLLATE utf8_unicode_ci DEFAULT CURRENT_TIMESTAMP
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 // FILE STATUS LEGEND
 // 0 = PENDING
