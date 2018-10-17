@@ -299,7 +299,7 @@ class ExportLetterData extends React.Component {
 											<tr align="left" valign="middle">
 												<td className="data-left-aligned" width="20%">
 													<Radio
-														name="tagsType"
+														name="periodType"
 														inline={true}
 														onChange={() => { this.handleRadioChange('byTags') }} >By Tags
 													</Radio>
