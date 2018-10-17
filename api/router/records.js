@@ -138,6 +138,7 @@ records.post('/getFilteredData',
 		for (var key in sortFilters) {
 			if (!_.isEmpty(sortFilters[key])) {
 				sortFiltersData = sortFilters[key].map(val => `'${helper.getFileStatusCodeFromName(val)}'`)
+				if(!_.isEmpty(searchFilters.searchTerm)) sortCriteria = 'AND '
 				sortCriteria += `FILE_STATUS IN (${sortFiltersData})`
 			}
 		}
