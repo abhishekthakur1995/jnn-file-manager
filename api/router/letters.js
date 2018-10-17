@@ -28,7 +28,7 @@ letters.post('/addNewLetterRecord',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 		const letterRecordData = req.body
 		req.body.LETTER_DATE = helper.convertDateTimeToMysqlFormat(req.body.LETTER_DATE)
@@ -65,7 +65,7 @@ letters.put('/updateRecord/:id',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		req.body.LETTER_DATE = helper.convertDateTimeToMysqlFormat(req.body.LETTER_DATE)
@@ -90,7 +90,7 @@ letters.put('/updateRecord/:id',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 	  	const data = {
@@ -176,7 +176,7 @@ letters.get('/getRecords',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		const page = req.query.page
@@ -219,7 +219,7 @@ letters.post('/getSearchResults',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		const query = req.body.searchTerm
@@ -258,7 +258,7 @@ letters.post('/getFilteredData',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		const page = req.body.page
@@ -319,7 +319,7 @@ letters.get('/getDataBasedOnSelectedMonth',
  	(req, res) => {
  		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		const month = req.query.month
@@ -346,7 +346,7 @@ letters.get('/getDataBasedOnSelectedDuration',
   	(req, res) => {
   		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
  		let { startDate, endDate } = req.query
@@ -373,7 +373,7 @@ letters.post('/getDataBasedOnSelectedTags',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 	  	let whereCriteria = ''
@@ -448,7 +448,7 @@ letters.post('/downloadAttachment',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		const { letterId } = req.body

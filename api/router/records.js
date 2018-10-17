@@ -27,7 +27,7 @@ records.post('/addNewRecord',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg[0].msg, saved : false})
 	  	}
 		const fileRecordData = {
 	        "APPLICANT_NAME": req.body.applicant_name,
@@ -77,7 +77,7 @@ records.get('/getRecords',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg[0].msg, saved : false})
 	  	}
 
 		const page = req.query.page
@@ -120,7 +120,7 @@ records.post('/getFilteredData',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg[0].msg, saved : false})
 	  	}
 	  	
 		const page = req.body.page
@@ -180,7 +180,7 @@ records.post('/getSearchResults',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		const query = req.body.searchTerm
@@ -227,7 +227,7 @@ records.put('/updateRecord/:id',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET APPLICANT_NAME = ?, APPLICANT_TYPE = ?, APPLICANT_ADDRESS = ?, APPLICANT_CONTACT = ?, BUILDING_NAME = ?, BUILDING_ADDRESS = ?, BUILDING_AREA = ?, FILE_NUMBER = ?, REMARK = ? WHERE ID = ?`, [req.body.applicant_name, req.body.applicant_type, req.body.applicant_address, req.body.applicant_contact, req.body.building_name, req.body.building_address, req.body.building_area, req.body.file_number, req.body.remark, req.params.id], (err, results, fields) => {
@@ -251,7 +251,7 @@ records.put('/updateRecordStatus/:id',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		const id = req.params.id
@@ -277,7 +277,7 @@ records.put('/updateMultipleRecordStatus',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 		const markedRecords = req.body.markedRecords
 		const status = req.body.status
@@ -301,7 +301,7 @@ records.delete('/deleteRecord/:id',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		connection.query(`DELETE FROM ${process.env.FILE_RECORD_TBL} WHERE ID = ${req.params.id}`, (err, results, fields) => {
@@ -338,7 +338,7 @@ records.get('/getDataBasedOnSelectedMonth',
  	(req, res) => {
  		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		const month = req.query.month
@@ -365,7 +365,7 @@ records.get('/getDataBasedOnSelectedDuration',
   	(req, res) => {
   		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 	  	
  		let { startDate, endDate } = req.query
@@ -411,7 +411,7 @@ records.post('/importDataToDB',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array(), saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		var workbook = excel.readFileSync(`${__dirname}/../../upload/${req.body.fileName}`)
