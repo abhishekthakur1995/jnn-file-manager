@@ -13,7 +13,6 @@ dbConnection.connect(function(err) {
         console.error('error connecting: ' + err.stack)
         return
     }
-    console.log(dbConnection)
     console.log('connected as id ' + dbConnection.threadId)
 })
 
