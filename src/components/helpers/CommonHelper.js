@@ -24,6 +24,19 @@ export const Common = {
 		localStorage.removeItem('tokenValidUpto')
 		localStorage.removeItem('searchFilters')
 		localStorage.removeItem('sortFilters')
+	},
+	checkIfSortFilterExists(array) {
+		for (let key in array) {
+			if (array[key].length > 0) return true
+		}
+		return false
+	},
+	checkIfSearchFilterExists(obj) {
+		for (var key in obj) {
+        if (obj[key] !== null && obj[key] != "")
+            return true
+	    }
+	    return false
 	}
 }
 

@@ -3,7 +3,7 @@ import config from 'config'
 import _ from 'underscore'
 import SingleLetter from './SingleLetter'
 import { Grid, Table } from 'react-bootstrap'
-import { LetterTracking } from './../helpers/CommonHelper'
+import { LetterTracking, Common } from './../helpers/CommonHelper'
 import { LettersService } from './../services/ApiServices'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import FilterComponent from './../uiComponents/FilterComponent'
@@ -143,7 +143,7 @@ class LettersList extends React.Component {
 	}
 
 	applyFilter(sortFilters, searchFilters, data) {
-		if (!_.isEmpty(sortFilters) || !_.isEmpty(searchFilters)) {
+		if (Common.checkIfSortFilterExists(sortFilters) || Common.checkIfSearchFilterExists(searchFilters)) {
 			this.setState({ showLoading: true })
 			const page = data && data.currentPage || this.state.currentPage
 			const filterData = { page, limit: this.appliedPageSize, sortFilters, searchFilters }

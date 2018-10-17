@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'underscore'
 import config from 'config'
 import Record from './Record'
+import { Common } from './helpers/CommonHelper'
 import FilterComponent from './uiComponents/FilterComponent'
 import PaginationComponent from './uiComponents/PaginationComponent'
 import { RecordsService } from './services/ApiServices'
@@ -181,7 +182,7 @@ class RecordList extends React.Component {
 	}
 
 	applyFilter(sortFilters, searchFilters, data) {
-		if (!_.isEmpty(sortFilters) || !_.isEmpty(searchFilters)) {
+		if (Common.checkIfSortFilterExists(sortFilters) || Common.checkIfSearchFilterExists(searchFilters)) {
 			this.setState({ showLoading: true })
 			const page = data && data.currentPage || this.state.currentPage
 			const filterData = { page, limit: this.appliedPageSize, sortFilters, searchFilters }
