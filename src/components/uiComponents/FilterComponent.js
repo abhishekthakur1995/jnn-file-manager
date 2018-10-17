@@ -9,7 +9,7 @@ class FilterComponent extends React.Component {
 		super(props)
 
 		this.state = {
-			formStatus : {
+			fileStatus : {
 				approved : false,
 				rejected : false,
 				pending  : false,
@@ -64,15 +64,15 @@ class FilterComponent extends React.Component {
 	}
 
 	handleCheckBoxClick(action, stateList) {
-		let { formStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer } = this.state
+		let { fileStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer } = this.state
 		stateList[action] = !stateList[action]
-		this.setState({ formStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer })
+		this.setState({ fileStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer })
 	}
 
 	handleFilterParams() {
-		const { formStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer } = this.state
+		const { fileStatus, letterStatus, departmentName, letterType, letterTag, assignedOfficer } = this.state
 		const sortFilters = {}
-		sortFilters['formStatus'] = _.keys(_.pick(formStatus, (status) =>  status === true ))
+		sortFilters['fileStatus'] = _.keys(_.pick(fileStatus, (status) =>  status === true ))
 		sortFilters['letterStatus'] = _.keys(_.pick(letterStatus, (status) =>  status === true ))
 		sortFilters['letterTag'] = _.keys(_.pick(letterTag, (status) =>  status === true ))
 		sortFilters['letterType'] = _.keys(_.pick(letterType, (status) =>  status === true ))
@@ -87,10 +87,10 @@ class FilterComponent extends React.Component {
 	}
 
 	resetAllFilters() {
-		let formStatus = this.state.formStatus
-		formStatus = _.mapObject(formStatus, () => false)
+		let fileStatus = this.state.fileStatus
+		fileStatus = _.mapObject(fileStatus, () => false)
 		this.setState({
-			formStatus,
+			fileStatus,
 			searchTerm: '',
 			queryField: ''
 		})
@@ -130,8 +130,8 @@ class FilterComponent extends React.Component {
 						                            			<Checkbox
 						                            				name={code}
 						                            				key={code}
-						                            				checked={this.state.formStatus.code}
-						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.formStatus) }}>{name}</Checkbox>
+						                            				checked={this.state.fileStatus[code] || false}
+						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.fileStatus) }}>{name}</Checkbox>
 					                            			)})
 					                            		}
 								                	</li>
@@ -150,7 +150,7 @@ class FilterComponent extends React.Component {
 							                            			<Checkbox
 							                            				name={code}
 							                            				key={code}
-							                            				checked={this.state.letterStatus.code}
+							                            				checked={this.state.letterStatus[code] || false}
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterStatus) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
@@ -167,7 +167,7 @@ class FilterComponent extends React.Component {
 							                            			<Checkbox
 							                            				name={code}
 							                            				key={code}
-							                            				checked={this.state.departmentName.code}
+							                            				checked={this.state.departmentName[code] || false}
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.departmentName) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
@@ -184,7 +184,7 @@ class FilterComponent extends React.Component {
 							                            			<Checkbox
 							                            				name={code}
 							                            				key={code}
-							                            				checked={this.state.letterType.code}
+							                            				checked={this.state.letterType[code] || false}
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterType) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
@@ -201,7 +201,7 @@ class FilterComponent extends React.Component {
 							                            			<Checkbox
 							                            				name={code}
 							                            				key={code}
-							                            				checked={this.state.letterTag.code}
+							                            				checked={this.state.letterTag[code] || false}
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterTag) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
@@ -218,7 +218,7 @@ class FilterComponent extends React.Component {
 							                            			<Checkbox
 							                            				name={code}
 							                            				key={code}
-							                            				checked={this.state.assignedOfficer.code}
+							                            				checked={this.state.assignedOfficer[code] || false}
 							                            				onChange={() => { this.handleCheckBoxClick(code,this.state.assignedOfficer) }}>{name}</Checkbox>
 						                            			)})
 						                            		}

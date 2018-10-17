@@ -26,7 +26,7 @@ records.post('/addNewRecord',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array()[0].msg[0].msg, saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 		const fileRecordData = {
 	        "APPLICANT_NAME": req.body.applicant_name,
@@ -76,7 +76,7 @@ records.get('/getRecords',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array()[0].msg[0].msg, saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
 		const page = req.query.page
@@ -119,7 +119,7 @@ records.post('/getFilteredData',
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
-		    return res.status(400).json({message: errors.array()[0].msg[0].msg, saved : false})
+		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 	  	
 		const page = req.body.page
@@ -133,20 +133,17 @@ records.post('/getFilteredData',
 		let searchCriteria = ''
 		let sortCriteria = ''
 		let whereCriteria = ''
+		let sortFiltersData = ''
 
-		sortFilters = sortFilters.map((status) => {
-			return helper.getFileStatusCodeFromName(status)
-		})
+		for (var key in sortFilters) {
+			if (!_.isEmpty(sortFilters[key])) {
+				sortFiltersData = sortFilters[key].map(val => `'${helper.getFileStatusCodeFromName(val)}'`)
+				sortCriteria += `FILE_STATUS IN (${sortFiltersData})`
+			}
+		}
 
 		if(!_.isEmpty(searchFilters.searchTerm)) {
 			searchCriteria = `${helper.getDbFieldCodeFromName(searchFilters.queryField)} LIKE '%${searchFilters.searchTerm}%'`
-		}
-
-		if(!_.isEmpty(sortFilters)) {
-			if(!_.isEmpty(searchFilters.searchTerm)) {
-				sortCriteria = 'AND '
-			}
-			sortCriteria += `FILE_STATUS IN (${sortFilters})`
 		}
 
 		whereCriteria = `WHERE ${searchCriteria} ${sortCriteria}`
