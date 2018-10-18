@@ -119,7 +119,7 @@ records.post('/getFilteredData',
 		  		if(array[key].length > 0) return true
 		  	}
 		  	return false
-		  }).withMessage('Please select a filter criteria')
+		}).withMessage('Please select a filter criteria')
 	],
 	(req, res) => {
 		const errors = validationResult(req)

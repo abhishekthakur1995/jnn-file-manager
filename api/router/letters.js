@@ -253,7 +253,12 @@ letters.post('/getFilteredData',
 	[
 		check('page').not().isEmpty().withMessage('No page number was sent'),
 		check('limit').not().isEmpty().withMessage('No limit was sent'),
-		check('sortFilters').not().isEmpty().withMessage('No filter data was sent')
+		check('sortFilters').custom((array) => {
+		  	for(let key in array) {
+		  		if(array[key].length > 0) return true
+		  	}
+		  	return false
+		}).withMessage('Please select a filter criteria')
 	],
 	(req, res) => {
 		const errors = validationResult(req)
