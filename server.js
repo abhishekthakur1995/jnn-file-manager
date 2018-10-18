@@ -1,14 +1,16 @@
 const express = require('express')
 const server = express()
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const fileUpload = require('express-fileupload')
-const session = require('express-session')
-const redis   = require("redis")
-const redisStore = require('connect-redis')(session)
-const client  = redis.createClient()
-const helmet = require('helmet')
 require('dotenv').config()
+const cors = require('cors')
+const redis = require("redis")
+const csurf = require('csurf')
+const helmet = require('helmet')
+const client  = redis.createClient()
+const bodyParser = require('body-parser')
+const session = require('express-session')
+const fileUpload = require('express-fileupload')
+const redisStore = require('connect-redis')(session)
+
 
 const redisOptions = {
 	host: process.env.REDIS_HOST, 
