@@ -114,7 +114,7 @@ class FilterComponent extends React.Component {
 			<Grid bsClass="filter-advanced">
 				<Grid bsClass="margin-1x">
 					<Row className="show-grid padding-0x margin-0x">
-						<Col sm={12} md={12} lg={12}>
+						<Col className={`${this.props.for === 'fileManager'? 'col-sm-6' : 'col-sm-12'}`}>
 							<Col sm={12} className="pull-left">
 								<Grid bsClass="pull-left margin-1x filter-group col-sm-12 padding-0x">
 									<Grid bsClass="pull-left col-sm-12 columns padding-0x">
