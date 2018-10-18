@@ -12,7 +12,7 @@ const rateLimiter = limiter({
   	total: process.env.ALLOWED_ATTEMPTS,
   	expire: process.env.EXPIRE_TIME,
   	onRateLimited: (req, res, next) => {
-  		res.status(429).json({message: 'To many request sent. Please try after some time'})
+  		res.status(429).json({message: 'Too many request sent. Please try after some time'})
   	}
 })
 
