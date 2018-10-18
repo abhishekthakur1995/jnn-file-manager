@@ -7,6 +7,7 @@ const session = require('express-session')
 const redis   = require("redis")
 const redisStore = require('connect-redis')(session)
 const client  = redis.createClient()
+const helmet = require('helmet')
 require('dotenv').config()
 
 const redisOptions = {
@@ -16,14 +17,26 @@ const redisOptions = {
 	client: client
 }
 
-// USE BODY PARSER 
+server.use(helmet())
+server.use(helmet.contentSecurityPolicy({
+	directives: {
+    	defaultSrc: ["'self'"],
+    	reportUri: '/report-violation'
+  	}
+}))
+server.use(helmet.referrerPolicy({ policy: 'same-origin' }))
+server.use(helmet.frameguard({ action: 'deny' }))
+server.use(helmet.permittedCrossDomainPolicies())
 server.use(session({
+	name: process.env.SESSION_NAME,
 	secret: process.env.SESSION_SECRET,
 	store: new redisStore(redisOptions),
 	resave: false,
   	saveUninitialized: true
 }))
-server.use(bodyParser.json())
+server.use(bodyParser.json({
+	type: ['json', 'application/csp-report']
+}))
 server.use(bodyParser.urlencoded({ extended: false }))
 server.use(fileUpload())
 
