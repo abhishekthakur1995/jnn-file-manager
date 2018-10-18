@@ -4,6 +4,17 @@ const connection = require('../../db/dbConnection')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const { check, validationResult } = require('express-validator/check')
+const client = require('redis').createClient()
+const limiter = require('express-limiter')(users, client)
+
+const rateLimiter = limiter({
+  	lookup: ['connection.remoteAddress'],
+  	total: process.env.ALLOWED_ATTEMPTS,
+  	expire: process.env.EXPIRE_TIME,
+  	onRateLimited: (req, res, next) => {
+  		res.status(429).json({message: 'To many request sent. Please try after some time'})
+  	}
+})
 
 /* 	path: /register
  *	type: POST 
@@ -16,6 +27,7 @@ users.post('/register',
 		check('password').isLength({ min: 8 }).withMessage('Password must be atleast 8 characters in length'),
 		check('role').not().isEmpty().withMessage('Role cannot be empty').trim().escape()
 	],
+	rateLimiter,
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
@@ -52,6 +64,7 @@ users.post('/login',
 		check('email').not().isEmpty().withMessage('Email address cannot be empty. Please enter an email address'),
 		check('password').not().isEmpty().withMessage('Password cannot be empty. Please enter your password')
 	],
+	rateLimiter,
 	(req, res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
@@ -116,6 +129,7 @@ users.post('/resetPassword',
 		check('newPassword').isLength({ min: 8 }).withMessage('New password must be atleast 8 characters in length'),
 		check('confirmNewPassword').not().isEmpty().withMessage('Confirm new password cannot be empty. Please enter your confirm new password')
 	],
+	rateLimiter,
 	(req,res) => {
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
