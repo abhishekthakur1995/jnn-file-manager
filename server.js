@@ -3,14 +3,12 @@ const server = express()
 require('dotenv').config()
 const cors = require('cors')
 const redis = require("redis")
-const csurf = require('csurf')
 const helmet = require('helmet')
 const client  = redis.createClient()
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const fileUpload = require('express-fileupload')
 const redisStore = require('connect-redis')(session)
-
 
 const redisOptions = {
 	host: process.env.REDIS_HOST, 
