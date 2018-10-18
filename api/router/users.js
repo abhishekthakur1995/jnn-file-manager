@@ -1,11 +1,11 @@
 const express = require('express')
 const users = express.Router()
-const connection = require('../../db/dbConnection')
-const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const { check, validationResult } = require('express-validator/check')
+const jwt = require('jsonwebtoken')
 const client = require('redis').createClient()
+const connection = require('../../db/dbConnection')
 const limiter = require('express-limiter')(users, client)
+const { check, validationResult } = require('express-validator/check')
 
 const rateLimiter = limiter({
   	lookup: ['connection.remoteAddress'],

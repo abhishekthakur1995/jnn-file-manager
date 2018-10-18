@@ -1,11 +1,11 @@
 const fs = require('fs')
 const path = require('path')
-const express = require('express')
-const letters = express.Router()
-const connection = require('../../db/dbConnection')
-const helper = require('../helper/Helper.js')
 const _ = require('underscore')
 const moment = require('moment')
+const express = require('express')
+const letters = express.Router()
+const helper = require('../helper/Helper.js')
+const connection = require('../../db/dbConnection')
 const { check, validationResult } = require('express-validator/check')
 
 /* 	path: /addNewLetterRecord

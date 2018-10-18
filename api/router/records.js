@@ -1,11 +1,11 @@
+const fs = require('fs')
+const _ = require('lodash')
+const excel = require('xlsx')
 const express = require('express')
 const records = express.Router()
+const helper = require('../helper/Helper.js')
 const connection = require('../../db/dbConnection')
 const { check, validationResult } = require('express-validator/check')
-const helper = require('../helper/Helper.js')
-const excel = require('xlsx')
-const _ = require('lodash')
-const fs = require('fs')
 
 /* 	path: /addNewRecord
  *	type: POST 
