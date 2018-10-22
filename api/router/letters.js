@@ -9,7 +9,7 @@ const connection = require('../../db/dbConnection')
 const { check, validationResult } = require('express-validator/check')
 
 /* 	path: /addNewLetterRecord
- *	type: POST 
+ *	type: POST
  */
 
 letters.post('/addNewLetterRecord',
@@ -82,7 +82,7 @@ letters.put('/updateRecord/:id',
  *	type: POST
  */
 
- letters.post('/addNewSettings',
+letters.post('/addNewSettings',
 	[
 		check('SETTING_NAME').not().isEmpty().withMessage('Setting name found').trim().escape(),
 		check('DEPARTMENT_CODE').not().isEmpty().withMessage('Setting code found').trim().escape(),
