@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { Breadcrumbs } from 'react-breadcrumbs-dynamic'
 import { CrumbIconItem } from './CustomBreadCrumbsComponent'
 import { Common, FileRecord, LetterTracking } from './../helpers/CommonHelper'
-import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup, Breadcrumb } from 'react-bootstrap'
+import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup, Breadcrumb, ListGroup } from 'react-bootstrap'
 
 export const PageHead = (props) => {
 	return (
@@ -64,7 +64,7 @@ InfoBlock.propTypes = {
 export const ChartHolder = (props) => {
     return (
         <Col xs={12} className="chart-holder">
-            <p className="bold">{props.title}</p>
+            <Grid componentClass="p" bsClass="bold">{props.title}</Grid>
             <Grid bsClass="padding-horiz-2x">
                 {props.chart}
             </Grid>
@@ -177,7 +177,7 @@ export const RecordDetails = (props) => {
                 } else {
                     val = record[key]
                 }
-                rows.push(<tr key={key}><td><span className="bold">{key}:</span> {val}</td></tr>)
+                rows.push(<tr key={key}><td><Grid componentClass="span" bsClass="bold">{key}:</Grid> {val}</td></tr>)
             }
         }
     }
@@ -256,7 +256,7 @@ export const TableFunctionalityBase = (props) => {
             {props.onPageSizeChange && <FormControl bsClass="pageSize" componentClass="select" onChange={(e) => { props.onPageSizeChange(e.target.value) }}>
                 {[10, 20, 30, 40, 50].map((pageSize) => <option key={pageSize} value={pageSize}>{pageSize}</option>)}
             </FormControl>}
-            {props.onPageSizeChange && <span className="margin-left-1x">results per page</span>}
+            {props.onPageSizeChange && <Grid componentClass="span" bsClass="margin-left-1x">results per page</Grid>}
         </Grid>
     )
 }
@@ -287,7 +287,7 @@ FilterButton.propTypes = {
 export const NoData = (props) => {
     return (
         <tr>
-            <td colSpan={props.colSpan}> No results found. </td>
+            <td colSpan={props.colSpan}> No results found.</td>
         </tr>
     )
 }
@@ -360,18 +360,19 @@ SearchFilterOptions.propTypes = {
 }
 
 export const ImportSummary = (props) => (
-    <section className="export-summary">
-        <h3 className="margin-top-0x margin-left-2x"> <u>Import Summary</u> </h3>
-        <ul>
-            <li> Total records in sheet: {props.totalRecords} </li>
-            <li> Number of records successfully inserted: {props.recordsInserted} </li>
-            <li> Number of records which were not inserted : {props.errorRecords.length} </li>
-
-            <ul className="error"> {props.errorRecords.map((errorRecord, index) => (
-                    <li className="no-margin-bottom-0x" key={index}>File Number: {errorRecord}</li>
+    <section className="import-summary">
+        <Grid componentClass="h3" bsClass="margin-top-0x margin-left-2x">
+            <u>Import Summary</u>
+        </Grid>
+        <ListGroup componentClass="ul" bsClass="import-data">
+            <ListGroup componentClass="li" bsClass="import-total-records"> Total records in sheet: {props.totalRecords} </ListGroup>
+            <ListGroup componentClass="li" bsClass="import-records-success"> Number of records successfully inserted: {props.recordsInserted} </ListGroup>
+            <ListGroup componentClass="li" bsClass="import-records-fail"> Number of records which were not inserted : {props.errorRecords.length} </ListGroup>
+            <ListGroup componentClass="ul" bsClass="error"> {props.errorRecords.map((errorRecord, index) => (
+                    <ListGroup componentClass="li" bsClass="no-margin-bottom-0x" key={index}>File Number: {errorRecord}</ListGroup>
                 ))}
-            </ul>
-        </ul>
+            </ListGroup>
+        </ListGroup>
     </section>
 )
 
