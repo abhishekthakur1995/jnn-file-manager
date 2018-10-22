@@ -20,7 +20,8 @@ class FilterComponent extends React.Component {
 			departmentName: {},
 			assignedOfficer: {},
 			searchTerm: '',
-			queryField: ''
+			queryField: '',
+			readOnly: true
 		}
 
 		this.handleCheckBoxClick = this.handleCheckBoxClick.bind(this)
@@ -96,17 +97,21 @@ class FilterComponent extends React.Component {
 		})
 	}
 
-	getSearchQueryField(queryField) {
-		if (queryField) {
-			this.setState({ queryField })
-		}
+	getSearchQueryField(event) {
+		const element = event.nativeEvent.target
+		this.setState((prevState) => ({
+		    ...prevState,
+		    [element.name]: element.value
+		}))
+		_.isEmpty(element.value) ? this.setState({ readOnly: true }) : this.setState({ readOnly: false })
 	}
 
 	setSearchTerm(event) {
-		const searchTerm = event.nativeEvent.target.value
-		if (searchTerm) {
-			this.setState({ searchTerm })
-		}
+		const element = event.nativeEvent.target
+		this.setState((prevState) => ({
+		    ...prevState,
+		    [element.name]: element.value
+		}))
 	}
 
    	render() {
@@ -239,11 +244,10 @@ class FilterComponent extends React.Component {
 								            <h5 className="bold margin-left-3x">Search By</h5>
 					                        <ul rel="sort" className="small-12 no-bullet list-style-type-none padding-vert-2x">
 				                                <li className="margin-vert-1x">
-
-				                                	<SearchFilterOptions onClick={this.getSearchQueryField} value={this.state.queryField}/>
-
+				                                	<SearchFilterOptions name="queryField" onClick={this.getSearchQueryField} value={this.state.queryField}/>
 				                                	<ControlLabel htmlFor="searchTerm">Search Query</ControlLabel>
 				                                	<FormControl
+				                                		readOnly={this.state.readOnly}
 				                                		type="text"
 				                                		name="searchTerm"
 				                                		value={this.state.searchTerm}

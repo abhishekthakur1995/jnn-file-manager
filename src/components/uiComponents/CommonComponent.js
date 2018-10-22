@@ -345,7 +345,7 @@ export const SearchFilterOptions = (props) => {
 
     return (
         <FormGroup controlId="formControlsSelect">
-            <FormControl componentClass="select" value={props.value} onChange={(e) => { props.onClick(e.target.value) }} >
+            <FormControl componentClass="select" name={props.name} value={props.value} onChange={(e) => { props.onClick(e) }} >
                 <option value="">Select</option>
                     {optionsList.map((options) => <option key={options.id} value={options.id}>{options.name}</option>)}
             </FormControl>
@@ -354,6 +354,7 @@ export const SearchFilterOptions = (props) => {
 }
 
 SearchFilterOptions.propTypes = {
+    name: PropTypes.string,
     onClick: PropTypes.func,
     value: PropTypes.string
 }
