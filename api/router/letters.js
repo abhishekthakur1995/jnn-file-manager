@@ -188,7 +188,7 @@ letters.get('/getRecords',
 
 		let dataQuery = `SELECT * FROM ${process.env.LETTER_RECORD_TBL} ORDER BY CREATED DESC LIMIT ${offset}, ${limit}`
 		if(req.query.sortField && req.query.orderBy) {
-			dataQuery = `SELECT * FROM ${process.env.LETTER_RECORD_TBL} ORDER BY ${helper.getDbFieldCodeFromName(req.query.sortField)} ${_.upperCase(req.query.orderBy)} LIMIT ${offset}, ${limit}`
+			dataQuery = `SELECT * FROM ${process.env.LETTER_RECORD_TBL} ORDER BY ${helper.getDbFieldCodeFromName(req.query.sortField)} ${req.query.orderBy.toUpperCase()} LIMIT ${offset}, ${limit}`
 		}
 
 		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL}`, (err, results, fields) => {
