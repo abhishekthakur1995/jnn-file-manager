@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'underscore'
 import PropTypes from 'prop-types'
 import { SearchFilterOptions } from './CommonComponent'
-import { Grid, Row, Col, Checkbox, Button, ControlLabel, FormControl } from 'react-bootstrap'
+import { Grid, Row, Col, Checkbox, Button, ControlLabel, FormControl, ListGroup } from 'react-bootstrap'
 
 class FilterComponent extends React.Component {
 	constructor(props) {
@@ -123,11 +123,11 @@ class FilterComponent extends React.Component {
 							<Col sm={12} className="pull-left">
 								<Grid bsClass="pull-left margin-1x filter-group col-sm-12 padding-0x">
 									<Grid bsClass="pull-left col-sm-12 columns padding-0x">
-							            <h4 className="bold margin-left-3x">Filter By</h4>
-							            <div className="pull-left col-sm-12 padding-0x">
+										<Grid componentClass="h4" bsClass="bold margin-left-3x">Filter By</Grid>
+							            <Grid bsClass="pull-left col-sm-12 padding-0x">
 							            	{this.props.for === 'fileManager' &&
-						                        <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-					                                <li className="margin-vert-1x">
+							            		<ListGroup componentClass="ul" bsClass="no-bullet list-style-type-none">
+					                                <ListGroup componentClass="li" bsClass="margin-vert-1x">
 				                                		{[{NAME:'Approved', CODE: 'approved'}, {NAME:'Rejected', CODE: 'rejected'}, {NAME:'Pending', CODE: 'pending'}].map((data) => {
 					                            			const code = data.CODE
 					                            			const name = data.NAME
@@ -139,15 +139,15 @@ class FilterComponent extends React.Component {
 						                            				onChange={() => { this.handleCheckBoxClick(code, this.state.fileStatus) }}>{name}</Checkbox>
 					                            			)})
 					                            		}
-								                	</li>
-					                            </ul>
+								                	</ListGroup>
+					                            </ListGroup>
 				                            }
 
 				                            {this.props.for === 'letterManager' &&
-				                            	<div className="pull-left">
-						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-						                            	<span className="bold underline">Letter Status</span>
-						                                <li className="margin-vert-1x">
+				                            	<Grid bsClass="pull-left">
+						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
+						                            	<Grid componentClass="span" bsClass="bold underline">Letter Status</Grid>
+						                                <ListGroup componentClass="li" bsClass="margin-vert-1x">
 					                                		{[{NAME:'Incoming', CODE: '1'}, {NAME:'Outgoing', CODE: '2'}].map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
@@ -159,12 +159,12 @@ class FilterComponent extends React.Component {
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterStatus) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
-									                	</li>
-						                            </ul>
+									                	</ListGroup>
+						                            </ListGroup>
 
-						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-						                            	<span className="bold underline">Department Name</span>
-						                            	<li className="margin-vert-1x">
+						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
+						                            	<Grid componentClass="span" bsClass="bold underline">Department Name</Grid>
+						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.props.inputFieldsData.DEPARTMENT_NAME.map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
@@ -176,12 +176,12 @@ class FilterComponent extends React.Component {
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.departmentName) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
-						                            	</li>
-						                            </ul>
+						                            	</ListGroup>
+						                            </ListGroup>
 
-						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-						                            	<span className="bold underline">Letter Type</span>
-						                            	<li className="margin-vert-1x">
+						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
+						                            	<Grid componentClass="span" bsClass="bold underline">Letter Type</Grid>
+						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.props.inputFieldsData.LETTER_TYPE.map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
@@ -193,12 +193,12 @@ class FilterComponent extends React.Component {
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterType) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
-						                            	</li>
-						                            </ul>
+						                            	</ListGroup>
+						                            </ListGroup>
 
-						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-						                            	<span className="bold underline">Letter Tag</span>
-						                            	<li className="margin-vert-1x">
+						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
+						                            	<Grid componentClass="span" bsClass="bold underline">Letter Tag</Grid>
+						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.props.inputFieldsData.LETTER_TAG.map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
@@ -210,12 +210,12 @@ class FilterComponent extends React.Component {
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterTag) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
-						                            	</li>
-						                            </ul>
+						                            	</ListGroup>
+						                            </ListGroup>
 
-						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-						                            	<span className="bold underline">Assigned Officer</span>
-						                            	<li className="margin-vert-1x">
+						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
+						                            	<Grid componentClass="span" bsClass="bold underline">Assigned Officer Type</Grid>
+						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.props.inputFieldsData.ASSIGNED_OFFICER.map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
@@ -227,11 +227,11 @@ class FilterComponent extends React.Component {
 							                            				onChange={() => { this.handleCheckBoxClick(code,this.state.assignedOfficer) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
-						                            	</li>
-						                            </ul>
-						                        </div>
+						                            	</ListGroup>
+						                            </ListGroup>
+						                        </Grid>
 				                        	}
-				                        </div>
+				                        </Grid>
 							        </Grid>
 							    </Grid>
 							</Col>
@@ -241,9 +241,9 @@ class FilterComponent extends React.Component {
 								<Col sm={12} className="pull-left">
 									<Grid bsClass="margin-1x filter-group small-12">
 										<Grid bsClass="columns">
-								            <h5 className="bold margin-left-3x">Search By</h5>
-					                        <ul rel="sort" className="small-12 no-bullet list-style-type-none padding-vert-2x">
-				                                <li className="margin-vert-1x">
+								            <Grid componentClass="h5" bsClass="bold margin-left-3x">Search By</Grid>
+					                        <ListGroup componentClass="ul" bsClass="small-12 no-bullet list-style-type-none padding-vert-2x">
+				                                <ListGroup componentClass="li" bsClass="margin-vert-1x">
 				                                	<SearchFilterOptions name="queryField" onClick={this.getSearchQueryField} value={this.state.queryField}/>
 				                                	<ControlLabel htmlFor="searchTerm">Search Query</ControlLabel>
 				                                	<FormControl
@@ -254,8 +254,8 @@ class FilterComponent extends React.Component {
 				                                		onChange={this.setSearchTerm}
 				                                		placeholder="Enter your query to search"
 			                                		/>
-							                	</li>
-				                            </ul>
+							                	</ListGroup>
+				                            </ListGroup>
 								        </Grid>
 								    </Grid>
 								</Col>
