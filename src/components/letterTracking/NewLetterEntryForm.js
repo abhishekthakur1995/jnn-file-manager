@@ -157,6 +157,7 @@ class NewLetterEntryForm extends React.Component {
                     return
                 })
             }
+            Alert.success(res.data.message, config.alertGlobalSettings)
         }).catch(err => {
             const errMsg = err.response.data.message || 'Some error occured. Please try again'
             Alert.error(errMsg, config.alertGlobalSettings)
