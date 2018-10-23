@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ErrorPage from './../ErrorPage'
 import LetterBoard from './LetterBoard'
 import LettersList from './LettersList'
+import { USERS } from './../helpers/Constants'
 import ExportLetterData from './ExportLetterData'
 import NewLetterEntryForm from './NewLetterEntryForm'
 import ManageLetterBoardInputs from './ManageLetterBoardInputs'
@@ -19,7 +20,7 @@ class SideBar extends React.Component {
 		return (
 			<Grid bsClass="wrapper">
 				<nav className="active" id="sidebar">
-					{userAuth.getUserRole() === 'SYSTEMUSER' &&
+					{userAuth.getUserRole() === USERS.SYSUSER &&
 						<ListGroup componentClass="ul" className="list-unstyled components">
 						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/addNewEntry' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/addNewEntry`}>
@@ -44,7 +45,7 @@ class SideBar extends React.Component {
 						</ListGroup>
 					}
 
-					{userAuth.getUserRole() === 'SYSTEMADMIN' &&
+					{userAuth.getUserRole() === USERS.SYSADMIN &&
 						<ListGroup componentClass="ul" className="list-unstyled components">
 						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/manageApp' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/manageApp`}>

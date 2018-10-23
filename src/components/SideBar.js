@@ -6,6 +6,7 @@ import InfoBoard from './InfoBoard'
 import ErrorPage from './ErrorPage'
 import RecordList from './RecordList'
 import GetRecords from './GetRecords'
+import { USERS } from './helpers/Constants'
 import ManageSystemInputs from './ManageSystemInputs'
 import { Link, Route, Switch } from 'react-router-dom'
 import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
@@ -20,7 +21,7 @@ class SideBar extends React.Component {
 		return (
 			<Grid bsClass="wrapper">
 				<nav className="active" id="sidebar">
-					{userAuth.getUserRole() === 'SYSTEMUSER' &&
+					{userAuth.getUserRole() === USERS.SYSUSER &&
 						<ListGroup componentClass="ul" className="list-unstyled components">
 						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/fileManager/addNewRecord' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/addNewRecord`}>
@@ -52,7 +53,7 @@ class SideBar extends React.Component {
 						</ListGroup>
 					}
 
-					{userAuth.getUserRole() === 'SYSTEMADMIN' &&
+					{userAuth.getUserRole() === USERS.SYSADMIN &&
 						<ListGroup componentClass="ul" className="list-unstyled components">
 						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/fileManager/manageSystemInputs' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/manageSystemInputs`}>

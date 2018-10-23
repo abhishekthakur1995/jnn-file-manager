@@ -1,6 +1,7 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { USERS } from './../helpers/Constants'
+import { Route, Redirect } from 'react-router-dom'
 
 export const userAuth = {
   	authenticate(authToken, validUpto, cb) {
@@ -49,7 +50,7 @@ PrivateRoute.propTypes = {
 
 export const SystemUserRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => (
-        userAuth.isUserAuthenticated() === true && userAuth.getUserRole() === 'SYSTEMUSER' ? <Component {...props} /> : <Redirect to={{
+        userAuth.isUserAuthenticated() === true && userAuth.getUserRole() === USERS.SYSUSER ? <Component {...props} /> : <Redirect to={{
             pathname: '/login',
             state: { from: props.location }
         }} />
@@ -64,7 +65,7 @@ SystemUserRoute.propTypes = {
 
 export const SystemAdminRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => (
-        userAuth.isUserAuthenticated() === true && userAuth.getUserRole() === 'SYSTEMADMIN' ? <Component {...props} /> : <Redirect to={{
+        userAuth.isUserAuthenticated() === true && userAuth.getUserRole() === USERS.SYSADMIN ? <Component {...props} /> : <Redirect to={{
             pathname: '/login',
             state: { from: props.location }
         }} />

@@ -15,3 +15,8 @@ export const COMMON = {
 		PENDING: '#EC9811'
 	}
 }
+
+export const USERS = {
+	SYSUSER: 'SYSTEMUSER',
+	SYSADMIN: 'SYSTEMADMIN'
+}
