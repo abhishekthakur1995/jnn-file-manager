@@ -42,8 +42,8 @@ export const InfoBlock = (props) => {
     return (
         <Col className={`padding-0x ${props.customClass}`}>
             <Grid bsClass="info-box">
-                <Grid componentClass="span" bsClass="info-box-icon bg-green">
-                    <img title={props.title} src={props.img}></img>
+                <Grid title={props.title} componentClass="span" bsClass="info-box-icon bg-green">
+                    <img src={props.img}></img>
                 </Grid>
                 <Grid bsClass="info-box-content green-top">
                     <Grid componentClass="span" bsClass="info-box-text fs20">{props.title}</Grid>
