@@ -1,14 +1,14 @@
 import React from 'react'
 import NavBar from './NavBar'
-import LoginForm from './LoginForm'
 import ErrorPage from './ErrorPage'
+import Dashboard from './Dashboard'
+import LoginForm from './LoginForm'
+import { Grid } from 'react-bootstrap'
 import ServicePanel from './ServicePanel'
 import ResetPassword from './ResetPassword'
-import Dashboard from './Dashboard'
-import LettertrackingDashboard from './letterTracking/LetterTrackingDashboard'
-import { PrivateRoute } from './services/AuthService'
-import { Grid } from 'react-bootstrap'
 import { Switch, Route } from 'react-router-dom'
+import { PrivateRoute } from './services/AuthService'
+import LettertrackingDashboard from './letterTracking/LetterTrackingDashboard'
 
 class App extends React.Component {
 	constructor(props) {
