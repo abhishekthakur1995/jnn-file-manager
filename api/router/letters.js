@@ -116,7 +116,7 @@ letters.post('/addNewSettings',
  */
 
 letters.get('/getLetterBoardData', (req, res) => {
-	connection.query(`SELECT COUNT(*) AS RECEIVED, COUNT(CASE WHEN LETTER_STATUS = 1 THEN 1 END) AS INCOMING, COUNT(CASE WHEN LETTER_STATUS = 2 THEN 1 END) AS OUTGOING FROM ${process.env.LETTER_RECORD_TBL}`, (err, results, fields) => {
+	connection.query(`SELECT COUNT(*) AS TOTAL, COUNT(CASE WHEN LETTER_STATUS = 1 THEN 1 END) AS INCOMING, COUNT(CASE WHEN LETTER_STATUS = 2 THEN 1 END) AS OUTGOING FROM ${process.env.LETTER_RECORD_TBL}`, (err, results, fields) => {
 		if (err) { return res.status(400).json({data: [], message : err, success : false}) }
 		res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
 	})
