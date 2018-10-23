@@ -105,7 +105,7 @@ class RecordList extends React.Component {
 	}
 
 	handleRecordStatus(rec, action) {
-		const newStatus = (action === 'approve') ? 1 : 2
+		const newStatus = action === 'approve' ? 1 : (action === 'reject') ? 2 : 0
 		const data = { status: newStatus }
 		RecordsService.updateRecordStatus(rec.ID, data).then((res) => {
 			if (res.data.saved === true) {
@@ -226,7 +226,7 @@ class RecordList extends React.Component {
 	handleMultiAction(action) {
 		if (!_.isEmpty(this.markedRecord)) {
 			this.setState({ showLoading: true })
-			const newStatus = action === 'approve' ? 1 : 2
+			const newStatus = action === 'approve' ? 1 : (action === 'reject') ? 2 : 0
 			const data = {markedRecords: this.markedRecord, status: newStatus}
 			RecordsService.updateMultipleRecordStatus(data).then((res) => {
 				if (res.data.saved === true) {
@@ -347,6 +347,7 @@ class RecordList extends React.Component {
 				{this.state.totalRecords > 0 && <TableFunctionalityBase
 					onApprove={this.handleMultiAction}
 					onReject={this.handleMultiAction}
+					onPending={this.handleMultiAction}
 					onPageSizeChange={this.handlePageSizeChange} /> }
 			</Grid>
 		)

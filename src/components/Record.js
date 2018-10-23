@@ -32,6 +32,7 @@ class Record extends React.Component {
 		this.handleModalClose = this.handleModalClose.bind(this)
 		this.handleUpdate = this.handleUpdate.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
+		this.handlePendingStatus = this.handlePendingStatus.bind(this)
 		this.handleApproveStatus = this.handleApproveStatus.bind(this)
 		this.handleRejectStatus = this.handleRejectStatus.bind(this)
 		this.handleCheckBoxClick = this.handleCheckBoxClick.bind(this)
@@ -77,6 +78,10 @@ class Record extends React.Component {
 	handleDelete() {
 		this.props.onDelete(this.props.singleRecord.ID)
 		this.handleModalClose()
+	}
+
+	handlePendingStatus() {
+		this.props.onStatusChange(this.props.singleRecord, 'pending')
 	}
 
 	handleApproveStatus() {
@@ -155,6 +160,7 @@ class Record extends React.Component {
 					onHide={this.handleModalClose}
 					handleModalClose={this.handleModalClose}
 					record={record}
+					onPending={this.handlePendingStatus}
 					onApprove={this.handleApproveStatus}
 					onReject={this.handleRejectStatus}
 					modalTitle="Manage record"

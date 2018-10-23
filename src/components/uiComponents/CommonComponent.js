@@ -142,7 +142,7 @@ export const ManageRecordModal = (props) => {
             </Modal.Header>
 
             <Modal.Body>
-                <RecordDetails record={props.record} showActionButtons={props.showActionButtons} handleApproveBtnClick={props.onApprove} handleRejectBtnClick={props.onReject} />
+                <RecordDetails record={props.record} showActionButtons={props.showActionButtons} handlePendingBtnClick={props.onPending} handleApproveBtnClick={props.onApprove} handleRejectBtnClick={props.onReject} />
             </Modal.Body>
         </Modal>
     )
@@ -153,6 +153,7 @@ ManageRecordModal.propTypes = {
     onHide: PropTypes.func,
     modalTitle: PropTypes.string,
     record: PropTypes.object,
+    onPending: PropTypes.func,
     onApprove: PropTypes.func,
     onReject: PropTypes.func,
     handleModalClose: PropTypes.func,
@@ -190,8 +191,9 @@ export const RecordDetails = (props) => {
 
             {props.showActionButtons &&
                 <Grid bsClass="width-10x display-inline">
-                    <Button className="btn-success pull-right margin-left-1x" onClick={props.handleApproveBtnClick}> Approve </Button>
-                    <Button className="btn-danger pull-right" onClick={props.handleRejectBtnClick}> Reject </Button>
+                    <Button className="btn-danger pull-right margin-left-1x" onClick={props.handleRejectBtnClick}>Reject</Button>
+                    <Button className="btn-success pull-right margin-left-1x" onClick={props.handleApproveBtnClick}>Approve</Button>
+                    <Button className="btn-warning pull-right margin-left-1x" onClick={props.handlePendingBtnClick}>Pending</Button>
                 </Grid>
             }
         </Grid>
@@ -200,6 +202,7 @@ export const RecordDetails = (props) => {
 
 RecordDetails.propTypes = {
     record: PropTypes.object,
+    handlePendingBtnClick: PropTypes.func,
     handleApproveBtnClick: PropTypes.func,
     handleRejectBtnClick: PropTypes.func,
     showActionButtons:PropTypes.bool
@@ -238,9 +241,17 @@ QuickSearchComponent.propTypes = {
 export const TableFunctionalityBase = (props) => {
     return (
         <Grid bsClass="table-base">
+            {props.onPending && <Glyphicon
+                glyph="option-horizontal"
+                title="Mark selected record as pending"
+                onClick={() => props.onReject('pending')}
+                className="margin-right-2x" >
+                <Grid componentClass="span" bsClass="">Pending</Grid>
+            </Glyphicon>}
+
             {props.onApprove && <Glyphicon
                 glyph="ok"
-                title="Approve"
+                title="Mark selected record as approveed"
                 onClick={() => props.onApprove('approve')}
                 className="margin-right-2x">
                 <Grid componentClass="span" bsClass="">Approve</Grid>
@@ -248,8 +259,9 @@ export const TableFunctionalityBase = (props) => {
 
             {props.onApprove && <Glyphicon
                 glyph="remove"
-                title="Reject"
-                onClick={() => props.onReject('reject')} >
+                title="Mark selected record as rejected"
+                onClick={() => props.onReject('reject')}
+                className="margin-right-2x" >
                 <Grid componentClass="span" bsClass="">Reject</Grid>
             </Glyphicon>}
 
@@ -262,6 +274,7 @@ export const TableFunctionalityBase = (props) => {
 }
 
 TableFunctionalityBase.propTypes = {
+    onPending: PropTypes.func,
     onApprove: PropTypes.func,
     onReject: PropTypes.func,
     onPageSizeChange: PropTypes.func
