@@ -4,8 +4,9 @@ import { Doughnut } from 'react-chartjs-2'
 import { COMMON } from './helpers/Constants'
 import { DashboardService } from './services/ApiServices'
 import { InfoBlock, ChartHolder, PageHead, LoadingSpinner } from './uiComponents/CommonComponent'
+import total from './../../public/img/total.png'
 import approved from './../../public/img/approved.png'
-import received from './../../public/img/received.png'
+import rejected from './../../public/img/rejected.png'
 import pending from './../../public/img/pending.png'
 
 class InfoBoard extends React.Component {
@@ -32,11 +33,11 @@ class InfoBoard extends React.Component {
 		const { dashboardData } = this.state
 
 		const chartData = {
-			labels: ['Received', 'Approved', 'Pending'],
+			labels: ['Pending', 'Approved', 'Rejected'],
 			datasets: [{
-				data: [dashboardData.RECEIVED, dashboardData.APPROVED, dashboardData.PENDING],
-				backgroundColor: [COMMON.CHART_COLOR.RECEIVED, COMMON.CHART_COLOR.INCOMING, COMMON.CHART_COLOR.OUTGOING],
-				hoverBackgroundColor: [COMMON.HOVER_COLOR.RECEIVED, COMMON.HOVER_COLOR.INCOMING, COMMON.HOVER_COLOR.OUTGOING],
+				data: [dashboardData.PENDING, dashboardData.APPROVED, dashboardData.REJECTED],
+				backgroundColor: [COMMON.CHART_COLOR.PENDING, COMMON.CHART_COLOR.APPROVED, COMMON.CHART_COLOR.REJECTED],
+				hoverBackgroundColor: [COMMON.HOVER_COLOR.PENDING, COMMON.HOVER_COLOR.APPROVED, COMMON.CHART_COLOR.REJECTED],
 			}]
 		}
 
@@ -59,9 +60,10 @@ class InfoBoard extends React.Component {
 				{this.state.showLoading && <LoadingSpinner />}
 				<PageHead />
 				<Grid bsClass="width-10x pull-left">
-					<InfoBlock title="Received" img={received} value={dashboardData.RECEIVED} customClass={'padding-right-3x'} />
-					<InfoBlock title="Pending"  img={pending} value={dashboardData.APPROVED} customClass={'padding-vert-3x'} />
-					<InfoBlock title="Approved" img={approved} value={dashboardData.PENDING} customClass={'padding-left-3x'} />
+					<InfoBlock title="Received" img={total} value={dashboardData.TOTAL} customClass={'padding-right-3x col-md-3'} />
+					<InfoBlock title="Pending"  img={pending} value={dashboardData.PENDING} customClass={'padding-vert-3x col-md-3'} />
+					<InfoBlock title="Approved" img={approved} value={dashboardData.APPROVED} customClass={'padding-left-3x col-md-3'} />
+					<InfoBlock title="Rejected" img={rejected} value={dashboardData.REJECTED} customClass={'padding-left-3x col-md-3'} />
 				</Grid>
 				<ChartHolder title="Application Status" chart={chart}/>
 			</Grid>

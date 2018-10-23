@@ -40,7 +40,7 @@ PageHead.propTypes = {
 
 export const InfoBlock = (props) => {
     return (
-        <Col md={4} sm={12} className={`padding-0x ${props.customClass}`}>
+        <Col className={`padding-0x ${props.customClass}`}>
             <Grid bsClass="info-box">
                 <Grid componentClass="span" bsClass="info-box-icon bg-green">
                     <img title={props.title} src={props.img}></img>

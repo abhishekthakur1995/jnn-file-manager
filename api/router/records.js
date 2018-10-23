@@ -320,7 +320,7 @@ records.delete('/deleteRecord/:id',
  */
 
 records.get('/getDashboardData', (req, res) => {
-	connection.query(`SELECT COUNT(*) AS RECEIVED, COUNT(CASE WHEN FILE_STATUS = 0 THEN 1 END) AS PENDING, COUNT(CASE WHEN FILE_STATUS = 1 THEN 1 END) AS APPROVED FROM ${process.env.FILE_RECORD_TBL}`, (err, results, fields) => {
+	connection.query(`SELECT COUNT(*) AS TOTAL, COUNT(CASE WHEN FILE_STATUS = 0 THEN 1 END) AS PENDING, COUNT(CASE WHEN FILE_STATUS = 1 THEN 1 END) AS APPROVED, COUNT(CASE WHEN FILE_STATUS = 2 THEN 1 END) AS REJECTED FROM ${process.env.FILE_RECORD_TBL}`, (err, results, fields) => {
 		if (err) {
 			return res.status(400).json({data: [], message : err, success : false})
 		}

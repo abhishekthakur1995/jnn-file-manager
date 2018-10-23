@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from 'react-bootstrap'
 import { Doughnut } from 'react-chartjs-2'
 import { COMMON } from './../helpers/Constants'
-import total from './../../../public/img/total_mail.png'
+import total from './../../../public/img/total.png'
 import incoming from './../../../public/img/incoming_mail.png'
 import outgoing from './../../../public/img/outgoing_mail.png'
 import { LetterBoardService } from './../services/ApiServices'
@@ -59,9 +59,9 @@ class LetterBoard extends React.Component {
 				{this.state.showLoading && <LoadingSpinner />}
 				<PageHead />
 				<Grid bsClass="width-10x pull-left">
-					<InfoBlock title="Total" img={total} value={dashboardData.TOTAL} customClass={'padding-right-3x'} />
-					<InfoBlock title="Incoming" img={incoming} value={dashboardData.INCOMING} customClass={'padding-vert-3x'} />
-					<InfoBlock title="Outgoing" img={outgoing} value={dashboardData.OUTGOING} customClass={'padding-left-3x'} />
+					<InfoBlock title="Total" img={total} value={dashboardData.TOTAL} customClass={'padding-right-3x col-md-4'} />
+					<InfoBlock title="Incoming" img={incoming} value={dashboardData.INCOMING} customClass={'padding-vert-3x col-md-4'} />
+					<InfoBlock title="Outgoing" img={outgoing} value={dashboardData.OUTGOING} customClass={'padding-left-3x col-md-4'} />
 				</Grid>
 				<ChartHolder title="Letter Status" chart={chart}/>
 			</Grid>
