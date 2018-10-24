@@ -75,7 +75,7 @@ class LoginForm extends React.Component {
 			<Grid bsClass="login-form-new">
 				<Alert stack={{limit: 3}} html={true} />
 				<Grid bsClass="login-title">
-					<p className="bold text-align-center fs33">Record Management System</p>
+					<Grid componentClass="p" bsClass="bold text-align-center fs33">Record Management System</Grid>
 				</Grid>
 				<Grid componentClass="section" bsClass="four-col">
 			    	<Row>

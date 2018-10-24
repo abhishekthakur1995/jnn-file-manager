@@ -208,9 +208,9 @@ class GetRecords extends React.Component {
 													<Clearfix />
 
 													{this.state.error.monthError &&
-														<span className="error">
+														<Grid componentClass="span" bsClass="error">
 															<FormattedMessage id="fileManager.getRecords.byMonthSection.errMsg" defaultMessage="Please select both year and month" />
-														</span>
+														</Grid>
 													}
 
 												</td>
@@ -256,9 +256,9 @@ class GetRecords extends React.Component {
 													</div>
 
 													{this.state.error.specificPeriodError &&
-														<span className="error">
+														<Grid componentClass="span" bsClass="error">
 															<FormattedMessage id="fileManager.getRecords.specificPeriodSection.errMsg" defaultMessage="Please select both start date and end date" />
-														</span>
+														</Grid>
 													}
 
 												</td>
@@ -283,9 +283,9 @@ class GetRecords extends React.Component {
 													</Radio>
 
 													{this.state.error.emptyDownloadFormat &&
-														<span className="error margin-left-5x">
+														<Grid componentClass="span" bsClass="error margin-left-5x">
 															<FormattedMessage id="fileManager.getRecords.selectFormatSection.errMsg" defaultMessage="Please select a download format" />
-														</span>
+														</Grid>
 													}
 												</td>
 											</tr>
@@ -309,9 +309,9 @@ class GetRecords extends React.Component {
 												}
 
 												{this.state.downloadData && this.state.filter.downloadFormat === 'pdf' &&
-													<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>
+													<Grid componentClass="span" bsClass="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>
 														<FormattedMessage id="fileManager.getRecords.downloadPdfLink" defaultMessage="Download Pdf" />
-													</span>
+													</Grid>
 												}
 												</td>
 											</tr>

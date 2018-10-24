@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import { LetterTracking } from './../helpers/CommonHelper'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import { Grid, Radio, Table, Button, Clearfix, Checkbox } from 'react-bootstrap'
+import { Grid, Radio, Table, Button, Clearfix, Checkbox, ListGroup } from 'react-bootstrap'
 import { ExportLetterDataService, NewLetterEntryFormService } from './../services/ApiServices'
 import { PageHead, MonthDropDown, YearDropDown, LoadingSpinner } from './../uiComponents/CommonComponent'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -257,9 +257,9 @@ class ExportLetterData extends React.Component {
 													<Clearfix />
 
 													{this.state.error.monthError &&
-														<span className="error">
+														<Grid componentClass="span" bsClass="error">
 															<FormattedMessage id="letterTracking.exportLetterData.byMonthSection.errMsg" defaultMessage="Please select both year and month" />
-														</span>
+														</Grid>
 													}
 
 												</td>
@@ -303,9 +303,9 @@ class ExportLetterData extends React.Component {
 													</div>
 
 													{this.state.error.specificPeriodError &&
-														<span className="error">
+														<Grid componentClass="span" bsClass="error">
 															<FormattedMessage id="letterTracking.exportLetterData.specificPeriodSection.errMsg" defaultMessage="Please select both start date and end date" />
-														</span>
+														</Grid>
 													}
 
 												</td>
@@ -321,9 +321,9 @@ class ExportLetterData extends React.Component {
 													</Radio>
 												</td>
 												<td width="80%">
-													<ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-						                            	<span className="bold underline">Letter Status</span>
-						                                <li className="margin-vert-1x">
+													<ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
+						                            	<Grid componentClass="span" bsClass="bold underline">Letter Status</Grid>
+						                                <ListGroup componentClass="li" bsClass="margin-vert-1x">
 					                                		{[{NAME:'Incoming', CODE: '1'}, {NAME:'Outgoing', CODE: '2'}].map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
@@ -335,11 +335,11 @@ class ExportLetterData extends React.Component {
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterStatus) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
-									                	</li>
-						                            </ul>
-													<ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-					                            		<span className="bold underline">Department Name</span>
-						                            	<li className="margin-vert-1x">
+									                	</ListGroup>
+						                            </ListGroup>
+													<ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
+					                            		<Grid componentClass="span" bsClass="bold underline">Department Name</Grid>
+						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.departmentList.map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
@@ -351,12 +351,12 @@ class ExportLetterData extends React.Component {
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.departmentName) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
-						                            	</li>
-						                            </ul>
+						                            	</ListGroup>
+						                            </ListGroup>
 
-						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-						                            	<span className="bold underline">Letter Type</span>
-						                            	<li className="margin-vert-1x">
+						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
+						                            	<Grid componentClass="span" bsClass="bold underline">Letter Type</Grid>
+						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.letterTypeList.map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
@@ -368,12 +368,12 @@ class ExportLetterData extends React.Component {
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterType) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
-						                            	</li>
-						                            </ul>
+						                            	</ListGroup>
+						                            </ListGroup>
 
-						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-						                            	<span className="bold underline">Letter Tag</span>
-						                            	<li className="margin-vert-1x">
+						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
+						                            	<Grid componentClass="span" bsClass="bold underline">Letter Tag</Grid>
+						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.letterTagList.map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
@@ -385,12 +385,12 @@ class ExportLetterData extends React.Component {
 							                            				onChange={() => { this.handleCheckBoxClick(code, this.state.letterTag) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
-						                            	</li>
-						                            </ul>
+						                            	</ListGroup>
+						                            </ListGroup>
 
-						                            <ul rel="sort" className="pull-left small-12 no-bullet list-style-type-none">
-						                            	<span className="bold underline">Assigned Officer</span>
-						                            	<li className="margin-vert-1x">
+						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
+						                            	<Grid componentClass="span" bsClass="bold underline">Assigned Officer</Grid>
+						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.assignedOfficerList.map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
@@ -402,8 +402,8 @@ class ExportLetterData extends React.Component {
 							                            				onChange={() => { this.handleCheckBoxClick(code,this.state.assignedOfficer) }}>{name}</Checkbox>
 						                            			)})
 						                            		}
-						                            	</li>
-						                            </ul>
+						                            	</ListGroup>
+						                            </ListGroup>
 												</td>
 											</tr>
 
@@ -426,9 +426,9 @@ class ExportLetterData extends React.Component {
 													</Radio>
 
 													{this.state.error.emptyDownloadFormat &&
-														<span className="error margin-left-5x">
+														<Grid componentClass="span" bsClass="error margin-left-5x">
 															<FormattedMessage id="letterTracking.exportLetterData.selectFormatSection.errMsg" defaultMessage="Please select a download format" />
-														</span>
+														</Grid>
 													}
 												</td>
 											</tr>
@@ -452,9 +452,9 @@ class ExportLetterData extends React.Component {
 												}
 
 												{this.state.downloadData && this.state.filter.downloadFormat === 'pdf' &&
-													<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>
+													<Grid componentClass="span" bsClass="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>
 														<FormattedMessage id="letterTracking.exportLetterData.downloadPdfLink" defaultMessage="Download Pdf" />
-													</span>
+													</Grid>
 												}
 												</td>
 											</tr>
