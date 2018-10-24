@@ -20,3 +20,8 @@ export const USERS = {
 	SYSUSER: 'SYSTEMUSER',
 	SYSADMIN: 'SYSTEMADMIN'
 }
+
+export const SYSTEMMODULES = {
+	FILE_MANAGER: 'FM',
+	LETTER_TRACKING: 'LT',
+}
