@@ -15,6 +15,11 @@ export default {
 				servicePanelLink: '',
 				resetPasswordLink: '',
 				logoutLink: ''
+			},
+			errorPage: {
+				msg1: '',
+				msg2: '',
+				msg3: ''
 			}
 		},
 		fileManager: {
