@@ -4,7 +4,7 @@ import { Grid } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 
-class LettertrackingDashboard extends React.Component {
+class LetterTrackingDashboard extends React.Component {
 	constructor(props) {
 		super(props)
 	}
@@ -21,9 +21,9 @@ class LettertrackingDashboard extends React.Component {
 	}
 }
 
-LettertrackingDashboard.propTypes = {
+LetterTrackingDashboard.propTypes = {
     match: PropTypes.object,
     location: PropTypes.object
 }
 
-export default LettertrackingDashboard
+export default LetterTrackingDashboard

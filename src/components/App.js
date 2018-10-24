@@ -8,7 +8,7 @@ import ServicePanel from './ServicePanel'
 import ResetPassword from './ResetPassword'
 import { Switch, Route } from 'react-router-dom'
 import { PrivateRoute } from './services/AuthService'
-import LettertrackingDashboard from './letterTracking/LetterTrackingDashboard'
+import LetterTrackingDashboard from './letterTracking/LetterTrackingDashboard'
 
 class App extends React.Component {
 	constructor(props) {
@@ -30,7 +30,7 @@ class App extends React.Component {
 					<Route path="/" exact={true} render={(props) => <LoginForm {...props} />} />
                     <Route path="/login" render={(props) => <LoginForm {...props} />} />
                     <PrivateRoute path={'/servicePanel/fileManager'} component={Dashboard} />
-                    <PrivateRoute path={'/servicePanel/letterTracking'} component={LettertrackingDashboard} />
+                    <PrivateRoute path={'/servicePanel/letterTracking'} component={LetterTrackingDashboard} />
                     <PrivateRoute path="/servicePanel" component={ServicePanel} />
                     <PrivateRoute path="/resetPassword" component={ResetPassword} />
                     <Route component={ErrorPage} />
