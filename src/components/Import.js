@@ -68,7 +68,7 @@ class Import extends React.Component {
 			<Grid bsClass="import-records">
 				<BreadcrumbsItem to={'/servicePanel/fileManager/import'}>Import</BreadcrumbsItem>
 				<PageHead title="Import"
-					downloadSampleExcel={<span onClick={this.downloadSampleExcel}><FormattedMessage id="fileManager.import.dwnldSampleExcelMsg" defaultMessage="Download Sample Excel" /><Glyphicon className="fs20" glyph="download" /></span>}
+					downloadSampleExcel={<Grid componentClass="span" bsClass="" onClick={this.downloadSampleExcel}><FormattedMessage id="fileManager.import.dwnldSampleExcelMsg" defaultMessage="Download Sample Excel" /><Glyphicon className="fs20" glyph="download" /></Grid>}
 				/>
 				{this.state.showLoading && <LoadingSpinner />}
 
@@ -79,12 +79,12 @@ class Import extends React.Component {
 						multiple={false}
 						onDrop={(files) => this.onDrop(files)}>
 							<Grid bsClass="dzinfo">
-								<span>
+								<Grid componentClass="span" bsClass="">
 									<FormattedMessage id="fileManager.import.dropzone.msg1" defaultMessage="Try dropping some files here, or click to select files to upload." />
-									<span className="highlight">
+									<Grid componentClass="span" bsClass="highlight">
 										<FormattedMessage id="fileManager.import.dropzone.msg2" defaultMessage="Only valid excel files (.xlsx) will be accepted" />
-									</span>
-								</span>
+									</Grid>
+								</Grid>
 								<Clearfix />
 
 								<Button bsStyle="default" className="dzuploadbtn">
@@ -93,7 +93,7 @@ class Import extends React.Component {
 								</Button>
 								<Clearfix />
 
-								<p className="dzuploadedfilename">{this.state.uploadedFileName}</p>
+								<Grid componentClass="p" bsClass="dzuploadedfilename">{this.state.uploadedFileName}</Grid>
 							</Grid>
 					</Dropzone>
 				</Grid>

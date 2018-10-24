@@ -402,12 +402,12 @@ class NewLetterEntryForm extends React.Component {
                                         multiple={false}
                                         onDrop={this.onDrop}>
                                             <Grid bsClass="dzinfo">
-                                                <span>
+                                                <Grid componentClass="span" bsClass="">
                                                     <FormattedMessage id="letterTracking.newLetterEntryForm.dropzone.msg1" defaultMessage="Upload your letter here. File size limit is 100KB." />
-                                                    <span className="highlight">
+                                                    <Grid componentClass="span" bsClass="highlight">
                                                         <FormattedMessage id="letterTracking.newLetterEntryForm.dropzone.msg2" defaultMessage="Supported File extensions are .pdf, .doc, .docx, .jpg, .png" />
-                                                    </span>
-                                                </span>
+                                                    </Grid>
+                                                </Grid>
                                                 <Clearfix />
 
                                                 <Btn bsStyle="default" className="dzuploadbtn">
@@ -415,12 +415,12 @@ class NewLetterEntryForm extends React.Component {
                                                 </Btn>
                                                 <Clearfix />
 
-                                                <p className="dzuploadedfilename">{this.state.uploadedFileName}
+                                                <Grid componentClass="p" bsClass="dzuploadedfilename">{this.state.uploadedFileName}
                                                     {this.state.uploadedFileName && <Glyphicon title={intl.formatMessage(messages.removeGlyphTitle)} glyph="remove" className="margin-left-1x cursor-pointer" onClick={this.removeUploadedFile}></Glyphicon>}
-                                                </p>
+                                                </Grid>
                                             </Grid>
                                     </Dropzone>
-                                    {this.state.uploadError && <p className="margin-top-1x error">{this.uploadFileErrorMsg}</p>}
+                                    {this.state.uploadError && <Grid componentClass="span" bsClass="margin-top-1x error">{this.uploadFileErrorMsg}</Grid>}
                                 </Col>
                             </fieldset>
 

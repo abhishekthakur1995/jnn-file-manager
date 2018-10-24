@@ -13,7 +13,7 @@ class Dashboard extends React.Component {
 		return (
 			<Grid bsClass="dashboard">
 				<BreadcrumbsItem glyph='dashboard' to={'/servicePanel/fileManager'}>
-					<span className="link">Dashboard</span>
+					<Grid componentClass="span" bsClass="link">Dashboard</Grid>
 				</BreadcrumbsItem>
 				<SideBar match={this.props.match} location={this.props.location}/>
 			</Grid>
