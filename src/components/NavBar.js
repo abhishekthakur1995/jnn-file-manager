@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import { Common } from './helpers/CommonHelper'
 import { userAuth } from './services/AuthService'
 import { NavBarService } from './services/ApiServices'
@@ -39,16 +40,19 @@ class NavBar extends React.Component {
                         {userAuth.isUserAuthenticated() &&
                             <ListGroup componentClass="ul" bsClass="nav navbar-nav navbar-right">
                                 <ListGroup componentClass="li" bsClass="nav-link">
-                                    <Link to="/servicePanel">Service Panel
+                                    <Link to="/servicePanel">
+                                        <FormattedMessage id="common.navbar.servicePanelLink" defaultMessage="Service Panel" />
                                     </Link>
                                 </ListGroup>
 
                                 <NavDropdown eventKey={3} title={`Welcome, ${localStorage.getItem('userRole')}`} id="basic-nav-dropdown">
                                     <MenuItem eventKey={3.1} componentClass={Link} href="/resetPassword" to="/resetPassword">
-                                        <Glyphicon glyph="refresh"></Glyphicon> Reset Password
+                                        <Glyphicon glyph="refresh" className="margin-right-1x"></Glyphicon>
+                                        <FormattedMessage id="common.navbar.resetPasswordLink" defaultMessage="Reset Password" />
                                     </MenuItem>
                                     <MenuItem eventKey={3.2} onClick={this.logout}>
-                                        <Glyphicon glyph="log-out margin-right-1x" />Logout
+                                        <Glyphicon glyph="log-out" className="margin-right-1x" />
+                                        <FormattedMessage id="common.navbar.logoutLink" defaultMessage="Logout" />
                                     </MenuItem>
                                 </NavDropdown>
                             </ListGroup>

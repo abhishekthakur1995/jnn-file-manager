@@ -5,11 +5,12 @@ import moment from 'moment'
 import { CSVLink } from 'react-csv'
 import DatePicker from 'react-datepicker'
 import pdfMake from "pdfmake/build/pdfmake"
-import pdfFonts from "pdfmake/build/vfs_fonts"
+import { FormattedMessage } from 'react-intl'
+import pdfFonts from 'pdfmake/build/vfs_fonts'
 import { LetterTracking } from './../helpers/CommonHelper'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import { ExportLetterDataService, NewLetterEntryFormService } from './../services/ApiServices'
 import { Grid, Radio, Table, Button, Clearfix, Checkbox } from 'react-bootstrap'
+import { ExportLetterDataService, NewLetterEntryFormService } from './../services/ApiServices'
 import { PageHead, MonthDropDown, YearDropDown, LoadingSpinner } from './../uiComponents/CommonComponent'
 import 'react-datepicker/dist/react-datepicker.css'
 pdfMake.vfs = pdfFonts.pdfMake.vfs
@@ -229,12 +230,15 @@ class ExportLetterData extends React.Component {
 													<Radio
 														name="periodType"
 														inline={true}
-														onChange={() => { this.handleRadioChange('monthType') }} >By Month
+														onChange={() => { this.handleRadioChange('monthType') }} >
+														<FormattedMessage id="letterTracking.exportLetterData.byMonthSection.title" defaultMessage="By Month" />
 													</Radio>
 												</td>
 
 												<td width="80%">
-													<Grid bsClass="pull-left">Year:<br />
+													<Grid bsClass="pull-left">
+														<FormattedMessage id="letterTracking.exportLetterData.byMonthSection.year" defaultMessage="Year:" />
+														<br />
 														<YearDropDown
 															onClick={this.handleFilterParams}
 														/>
@@ -242,7 +246,9 @@ class ExportLetterData extends React.Component {
 
 													<Clearfix />
 
-													<Grid bsClass="pull-left">Month:<br />
+													<Grid bsClass="pull-left">
+														<FormattedMessage id="letterTracking.exportLetterData.byMonthSection.month" defaultMessage="Month:" />
+														<br />
 														<MonthDropDown
 															onClick={this.handleFilterParams}
 														/>
@@ -250,7 +256,11 @@ class ExportLetterData extends React.Component {
 
 													<Clearfix />
 
-													{this.state.error.monthError && <span className="error">Please select both year and month</span>}
+													{this.state.error.monthError &&
+														<span className="error">
+															<FormattedMessage id="letterTracking.exportLetterData.byMonthSection.errMsg" defaultMessage="Please select both year and month" />
+														</span>
+													}
 
 												</td>
 											</tr>
@@ -260,15 +270,16 @@ class ExportLetterData extends React.Component {
 													<Radio
 														name="periodType"
 														inline={true}
-														onChange={() => { this.handleRadioChange('specificPeriodType') }} >Specific Period
+														onChange={() => { this.handleRadioChange('specificPeriodType') }} >
+														<FormattedMessage id="letterTracking.exportLetterData.specificPeriodSection.title" defaultMessage="Specific Period" />
 													</Radio>
 												</td>
 
 												<td width="80%">
-													<div>From:
+													<div>
+														<FormattedMessage id="letterTracking.exportLetterData.specificPeriodSection.from" defaultMessage="From:" />
 														<DatePicker
 															dateFormat={config.datePicker.dateFormat}
-															placeholderText="Click to select a date"
 															maxDate={moment()}
 															selected={this.state.filter.startDate}
 															startDate={this.state.filter.startDate}
@@ -279,10 +290,10 @@ class ExportLetterData extends React.Component {
 
 													<br />
 
-													<div>To:
+													<div>
+														<FormattedMessage id="letterTracking.exportLetterData.specificPeriodSection.to" defaultMessage="To:" />
 														<DatePicker
 														   	dateFormat={config.datePicker.dateFormat}
-														   	placeholderText="Click to select a date"
 														   	maxDate={moment()}
 														   	selected={this.state.filter.endDate}
 														    startDate={this.state.filter.startDate}
@@ -291,7 +302,11 @@ class ExportLetterData extends React.Component {
 														/>
 													</div>
 
-													{this.state.error.specificPeriodError && <span className="error">Please select both start date and end date</span>}
+													{this.state.error.specificPeriodError &&
+														<span className="error">
+															<FormattedMessage id="letterTracking.exportLetterData.specificPeriodSection.errMsg" defaultMessage="Please select both start date and end date" />
+														</span>
+													}
 
 												</td>
 											</tr>
@@ -301,7 +316,8 @@ class ExportLetterData extends React.Component {
 													<Radio
 														name="periodType"
 														inline={true}
-														onChange={() => { this.handleRadioChange('byTags') }} >By Tags
+														onChange={() => { this.handleRadioChange('byTags') }} >
+														<FormattedMessage id="letterTracking.exportLetterData.byTagsSection.title" defaultMessage="By Tags" />
 													</Radio>
 												</td>
 												<td width="80%">
@@ -393,27 +409,35 @@ class ExportLetterData extends React.Component {
 
 											<tr align="left" valign="middle">
 												<td className="data-left-aligned" width="20%">
-													Select a format
+													<FormattedMessage id="letterTracking.exportLetterData.selectFormatSection.title" defaultMessage="Select a format" />
 												</td>
 												<td width="80%" className="data-left-aligned">
 													<Radio
 														name="downloadFormat"
 														inline={true}
-														onChange={() => { this.handleFilterParams('downloadFormat', 'excel') }} >Excel
+														onChange={() => { this.handleFilterParams('downloadFormat', 'excel') }} >
+														<FormattedMessage id="letterTracking.exportLetterData.selectFormatSection.excel" defaultMessage="Excel" />
 													</Radio>
 													<Radio
 														name="downloadFormat"
 														inline={true}
-														onChange={() => { this.handleFilterParams('downloadFormat', 'pdf') }} >PDF
+														onChange={() => { this.handleFilterParams('downloadFormat', 'pdf') }} >
+														<FormattedMessage id="letterTracking.exportLetterData.selectFormatSection.pdf" defaultMessage="PDF" />
 													</Radio>
 
-													{this.state.error.emptyDownloadFormat && <span className="error margin-left-5x">Please select a download format</span>}
+													{this.state.error.emptyDownloadFormat &&
+														<span className="error margin-left-5x">
+															<FormattedMessage id="letterTracking.exportLetterData.selectFormatSection.errMsg" defaultMessage="Please select a download format" />
+														</span>
+													}
 												</td>
 											</tr>
 
 											<tr align="left" valign="middle">
 												<td width="20%" className="data-left-aligned">
-													<Button className="green-btn" onClick={this.downloadData}>Fetch Data</Button>
+													<Button className="green-btn" onClick={this.downloadData}>
+														<FormattedMessage id="letterTracking.exportLetterData.fetchDataBtn" defaultMessage="Fetch Data" />
+													</Button>
 												</td>
 
 												<td width="80%" className="data-left-aligned">
@@ -422,12 +446,15 @@ class ExportLetterData extends React.Component {
 														data={this.state.downloadData}
 												  		filename={`${this.state.filter.month}.csv`}
 												  		target="_blank"
-												  		className="traditional-link"> Download Excel
+												  		className="traditional-link">
+												  		<FormattedMessage id="letterTracking.exportLetterData.downloadExcelLink" defaultMessage="Download Excel" />
 													</CSVLink>
 												}
 
 												{this.state.downloadData && this.state.filter.downloadFormat === 'pdf' &&
-													<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>Download Pdf</span>
+													<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>
+														<FormattedMessage id="letterTracking.exportLetterData.downloadPdfLink" defaultMessage="Download Pdf" />
+													</span>
 												}
 												</td>
 											</tr>

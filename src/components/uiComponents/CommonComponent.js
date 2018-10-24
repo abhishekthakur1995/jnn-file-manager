@@ -5,8 +5,16 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Breadcrumbs } from 'react-breadcrumbs-dynamic'
 import { CrumbIconItem } from './CustomBreadCrumbsComponent'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { Common, FileRecord, LetterTracking } from './../helpers/CommonHelper'
 import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup, Breadcrumb, ListGroup } from 'react-bootstrap'
+
+const messages = defineMessages({
+    quickSearchPlaceHolder: {
+        id: 'common.filter.quickSearchPlaceHolder',
+        defaultMessage: 'Quick Search',
+    }
+})
 
 export const PageHead = (props) => {
 	return (
@@ -212,7 +220,7 @@ export const LoadingSpinner = () => (
     <Grid className="overlay" />
 )
 
-export const QuickSearchComponent = (props) => {
+export const QuickSearchComponent = injectIntl((props) => {
     let inputRef
     return (
         <Grid bsClass="quick_search">
@@ -220,7 +228,7 @@ export const QuickSearchComponent = (props) => {
                 type="text"
                 inputRef={ref => inputRef = ref}
                 autoComplete="on"
-                placeholder="Quick Search"
+                placeholder={props.intl.formatMessage(messages.quickSearchPlaceHolder)}
                 name="quickSearch"
                 className="searchInputBox"
             />
@@ -230,9 +238,10 @@ export const QuickSearchComponent = (props) => {
             }
         </Grid>
     )
-}
+})
 
 QuickSearchComponent.propTypes = {
+    intl: PropTypes.object,
     search: PropTypes.func,
     remove: PropTypes.func,
     enabled: PropTypes.bool
@@ -284,7 +293,8 @@ export const FilterButton = (props) => {
     return (
         <Grid bsClass="filter-dropdown">
             <Grid bsClass="pull-left">
-                <Grid bsClass="margin-top-3x cursor-pointer" onClick={props.onClick}>Filter Results
+                <Grid bsClass="margin-top-3x cursor-pointer" onClick={props.onClick}>
+                    <FormattedMessage id="common.filter.title" defaultMessage="Filter Results" />
                     <Grid bsClass="chevron"> { props.upCheveron ? <Glyphicon glyph="chevron-up" /> : <Glyphicon glyph="chevron-down" /> }</Grid>
                 </Grid>
             </Grid>

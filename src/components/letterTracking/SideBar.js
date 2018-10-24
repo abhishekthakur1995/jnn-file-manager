@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import ErrorPage from './../ErrorPage'
 import LetterBoard from './LetterBoard'
 import LettersList from './LettersList'
+import { FormattedMessage } from 'react-intl'
 import { USERS } from './../helpers/Constants'
 import ExportLetterData from './ExportLetterData'
 import NewLetterEntryForm from './NewLetterEntryForm'
+import { Link, Route, Switch } from 'react-router-dom'
 import ManageLetterBoardInputs from './ManageLetterBoardInputs'
 import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
-import { Link, Route, Switch } from 'react-router-dom'
 import { userAuth, SystemUserRoute, SystemAdminRoute } from './../services/AuthService'
 
 class SideBar extends React.Component {
@@ -25,21 +26,24 @@ class SideBar extends React.Component {
 						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/addNewEntry' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/addNewEntry`}>
 						            <i className="glyphicon glyphicon-pencil"></i>
-						            Add New Entry
+						            <FormattedMessage id="letterTracking.sidebar.addNewEntry"
+                                     	defaultMessage="Add New Entry" />
 						        </Link>
 						    </ListGroupItem>
 
 						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/manageLetters' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/manageLetters`}>
 						            <i className="glyphicon glyphicon-briefcase"></i>
-						            Manage Letters
+						            <FormattedMessage id="letterTracking.sidebar.manageLetters"
+                                     	defaultMessage="Manage Letters" />
 						        </Link>
 						    </ListGroupItem>
 
 						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/exportData' ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/exportData`}>
 						            <i className="glyphicon glyphicon-export"></i>
-						            Export Data
+						            <FormattedMessage id="letterTracking.sidebar.exportData"
+						             	defaultMessage="Export Data" />
 						        </Link>
 						    </ListGroupItem>
 						</ListGroup>

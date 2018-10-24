@@ -1,8 +1,16 @@
 import React from 'react'
 import _ from 'underscore'
 import PropTypes from 'prop-types'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { SearchFilterOptions } from './CommonComponent'
 import { Grid, Row, Col, Checkbox, Button, ControlLabel, FormControl, ListGroup } from 'react-bootstrap'
+
+const messages = defineMessages({
+    searchBoxPlaceholder: {
+		id: 'common.filter.searchBoxPlaceholder',
+        defaultMessage: 'Enter your query to search',
+    }
+})
 
 class FilterComponent extends React.Component {
 	constructor(props) {
@@ -123,7 +131,9 @@ class FilterComponent extends React.Component {
 							<Col sm={12} className="pull-left">
 								<Grid bsClass="pull-left margin-1x filter-group col-sm-12 padding-0x">
 									<Grid bsClass="pull-left col-sm-12 columns padding-0x">
-										<Grid componentClass="h4" bsClass="bold margin-left-3x">Filter By</Grid>
+										<Grid componentClass="h4" bsClass="bold margin-left-3x">
+											<FormattedMessage id="common.filter.mainHeading" defaultMessage="Filter By" />
+										</Grid>
 							            <Grid bsClass="pull-left col-sm-12 padding-0x">
 							            	{this.props.for === 'fileManager' &&
 							            		<ListGroup componentClass="ul" bsClass="no-bullet list-style-type-none">
@@ -241,18 +251,22 @@ class FilterComponent extends React.Component {
 								<Col sm={12} className="pull-left">
 									<Grid bsClass="margin-1x filter-group small-12">
 										<Grid bsClass="columns">
-								            <Grid componentClass="h5" bsClass="bold margin-left-3x">Search By</Grid>
+								            <Grid componentClass="h5" bsClass="bold margin-left-3x">
+								            	<FormattedMessage id="common.filter.searchPanelHeading" defaultMessage="Search By" />
+								            </Grid>
 					                        <ListGroup componentClass="ul" bsClass="small-12 no-bullet list-style-type-none padding-vert-2x">
 				                                <ListGroup componentClass="li" bsClass="margin-vert-1x">
 				                                	<SearchFilterOptions name="queryField" onClick={this.getSearchQueryField} value={this.state.queryField}/>
-				                                	<ControlLabel htmlFor="searchTerm">Search Query</ControlLabel>
+				                                	<ControlLabel htmlFor="searchTerm">
+				                                		<FormattedMessage id="common.filter.searchBoxHeading" defaultMessage="Search Query" />
+				                                	</ControlLabel>
 				                                	<FormControl
 				                                		readOnly={this.state.readOnly}
 				                                		type="text"
 				                                		name="searchTerm"
 				                                		value={this.state.searchTerm}
 				                                		onChange={this.setSearchTerm}
-				                                		placeholder="Enter your query to search"
+				                                		placeholder={this.props.intl.formatMessage(messages.searchBoxPlaceholder)}
 			                                		/>
 							                	</ListGroup>
 				                            </ListGroup>
@@ -265,8 +279,12 @@ class FilterComponent extends React.Component {
 				</Grid>
 
 				<Grid bsClass="clear full-width filter-action">
-					<Button className="primary green-btn pull-right margin-1x" onClick={this.handleFilterParams}>Filter</Button>
-					<Button className="primary green-btn pull-right margin-1x" onClick={this.resetAllFilters}>Reset</Button>
+					<Button className="primary green-btn pull-right margin-1x" onClick={this.handleFilterParams}>
+						<FormattedMessage id="common.filter.filterBtn" defaultMessage="Filter" />
+					</Button>
+					<Button className="primary green-btn pull-right margin-1x" onClick={this.resetAllFilters}>
+						<FormattedMessage id="common.filter.resetBtn" defaultMessage="Reset" />
+					</Button>
 				    <Grid bsClass="clear"></Grid>
 				</Grid>
 			</Grid>
@@ -277,7 +295,8 @@ class FilterComponent extends React.Component {
 FilterComponent.propTypes = {
 	for: PropTypes.string,
 	onApply: PropTypes.func,
+	intl: PropTypes.object,
 	inputFieldsData: PropTypes.object
 }
 
-export default FilterComponent
+export default injectIntl(FilterComponent)

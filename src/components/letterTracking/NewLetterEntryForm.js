@@ -15,11 +15,47 @@ import { required } from './..//helpers/ValidationHelper'
 import { LetterTracking } from './../helpers/CommonHelper'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { NewLetterEntryFormService } from './../services/ApiServices'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
 import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label, Button as Btn } from 'react-bootstrap'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/slide.css'
+
+const messages = defineMessages({
+    submitBtnSaveText: {
+        id: 'letterTracking.newLetterEntryForm.submitBtnSaveText',
+        defaultMessage: 'Save',
+    },
+    submitBtnUpdateText: {
+        id: 'letterTracking.newLetterEntryForm.submitBtnUpdateText',
+        defaultMessage: 'Update',
+    },
+    saveEntryFormLabel: {
+        id: 'letterTracking.newLetterEntryForm.saveEntryFormLabel',
+        defaultMessage: 'New Entry',
+    },
+    updateEntryFormLabel: {
+        id: 'letterTracking.newLetterEntryForm.updateEntryFormLabel',
+        defaultMessage: 'Update Entry',
+    },
+    uploadFileErrMsg1: {
+        id: 'letterTracking.newLetterEntryForm.uploadFileErrMsg1',
+        defaultMessage: 'Error uploading file. Please try again.',
+    },
+    uploadFileErrMsg2: {
+        id: 'letterTracking.newLetterEntryForm.uploadFileErrMsg2',
+        defaultMessage: 'File size is greater then 100 KB. Please upload a smaller file.',
+    },
+    uploadFileErrMsg3: {
+        id: 'letterTracking.newLetterEntryForm.uploadFileErrMsg3',
+        defaultMessage: '{fileExtension} is not an accepted extension.',
+    },
+    removeGlyphTitle: {
+        id: 'letterTracking.newLetterEntryForm.removeGlyphTitle',
+        defaultMessage: 'Remove File',
+    }
+})
 
 class NewLetterEntryForm extends React.Component {
     constructor(props) {
@@ -50,7 +86,7 @@ class NewLetterEntryForm extends React.Component {
             uploadError: ''
         }
 
-        this.uploadFileErrorMsg = 'Error uploading file. Please try again.'
+        this.uploadFileErrorMsg = this.props.intl.formatMessage(messages.uploadFileErrMsg1)
 
         // functions binding
         this.onDrop = this.onDrop.bind(this)
@@ -124,12 +160,12 @@ class NewLetterEntryForm extends React.Component {
         }
         if (!_.isEmpty(rejectedFiles)) {
             if (rejectedFiles[0].size > config.uploadFileSizeLimit) {
-                this.uploadFileErrorMsg = 'File size is greater then 100 KB. Please upload a smaller file.'
+                this.uploadFileErrorMsg = this.props.intl.formatMessage(messages.uploadFileErrMsg2)
             }
 
             const fileExtension = LetterTracking.getFileExtensionFromName(rejectedFiles[0].name)
             if (!_.contains(LetterTracking.getUploadFileValidExtensions(), fileExtension)) {
-                this.uploadFileErrorMsg = `${fileExtension} is not an accepted extension.`
+                this.uploadFileErrorMsg = this.props.intl.formatMessage(messages.uploadFileErrMsg3, {fileExtension: fileExtension})
             }
 
             this.setState({ uploadedFileName:'', uploadError: true })
@@ -168,7 +204,8 @@ class NewLetterEntryForm extends React.Component {
     }
 
     render() {
-        const btnText = this.props.mode === 'edit' ? 'Update' : 'Save'
+        const { intl } = this.props
+        const btnText = this.props.mode === 'edit' ? intl.formatMessage(messages.submitBtnUpdateText) : intl.formatMessage(messages.submitBtnSaveText)
         return (
             <Grid bsClass="entry-form">
                 {this.props.mode !== 'edit' && <BreadcrumbsItem to={LetterTracking.getLetterTrackingAbsolutePath('addNewEntry')}> Add New Entry </BreadcrumbsItem>}
@@ -181,11 +218,13 @@ class NewLetterEntryForm extends React.Component {
                         <Form onSubmit={this.handleSubmit}>
                             <fieldset className="custom-fieldset margin-bottom-2x">
                                 <legend className="custom-legend">
-                                    <Label bsStyle="primary" className="padding-2x">{this.props.mode === 'edit' ? 'Update Entry' : 'New Entry'}</Label>
+                                    <Label bsStyle="primary" className="padding-2x">{this.props.mode === 'edit' ? intl.formatMessage(messages.updateEntryFormLabel) : intl.formatMessage(messages.saveEntryFormLabel)}</Label>
                                 </legend>
                                 <Col md={3}>
                                     <FormGroup className="required" >
-                                        <ControlLabel htmlFor="LETTER_REG_NO">LETTER_REG_NO</ControlLabel>
+                                        <ControlLabel htmlFor="LETTER_REG_NO">
+                                            <FormattedMessage id="letterTracking.newLetterEntryForm.regNo" defaultMessage="LETTER_REG_NO" />
+                                        </ControlLabel>
                                         <Input
                                             type="text"
                                             autoComplete="on"
@@ -200,7 +239,9 @@ class NewLetterEntryForm extends React.Component {
 
                                 <Col md={3}>
                                     <FormGroup className="required" >
-                                        <ControlLabel htmlFor="LETTER_STATUS">LETTER_STATUS</ControlLabel>
+                                        <ControlLabel htmlFor="LETTER_STATUS">
+                                            <FormattedMessage id="letterTracking.newLetterEntryForm.status" defaultMessage="LETTER_STATUS" />
+                                        </ControlLabel>
                                         <Select
                                         name="LETTER_STATUS"
                                         value={this.state.fields.LETTER_STATUS}
@@ -216,7 +257,9 @@ class NewLetterEntryForm extends React.Component {
 
                                 <Col md={4}>
                                     <FormGroup className="required" >
-                                        <ControlLabel htmlFor="LETTER_DATE">SELECT_DATE</ControlLabel>
+                                        <ControlLabel htmlFor="LETTER_DATE">
+                                            <FormattedMessage id="letterTracking.newLetterEntryForm.date" defaultMessage="SELECT_DATE" />
+                                        </ControlLabel>
                                         <DatePicker
                                             name="LETTER_DATE"
                                             className="form-control"
@@ -232,7 +275,9 @@ class NewLetterEntryForm extends React.Component {
 
                                 <Col md={3}>
                                     <FormGroup className="required" >
-                                        <ControlLabel htmlFor="DEPARTMENT_NAME">DEPARTMENT_NAME</ControlLabel>
+                                        <ControlLabel htmlFor="DEPARTMENT_NAME">
+                                            <FormattedMessage id="letterTracking.newLetterEntryForm.deptName" defaultMessage="DEPARTMENT_NAME" />
+                                        </ControlLabel>
                                         <Select
                                         name="DEPARTMENT_NAME"
                                         value={this.state.fields.DEPARTMENT_NAME}
@@ -247,7 +292,9 @@ class NewLetterEntryForm extends React.Component {
 
                                 <Col md={3}>
                                     <FormGroup className="required" >
-                                        <ControlLabel htmlFor="LETTER_TYPE">LETTER_TYPE</ControlLabel>
+                                        <ControlLabel htmlFor="LETTER_TYPE">
+                                            <FormattedMessage id="letterTracking.newLetterEntryForm.type" defaultMessage="LETTER_TYPE" />
+                                        </ControlLabel>
                                         <Select
                                         name="LETTER_TYPE"
                                         value={this.state.fields.LETTER_TYPE}
@@ -262,7 +309,9 @@ class NewLetterEntryForm extends React.Component {
 
                                 <Col md={3}>
                                     <FormGroup className="required" >
-                                        <ControlLabel htmlFor="LETTER_TAG">LETTER_TAG</ControlLabel>
+                                        <ControlLabel htmlFor="LETTER_TAG">
+                                            <FormattedMessage id="letterTracking.newLetterEntryForm.tag" defaultMessage="LETTER_TAG" />
+                                        </ControlLabel>
                                         <Select
                                         name="LETTER_TAG"
                                         value={this.state.fields.LETTER_TAG}
@@ -277,7 +326,9 @@ class NewLetterEntryForm extends React.Component {
 
                                 <Col md={3}>
                                     <FormGroup className="required" >
-                                        <ControlLabel htmlFor="ASSIGNED_OFFICER">ASSIGNED_OFFICER</ControlLabel>
+                                        <ControlLabel htmlFor="ASSIGNED_OFFICER">
+                                            <FormattedMessage id="letterTracking.newLetterEntryForm.assignedOfficer" defaultMessage="ASSIGNED_OFFICER" />
+                                        </ControlLabel>
                                         <Select
                                         name="ASSIGNED_OFFICER"
                                         value={this.state.fields.ASSIGNED_OFFICER}
@@ -293,7 +344,9 @@ class NewLetterEntryForm extends React.Component {
 
                                 <Col md={6}>
                                     <FormGroup className="required" >
-                                        <ControlLabel htmlFor="LETTER_ADDRESS">LETTER_ADDRESS</ControlLabel>
+                                        <ControlLabel htmlFor="LETTER_ADDRESS">
+                                            <FormattedMessage id="letterTracking.newLetterEntryForm.address" defaultMessage="LETTER_ADDRESS" />
+                                        </ControlLabel>
                                         <Input
                                             type="text"
                                             autoComplete="on"
@@ -308,7 +361,9 @@ class NewLetterEntryForm extends React.Component {
 
                                 <Col md={6}>
                                     <FormGroup className="required" >
-                                        <ControlLabel htmlFor="LETTER_SUBJECT">LETTER_SUBJECT</ControlLabel>
+                                        <ControlLabel htmlFor="LETTER_SUBJECT">
+                                            <FormattedMessage id="letterTracking.newLetterEntryForm.subject" defaultMessage="LETTER_SUBJECT" />
+                                        </ControlLabel>
                                         <Input
                                             type="text"
                                             autoComplete="on"
@@ -324,7 +379,9 @@ class NewLetterEntryForm extends React.Component {
 
                                 <Col md={12}>
                                     <FormGroup bsSize="large" >
-                                        <ControlLabel htmlFor="REMARK">REMARK</ControlLabel>
+                                        <ControlLabel htmlFor="REMARK">
+                                            <FormattedMessage id="letterTracking.newLetterEntryForm.remark" defaultMessage="REMARK" />
+                                        </ControlLabel>
                                         <Textarea
                                             autoComplete="on"
                                             name="REMARK"
@@ -345,16 +402,21 @@ class NewLetterEntryForm extends React.Component {
                                         multiple={false}
                                         onDrop={this.onDrop}>
                                             <Grid bsClass="dzinfo">
-                                                <span> Upload your letter here. File size limit is 100KB. <span className="highlight">Supported File extensions are .pdf, .doc, .docx, .jpg, .png</span></span>
+                                                <span>
+                                                    <FormattedMessage id="letterTracking.newLetterEntryForm.dropzone.msg1" defaultMessage="Upload your letter here. File size limit is 100KB." />
+                                                    <span className="highlight">
+                                                        <FormattedMessage id="letterTracking.newLetterEntryForm.dropzone.msg2" defaultMessage="Supported File extensions are .pdf, .doc, .docx, .jpg, .png" />
+                                                    </span>
+                                                </span>
                                                 <Clearfix />
 
                                                 <Btn bsStyle="default" className="dzuploadbtn">
-                                                    <Glyphicon glyph="upload" /> Upload File
+                                                    <Glyphicon glyph="upload" /> <FormattedMessage id="letterTracking.newLetterEntryForm.dropzone.uploadBtn" defaultMessage="Upload File" />
                                                 </Btn>
                                                 <Clearfix />
 
                                                 <p className="dzuploadedfilename">{this.state.uploadedFileName}
-                                                    {this.state.uploadedFileName && <Glyphicon title="Remove File" glyph="remove" className="margin-left-1x cursor-pointer" onClick={this.removeUploadedFile}></Glyphicon>}
+                                                    {this.state.uploadedFileName && <Glyphicon title={intl.formatMessage(messages.removeGlyphTitle)} glyph="remove" className="margin-left-1x cursor-pointer" onClick={this.removeUploadedFile}></Glyphicon>}
                                                 </p>
                                             </Grid>
                                     </Dropzone>
@@ -378,7 +440,8 @@ class NewLetterEntryForm extends React.Component {
 NewLetterEntryForm.propTypes = {
     mode: PropTypes.string,
     onUpdate: PropTypes.func,
-    record: PropTypes.object
+    record: PropTypes.object,
+    intl: PropTypes.object
 }
 
-export default NewLetterEntryForm
+export default injectIntl(NewLetterEntryForm)

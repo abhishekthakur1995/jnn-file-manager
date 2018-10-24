@@ -1,3 +1,4 @@
+dist/messages/
 node_modules/
 upload/
 npm-debug.log

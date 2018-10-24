@@ -4,8 +4,9 @@ import config from 'config'
 import moment from 'moment'
 import { CSVLink } from 'react-csv'
 import DatePicker from 'react-datepicker'
-import pdfMake from "pdfmake/build/pdfmake"
-import pdfFonts from "pdfmake/build/vfs_fonts"
+import pdfMake from 'pdfmake/build/pdfmake'
+import { FormattedMessage } from 'react-intl'
+import pdfFonts from 'pdfmake/build/vfs_fonts'
 import { GetRecordsService } from './services/ApiServices'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { Grid, Radio, Table, Button, Clearfix } from 'react-bootstrap'
@@ -180,12 +181,15 @@ class GetRecords extends React.Component {
 													<Radio
 														name="periodType"
 														inline={true}
-														onChange={() => { this.handleRadioChange('monthType') }} >By Month
+														onChange={() => { this.handleRadioChange('monthType') }} >
+														<FormattedMessage id="fileManager.getRecords.byMonthSection.title" defaultMessage="By Month" />
 													</Radio>
 												</td>
 
 												<td width="80%">
-													<Grid bsClass="pull-left">Year:<br />
+													<Grid bsClass="pull-left">
+														<FormattedMessage id="fileManager.getRecords.byMonthSection.year" defaultMessage="Year:" />
+														<br />
 														<YearDropDown
 															onClick={this.handleFilterParams}
 														/>
@@ -193,7 +197,9 @@ class GetRecords extends React.Component {
 
 													<Clearfix />
 
-													<Grid bsClass="pull-left">Month:<br />
+													<Grid bsClass="pull-left">
+														<FormattedMessage id="fileManager.getRecords.byMonthSection.month" defaultMessage="Month:" />
+														<br />
 														<MonthDropDown
 															onClick={this.handleFilterParams}
 														/>
@@ -201,7 +207,11 @@ class GetRecords extends React.Component {
 
 													<Clearfix />
 
-													{this.state.error.monthError && <span className="error">Please select both year and month</span>}
+													{this.state.error.monthError &&
+														<span className="error">
+															<FormattedMessage id="fileManager.getRecords.byMonthSection.errMsg" defaultMessage="Please select both year and month" />
+														</span>
+													}
 
 												</td>
 											</tr>
@@ -211,12 +221,14 @@ class GetRecords extends React.Component {
 													<Radio
 														name="periodType"
 														inline={true}
-														onChange={() => { this.handleRadioChange('specificPeriodType') }} >Specific Period
+														onChange={() => { this.handleRadioChange('specificPeriodType') }} >
+														<FormattedMessage id="fileManager.getRecords.specificPeriodSection.title" defaultMessage="Specific Period" />
 													</Radio>
 												</td>
 
 												<td width="80%">
-													<div>From:
+													<div>
+														<FormattedMessage id="fileManager.getRecords.specificPeriodSection.from" defaultMessage="From:" />
 														<DatePicker
 															dateFormat={config.datePicker.dateFormat}
 															placeholderText="Click to select a date"
@@ -230,7 +242,8 @@ class GetRecords extends React.Component {
 
 													<br />
 
-													<div>To:
+													<div>
+														<FormattedMessage id="fileManager.getRecords.specificPeriodSection.to" defaultMessage="To:" />
 														<DatePicker
 														   	dateFormat={config.datePicker.dateFormat}
 														   	placeholderText="Click to select a date"
@@ -242,34 +255,46 @@ class GetRecords extends React.Component {
 														/>
 													</div>
 
-													{this.state.error.specificPeriodError && <span className="error">Please select both start date and end date</span>}
+													{this.state.error.specificPeriodError &&
+														<span className="error">
+															<FormattedMessage id="fileManager.getRecords.specificPeriodSection.errMsg" defaultMessage="Please select both start date and end date" />
+														</span>
+													}
 
 												</td>
 											</tr>
 
 											<tr align="left" valign="middle">
 												<td className="data-left-aligned" width="20%">
-													Select a format
+													<FormattedMessage id="fileManager.getRecords.selectFormatSection.title" defaultMessage="Select a format" />
 												</td>
 												<td width="80%" className="data-left-aligned">
 													<Radio
 														name="downloadFormat"
 														inline={true}
-														onChange={() => { this.handleFilterParams('downloadFormat', 'excel') }} >Excel
+														onChange={() => { this.handleFilterParams('downloadFormat', 'excel') }} >
+														<FormattedMessage id="fileManager.getRecords.selectFormatSection.excel" defaultMessage="Excel" />
 													</Radio>
 													<Radio
 														name="downloadFormat"
 														inline={true}
-														onChange={() => { this.handleFilterParams('downloadFormat', 'pdf') }} >PDF
+														onChange={() => { this.handleFilterParams('downloadFormat', 'pdf') }} >
+														<FormattedMessage id="fileManager.getRecords.selectFormatSection.pdf" defaultMessage="PDF" />
 													</Radio>
 
-													{this.state.error.emptyDownloadFormat && <span className="error margin-left-5x">Please select a download format</span>}
+													{this.state.error.emptyDownloadFormat &&
+														<span className="error margin-left-5x">
+															<FormattedMessage id="fileManager.getRecords.selectFormatSection.errMsg" defaultMessage="Please select a download format" />
+														</span>
+													}
 												</td>
 											</tr>
 
 											<tr align="left" valign="middle">
 												<td width="20%" className="data-left-aligned">
-													<Button className="green-btn" onClick={this.downloadData}>Fetch Data</Button>
+													<Button className="green-btn" onClick={this.downloadData}>
+														<FormattedMessage id="fileManager.getRecords.fetchDataBtn" defaultMessage="Fetch Data" />
+													</Button>
 												</td>
 
 												<td width="80%" className="data-left-aligned">
@@ -278,12 +303,15 @@ class GetRecords extends React.Component {
 														data={this.state.downloadData}
 												  		filename={`${this.state.filter.month}.csv`}
 												  		target="_blank"
-												  		className="traditional-link"> Download Excel
+												  		className="traditional-link">
+												  		<FormattedMessage id="fileManager.getRecords.downloadExcelLink" defaultMessage="Download Excel" />
 													</CSVLink>
 												}
 
 												{this.state.downloadData && this.state.filter.downloadFormat === 'pdf' &&
-													<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>Download Pdf</span>
+													<span className="traditional-link cursor-pointer" onClick={this.handlePdfGeneration}>
+														<FormattedMessage id="fileManager.getRecords.downloadPdfLink" defaultMessage="Download Pdf" />
+													</span>
 												}
 												</td>
 											</tr>

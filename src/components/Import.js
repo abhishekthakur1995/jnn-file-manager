@@ -1,5 +1,6 @@
 import React from 'react'
 import Dropzone from 'react-dropzone'
+import { FormattedMessage } from 'react-intl'
 import { ImportService } from './services/ApiServices'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { Grid, Button, Glyphicon, Clearfix } from 'react-bootstrap'
@@ -65,8 +66,10 @@ class Import extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="import-records">
-				<BreadcrumbsItem to={'/servicePanel/fileManager/import'}> Import </BreadcrumbsItem>
-				<PageHead title="Import" downloadSampleExcel={<span onClick={this.downloadSampleExcel}> Download Sample Excel<Glyphicon className="fs20" glyph="download" /></span>} />
+				<BreadcrumbsItem to={'/servicePanel/fileManager/import'}>Import</BreadcrumbsItem>
+				<PageHead title="Import"
+					downloadSampleExcel={<span onClick={this.downloadSampleExcel}><FormattedMessage id="fileManager.import.dwnldSampleExcelMsg" defaultMessage="Download Sample Excel" /><Glyphicon className="fs20" glyph="download" /></span>}
+				/>
 				{this.state.showLoading && <LoadingSpinner />}
 
 				<Grid bsClass="bg-white padding-2x green-top">
@@ -76,11 +79,17 @@ class Import extends React.Component {
 						multiple={false}
 						onDrop={(files) => this.onDrop(files)}>
 							<Grid bsClass="dzinfo">
-								<span>Try dropping some files here, or click to select files to upload. <span className="highlight">Only valid excel files (.xlsx) will be accepted</span></span>
+								<span>
+									<FormattedMessage id="fileManager.import.dropzone.msg1" defaultMessage="Try dropping some files here, or click to select files to upload." />
+									<span className="highlight">
+										<FormattedMessage id="fileManager.import.dropzone.msg2" defaultMessage="Only valid excel files (.xlsx) will be accepted" />
+									</span>
+								</span>
 								<Clearfix />
 
 								<Button bsStyle="default" className="dzuploadbtn">
-									<Glyphicon glyph="file" /> Select File
+									<Glyphicon glyph="file" />
+									<FormattedMessage id="fileManager.import.dropzone.uploadFileBtn" defaultMessage="Select File" />
 								</Button>
 								<Clearfix />
 
@@ -93,7 +102,8 @@ class Import extends React.Component {
 
 				{this.state.fileUpload &&
 					<Button className="margin-top-2x width-2x green-btn" onClick={this.onImport}>
-						<Glyphicon glyph="import" /> Import Data
+						<Glyphicon glyph="import" />
+						<FormattedMessage id="fileManager.import.dropzone.importDataBtn" defaultMessage="Import Data" />
 					</Button>
 				}
 			</Grid>
