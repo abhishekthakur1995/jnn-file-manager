@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Glyphicon, Breadcrumb } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import { Grid, Glyphicon, Breadcrumb } from 'react-bootstrap'
 
 export const CrumbIconItem = ({to, glyph, children, ...props}) => (
     <LinkContainer to={to}>

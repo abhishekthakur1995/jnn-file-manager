@@ -1,17 +1,17 @@
-import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import React, { Component, Fragment } from 'react'
 
 const LEFT_PAGE = 'LEFT'
 const RIGHT_PAGE = 'RIGHT'
 
 const range = (from, to, step = 1) => {
-    let i = from;
-    const range = [];
+    let i = from
+    const range = []
     while (i <= to) {
-        range.push(i);
-        i += step;
+        range.push(i)
+        i += step
     }
-    return range;
+    return range
 }
 
 class PaginationComponent extends Component {
@@ -22,7 +22,7 @@ class PaginationComponent extends Component {
         this.pageNeighbours =
           typeof pageNeighbours === "number"
             ? Math.max(0, Math.min(props.pageNeighbours, 2))
-            : 0;
+            : 0
 
         this.getTotalPages = this.getTotalPages.bind(this)
     }
@@ -32,7 +32,7 @@ class PaginationComponent extends Component {
     }
 
     getTotalPages() {
-        if (this.props.totalRecords == 0) return 1;
+        if (this.props.totalRecords == 0) return 1
         return Math.ceil(this.props.totalRecords / this.props.pageLimit)
     }
 
