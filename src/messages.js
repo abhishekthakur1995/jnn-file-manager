@@ -16,6 +16,12 @@ export default {
 				resetPasswordLink: '',
 				logoutLink: ''
 			},
+			loginForm: {
+				moduleTitle: '',
+				emailField: '',
+				passwordField: '',
+				loginBtn: ''
+			},
 			errorPage: {
 				msg1: '',
 				msg2: '',

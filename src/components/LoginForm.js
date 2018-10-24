@@ -3,10 +3,11 @@ import _ from 'underscore'
 import config from 'config'
 import Alert from 'react-s-alert'
 import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Button from 'react-validation/build/button'
-import { Redirect } from 'react-router-dom'
 import { userAuth } from './services/AuthService'
 import { LoginService } from './services/ApiServices'
 import { required, email } from './helpers/ValidationHelper'
@@ -75,7 +76,9 @@ class LoginForm extends React.Component {
 			<Grid bsClass="login-form-new">
 				<Alert stack={{limit: 3}} html={true} />
 				<Grid bsClass="login-title">
-					<Grid componentClass="p" bsClass="bold text-align-center fs33">Record Management System</Grid>
+					<Grid componentClass="p" bsClass="bold text-align-center fs33">
+						<FormattedMessage id="common.loginForm.moduleTitle" defaultMessage="Record Management System" />
+					</Grid>
 				</Grid>
 				<Grid componentClass="section" bsClass="four-col">
 			    	<Row>
@@ -88,7 +91,9 @@ class LoginForm extends React.Component {
 					            <Col xs={12}>
 					            	<Col xs={8}>
 	                    			    <FormGroup md={4} bsSize="large">
-	                    			        <ControlLabel htmlFor="email">Email</ControlLabel>
+	                    			        <ControlLabel htmlFor="email">
+	                    			        	<FormattedMessage id="common.loginForm.emailField" defaultMessage="Email" />
+	                    			        </ControlLabel>
 	                        			        <Input
 	                        			            type="email"
 	                        			            autoComplete="on"
@@ -103,7 +108,9 @@ class LoginForm extends React.Component {
 
 					                <Col xs={8}>
                         			    <FormGroup md={4} bsSize="large">
-                        			        <ControlLabel htmlFor="password">Password</ControlLabel>
+                        			        <ControlLabel htmlFor="password">
+                        			        	<FormattedMessage id="common.loginForm.passwordField" defaultMessage="Password" />
+                        			        </ControlLabel>
                             			        <Input
                             			            type="password"
                             			            autoComplete="on"
@@ -118,7 +125,8 @@ class LoginForm extends React.Component {
 
 				                    <Col xs={8}>
 				                        <Button type="submit" className="btn btn-default btn-block">
-                            		    	<Glyphicon className="padding-right-1x" glyph="log-in" />Login
+                            		    	<Glyphicon className="padding-right-1x" glyph="log-in" />
+                            		    	<FormattedMessage id="common.loginForm.loginBtn" defaultMessage="Login" />
                             		    </Button>
 				                    </Col>
 					            </Col>
