@@ -126,7 +126,7 @@ class LoginForm extends React.Component {
 				                    <Col xs={8}>
 				                        <Button type="submit" className="btn btn-default btn-block">
                             		    	<Glyphicon className="padding-right-1x" glyph="log-in" />
-                            		    	<FormattedMessage id="common.loginForm.loginBtn" defaultMessage="LoginForm`" />
+                            		    	<FormattedMessage id="common.loginForm.loginBtn" defaultMessage="Login" />
                             		    </Button>
 				                    </Col>
 					            </Col>
