@@ -94,15 +94,15 @@ class LoginForm extends React.Component {
 	                    			        <ControlLabel htmlFor="email">
 	                    			        	<FormattedMessage id="common.loginForm.emailField" defaultMessage="Email" />
 	                    			        </ControlLabel>
-	                        			        <Input
-	                        			            type="email"
-	                        			            autoComplete="on"
-	                        			            name="email"
-	                        			            validations={[required, email]}
-	                        			            className="form-control"
-	                        			            value={this.state.fields.email}
-	                        			            onChange={this.handleChange}
-	                        			        />
+                        			        <Input
+                        			            type="email"
+                        			            autoComplete="on"
+                        			            name="email"
+                        			            validations={[required, email]}
+                        			            className="form-control"
+                        			            value={this.state.fields.email}
+                        			            onChange={this.handleChange}
+                        			        />
 	                    			    </FormGroup>
 					                </Col>
 
@@ -111,15 +111,15 @@ class LoginForm extends React.Component {
                         			        <ControlLabel htmlFor="password">
                         			        	<FormattedMessage id="common.loginForm.passwordField" defaultMessage="Password" />
                         			        </ControlLabel>
-                            			        <Input
-                            			            type="password"
-                            			            autoComplete="on"
-                            			            name="password"
-                            			            validations={[required]}
-                            			            className="form-control"
-                            			            value={this.state.fields.password}
-                            			            onChange={this.handleChange}
-                            			        />
+                        			        <Input
+                        			            type="password"
+                        			            autoComplete="on"
+                        			            name="password"
+                        			            validations={[required]}
+                        			            className="form-control"
+                        			            value={this.state.fields.password}
+                        			            onChange={this.handleChange}
+                        			        />
                         			    </FormGroup>
 				                    </Col>
 
