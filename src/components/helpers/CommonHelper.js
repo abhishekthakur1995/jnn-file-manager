@@ -41,7 +41,7 @@ export const Common = {
 }
 
 export const LetterTracking = {
-	getLetterTrackingAbsolutePath(relativePath) {
+	getAbsolutePath(relativePath) {
 		return `/servicePanel/letterTracking/${relativePath}`
 	},
 	getLetterStatusFromCode(code) {
@@ -63,6 +63,9 @@ export const LetterTracking = {
 }
 
 export const FileRecord = {
+	getAbsolutePath(relativePath) {
+		return `/servicePanel/fileManager/${relativePath}`
+	},
 	getFileStatusFromCode(code) {
 		return FILE_STATUS_CODE_MAPPING[code]
 	}

@@ -215,7 +215,7 @@ class ExportLetterData extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="get-records">
-				<BreadcrumbsItem to={LetterTracking.getLetterTrackingAbsolutePath('exportData')}> Get Records </BreadcrumbsItem>
+				<BreadcrumbsItem to={LetterTracking.getAbsolutePath('exportData')}> Get Records </BreadcrumbsItem>
 				<PageHead title="Get Records" />
 				{this.state.showLoading && <LoadingSpinner />}
 				<Grid bsClass="green-top bg-white">

@@ -1,5 +1,6 @@
 import React from 'react'
 import Dropzone from 'react-dropzone'
+import { FileRecord } from './helpers/CommonHelper'
 import { FormattedMessage } from 'react-intl'
 import { ImportService } from './services/ApiServices'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
@@ -66,7 +67,7 @@ class Import extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="import-records">
-				<BreadcrumbsItem to={'/servicePanel/fileManager/import'}>Import</BreadcrumbsItem>
+				<BreadcrumbsItem to={FileRecord.getAbsolutePath('import')}>Import</BreadcrumbsItem>
 				<PageHead title="Import"
 					downloadSampleExcel={<Grid componentClass="span" bsClass="" onClick={this.downloadSampleExcel}><FormattedMessage id="fileManager.import.dwnldSampleExcelMsg" defaultMessage="Download Sample Excel" /><Glyphicon className="fs20" glyph="download" /></Grid>}
 				/>

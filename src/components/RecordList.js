@@ -2,12 +2,12 @@ import React from 'react'
 import _ from 'underscore'
 import config from 'config'
 import Record from './Record'
-import { Common } from './helpers/CommonHelper'
-import FilterComponent from './uiComponents/FilterComponent'
-import PaginationComponent from './uiComponents/PaginationComponent'
 import { RecordsService } from './services/ApiServices'
 import { Grid, Table, Checkbox } from 'react-bootstrap'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import { Common, FileRecord } from './helpers/CommonHelper'
+import FilterComponent from './uiComponents/FilterComponent'
+import PaginationComponent from './uiComponents/PaginationComponent'
 import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase, FilterButton, NoData } from './uiComponents/CommonComponent'
 
 class RecordList extends React.Component {
@@ -292,7 +292,7 @@ class RecordList extends React.Component {
 
 		return (
 			<Grid bsClass="record-list">
-				<BreadcrumbsItem to={'/servicePanel/fileManager/manageRecords'}> Manage Records </BreadcrumbsItem>
+				<BreadcrumbsItem to={FileRecord.getAbsolutePath('manageRecords')}> Manage Records </BreadcrumbsItem>
 				{this.state.showLoading && <LoadingSpinner />}
 				<PageHead
 					title="Manage Record Status"

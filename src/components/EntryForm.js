@@ -6,6 +6,7 @@ import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Select from 'react-validation/build/select'
 import Button from 'react-validation/build/button'
+import { FileRecord } from './helpers/CommonHelper'
 import Textarea from 'react-validation/build/textarea'
 import { EntryFormService } from './services/ApiServices'
 import { PageHead } from './uiComponents/CommonComponent'
@@ -98,7 +99,7 @@ class EntryForm extends React.Component {
         const btnText = this.props.mode === 'edit' ? 'Update' : 'Save'
         return (
             <Grid bsClass="entry-form">
-            {this.props.mode !== 'edit' && <BreadcrumbsItem to={'/servicePanel/fileManager/addNewRecord'}> Add New Record </BreadcrumbsItem>}
+            {this.props.mode !== 'edit' && <BreadcrumbsItem to={FileRecord.getAbsolutePath('addNewRecord')}> Add New Record </BreadcrumbsItem>}
             {this.props.mode !== 'edit' && <PageHead />}
                 <Row className="margin-0x bg-white green-top padding-top-2x">
                     <Alert stack={{limit: 3}} html={true} />

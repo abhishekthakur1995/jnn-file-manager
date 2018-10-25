@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker'
 import pdfMake from 'pdfmake/build/pdfmake'
 import { FormattedMessage } from 'react-intl'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
+import { FileRecord } from './helpers/CommonHelper'
 import { GetRecordsService } from './services/ApiServices'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { Grid, Radio, Table, Button, Clearfix } from 'react-bootstrap'
@@ -167,7 +168,7 @@ class GetRecords extends React.Component {
 	render() {
 		return (
 			<Grid bsClass="get-records">
-				<BreadcrumbsItem to={'/servicePanel/fileManager/getRecords'}> Get Records </BreadcrumbsItem>
+				<BreadcrumbsItem to={FileRecord.getAbsolutePath('getRecords')}> Get Records </BreadcrumbsItem>
 				<PageHead title="Get Records" />
 				<Grid bsClass="green-top bg-white">
 					<Table bordered className="table" width="100%">

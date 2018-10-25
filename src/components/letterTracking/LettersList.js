@@ -219,7 +219,7 @@ class LettersList extends React.Component {
 
 		return (
 			<Grid bsClass="record-list">
-				<BreadcrumbsItem to={LetterTracking.getLetterTrackingAbsolutePath('manageLetters')}> Manage Letters </BreadcrumbsItem>
+				<BreadcrumbsItem to={LetterTracking.getAbsolutePath('manageLetters')}> Manage Letters </BreadcrumbsItem>
 				{this.state.showLoading && <LoadingSpinner />}
 				<PageHead
 					title="Manage Letters"

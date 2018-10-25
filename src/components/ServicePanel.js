@@ -13,7 +13,7 @@ const messages = defineMessages({
     },
     letterRecordTitle: {
 		id: 'common.servicePanel.letterRecordTitle',
-        defaultMessage: 'File Record Manager'
+        defaultMessage: 'Letter Tracking'
     }
 })
 

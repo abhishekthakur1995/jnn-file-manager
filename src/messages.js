@@ -39,6 +39,7 @@ export default {
 				manageRecords: '',
 				getRecords: '',
 				importExcel: '',
+				manageSystemInputs: ''
 			},
 			infoboard: {
 				total: '',
@@ -87,7 +88,8 @@ export default {
 			sidebar: {
 				addNewEntry: '',
 				manageLetters: '',
-				exportData: ''
+				exportData: '',
+				manage: ''
 			},
 			letterboard: {
 				total: '',

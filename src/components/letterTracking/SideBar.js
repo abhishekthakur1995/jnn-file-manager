@@ -8,6 +8,7 @@ import { USERS } from './../helpers/Constants'
 import ExportLetterData from './ExportLetterData'
 import NewLetterEntryForm from './NewLetterEntryForm'
 import { Link, Route, Switch } from 'react-router-dom'
+import { LetterTracking } from './../helpers/CommonHelper'
 import ManageLetterBoardInputs from './ManageLetterBoardInputs'
 import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { userAuth, SystemUserRoute, SystemAdminRoute } from './../services/AuthService'
@@ -23,27 +24,24 @@ class SideBar extends React.Component {
 				<nav className="active" id="sidebar">
 					{userAuth.getUserRole() === USERS.SYSUSER &&
 						<ListGroup componentClass="ul" className="list-unstyled components">
-						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/addNewEntry' ? 'active' : ''}`} bsClass="list">
+						    <ListGroupItem className={`${this.props.location.pathname == LetterTracking.getAbsolutePath('addNewEntry') ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/addNewEntry`}>
 						            <i className="glyphicon glyphicon-pencil"></i>
-						            <FormattedMessage id="letterTracking.sidebar.addNewEntry"
-                                     	defaultMessage="Add New Entry" />
+						            <FormattedMessage id="letterTracking.sidebar.addNewEntry" defaultMessage="Add New Entry" />
 						        </Link>
 						    </ListGroupItem>
 
-						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/manageLetters' ? 'active' : ''}`} bsClass="list">
+						    <ListGroupItem className={`${this.props.location.pathname == LetterTracking.getAbsolutePath('manageLetters') ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/manageLetters`}>
 						            <i className="glyphicon glyphicon-briefcase"></i>
-						            <FormattedMessage id="letterTracking.sidebar.manageLetters"
-                                     	defaultMessage="Manage Letters" />
+						            <FormattedMessage id="letterTracking.sidebar.manageLetters" defaultMessage="Manage Letters" />
 						        </Link>
 						    </ListGroupItem>
 
-						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/exportData' ? 'active' : ''}`} bsClass="list">
+						    <ListGroupItem className={`${this.props.location.pathname == LetterTracking.getAbsolutePath('exportData') ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/exportData`}>
 						            <i className="glyphicon glyphicon-export"></i>
-						            <FormattedMessage id="letterTracking.sidebar.exportData"
-						             	defaultMessage="Export Data" />
+						            <FormattedMessage id="letterTracking.sidebar.exportData" defaultMessage="Export Data" />
 						        </Link>
 						    </ListGroupItem>
 						</ListGroup>
@@ -51,10 +49,10 @@ class SideBar extends React.Component {
 
 					{userAuth.getUserRole() === USERS.SYSADMIN &&
 						<ListGroup componentClass="ul" className="list-unstyled components">
-						    <ListGroupItem className={`${this.props.location.pathname == '/servicePanel/letterTracking/manageApp' ? 'active' : ''}`} bsClass="list">
+						    <ListGroupItem className={`${this.props.location.pathname == LetterTracking.getAbsolutePath('manageApp') ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/manageApp`}>
 						            <i className="glyphicon glyphicon-cog"></i>
-						            Manage
+						            <FormattedMessage id="letterTracking.sidebar.manage" defaultMessage="Manage" />
 						        </Link>
 						    </ListGroupItem>
 						</ListGroup>

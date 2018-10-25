@@ -208,7 +208,7 @@ class NewLetterEntryForm extends React.Component {
         const btnText = this.props.mode === 'edit' ? intl.formatMessage(messages.submitBtnUpdateText) : intl.formatMessage(messages.submitBtnSaveText)
         return (
             <Grid bsClass="entry-form">
-                {this.props.mode !== 'edit' && <BreadcrumbsItem to={LetterTracking.getLetterTrackingAbsolutePath('addNewEntry')}> Add New Entry </BreadcrumbsItem>}
+                {this.props.mode !== 'edit' && <BreadcrumbsItem to={LetterTracking.getAbsolutePath('addNewEntry')}> Add New Entry </BreadcrumbsItem>}
                 {this.props.mode !== 'edit' && <PageHead />}
                 {this.state.showLoading && <LoadingSpinner />}
 
