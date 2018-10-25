@@ -410,7 +410,7 @@ export const GetModuleLogo = (props) => {
         <Col xs={12} title={props.title}>
             <Grid bsClass="thumbnail margin-bottom-0x">
                 <Link to={props.moduleUrl}>
-                    <img src={props.logo} alt="Lights" className="width-10x image" />
+                    <img src={props.logo} alt={props.title} className="width-10x image" />
                     <Grid bsClass="middle">
                         <Grid bsClass="text">{props.title}</Grid>
                       </Grid>

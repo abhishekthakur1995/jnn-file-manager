@@ -26,6 +26,11 @@ export default {
 				msg1: '',
 				msg2: '',
 				msg3: ''
+			},
+			servicePanel: {
+				title: '',
+				fileRecordTitle: '',
+				letterRecordTitle: ''
 			}
 		},
 		fileManager: {
