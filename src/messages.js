@@ -82,6 +82,25 @@ export default {
 					msg2: '',
 					uploadFileBtn: ''
 				}
+			},
+			record: {
+				dropdown: {
+					btn1: '',
+					btn2: '',
+					btn3: ''
+				},
+				editRecordModal: {
+					title: ''
+				},
+				deleteRecordModal: {
+					title: '',
+					warning: '',
+					closeBtn: '',
+					deleteBtn: ''
+				},
+				manageRecordModal: {
+					title: ''
+				}
 			}
 		},
 		letterTracking: {

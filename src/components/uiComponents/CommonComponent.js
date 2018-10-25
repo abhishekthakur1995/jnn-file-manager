@@ -42,8 +42,8 @@ export const PageHead = (props) => {
 PageHead.propTypes = {
     pagination: PropTypes.object,
     quickSearch: PropTypes.object,
-    filter: PropTypes.object,
-    downloadSampleExcel: PropTypes.element
+    downloadSampleExcel: PropTypes.element,
+    filter: PropTypes.object
 }
 
 export const InfoBlock = (props) => {
@@ -123,12 +123,16 @@ export const DeleteRecordModal = (props) => {
             </Modal.Header>
 
             <Modal.Body>
-                Are you sure you want to delete this record? This cannot be undone.
+                <FormattedMessage id="record.deleteRecordModal.warning" defaultMessage="Are you sure you want to delete this record? This cannot be undone." />
             </Modal.Body>
 
             <Modal.Footer>
-                <Button onClick={props.handleModalClose}>Close</Button>
-                <Button bsClass="btn btn-danger" onClick={props.onDelete}>Delete</Button>
+                <Button onClick={props.handleModalClose}>
+                    <FormattedMessage id="record.deleteRecordModal.closeBtn" defaultMessage="Close" />
+                </Button>
+                <Button bsClass="btn btn-danger" onClick={props.onDelete}>
+                    <FormattedMessage id="record.deleteRecordModal.deleteBtn" defaultMessage="Delete" />
+                </Button>
             </Modal.Footer>
         </Modal>
     )
@@ -415,7 +419,7 @@ export const GetModuleLogo = (props) => {
                         <Grid bsClass="text">{props.title}</Grid>
                       </Grid>
                     <Grid bsClass="caption">
-                        <p className="text-align-center bold">{props.title}</p>
+                        <Grid componentClass="p" bsClass="text-align-center bold">{props.title}</Grid>
                     </Grid>
                 </Link>
             </Grid>

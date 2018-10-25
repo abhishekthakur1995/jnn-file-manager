@@ -3,8 +3,28 @@ import moment from 'moment'
 import config from 'config'
 import PropTypes from 'prop-types'
 import EntryForm from './EntryForm'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { SplitButton, MenuItem, Checkbox } from 'react-bootstrap'
 import { EditRecordModal, DeleteRecordModal, ManageRecordModal } from './uiComponents/CommonComponent'
+
+const messages = defineMessages({
+    editModalTitle: {
+		id: 'fileManager.record.editRecordModal.title',
+        defaultMessage: 'Edit record',
+    },
+    deleteModalTitle: {
+		id: 'fileManager.record.deleteRecordModal.title',
+        defaultMessage: 'Delete record',
+    },
+    manageModalTitle: {
+		id: 'fileManager.record.manageRecordModal.title',
+        defaultMessage: 'Manage record'
+    },
+    dropdownBtn1: {
+    	id: 'fileManager.record.dropdown.btn1',
+    	defaultMessage: 'Manage record'
+    }
+})
 
 class Record extends React.Component {
 	constructor(props) {
@@ -110,6 +130,7 @@ class Record extends React.Component {
   	}
 
 	render() {
+		const { intl } = this.props
 		const record = this.props.singleRecord
 		const fileStatus = record.FILE_STATUS == 1 ? 'Approved' : (record.FILE_STATUS == 2 ? 'Rejected' : 'Pending')
 		const dateCreated = moment(record.CREATED).format(config.defaultDateTimeFormat)
@@ -130,9 +151,13 @@ class Record extends React.Component {
 			    <td title={fileStatus}>{fileStatus}</td>
 			    <td title={dateCreated}>{dateCreated}</td>
 			    <td>
-			    	<SplitButton title="Manage" data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
-  						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>Edit</MenuItem>
-  						<MenuItem data-id="delete" eventKey="2" onClick={this.showModal}>Delete</MenuItem>
+			    	<SplitButton title={intl.formatMessage(messages.dropdownBtn1)} data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
+  						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>
+  							<FormattedMessage id="record.dropdown.btn2" defaultMessage="Edit" />
+  						</MenuItem>
+  						<MenuItem data-id="delete" eventKey="2" onClick={this.showModal}>
+  							<FormattedMessage id="record.dropdown.btn3" defaultMessage="Delete" />
+  						</MenuItem>
 					</SplitButton>
 				</td>
 
@@ -141,7 +166,7 @@ class Record extends React.Component {
 					onHide={this.handleModalClose}
 					handleModalClose={this.handleModalClose}
 					dialogClassName="width-9x"
-					modalTitle="Edit record"
+					modalTitle={intl.formatMessage(messages.editModalTitle)}
 					onUpdate={this.handleUpdate}
 					record={record}
 					component={EntryForm} >
@@ -152,7 +177,7 @@ class Record extends React.Component {
 					onHide={this.handleModalClose}
 					handleModalClose={this.handleModalClose}
 					onDelete={this.handleDelete}
-					modalTitle="Delete record">
+					modalTitle={intl.formatMessage(messages.deleteModalTitle)}>
 				</DeleteRecordModal>
 
 				<ManageRecordModal
@@ -163,7 +188,7 @@ class Record extends React.Component {
 					onPending={this.handlePendingStatus}
 					onApprove={this.handleApproveStatus}
 					onReject={this.handleRejectStatus}
-					modalTitle="Manage record"
+					modalTitle={intl.formatMessage(messages.manageModalTitle)}
 					showActionButtons={true}>
 				</ManageRecordModal>
 			</tr>
@@ -179,7 +204,8 @@ Record.propTypes = {
     onStatusChange: PropTypes.func,
     handleMultiSelect: PropTypes.func,
     getRecordsMarkedForUpdate: PropTypes.func,
-    checkBoxDefaultStatus: PropTypes.bool
+    checkBoxDefaultStatus: PropTypes.bool,
+    intl: PropTypes.object
 }
 
-export default Record
+export default injectIntl(Record)
