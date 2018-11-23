@@ -1,5 +1,6 @@
 //OFF = 0, WARN = 1, ERROR = 2;
 {
+    "parser": "babel-eslint",
     "env": {
         "browser": true,
         "es6": true
@@ -8,10 +9,12 @@
         "sourceType": "module",
         "ecmaFeatures": {
             "modules": true,
-            "jsx": true,
-            "experimentalObjectRestSpread": true
+            "jsx": true
         }
     },
+    "plugins": [
+        "react"
+    ],
     "extends": ["eslint:recommended", "plugin:react/recommended"],
     "rules": {
         "semi": 0,
@@ -28,5 +31,11 @@
         "no-console": ["warn", { "allow": ["info", "error"] }],
         "eol-last": 0,
         "no-useless-escape": 0
+    },
+    "settings": {
+        "react": {
+            "pragma": "React",
+            "version": "16.4.1"
+        }
     }
 }
