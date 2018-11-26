@@ -7,11 +7,11 @@ import ErrorPage from './ErrorPage'
 import RecordList from './RecordList'
 import GetRecords from './GetRecords'
 import { USERS } from './helpers/Constants'
-import { FormattedMessage } from 'react-intl'
 import { FileRecord } from './helpers/CommonHelper'
 import ManageSystemInputs from './ManageSystemInputs'
 import { Link, Route, Switch } from 'react-router-dom'
 import { Grid, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { FormattedMessage } from 'react-intl'
 import { userAuth, SystemUserRoute, SystemAdminRoute } from './services/AuthService'
 
 class SideBar extends React.Component {
@@ -28,7 +28,7 @@ class SideBar extends React.Component {
 						    <ListGroupItem className={`${this.props.location.pathname == FileRecord.getAbsolutePath('addNewRecord') ? 'active' : ''}`} bsClass="list">
 						        <Link to={`${this.props.match.url}/addNewRecord`}>
 						            <i className="glyphicon glyphicon-file"></i>
-						            <FormattedMessage id="fileManager.sidebar.addNewRecord" defaultMessage="Add New Record" />
+						            <FormattedMessage id="fileManager.sidebar.addNewRecord" />
 						        </Link>
 						    </ListGroupItem>
 

@@ -6,6 +6,8 @@ export default {
 				approved: 'स्वीकृत',
 				rejected: 'अस्वीकृत',
 				pending: 'लंबित',
+				total: 'कुल',
+				dashboard: 'डैशबोर्ड'
 			},
 			filter: {
 				title: 'फ़िल्टर लगाए',
@@ -49,11 +51,7 @@ export default {
 				manageSystemInputs: ''
 			},
 			infoboard: {
-				total: '',
-				pending: '',
-				approved: '',
-				rejected: '',
-				chartHolderTitle: ''
+				chartHolderTitle: 'रिकॉर्ड सारांश'
 			},
 			getRecords: {
 				byMonthSection: {

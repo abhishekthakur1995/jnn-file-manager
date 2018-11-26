@@ -13,19 +13,19 @@ import pending from './../../public/img/pending.png'
 
 const messages = defineMessages({
     total: {
-		id: 'fileManager.infoboard.total',
+		id: 'common.general.total',
         defaultMessage: 'Total'
     },
     pending: {
-		id: 'fileManager.infoboard.pending',
+		id: 'common.general.pending',
         defaultMessage: 'Pending'
     },
     rejected: {
-		id: 'fileManager.infoboard.rejected',
+		id: 'common.general.rejected',
         defaultMessage: 'Rejected'
     },
     approved: {
-    	id: 'fileManager.infoboard.approved',
+    	id: 'common.general.approved',
         defaultMessage: 'Approved'
     },
     chartHolderTitle: {
