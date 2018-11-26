@@ -10,7 +10,8 @@ export default {
 				incoming: 'आने वाला',
 				outgoing: 'बाहर जाने वाला',
 				dashboard: 'डैशबोर्ड',
-				action: 'कार्य'
+				action: 'कार्य',
+				noResult: 'कोई रिकॉर्ड नहीं मिला'
 			},
 			filter: {
 				title: 'फ़िल्टर लगाए',
@@ -43,6 +44,13 @@ export default {
 				title: 'एप्लीकेशन पोर्टल',
 				fileRecordTitle: 'फाइल मैनेजर',
 				letterRecordTitle: 'लेटर ट्रैकिंग'
+			},
+			resetPassword: {
+				title: 'पासवर्ड रिसेट करे',
+				currentPassword: 'वर्तमान पासवर्ड',
+				newPassword: 'नया पासवर्ड',
+				confirmPassword: 'नए पासवर्ड की पुष्टि करें',
+				resetBtn: 'पासवर्ड रिसेट करे'
 			}
 		},
 		fileManager: {

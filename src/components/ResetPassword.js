@@ -3,6 +3,7 @@ import config from 'config'
 import Alert from 'react-s-alert'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Button from 'react-validation/build/button'
@@ -86,12 +87,16 @@ class ResetPassword extends React.Component {
 							    <Form onSubmit={this.handleSubmit}>
 							    	<fieldset className="custom-fieldset margin-bottom-2x">
 								    	<legend className="custom-legend">
-								    	    <Label bsStyle="primary" className="padding-2x">Reset Password</Label>
+								    	    <Label bsStyle="primary" className="padding-2x">
+								    	    	<FormattedMessage id="common.resetPassword.title" defaultMessage="Reset Password" />
+								    	    </Label>
 								    	</legend>
 
 								    	<Col xs={12}>
 								    	    <FormGroup className="required">
-								    	        <ControlLabel htmlFor="currentPassword">Current Password</ControlLabel>
+								    	        <ControlLabel htmlFor="currentPassword">
+								    	        	<FormattedMessage id="common.resetPassword.currentPassword" defaultMessage="Current Password" />
+								    	        </ControlLabel>
 								    	        <Input
 								    	            type="password"
 								    	            autoComplete="on"
@@ -106,7 +111,9 @@ class ResetPassword extends React.Component {
 
 								    	<Col xs={12}>
 								    	    <FormGroup className="required">
-								    	        <ControlLabel htmlFor="newPassword">New Password</ControlLabel>
+								    	        <ControlLabel htmlFor="newPassword">
+								    	        	<FormattedMessage id="common.resetPassword.newPassword" defaultMessage="New Password" />
+								    	        </ControlLabel>
 								    	        <Input
 								    	            type="password"
 								    	            autoComplete="on"
@@ -121,7 +128,9 @@ class ResetPassword extends React.Component {
 
 								    	<Col xs={12}>
 								    	    <FormGroup className="required">
-								    	        <ControlLabel htmlFor="confirmNewPassword">Confirm New Password</ControlLabel>
+								    	        <ControlLabel htmlFor="confirmNewPassword">
+								    	        	<FormattedMessage id="common.resetPassword.confirmPassword" defaultMessage="Confirm New Password" />
+								    	        </ControlLabel>
 								    	        <Input
 								    	            type="password"
 								    	            autoComplete="on"
@@ -137,7 +146,8 @@ class ResetPassword extends React.Component {
 
 						    	    <Col className="padding-0x margin-bottom-2x" md={12}>
 						    	        <Button type="submit" className="btn btn-default green-btn pull-right">
-						    	            <Glyphicon className="padding-right-1x" glyph="refresh" />Reset Password
+						    	            <Glyphicon className="padding-right-1x" glyph="refresh" />
+					    	            	<FormattedMessage id="common.resetPassword.resetBtn" defaultMessage="Reset Password" />
 						    	        </Button>
 						    	    </Col>
 							    </Form>

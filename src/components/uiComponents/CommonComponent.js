@@ -318,7 +318,9 @@ FilterButton.propTypes = {
 export const NoData = (props) => {
     return (
         <tr>
-            <td colSpan={props.colSpan}> No results found.</td>
+            <td colSpan={props.colSpan}>
+                <FormattedMessage id="common.general.noResult" defaultMessage="No Results Found" />
+            </td>
         </tr>
     )
 }
