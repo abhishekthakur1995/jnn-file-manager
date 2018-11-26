@@ -121,7 +121,7 @@ export default {
 				addNewEntry: 'नया पत्र जोड़े',
 				manageLetters: 'पत्र प्रबंधित करें',
 				exportData: 'पत्र रिपोर्ट देखे',
-				manage: ''
+				manage: 'सेटिंग्स'
 			},
 			letterboard: {
 				chartHolderTitle: 'पत्र रिकॉर्ड सारांश'
@@ -184,6 +184,33 @@ export default {
 					viewAttachmentBtn: 'संलग्न पत्र देखें'
 				},
 				resultsPerPageMsg: 'परिणाम प्रति पृष्ठ'
+			},
+			manageSystemInputs: {
+				addBtn: 'जोड़े',
+				tab1: {
+					heading: 'विभागों का प्रबंधन करें',
+					title: 'नया डिपार्टमेंट जोड़े',
+					inputTitle: 'नए विभाग का नाम',
+					listTitle: 'विभाग सूची'
+				},
+				tab2: {
+					heading: 'अधिकारियों को प्रबंधित करें',
+					title: 'नया अधिकारी जोड़े',
+					inputTitle: 'नए अधिकारी का नाम',
+					listTitle: 'अधिकारी सूची'
+				},
+				tab3: {
+					heading: 'पत्र प्रकार प्रबंधित करें',
+					title: 'नया पत्र प्रकार जोड़े',
+					inputTitle: 'नए पत्र प्रकार का नाम',
+					listTitle: 'पत्र प्रकार सूची'
+				},
+				tab4: {
+					heading: 'पत्र विषय प्रबंधित करें',
+					title: 'नया पत्र विषय जोड़े',
+					inputTitle: 'नए पत्र विषय का नाम',
+					listTitle: 'पत्र विषय सूची'
+				}
 			}
 		}
 	},

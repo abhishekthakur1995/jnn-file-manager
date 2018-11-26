@@ -1,17 +1,38 @@
 import React from 'react'
 import config from 'config'
 import Alert from 'react-s-alert'
+import PropTypes from 'prop-types'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Button from 'react-validation/build/button'
 import { required } from './..//helpers/ValidationHelper'
 import { LetterTracking } from './../helpers/CommonHelper'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import { PageHead, LoadingSpinner } from './../uiComponents/CommonComponent'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import { LoadingSpinner } from './../uiComponents/CommonComponent'
 import { NewLetterEntryFormService, ManageLetterBoardInputsService } from './../services/ApiServices'
 import { Grid, FormGroup, ControlLabel, Col, Glyphicon, Label, Tabs, Tab, ListGroup, ListGroupItem } from 'react-bootstrap'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/slide.css'
+
+const messages = defineMessages({
+	tab1Heading: {
+		id: 'letterTracking.manageSystemInputs.tab1.heading',
+		defaultMessage: 'Manage Department'
+	},
+	tab2Heading: {
+		id: 'letterTracking.manageSystemInputs.tab2.heading',
+		defaultMessage: 'Manage Officers List'
+	},
+	tab3Heading: {
+		id: 'letterTracking.manageSystemInputs.tab3.heading',
+		defaultMessage: 'Manage Letter Type'
+	},
+	tab4Heading: {
+		id: 'letterTracking.manageSystemInputs.tab4.heading',
+		defaultMessage: 'Manage Letter Tag'
+	}
+})
 
 class ManageLetterBoardInputs extends React.Component {
 	constructor(props) {
@@ -76,22 +97,26 @@ class ManageLetterBoardInputs extends React.Component {
   	}
 
 	render() {
+		const { intl } = this.props
 		return (
 			<Grid bsClass="manage-letter-system-inputs">
 				<BreadcrumbsItem to={'/servicePanel/letterTracking/manageApp'}> Manage Letter Board Inputs </BreadcrumbsItem>
-				<PageHead title="Import" />
 				{this.state.showLoading && <LoadingSpinner />}
             	<Alert stack={{limit: 3}} html={true} />
 				<Tabs activeKey={this.state.key} onSelect={this.handleSelect} id="controlled-tab-example" >
-			  		<Tab eventKey={1} title="Manage Department">
+			  		<Tab eventKey={1} title={intl.formatMessage(messages.tab1Heading)}>
 						<fieldset className="custom-fieldset margin-bottom-6x">
 							<legend className="custom-legend">
-								<Label bsStyle="primary" className="padding-2x">Add New Department</Label>
+								<Label bsStyle="primary" className="padding-2x">
+									<FormattedMessage id="letterTracking.manageSystemInputs.tab1.title" defaultMessage="Add New Department" />
+								</Label>
 							</legend>
 							<Form onSubmit={(e) => this.handleSubmit(e, 'DEPARTMENT')}>
 								<Col md={4}>
 								    <FormGroup className="margin-top-2x required">
-								        <ControlLabel htmlFor="DEPARTMENT_NAME">DEPARTMENT_NAME</ControlLabel>
+								        <ControlLabel htmlFor="DEPARTMENT_NAME">
+								        	<FormattedMessage id="letterTracking.manageSystemInputs.tab1.inputTitle" defaultMessage="New Department Name" />
+								        </ControlLabel>
 								        <Input
 		                                    type="text"
 		                                    autoComplete="on"
@@ -104,12 +129,15 @@ class ManageLetterBoardInputs extends React.Component {
 								    </FormGroup>
 								</Col>
 								<Button type="submit" className="btn btn-default btn-adjust">
-								    <Glyphicon className="padding-right-1x" glyph="plus" />Add new department
+								    <Glyphicon className="padding-right-1x" glyph="plus" />
+								    <FormattedMessage id="letterTracking.manageSystemInputs.addBtn" />
 								</Button>
 							</Form>
 						</fieldset>
 
-						<Label bsStyle="primary" className="padding-2x">Department List</Label>
+						<Label bsStyle="primary" className="padding-2x">
+							<FormattedMessage id="letterTracking.manageSystemInputs.tab1.listTitle" defaultMessage="Department List" />
+						</Label>
 						<ListGroup className="margin-top-4x">
 							{this.departmentList.map((dept) =>
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={dept.CODE} value={dept.CODE}>{dept.NAME}
@@ -117,15 +145,19 @@ class ManageLetterBoardInputs extends React.Component {
 							)}
 						</ListGroup>
 				  	</Tab>
-				  	<Tab eventKey={2} title="Manage Officers List">
+				  	<Tab eventKey={2} title={intl.formatMessage(messages.tab2Heading)}>
 				  		<fieldset className="custom-fieldset margin-bottom-6x">
 							<legend className="custom-legend">
-								<Label bsStyle="primary" className="padding-2x">Add New Officer</Label>
+								<Label bsStyle="primary" className="padding-2x">
+									<FormattedMessage id="letterTracking.manageSystemInputs.tab2.title" defaultMessage="Add New Officer" />
+								</Label>
 							</legend>
 							<Form onSubmit={(e) => this.handleSubmit(e, 'OFFICER')}>
 								<Col md={4}>
 								    <FormGroup className="margin-top-2x required">
-								        <ControlLabel htmlFor="ASSIGNED_OFFICER">ASSIGNED_OFFICER</ControlLabel>
+								        <ControlLabel htmlFor="ASSIGNED_OFFICER">
+								        	<FormattedMessage id="letterTracking.manageSystemInputs.tab2.inputTitle" defaultMessage="New Officer Name" />
+								        </ControlLabel>
 								        <Input
 		                                    type="text"
 		                                    autoComplete="on"
@@ -138,12 +170,15 @@ class ManageLetterBoardInputs extends React.Component {
 								    </FormGroup>
 								</Col>
 								<Button type="submit" className="btn btn-default btn-adjust">
-								    <Glyphicon className="padding-right-1x" glyph="plus" />Add new officer
+								    <Glyphicon className="padding-right-1x" glyph="plus" />
+							    	<FormattedMessage id="letterTracking.manageSystemInputs.addBtn"/>
 								</Button>
 							</Form>
 						</fieldset>
 
-						<Label bsStyle="primary" className="padding-2x">Officer List</Label>
+						<Label bsStyle="primary" className="padding-2x">
+							<FormattedMessage id="letterTracking.manageSystemInputs.tab2.listTitle" defaultMessage="Officer List" />
+						</Label>
 						<ListGroup className="margin-top-4x">
 							{this.assignedOfficerList.map((officer) =>
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={officer.CODE} value={officer.CODE}>{officer.NAME}
@@ -151,15 +186,19 @@ class ManageLetterBoardInputs extends React.Component {
 							)}
 						</ListGroup>
 				  	</Tab>
-				  	<Tab eventKey={3} title="Manage Letter Type">
+				  	<Tab eventKey={3} title={intl.formatMessage(messages.tab3Heading)}>
 				  		<fieldset className="custom-fieldset margin-bottom-6x">
 							<legend className="custom-legend">
-								<Label bsStyle="primary" className="padding-2x">Add New Letter Type</Label>
+								<Label bsStyle="primary" className="padding-2x">
+									<FormattedMessage id="letterTracking.manageSystemInputs.tab3.title" defaultMessage="Add New Letter Type" />
+								</Label>
 							</legend>
 							<Form onSubmit={(e) => this.handleSubmit(e, 'TYPE')}>
 								<Col md={4}>
 								    <FormGroup className="margin-top-2x required">
-								        <ControlLabel htmlFor="LETTER_TYPE">LETTER_TYPE</ControlLabel>
+								        <ControlLabel htmlFor="LETTER_TYPE">
+								        	<FormattedMessage id="letterTracking.manageSystemInputs.tab3.inputTitle" defaultMessage="New Letter Type" />
+								        </ControlLabel>
 								        <Input
 		                                    type="text"
 		                                    autoComplete="on"
@@ -172,12 +211,15 @@ class ManageLetterBoardInputs extends React.Component {
 								    </FormGroup>
 								</Col>
 								<Button type="submit" className="btn btn-default btn-adjust">
-								    <Glyphicon className="padding-right-1x" glyph="plus" />Add new letter type
+								    <Glyphicon className="padding-right-1x" glyph="plus" />
+							    	<FormattedMessage id="letterTracking.manageSystemInputs.addBtn" />
 								</Button>
 							</Form>
 						</fieldset>
 
-						<Label bsStyle="primary" className="padding-2x">Letter Type List</Label>
+						<Label bsStyle="primary" className="padding-2x">
+							<FormattedMessage id="letterTracking.manageSystemInputs.tab3.listTitle" defaultMessage="Letter Type List" />
+						</Label>
 						<ListGroup className="margin-top-4x">
 							{this.letterTypeList.map((letterType) =>
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={letterType.CODE} value={letterType.CODE}>{letterType.NAME}
@@ -185,15 +227,19 @@ class ManageLetterBoardInputs extends React.Component {
 							)}
 						</ListGroup>
 				  	</Tab>
-				  	<Tab eventKey={4} title="Manage Letter Tag">
+				  	<Tab eventKey={4} title={intl.formatMessage(messages.tab4Heading)}>
 				  		<fieldset className="custom-fieldset margin-bottom-6x">
 							<legend className="custom-legend">
-								<Label bsStyle="primary" className="padding-2x">Add New Letter Tag</Label>
+								<Label bsStyle="primary" className="padding-2x">
+									<FormattedMessage id="letterTracking.manageSystemInputs.tab4.title" defaultMessage="Add New Letter Tag" />
+								</Label>
 							</legend>
 							<Form onSubmit={(e) => this.handleSubmit(e, 'TAG')}>
 								<Col md={4}>
 								    <FormGroup className="margin-top-2x required">
-								        <ControlLabel htmlFor="LETTER_TAG">LETTER_TAG</ControlLabel>
+								        <ControlLabel htmlFor="LETTER_TAG">
+								        	<FormattedMessage id="letterTracking.manageSystemInputs.tab4.inputTitle" defaultMessage="New Letter Tag" />
+								        </ControlLabel>
 								        <Input
 		                                    type="text"
 		                                    autoComplete="on"
@@ -206,12 +252,15 @@ class ManageLetterBoardInputs extends React.Component {
 								    </FormGroup>
 								</Col>
 								<Button type="submit" className="btn btn-default btn-adjust">
-								    <Glyphicon className="padding-right-1x" glyph="plus" />Add new letter tag
+								    <Glyphicon className="padding-right-1x" glyph="plus" />
+								    <FormattedMessage id="letterTracking.manageSystemInputs.addBtn" />
 								</Button>
 							</Form>
 						</fieldset>
 
-						<Label bsStyle="primary" className="padding-2x">Letter Tag List</Label>
+						<Label bsStyle="primary" className="padding-2x">
+							<FormattedMessage id="letterTracking.manageSystemInputs.tab4.listTitle" defaultMessage="Letter Tag List" />
+						</Label>
 						<ListGroup className="margin-top-4x">
 							{this.letterTagList.map((letterTag) =>
 								<ListGroupItem className="width-3x pull-left margin-right-2x margin-bottom-2x" key={letterTag.CODE} value={letterTag.CODE}>{letterTag.NAME}
@@ -225,4 +274,8 @@ class ManageLetterBoardInputs extends React.Component {
 	}
 }
 
-export default ManageLetterBoardInputs
+ManageLetterBoardInputs.propTypes = {
+    intl: PropTypes.object
+}
+
+export default injectIntl(ManageLetterBoardInputs)
