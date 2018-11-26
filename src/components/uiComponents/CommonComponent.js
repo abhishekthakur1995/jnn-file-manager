@@ -373,7 +373,9 @@ export const SearchFilterOptions = (props) => {
     return (
         <FormGroup controlId="formControlsSelect">
             <FormControl componentClass="select" name={props.name} value={props.value} onChange={(e) => { props.onClick(e) }} >
-                <option value="">Select</option>
+                <option value="">
+                    <FormattedMessage id="common.general.select" defaultMessage="Select" />
+                </option>
                     {optionsList.map((options) => <option key={options.id} value={options.id}>{options.name}</option>)}
             </FormControl>
         </FormGroup>

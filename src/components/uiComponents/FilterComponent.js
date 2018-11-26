@@ -9,6 +9,18 @@ const messages = defineMessages({
     searchBoxPlaceholder: {
 		id: 'common.filter.searchBoxPlaceholder',
         defaultMessage: 'Enter your query to search',
+    },
+    approved: {
+    	id: 'common.general.approved',
+    	defaultMessage: 'Approved',
+    },
+    pending: {
+    	id: 'common.general.pending',
+    	defaultMessage: 'Pending',
+    },
+    rejected: {
+    	id: 'common.general.rejected',
+    	defaultMessage: 'Rejected',
     }
 })
 
@@ -138,7 +150,7 @@ class FilterComponent extends React.Component {
 							            	{this.props.for === 'fileManager' &&
 							            		<ListGroup componentClass="ul" bsClass="no-bullet list-style-type-none">
 					                                <ListGroup componentClass="li" bsClass="margin-vert-1x">
-				                                		{[{NAME:'Approved', CODE: 'approved'}, {NAME:'Rejected', CODE: 'rejected'}, {NAME:'Pending', CODE: 'pending'}].map((data) => {
+				                                		{[{NAME:this.props.intl.formatMessage(messages.approved), CODE: 'approved'}, {NAME:this.props.intl.formatMessage(messages.rejected), CODE: 'rejected'}, {NAME:this.props.intl.formatMessage(messages.pending), CODE: 'pending'}].map((data) => {
 					                            			const code = data.CODE
 					                            			const name = data.NAME
 					                            			return (

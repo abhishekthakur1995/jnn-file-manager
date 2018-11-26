@@ -1,14 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
 import { Common } from './helpers/CommonHelper'
 import { userAuth } from './services/AuthService'
 import { NavBarService } from './services/ApiServices'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { Glyphicon, NavDropdown, MenuItem, Grid, ListGroup } from 'react-bootstrap'
 import '../../public/scss/style.scss'
 import '../../public/scss/generic.scss'
 import logo from '../../public/img/jnnLogoTransparent.png'
+
+const messages = defineMessages({
+    welcomeText: {
+        id: 'common.navbar.welcomeText',
+        defaultMessage: 'Welcome'
+    }
+})
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -26,6 +33,7 @@ class NavBar extends React.Component {
     }
 
     render() {
+        const { intl } = this.props
     	return (
     		<Grid componentClass="header" id="header" bsClass="custom-navbar">
                 <Grid bsClass="container-fluid">
@@ -45,7 +53,7 @@ class NavBar extends React.Component {
                                     </Link>
                                 </ListGroup>
 
-                                <NavDropdown eventKey={3} title={`Welcome, ${localStorage.getItem('userRole')}`} id="basic-nav-dropdown">
+                                <NavDropdown eventKey={3} title={`${intl.formatMessage(messages.welcomeText)}, ${localStorage.getItem('userRole')}`} id="basic-nav-dropdown">
                                     <MenuItem eventKey={3.1} componentClass={Link} href="/resetPassword" to="/resetPassword">
                                         <Glyphicon glyph="refresh" className="margin-right-1x"></Glyphicon>
                                         <FormattedMessage id="common.navbar.resetPasswordLink" defaultMessage="Reset Password" />
@@ -65,7 +73,8 @@ class NavBar extends React.Component {
 }
 
 NavBar.propTypes = {
+    intl: PropTypes.object,
     doRedirectToHome: PropTypes.func
 }
 
-export default NavBar
+export default injectIntl(NavBar)
