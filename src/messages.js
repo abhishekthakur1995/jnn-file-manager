@@ -55,37 +55,34 @@ export default {
 			},
 			getRecords: {
 				byMonthSection: {
-					title: '',
-					year: '',
-					month: '',
-					errMsg: ''
+					title: 'महीनो के अनुसार देखे',
+					year: 'साल',
+					month: 'महीना',
+					errMsg: 'कृपया साल और महीने दोनों का चयन करें'
 				},
 				specificPeriodSection: {
-					title: '',
-					from: '',
-					to: '',
+					title: 'विशिष्ट अवधि के अनुसार देखे',
+					from: 'प्रारंभ',
+					to: 'अंत',
 					errMsg: ''
-				},
-				byTagsSection: {
-					title: ''
 				},
 				selectFormatSection: {
-					title: '',
-					excel: '',
-					pdf: '',
-					errMsg: ''
+					title: 'रिपोर्ट फॉर्मेट का चयन करे',
+					excel: 'एक्सेल',
+					pdf: 'पीडीएफ',
+					errMsg: 'कृपया रिपोर्ट फॉर्मेट का चयन करे'
 				},
-				fetchDataBtn: '',
-				downloadExcelLink: '',
-				downloadPdfLink: '',
+				fetchDataBtn: 'डाटा देखे',
+				downloadExcelLink: 'एक्सेल डाउनलोड करे',
+				downloadPdfLink: 'पीडीएफ डाउनलोड करे',
 			},
 			import: {
-				dwnldSampleExcelMsg: '',
-				importDataBtn: '',
+				dwnldSampleExcelMsg: 'सैंपल एक्सेल फाइल डाउनलोड करे',
+				importDataBtn: 'डाटा सेव करे',
 				dropzone: {
-					msg1: '',
-					msg2: '',
-					uploadFileBtn: ''
+					msg1: 'फाइल ड्राप करे या क्लिक करके सेलेक्ट करे | ',
+					msg2: 'केवल वैध एक्सेल फ़ाइलें (.xlsx) स्वीकार की जाएगी',
+					uploadFileBtn: 'फाइल का चयन करें'
 				}
 			},
 			record: {

@@ -13,6 +13,10 @@ const messages = defineMessages({
     quickSearchPlaceHolder: {
         id: 'common.filter.quickSearchPlaceHolder',
         defaultMessage: 'Quick Search',
+    },
+    selectText: {
+        id: 'common.general.select',
+        defaultMessage: 'Select',
     }
 })
 
@@ -323,24 +327,24 @@ NoData.propTypes = {
     colSpan: PropTypes.number
 }
 
-export const YearDropDown = (props) => {
+export const YearDropDown = injectIntl((props) => {
     const yearList = [moment().format('YYYY'), moment().format('YYYY') - 1, moment().format('YYYY') - 2]
 
     return (
         <FormGroup controlId="formControlsSelect">
             <FormControl componentClass="select" onChange={(e) => { props.onClick('year', e.target.value) }} >
-                <option value="">Select</option>
+                <option value="">{props.intl.formatMessage(messages.selectText)}</option>
                     {yearList.map((year) => <option key={year} value={year}>{year}</option>)}
             </FormControl>
         </FormGroup>
     )
-}
+})
 
 YearDropDown.propTypes = {
     onClick: PropTypes.func
 }
 
-export const MonthDropDown = (props) => {
+export const MonthDropDown = injectIntl((props) => {
     const monthList = [
         { id: 1, name: 'January'}, { id: 2, name: 'February'}, { id: 3, name: 'March'}, { id: 4, name: 'April'},
         { id: 5, name: 'May'}, { id: 6, name: 'June'}, { id: 7, name: 'July'}, { id: 8, name: 'August'},
@@ -350,18 +354,18 @@ export const MonthDropDown = (props) => {
     return (
         <FormGroup controlId="formControlsSelect">
             <FormControl componentClass="select" onChange={(e) => { props.onClick('month', e.target.value) }} >
-                <option value="">Select</option>
+                <option value="">{props.intl.formatMessage(messages.selectText)}</option>
                     {monthList.map((month) => <option key={month.id} value={month.id}>{month.name}</option>)}
             </FormControl>
         </FormGroup>
     )
-}
+})
 
 MonthDropDown.propTypes = {
     onClick: PropTypes.func
 }
 
-export const SearchFilterOptions = (props) => {
+export const SearchFilterOptions = injectIntl((props) => {
     const optionsList = [
         { id: 'buildingName', name: 'Building Name'},
         { id: 'applicantName', name: 'Applicant Name'},
@@ -373,14 +377,12 @@ export const SearchFilterOptions = (props) => {
     return (
         <FormGroup controlId="formControlsSelect">
             <FormControl componentClass="select" name={props.name} value={props.value} onChange={(e) => { props.onClick(e) }} >
-                <option value="">
-                    <FormattedMessage id="common.general.select" defaultMessage="Select" />
-                </option>
+                <option value="">{props.intl.formatMessage(messages.selectText)}</option>
                     {optionsList.map((options) => <option key={options.id} value={options.id}>{options.name}</option>)}
             </FormControl>
         </FormGroup>
     )
-}
+})
 
 SearchFilterOptions.propTypes = {
     name: PropTypes.string,

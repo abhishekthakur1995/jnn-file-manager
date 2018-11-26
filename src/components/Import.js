@@ -104,7 +104,7 @@ class Import extends React.Component {
 				{this.state.fileUpload &&
 					<Button className="margin-top-2x width-2x green-btn" onClick={this.onImport}>
 						<Glyphicon glyph="import" />
-						<FormattedMessage id="fileManager.import.dropzone.importDataBtn" defaultMessage="Import Data" />
+						<FormattedMessage id="fileManager.import.importDataBtn" defaultMessage="Import Data" />
 					</Button>
 				}
 			</Grid>
