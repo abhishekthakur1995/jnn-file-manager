@@ -11,7 +11,8 @@ import { BreadcrumbsProvider } from 'react-breadcrumbs-dynamic'
 
 addLocaleData([...en, ...hi])
 
-let locale = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage || 'en-HI'
+// let locale = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage || 'en-HI'
+let locale = 'hi-IN'
 
 ReactDOM.render((
 	<IntlProvider locale={locale} messages={flattenMessages(messages[locale])}>
