@@ -1,7 +1,8 @@
 import React from 'react'
 import SideBar from './SideBar.js'
-import { Grid } from 'react-bootstrap'
 import PropTypes from 'prop-types'
+import { Grid } from 'react-bootstrap'
+import { FormattedMessage } from 'react-intl'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 
 class LetterTrackingDashboard extends React.Component {
@@ -13,7 +14,9 @@ class LetterTrackingDashboard extends React.Component {
 		return (
 			<Grid bsClass="dashboard">
 				<BreadcrumbsItem glyph='dashboard' to={'/servicePanel/letterTracking'}>
-					<Grid componentClass="span" bsClass="link">Dashboard</Grid>
+					<Grid componentClass="span" bsClass="link">
+						<FormattedMessage id="common.general.dashboard" defaultMessage="Dashboard" />
+					</Grid>
 				</BreadcrumbsItem>
 				<SideBar match={this.props.match} location={this.props.location}/>
 			</Grid>

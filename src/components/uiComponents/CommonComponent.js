@@ -285,7 +285,7 @@ export const TableFunctionalityBase = (props) => {
             {props.onPageSizeChange && <FormControl bsClass="pageSize" componentClass="select" onChange={(e) => { props.onPageSizeChange(e.target.value) }}>
                 {[10, 20, 30, 40, 50].map((pageSize) => <option key={pageSize} value={pageSize}>{pageSize}</option>)}
             </FormControl>}
-            {props.onPageSizeChange && <Grid componentClass="span" bsClass="margin-left-1x">results per page</Grid>}
+            {props.onPageSizeChange && <Grid componentClass="span" bsClass="margin-left-1x"><FormattedMessage id="letterTracking.letterList.resultsPerPageMsg" defaultMessage="results per page" /> </Grid>}
         </Grid>
     )
 }

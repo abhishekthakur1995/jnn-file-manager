@@ -1,8 +1,8 @@
 import React from 'react'
 import _ from 'underscore'
 import PropTypes from 'prop-types'
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { SearchFilterOptions } from './CommonComponent'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { Grid, Row, Col, Checkbox, Button, ControlLabel, FormControl, ListGroup } from 'react-bootstrap'
 
 const messages = defineMessages({

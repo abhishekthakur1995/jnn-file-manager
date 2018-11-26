@@ -2,18 +2,30 @@ import React from 'react'
 import _ from 'underscore'
 import config from 'config'
 import moment from 'moment'
+import PropTypes from 'prop-types'
 import { CSVLink } from 'react-csv'
 import DatePicker from 'react-datepicker'
 import pdfMake from "pdfmake/build/pdfmake"
-import { FormattedMessage } from 'react-intl'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import { LetterTracking } from './../helpers/CommonHelper'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { Grid, Radio, Table, Button, Clearfix, Checkbox, ListGroup } from 'react-bootstrap'
 import { ExportLetterDataService, NewLetterEntryFormService } from './../services/ApiServices'
 import { PageHead, MonthDropDown, YearDropDown, LoadingSpinner } from './../uiComponents/CommonComponent'
 import 'react-datepicker/dist/react-datepicker.css'
 pdfMake.vfs = pdfFonts.pdfMake.vfs
+
+const messages = defineMessages({
+	incoming: {
+		id: 'common.general.incoming',
+		defaultMessage: 'Incoming'
+	},
+	outgoing: {
+		id: 'common.general.outgoing',
+		defaultMessage: 'Outgoing'
+	}
+})
 
 class ExportLetterData extends React.Component {
 	constructor(props) {
@@ -213,6 +225,7 @@ class ExportLetterData extends React.Component {
   	}
 
 	render() {
+		const { intl } = this.props
 		return (
 			<Grid bsClass="get-records">
 				<BreadcrumbsItem to={LetterTracking.getAbsolutePath('exportData')}> Get Records </BreadcrumbsItem>
@@ -322,9 +335,11 @@ class ExportLetterData extends React.Component {
 												</td>
 												<td width="80%">
 													<ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
-						                            	<Grid componentClass="span" bsClass="bold underline">Letter Status</Grid>
+						                            	<Grid componentClass="span" bsClass="bold underline">
+						                            		<FormattedMessage id="letterTracking.newLetterEntryForm.status" />
+						                            	</Grid>
 						                                <ListGroup componentClass="li" bsClass="margin-vert-1x">
-					                                		{[{NAME:'Incoming', CODE: '1'}, {NAME:'Outgoing', CODE: '2'}].map((data) => {
+					                                		{[{NAME: intl.formatMessage(messages.incoming), CODE: '1'}, {NAME:intl.formatMessage(messages.outgoing), CODE: '2'}].map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
 						                            			return (
@@ -338,7 +353,9 @@ class ExportLetterData extends React.Component {
 									                	</ListGroup>
 						                            </ListGroup>
 													<ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
-					                            		<Grid componentClass="span" bsClass="bold underline">Department Name</Grid>
+					                            		<Grid componentClass="span" bsClass="bold underline">
+					                            			<FormattedMessage id="letterTracking.newLetterEntryForm.deptName" />
+					                            		</Grid>
 						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.departmentList.map((data) => {
 						                            			const code = data.CODE
@@ -355,7 +372,9 @@ class ExportLetterData extends React.Component {
 						                            </ListGroup>
 
 						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
-						                            	<Grid componentClass="span" bsClass="bold underline">Letter Type</Grid>
+						                            	<Grid componentClass="span" bsClass="bold underline">
+						                            		<FormattedMessage id="letterTracking.newLetterEntryForm.type" />
+						                            	</Grid>
 						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.letterTypeList.map((data) => {
 						                            			const code = data.CODE
@@ -372,7 +391,9 @@ class ExportLetterData extends React.Component {
 						                            </ListGroup>
 
 						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
-						                            	<Grid componentClass="span" bsClass="bold underline">Letter Tag</Grid>
+						                            	<Grid componentClass="span" bsClass="bold underline">
+						                            		<FormattedMessage id="letterTracking.newLetterEntryForm.tag" />
+						                            	</Grid>
 						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.letterTagList.map((data) => {
 						                            			const code = data.CODE
@@ -389,7 +410,9 @@ class ExportLetterData extends React.Component {
 						                            </ListGroup>
 
 						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
-						                            	<Grid componentClass="span" bsClass="bold underline">Assigned Officer</Grid>
+						                            	<Grid componentClass="span" bsClass="bold underline">
+						                            		<FormattedMessage id="letterTracking.newLetterEntryForm.assignedOfficer" />
+						                            	</Grid>
 						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.assignedOfficerList.map((data) => {
 						                            			const code = data.CODE
@@ -471,4 +494,8 @@ class ExportLetterData extends React.Component {
 	}
 }
 
-export default ExportLetterData
+ExportLetterData.propTypes = {
+	intl: PropTypes.object
+}
+
+export default injectIntl(ExportLetterData)

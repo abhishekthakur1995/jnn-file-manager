@@ -1,9 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import NewLetterEntryForm from './NewLetterEntryForm'
+import { defineMessages, injectIntl } from 'react-intl'
 import { SplitButton, MenuItem } from 'react-bootstrap'
 import { Common, LetterTracking } from './../helpers/CommonHelper'
 import { EditRecordModal, ManageRecordModal } from './../uiComponents/CommonComponent'
+
+const messages = defineMessages({
+	viewBtn: {
+		id: 'letterTracking.letterList.dropdown.viewBtn',
+		defaultMessage: 'View'
+	},
+	editBtn: {
+		id: 'letterTracking.letterList.dropdown.editBtn',
+		defaultMessage: 'Edit'
+	},
+	viewAttachmentBtn: {
+		id: 'letterTracking.letterList.dropdown.viewAttachmentBtn',
+		defaultMessage: 'View Attachment'
+	}
+})
 
 class SingleLetter extends React.Component {
 	constructor(props) {
@@ -46,6 +62,7 @@ class SingleLetter extends React.Component {
 	}
 
 	render() {
+		const { intl } = this.props
 		const letter = this.props.singleLetter
 		const letterStatus = LetterTracking.getLetterStatusFromCode(letter.LETTER_STATUS)
 		const dateCreated = Common.getDisplayFormatDate(letter.CREATED)
@@ -60,9 +77,9 @@ class SingleLetter extends React.Component {
 			    <td title={letterStatus}>{letterStatus}</td>
 			    <td title={dateCreated}>{dateCreated}</td>
 			    <td>
-			    	<SplitButton title="View" data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
-  						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>Edit</MenuItem>
-  						{letter.LETTER_FILE_EXT && <MenuItem data-id="attachment" eventKey="2" onClick={() => this.props.onDownload(letter.ID)}>View Attachment</MenuItem>}
+			    	<SplitButton title={intl.formatMessage(messages.viewBtn)} data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
+  						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>{intl.formatMessage(messages.editBtn)}</MenuItem>
+  						{letter.LETTER_FILE_EXT && <MenuItem data-id="attachment" eventKey="2" onClick={() => this.props.onDownload(letter.ID)}>{intl.formatMessage(messages.viewAttachmentBtn)}</MenuItem>}
 					</SplitButton>
 				</td>
 
@@ -92,10 +109,11 @@ class SingleLetter extends React.Component {
 }
 
 SingleLetter.propTypes = {
+	intl: PropTypes.object,
 	index: PropTypes.number,
 	onUpdate: PropTypes.func,
 	onDownload: PropTypes.func,
     singleLetter: PropTypes.object
 }
 
-export default SingleLetter
+export default injectIntl(SingleLetter)

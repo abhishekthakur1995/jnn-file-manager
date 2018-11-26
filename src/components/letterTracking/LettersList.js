@@ -2,11 +2,12 @@ import React from 'react'
 import config from 'config'
 import _ from 'underscore'
 import SingleLetter from './SingleLetter'
+import { FormattedMessage } from 'react-intl'
 import { Grid, Table } from 'react-bootstrap'
-import { LetterTracking, Common } from './../helpers/CommonHelper'
 import { LettersService } from './../services/ApiServices'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import FilterComponent from './../uiComponents/FilterComponent'
+import { LetterTracking, Common } from './../helpers/CommonHelper'
 import { NewLetterEntryFormService } from './../services/ApiServices'
 import PaginationComponent from './../uiComponents/PaginationComponent'
 import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase, FilterButton, NoData } from './../uiComponents/CommonComponent'
@@ -234,22 +235,25 @@ class LettersList extends React.Component {
 		                    <tr>
 		                    	<th
 		                        	className={`cursor-pointer ${this.state.sortField === 'DEPARTMENT_NAME' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-		                        	onClick={() => this.sortField('DEPARTMENT_NAME')}>DEPTNAME
+		                        	onClick={() => this.sortField('DEPARTMENT_NAME')}>
+		                        	<FormattedMessage id='letterTracking.newLetterEntryForm.deptName' />
 		                    	</th>
 		                    	<th
 		                        	className={`cursor-pointer ${this.state.sortField === 'ASSIGNED_OFFICER' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-		                        	onClick={() => this.sortField('ASSIGNED_OFFICER')}>OFFICER
+		                        	onClick={() => this.sortField('ASSIGNED_OFFICER')}>
+		                        	<FormattedMessage id='letterTracking.newLetterEntryForm.assignedOfficer' />
 		                    	</th>
-		                		<th>TYPE</th>
-		                        <th>TAG</th>
-		                        <th>SUBJECT</th>
-		                        <th>REG_NO</th>
-		                        <th>STATUS</th>
+		                		<th><FormattedMessage id='letterTracking.newLetterEntryForm.type' /></th>
+		                        <th><FormattedMessage id='letterTracking.newLetterEntryForm.tag' /></th>
+		                        <th><FormattedMessage id='letterTracking.newLetterEntryForm.subject' /></th>
+		                        <th><FormattedMessage id='letterTracking.newLetterEntryForm.regNo' /></th>
+		                        <th><FormattedMessage id='letterTracking.newLetterEntryForm.status' /></th>
 		                        <th
 		                       		className={`cursor-pointer ${this.state.sortField === 'CREATED' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-		                    		onClick={() => this.sortField('CREATED')}>CREATED
+		                    		onClick={() => this.sortField('CREATED')}>
+		                    		<FormattedMessage id='letterTracking.newLetterEntryForm.date' />
 		                		</th>
-		                        <th>Action</th>
+		                        <th><FormattedMessage id='common.general.action' /></th>
 		                    </tr>
 		                </thead>
 

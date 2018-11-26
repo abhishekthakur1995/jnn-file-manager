@@ -12,15 +12,15 @@ import { InfoBlock, ChartHolder, PageHead, LoadingSpinner } from './../uiCompone
 
 const messages = defineMessages({
     total: {
-		id: 'letterTracking.letterboard.total',
+		id: 'common.general.total',
         defaultMessage: 'Total',
     },
     incoming: {
-		id: 'letterTracking.letterboard.incoming',
+		id: 'common.general.incoming',
         defaultMessage: 'Incoming',
     },
     outgoing: {
-		id: 'letterTracking.letterboard.outgoing',
+		id: 'common.general.outgoing',
         defaultMessage: 'Outgoing',
     },
     chartHolderTitle: {

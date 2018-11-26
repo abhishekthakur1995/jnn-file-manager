@@ -7,7 +7,10 @@ export default {
 				rejected: 'अस्वीकृत',
 				pending: 'लंबित',
 				total: 'कुल',
-				dashboard: 'डैशबोर्ड'
+				incoming: 'आने वाला',
+				outgoing: 'बाहर जाने वाला',
+				dashboard: 'डैशबोर्ड',
+				action: 'कार्य'
 			},
 			filter: {
 				title: 'फ़िल्टर लगाए',
@@ -51,7 +54,7 @@ export default {
 				manageSystemInputs: ''
 			},
 			infoboard: {
-				chartHolderTitle: 'रिकॉर्ड सारांश'
+				chartHolderTitle: 'फाइल रिकॉर्ड सारांश'
 			},
 			getRecords: {
 				byMonthSection: {
@@ -80,7 +83,7 @@ export default {
 				dwnldSampleExcelMsg: 'सैंपल एक्सेल फाइल डाउनलोड करे',
 				importDataBtn: 'डाटा सेव करे',
 				dropzone: {
-					msg1: 'फाइल ड्राप करे या क्लिक करके सेलेक्ट करे | ',
+					msg1: 'फाइल ड्राप करे या क्लिक करके सेलेक्ट करे । ',
 					msg2: 'केवल वैध एक्सेल फ़ाइलें (.xlsx) स्वीकार की जाएगी',
 					uploadFileBtn: 'फाइल का चयन करें'
 				}
@@ -107,67 +110,72 @@ export default {
 		},
 		letterTracking: {
 			sidebar: {
-				addNewEntry: '',
-				manageLetters: '',
-				exportData: '',
+				addNewEntry: 'नया पत्र जोड़े',
+				manageLetters: 'पत्र प्रबंधित करें',
+				exportData: 'पत्र रिपोर्ट देखे',
 				manage: ''
 			},
 			letterboard: {
-				total: '',
-				incoming: '',
-				outgoing: '',
-				chartHolderTitle: ''
+				chartHolderTitle: 'पत्र रिकॉर्ड सारांश'
 			},
 			newLetterEntryForm: {
-				regNo: '',
-				status: '',
-				date: '',
-				deptName: '',
-				type: '',
-				tag: '',
-				assignedOfficer: '',
-				address: '',
-				subject: '',
-				remark: '',
-				submitBtnSaveText: '',
-				submitBtnUpdateText: '',
-				saveEntryFormLabel: '',
-				updateEntryFormLabel: '',
+				regNo: 'क्रमांक',
+				status: 'पत्र स्थिति',
+				date: 'दिनांक',
+				deptName: 'संबंधित विभाग',
+				type: 'पत्र प्रकार',
+				tag: 'विषय में',
+				assignedOfficer: 'नियुक्त अधिकारी',
+				address: 'पत्र पता',
+				subject: 'पत्र विषय',
+				remark: 'टिप्पणी',
+				submitBtnSaveText: 'सेव करे',
+				submitBtnUpdateText: 'अपडेट करे',
+				saveEntryFormLabel: 'नया रिकॉर्ड जोड़े',
+				updateEntryFormLabel: 'रिकॉर्ड अपडेट करे',
 				dropzone: {
-					msg1: '',
-					msg2: '',
-					uploadBtn: '',
-					uploadFileErrMsg1: '',
-					uploadFileErrMsg2: '',
-					uploadFileErrMsg3: '',
-					removeGlyphTitle: ''
+					msg1: 'अपना पत्र यहां अपलोड करें । ',
+					msg2: 'समर्थित फ़ाइल एक्सटेंशन .pdf, .doc, .docx, .jpg, .png हैं',
+					uploadBtn: 'फाइल का चयन करें',
+					uploadFileErrMsg1: 'फ़ाइल अपलोड करने में असफल । कृपया पुन: प्रयास करें।',
+					uploadFileErrMsg2: 'फ़ाइल का साइज 100 केबी से अधिक है। कृपया एक छोटी फाइल अपलोड करें।',
+					uploadFileErrMsg3: '{fileExtension} एक स्वीकार्य एक्सटेंशन नहीं है।',
+					removeGlyphTitle: 'फ़ाइल को हटाएं'
 				}
 			},
 			exportLetterData: {
 				byMonthSection: {
-					title: '',
-					year: '',
-					month: '',
-					errMsg: ''
+					title: 'महीनो के अनुसार देखे',
+					year: 'साल',
+					month: 'महीना',
+					errMsg: 'कृपया साल और महीने दोनों का चयन करें'
 				},
 				specificPeriodSection: {
-					title: '',
-					from: '',
-					to: '',
+					title: 'विशिष्ट अवधि के अनुसार देखे',
+					from: 'प्रारंभ',
+					to: 'अंत',
 					errMsg: ''
 				},
 				byTagsSection: {
-					title: ''
+					title: 'अन्य'
 				},
 				selectFormatSection: {
-					title: '',
-					excel: '',
-					pdf: '',
-					errMsg: ''
+					title: 'रिपोर्ट फॉर्मेट का चयन करे',
+					excel: 'एक्सेल',
+					pdf: 'पीडीएफ',
+					errMsg: 'कृपया रिपोर्ट फॉर्मेट का चयन करे'
 				},
-				fetchDataBtn: '',
-				downloadExcelLink: '',
-				downloadPdfLink: '',
+				fetchDataBtn: 'डाटा देखे',
+				downloadExcelLink: 'एक्सेल डाउनलोड करे',
+				downloadPdfLink: 'पीडीएफ डाउनलोड करे',
+			},
+			letterList: {
+				dropdown: {
+					viewBtn: 'पत्र डेटा देखें',
+					editBtn: 'पत्र डेटा संपादित करें',
+					viewAttachmentBtn: 'संलग्न पत्र देखें'
+				},
+				resultsPerPageMsg: 'परिणाम प्रति पृष्ठ'
 			}
 		}
 	},

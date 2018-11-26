@@ -40,19 +40,19 @@ const messages = defineMessages({
         defaultMessage: 'Update Entry',
     },
     uploadFileErrMsg1: {
-        id: 'letterTracking.newLetterEntryForm.uploadFileErrMsg1',
+        id: 'letterTracking.newLetterEntryForm.dropzone.uploadFileErrMsg1',
         defaultMessage: 'Error uploading file. Please try again.',
     },
     uploadFileErrMsg2: {
-        id: 'letterTracking.newLetterEntryForm.uploadFileErrMsg2',
+        id: 'letterTracking.newLetterEntryForm.dropzone.uploadFileErrMsg2',
         defaultMessage: 'File size is greater then 100 KB. Please upload a smaller file.',
     },
     uploadFileErrMsg3: {
-        id: 'letterTracking.newLetterEntryForm.uploadFileErrMsg3',
+        id: 'letterTracking.newLetterEntryForm.dropzone.uploadFileErrMsg3',
         defaultMessage: '{fileExtension} is not an accepted extension.',
     },
     removeGlyphTitle: {
-        id: 'letterTracking.newLetterEntryForm.removeGlyphTitle',
+        id: 'letterTracking.newLetterEntryForm.dropzone.removeGlyphTitle',
         defaultMessage: 'Remove File',
     }
 })
