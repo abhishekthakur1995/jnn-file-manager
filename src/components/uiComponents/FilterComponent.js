@@ -21,7 +21,16 @@ const messages = defineMessages({
     rejected: {
     	id: 'common.general.rejected',
     	defaultMessage: 'Rejected',
+    },
+    incoming: {
+    	id: 'common.general.incoming',
+    	defaultMessage: 'Incoming'
+    },
+    outgoing: {
+    	id: 'common.general.outgoing',
+    	defaultMessage: 'Outgoing'
     }
+
 })
 
 class FilterComponent extends React.Component {
@@ -135,6 +144,7 @@ class FilterComponent extends React.Component {
 	}
 
    	render() {
+   		const { intl } = this.props
    		return (
 			<Grid bsClass="filter-advanced">
 				<Grid bsClass="margin-1x">
@@ -150,7 +160,7 @@ class FilterComponent extends React.Component {
 							            	{this.props.for === 'fileManager' &&
 							            		<ListGroup componentClass="ul" bsClass="no-bullet list-style-type-none">
 					                                <ListGroup componentClass="li" bsClass="margin-vert-1x">
-				                                		{[{NAME:this.props.intl.formatMessage(messages.approved), CODE: 'approved'}, {NAME:this.props.intl.formatMessage(messages.rejected), CODE: 'rejected'}, {NAME:this.props.intl.formatMessage(messages.pending), CODE: 'pending'}].map((data) => {
+				                                		{[{NAME:intl.formatMessage(messages.approved), CODE: 'approved'}, {NAME:intl.formatMessage(messages.rejected), CODE: 'rejected'}, {NAME:intl.formatMessage(messages.pending), CODE: 'pending'}].map((data) => {
 					                            			const code = data.CODE
 					                            			const name = data.NAME
 					                            			return (
@@ -168,9 +178,11 @@ class FilterComponent extends React.Component {
 				                            {this.props.for === 'letterManager' &&
 				                            	<Grid bsClass="pull-left">
 						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
-						                            	<Grid componentClass="span" bsClass="bold underline">Letter Status</Grid>
+						                            	<Grid componentClass="span" bsClass="bold underline">
+						                            		<FormattedMessage id="letterTracking.newLetterEntryForm.status" />
+						                            	</Grid>
 						                                <ListGroup componentClass="li" bsClass="margin-vert-1x">
-					                                		{[{NAME:'Incoming', CODE: '1'}, {NAME:'Outgoing', CODE: '2'}].map((data) => {
+					                                		{[{NAME: intl.formatMessage(messages.incoming), CODE: '1'}, {NAME: intl.formatMessage(messages.outgoing), CODE: '2'}].map((data) => {
 						                            			const code = data.CODE
 						                            			const name = data.NAME
 						                            			return (
@@ -185,7 +197,9 @@ class FilterComponent extends React.Component {
 						                            </ListGroup>
 
 						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
-						                            	<Grid componentClass="span" bsClass="bold underline">Department Name</Grid>
+						                            	<Grid componentClass="span" bsClass="bold underline">
+						                            		<FormattedMessage id="letterTracking.newLetterEntryForm.deptName" />
+						                            	</Grid>
 						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.props.inputFieldsData.DEPARTMENT_NAME.map((data) => {
 						                            			const code = data.CODE
@@ -202,7 +216,9 @@ class FilterComponent extends React.Component {
 						                            </ListGroup>
 
 						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
-						                            	<Grid componentClass="span" bsClass="bold underline">Letter Type</Grid>
+						                            	<Grid componentClass="span" bsClass="bold underline">
+						                            		<FormattedMessage id="letterTracking.newLetterEntryForm.type" />
+						                            	</Grid>
 						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.props.inputFieldsData.LETTER_TYPE.map((data) => {
 						                            			const code = data.CODE
@@ -219,7 +235,9 @@ class FilterComponent extends React.Component {
 						                            </ListGroup>
 
 						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
-						                            	<Grid componentClass="span" bsClass="bold underline">Letter Tag</Grid>
+						                            	<Grid componentClass="span" bsClass="bold underline">
+						                            		<FormattedMessage id="letterTracking.newLetterEntryForm.tag" />
+						                            	</Grid>
 						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.props.inputFieldsData.LETTER_TAG.map((data) => {
 						                            			const code = data.CODE
@@ -236,7 +254,9 @@ class FilterComponent extends React.Component {
 						                            </ListGroup>
 
 						                            <ListGroup componentClass="ul" bsClass="pull-left small-12 no-bullet list-style-type-none">
-						                            	<Grid componentClass="span" bsClass="bold underline">Assigned Officer Type</Grid>
+						                            	<Grid componentClass="span" bsClass="bold underline">
+						                            		<FormattedMessage id="letterTracking.newLetterEntryForm.assignedOfficer" />
+						                            	</Grid>
 						                            	<ListGroup componentClass="li" bsClass="margin-vert-1x">
 						                            		{this.props.inputFieldsData.ASSIGNED_OFFICER.map((data) => {
 						                            			const code = data.CODE
@@ -278,7 +298,7 @@ class FilterComponent extends React.Component {
 				                                		name="searchTerm"
 				                                		value={this.state.searchTerm}
 				                                		onChange={this.setSearchTerm}
-				                                		placeholder={this.props.intl.formatMessage(messages.searchBoxPlaceholder)}
+				                                		placeholder={intl.formatMessage(messages.searchBoxPlaceholder)}
 			                                		/>
 							                	</ListGroup>
 				                            </ListGroup>
