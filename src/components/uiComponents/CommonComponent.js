@@ -93,6 +93,10 @@ const messages = defineMessages({
     DEPARTMENT: {
         id: 'fileManager.entryForm.department',
         defaultMessage: 'Department'
+    },
+    CREATED: {
+        id: 'fileManager.entryForm.dateCreated',
+        defaultMessage: 'Date Created'
     }
 })
 
@@ -262,7 +266,7 @@ export const RecordDetails = injectIntl((props) => {
     var rows = [];
     for (var key in record) {
         if (record.hasOwnProperty(key)) {
-            if (!_.contains(['CREATED', 'MODIFIED', 'ID', 'STATUS', 'LETTER_FILE', 'LETTER_FILE_EXT', 'DEPARTMENT_VIEW_LEVEL'], key)) {
+            if (!_.contains(['MODIFIED', 'ID', 'STATUS', 'LETTER_FILE', 'LETTER_FILE_EXT', 'DEPARTMENT_VIEW_LEVEL'], key)) {
                 let val = ''
                 if (key === 'FILE_STATUS') {
                     val = FileRecord.getFileStatusFromCode(record[key])
@@ -270,6 +274,8 @@ export const RecordDetails = injectIntl((props) => {
                     val = LetterTracking.getLetterStatusFromCode(record[key])
                 } else if (key === 'LETTER_DATE') {
                     val = Common.getDisplayFormatDate(record[key])
+                } else if (key === 'CREATED') {
+                    val = Common.getDisplayFormatDateTime(record[key])
                 } else {
                     val = record[key]
                 }

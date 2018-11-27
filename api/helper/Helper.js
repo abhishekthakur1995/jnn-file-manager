@@ -21,7 +21,8 @@ const DB_FIELDS_CODE_MAPPING = {
 	'dateCreated'  		: 	'CREATED',
 	'DEPARTMENT_NAME'   :   'DEPARTMENT_NAME',
 	'ASSIGNED_OFFICER'  :   'ASSIGNED_OFFICER',
-	'CREATED'           :   'CREATED'
+	'CREATED'           :   'CREATED',
+	'LETTER_DATE'       :   'LETTER_DATE'
 }
 
 const LETTER_FIELDS_CODE_MAPPING = {

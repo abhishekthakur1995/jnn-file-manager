@@ -73,7 +73,8 @@ class SingleLetter extends React.Component {
 		const { intl } = this.props
 		const letter = this.props.singleLetter
 		const letterStatus = LetterTracking.getLetterStatusFromCode(letter.LETTER_STATUS)
-		const dateCreated = Common.getDisplayFormatDate(letter.CREATED)
+		const letterDate = Common.getDisplayFormatDate(letter.LETTER_DATE)
+		const created = Common.getDisplayFormatDateTime(letter.CREATED)
 		return (
 			<tr>
 			    <td title={letter.DEPARTMENT_NAME}>{letter.DEPARTMENT_NAME}</td>
@@ -83,7 +84,8 @@ class SingleLetter extends React.Component {
 			    <td title={letter.LETTER_SUBJECT}>{letter.LETTER_SUBJECT}</td>
 			    <td title={letter.LETTER_REG_NO}>{letter.LETTER_REG_NO}</td>
 			    <td title={letterStatus}>{letterStatus}</td>
-			    <td title={dateCreated}>{dateCreated}</td>
+			    <td title={letterDate}>{letterDate}</td>
+			    <td title={created}>{created}</td>
 			    <td>
 			    	<SplitButton title={intl.formatMessage(messages.viewBtn)} data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
   						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>{intl.formatMessage(messages.editBtn)}</MenuItem>

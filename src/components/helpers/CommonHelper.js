@@ -15,8 +15,11 @@ const LETTER_STATUS_CODE_MAPPING = {
 const UPLOAD_FILE_VALID_EXTENSIONS = ['.jpg', '.png', '.doc', '.docx', '.pdf']
 
 export const Common = {
-	getDisplayFormatDate(date) {
+	getDisplayFormatDateTime(date) {
 		return moment(date).format(config.defaultDateTimeFormat)
+	},
+	getDisplayFormatDate(date) {
+		return moment(date).format(config.defaultDateFormat)
 	},
 	clearLocalStorageData() {
 		localStorage.removeItem('authToken')

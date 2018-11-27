@@ -249,10 +249,15 @@ class LettersList extends React.Component {
 		                        <th><FormattedMessage id='letterTracking.newLetterEntryForm.regNo' /></th>
 		                        <th><FormattedMessage id='letterTracking.newLetterEntryForm.status' /></th>
 		                        <th
-		                       		className={`cursor-pointer ${this.state.sortField === 'CREATED' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-		                    		onClick={() => this.sortField('CREATED')}>
+		                       		className={`cursor-pointer ${this.state.sortField === 'LETTER_DATE' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+		                    		onClick={() => this.sortField('LETTER_DATE')}>
 		                    		<FormattedMessage id='letterTracking.newLetterEntryForm.date' />
 		                		</th>
+                		        <th
+                		       		className={`cursor-pointer ${this.state.sortField === 'CREATED' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+                		    		onClick={() => this.sortField('CREATED')}>
+                		    		<FormattedMessage id='letterTracking.newLetterEntryForm.dateCreated' />
+                				</th>
 		                        <th><FormattedMessage id='common.general.action' /></th>
 		                    </tr>
 		                </thead>

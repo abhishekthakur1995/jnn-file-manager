@@ -146,7 +146,7 @@ export default {
 			newLetterEntryForm: {
 				regNo: 'क्रमांक',
 				status: 'पत्र स्थिति',
-				date: 'दिनांक',
+				date: 'पत्र का दिनांक',
 				deptName: 'संबंधित विभाग',
 				type: 'पत्र प्रकार',
 				tag: 'विषय में',
@@ -154,6 +154,7 @@ export default {
 				address: 'पत्र पता',
 				subject: 'पत्र विषय',
 				remark: 'टिप्पणी',
+				dateCreated: 'दिनांक और समय',
 				submitBtnSaveText: 'सेव करे',
 				submitBtnUpdateText: 'अपडेट करे',
 				saveEntryFormLabel: 'नया रिकॉर्ड जोड़े',
