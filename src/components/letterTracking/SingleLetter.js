@@ -18,6 +18,14 @@ const messages = defineMessages({
 	viewAttachmentBtn: {
 		id: 'letterTracking.letterList.dropdown.viewAttachmentBtn',
 		defaultMessage: 'View Attachment'
+	},
+	manageRecordModalTitle: {
+		id: 'letterTracking.letterList.manageRecordModal.title',
+		defaultMessage: 'View Data'
+	},
+	editeRecordModalTitle: {
+		id: 'letterTracking.letterList.editRecordModal.title',
+		defaultMessage: 'Edit Data'
 	}
 })
 
@@ -88,7 +96,7 @@ class SingleLetter extends React.Component {
 					onHide={this.handleModalClose}
 					handleModalClose={this.handleModalClose}
 					dialogClassName="width-9x"
-					modalTitle="Edit data"
+					modalTitle={intl.formatMessage(messages.editeRecordModalTitle)}
 					onUpdate={this.handleUpdate}
 					record={letter}
 					component={NewLetterEntryForm} >
@@ -100,7 +108,7 @@ class SingleLetter extends React.Component {
 					handleModalClose={this.handleModalClose}
 					record={letter}
 					dialogClassName="width-5x"
-					modalTitle="View data"
+					modalTitle={intl.formatMessage(messages.manageRecordModalTitle)}
 					showActionButtons={false} >
 				</ManageRecordModal>
 			</tr>

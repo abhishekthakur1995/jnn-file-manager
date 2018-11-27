@@ -200,6 +200,12 @@ export default {
 					editBtn: 'पत्र डेटा संपादित करें',
 					viewAttachmentBtn: 'संलग्न पत्र देखें'
 				},
+				manageRecordModal: {
+					title: 'पत्र डेटा'
+				},
+				editRecordModal: {
+					title: 'रिकॉर्ड संपादित करें'
+				},
 				resultsPerPageMsg: 'परिणाम प्रति पृष्ठ'
 			},
 			manageSystemInputs: {
