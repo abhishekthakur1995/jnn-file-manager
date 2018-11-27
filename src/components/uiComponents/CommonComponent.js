@@ -17,8 +17,85 @@ const messages = defineMessages({
     selectText: {
         id: 'common.general.select',
         defaultMessage: 'Select',
+    },
+    DEPARTMENT_NAME: {
+        id: 'letterTracking.newLetterEntryForm.deptName',
+        defaultMessage: 'Department Name'
+    },
+    ASSIGNED_OFFICER: {
+        id: 'letterTracking.newLetterEntryForm.assignedOfficer',
+        defaultMessage: 'Assigned Officer'
+    },
+    LETTER_TYPE: {
+        id: 'letterTracking.newLetterEntryForm.type',
+        defaultMessage: 'Letter Type'
+    },
+    LETTER_TAG: {
+        id: 'letterTracking.newLetterEntryForm.tag',
+        defaultMessage: 'Letter Tag'
+    },
+    LETTER_ADDRESS: {
+        id: 'letterTracking.newLetterEntryForm.address',
+        defaultMessage: 'Letter Address'
+    },
+    LETTER_SUBJECT: {
+        id: 'letterTracking.newLetterEntryForm.subject',
+        defaultMessage: 'Letter Subject'
+    },
+    LETTER_REG_NO: {
+        id: 'letterTracking.newLetterEntryForm.regNo',
+        defaultMessage: 'Letter Reg No'
+    },
+    LETTER_STATUS: {
+        id: 'letterTracking.newLetterEntryForm.status',
+        defaultMessage: 'Letter Status'
+    },
+    LETTER_DATE: {
+        id: 'letterTracking.newLetterEntryForm.date',
+        defaultMessage: 'Letter Date'
+    },
+    REMARK: {
+        id: 'letterTracking.newLetterEntryForm.remark',
+        defaultMessage: 'Remark'
+    },
+    APPLICANT_NAME: {
+        id: 'fileManager.entryForm.applicantName',
+        defaultMessage: 'Applicant Name'
+    },
+    APPLICANT_ADDRESS: {
+        id: 'fileManager.entryForm.applicantAddress',
+        defaultMessage: 'Applicant Address'
+    },
+    APPLICANT_CONTACT: {
+        id: 'fileManager.entryForm.applicantContact',
+        defaultMessage: 'Applicant Contact'
+    },
+    FILE_NUMBER: {
+        id: 'fileManager.entryForm.fileNumber',
+        defaultMessage: 'File Number'
+    },
+    FILE_STATUS: {
+        id: 'fileManager.entryForm.fileStatus',
+        defaultMessage: 'File Status'
+    },
+    FILE_DESCRIPTION: {
+        id: 'fileManager.entryForm.fileDescription',
+        defaultMessage: 'File Description'
+    },
+    WARD: {
+        id: 'fileManager.entryForm.ward',
+        defaultMessage: 'Ward'
+    },
+    ZONE: {
+        id: 'fileManager.entryForm.zone',
+        defaultMessage: 'Zone'
+    },
+    DEPARTMENT: {
+        id: 'fileManager.entryForm.department',
+        defaultMessage: 'Department'
     }
 })
+
 
 export const PageHead = (props) => {
 	return (
@@ -179,13 +256,13 @@ ManageRecordModal.propTypes = {
     dialogClassName: PropTypes.string,
 }
 
-export const RecordDetails = (props) => {
+export const RecordDetails = injectIntl((props) => {
     const { record } = props
 
     var rows = [];
     for (var key in record) {
         if (record.hasOwnProperty(key)) {
-            if (!_.contains(['CREATED', 'MODIFIED', 'ID', 'STATUS', 'LETTER_FILE', 'LETTER_FILE_EXT'], key)) {
+            if (!_.contains(['CREATED', 'MODIFIED', 'ID', 'STATUS', 'LETTER_FILE', 'LETTER_FILE_EXT', 'DEPARTMENT_VIEW_LEVEL'], key)) {
                 let val = ''
                 if (key === 'FILE_STATUS') {
                     val = FileRecord.getFileStatusFromCode(record[key])
@@ -196,7 +273,7 @@ export const RecordDetails = (props) => {
                 } else {
                     val = record[key]
                 }
-                rows.push(<tr key={key}><td><Grid componentClass="span" bsClass="bold">{key}:</Grid> {val}</td></tr>)
+                rows.push(<tr key={key}><td><Grid componentClass="span" bsClass="bold">{props.intl.formatMessage(messages[key])}:</Grid> {val}</td></tr>)
             }
         }
     }
@@ -222,7 +299,7 @@ export const RecordDetails = (props) => {
             }
         </Grid>
     )
-}
+})
 
 RecordDetails.propTypes = {
     record: PropTypes.object,
