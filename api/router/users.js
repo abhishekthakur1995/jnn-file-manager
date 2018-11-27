@@ -2,6 +2,7 @@ const express = require('express')
 const users = express.Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const lang = require('../translate/lang.js')
 const client = require('redis').createClient()
 const connection = require('../../db/dbConnection')
 const limiter = require('express-limiter')(users, client)
@@ -141,27 +142,27 @@ users.post('/resetPassword',
 
 	  	if(newPassword === confirmNewPassword) {
 		  	connection.query(`SELECT PASSWORD FROM ${process.env.USER_TBL} WHERE ROLE = ? AND STATUS = 1`, [userRole], (err, results, fields) => {
-				if (err) { return res.status(400).json({message: 'Unable to reset password. Please try again', success: false}) }
+				if (err) { return res.status(400).json({message: lang.convertMessage('resetPasswordUnsuccess'), success: false}) }
 
 				if (results.length > 0) {
 					bcrypt.compare(currentPassword, results[0].PASSWORD).then((match) => {
 						if (match == true) {
 							bcrypt.hash(newPassword, parseInt(process.env.SALT_ROUNDS)).then((hashedPassword) => {
 								connection.query(`UPDATE ${process.env.USER_TBL} SET PASSWORD = ?`, [hashedPassword], (err, results, fields) => {
-									if (err) { return res.status(400).json({message: 'Unable to reset password. Please try again', success: false}) }
-									res.status(200).json({message: 'User password resetted successfully', success: true})	
+									if (err) { return res.status(400).json({message: lang.convertMessage('resetPasswordUnsuccess'), success: false}) }
+									res.status(200).json({message: lang.convertMessage('resetPasswordSuccess'), success: true})	
 								})
 							})
 						} else {
-							return res.status(400).json({message: 'Incorrect password sent. Please enter the correct password', success: false})
+							return res.status(400).json({message: lang.convertMessage('resetPasswordIncorrect'), success: false})
 						}
 					})
 				} else {
-					return res.status(400).json({message: 'No user exists', success: false})
+					return res.status(400).json({message: lang.convertMessage('resetPasswordNoUserFound'), success: false})
 				}
 		  	})
 	  	} else {
-	  		res.status(400).json({message:  'Password and confirm password do not match. Please try again', success: false})
+	  		res.status(400).json({message: lang.convertMessage('resetPasswordNoMatch'), success: false})
 	  	}
 	}
 )

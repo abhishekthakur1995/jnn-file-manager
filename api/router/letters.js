@@ -5,6 +5,7 @@ const moment = require('moment')
 const express = require('express')
 const letters = express.Router()
 const helper = require('../helper/Helper.js')
+const lang = require('../translate/lang.js')
 const connection = require('../../db/dbConnection')
 const { check, validationResult } = require('express-validator/check')
 
@@ -35,11 +36,11 @@ letters.post('/addNewLetterRecord',
 		connection.query(`INSERT INTO ${process.env.LETTER_RECORD_TBL} SET ?`, letterRecordData, (err, results, fields) => {
 			if (err) {
 				if(err.code === 'ER_DUP_ENTRY') {
-					return res.status(400).json({message : `This registration number (${req.body.LETTER_REG_NO}) already exists. Kindly give a new registration number.`, saved : false})
+					return res.status(400).json({message : lang.convertMessage('duplicateRegNo'), saved : false})
 				}
-				return res.status(400).json({message : 'Unable to save letter data. Please try again', saved : false})
+				return res.status(400).json({message : lang.convertMessage('letterAddUnsuccess'), saved : false})
 			}
-			res.status(200).json({message : 'Letter record saved successfully', saved : true, id: results.insertId})
+			res.status(200).json({message : lang.convertMessage('letterAddSuccess'), saved : true, id: results.insertId})
 		})
 	}
 )
@@ -71,9 +72,9 @@ letters.put('/updateRecord/:id',
 		req.body.LETTER_DATE = helper.convertDateTimeToMysqlFormat(req.body.LETTER_DATE)
 		connection.query(`UPDATE ${process.env.LETTER_RECORD_TBL} SET DEPARTMENT_NAME = ?, ASSIGNED_OFFICER = ?, LETTER_TYPE = ?, LETTER_TAG = ?, LETTER_ADDRESS = ?, LETTER_SUBJECT = ?, LETTER_REG_NO = ?, LETTER_DATE = ?, LETTER_STATUS = ?, REMARK = ? WHERE ID = ?`, [req.body.DEPARTMENT_NAME, req.body.ASSIGNED_OFFICER, req.body.LETTER_TYPE, req.body.LETTER_TAG, req.body.LETTER_ADDRESS, req.body.LETTER_SUBJECT, req.body.LETTER_REG_NO, req.body.LETTER_DATE, req.body.LETTER_STATUS, req.body.REMARK, req.params.id], (err, results, fields) => {
 			if (err) {
-				return res.status(400).json({message : err, saved : false})
+				return res.status(400).json({message : lang.convertMessage('letterUpdateUnsuccess'), saved : false})
 			}
-			res.status(200).json({message : 'Letter data updated successfully', saved : true, id: req.params.id})
+			res.status(200).json({message : lang.convertMessage('letterUpdateSuccess'), saved : true, id: req.params.id})
 		})
 	}
 )
@@ -102,11 +103,11 @@ letters.post('/addNewSettings',
 	  	connection.query(`INSERT INTO ${process.env.INPUTS_TBL} SET ?`, data, (err, results, fields) => {
 	  		if (err) {
 	  			if(err.code === 'ER_DUP_ENTRY') {
-					return res.status(400).json({message : `This setting (${req.body.SETTING_NAME}) already exists.`, saved : false})
+					return res.status(400).json({message : lang.convertMessage('duplicateSettings'), saved : false})
 				}
-	  			return res.status(400).json({message : err, saved : false})
+	  			return res.status(400).json({message : lang.convertMessage('settingsAddUnsuccess'), saved : false})
 	  		}
-  			res.status(200).json({message : 'Setting added successfully', saved : true})
+  			res.status(200).json({message : lang.convertMessage('settingsAddSuccess'), saved : true})
 	  	})
 	}
 )

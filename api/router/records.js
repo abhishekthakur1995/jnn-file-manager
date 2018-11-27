@@ -3,6 +3,7 @@ const _ = require('lodash')
 const excel = require('xlsx')
 const express = require('express')
 const records = express.Router()
+const lang = require('../translate/lang.js')
 const helper = require('../helper/Helper.js')
 const connection = require('../../db/dbConnection')
 const { check, validationResult } = require('express-validator/check')
@@ -42,11 +43,11 @@ records.post('/addNewRecord',
 		connection.query(`INSERT INTO ${process.env.FILE_RECORD_TBL} SET ?`, fileRecordData, (err, results, fields) => {
 			if (err) {
 				if(err.code === 'ER_DUP_ENTRY') {
-					return res.status(400).json({message : `This file number (${req.body.file_number}) already exists. Kindly give a new file number.`, saved : false})
+					return res.status(400).json({message : lang.convertMessage('duplicateFileNo'), saved : false})
 				}
-				return res.status(400).json({message : 'Unable to save file data. Please try again', saved : false})
+				return res.status(400).json({message : lang.convertMessage('recordAddUnsuccess'), saved : false})
 			}
-			res.status(200).json({message : 'Record saved successfully', saved : true})
+			res.status(200).json({message : lang.convertMessage('recordAddSuccess'), saved : true})
 		})
 	}
 )
@@ -234,9 +235,9 @@ records.put('/updateRecord/:id',
 
 		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET APPLICANT_NAME = ?, APPLICANT_TYPE = ?, APPLICANT_ADDRESS = ?, APPLICANT_CONTACT = ?, BUILDING_NAME = ?, BUILDING_ADDRESS = ?, BUILDING_AREA = ?, FILE_NUMBER = ?, REMARK = ? WHERE ID = ?`, [req.body.applicant_name, req.body.applicant_type, req.body.applicant_address, req.body.applicant_contact, req.body.building_name, req.body.building_address, req.body.building_area, req.body.file_number, req.body.remark, req.params.id], (err, results, fields) => {
 			if (err) {
-				return res.status(400).json({message : err, saved : false})
+				return res.status(400).json({message : lang.convertMessage('recordUpdateUnsuccess'), saved : false})
 			}
-			res.status(200).json({message : 'Record updated successfully', saved : true})
+			res.status(200).json({message : lang.convertMessage('recordUpdateSuccess'), saved : true})
 		})
 	}
 )
