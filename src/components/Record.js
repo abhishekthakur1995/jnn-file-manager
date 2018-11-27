@@ -3,7 +3,7 @@ import moment from 'moment'
 import config from 'config'
 import PropTypes from 'prop-types'
 import EntryForm from './EntryForm'
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import { defineMessages, injectIntl } from 'react-intl'
 import { SplitButton, MenuItem, Checkbox } from 'react-bootstrap'
 import { EditRecordModal, DeleteRecordModal, ManageRecordModal } from './uiComponents/CommonComponent'
 
@@ -22,6 +22,14 @@ const messages = defineMessages({
     },
     dropdownBtn1: {
     	id: 'fileManager.record.dropdown.btn1',
+    	defaultMessage: 'Manage record'
+    },
+    dropdownBtn2: {
+    	id: 'fileManager.record.dropdown.btn2',
+    	defaultMessage: 'Manage record'
+    },
+    dropdownBtn3: {
+    	id: 'fileManager.record.dropdown.btn3',
     	defaultMessage: 'Manage record'
     }
 })
@@ -146,18 +154,17 @@ class Record extends React.Component {
 			    <td title={record.APPLICANT_NAME}>{record.APPLICANT_NAME}</td>
 			    <td title={record.APPLICANT_ADDRESS}>{record.APPLICANT_ADDRESS}</td>
 			    <td title={record.APPLICANT_CONTACT}>{record.APPLICANT_CONTACT}</td>
-			    <td title={record.BUILDING_NAME}>{record.BUILDING_NAME}</td>
 			    <td title={record.FILE_NUMBER}>{record.FILE_NUMBER}</td>
+			    <td title={record.FILE_DESCRIPTION}>{record.FILE_DESCRIPTION}</td>
+			    <td title={record.DEPARTMENT}>{record.DEPARTMENT}</td>
+			    <td title={record.WARD}>{record.WARD}</td>
+			    <td title={record.ZONE}>{record.ZONE}</td>
 			    <td title={fileStatus}>{fileStatus}</td>
 			    <td title={dateCreated}>{dateCreated}</td>
 			    <td>
 			    	<SplitButton title={intl.formatMessage(messages.dropdownBtn1)} data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>
-  						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>
-  							<FormattedMessage id="record.dropdown.btn2" defaultMessage="Edit" />
-  						</MenuItem>
-  						<MenuItem data-id="delete" eventKey="2" onClick={this.showModal}>
-  							<FormattedMessage id="record.dropdown.btn3" defaultMessage="Delete" />
-  						</MenuItem>
+  						<MenuItem data-id="edit" eventKey="1" onClick={this.showModal}>{intl.formatMessage(messages.dropdownBtn2)}</MenuItem>
+  						<MenuItem data-id="delete" eventKey="2" onClick={this.showModal}>{intl.formatMessage(messages.dropdownBtn3)}</MenuItem>
 					</SplitButton>
 				</td>
 

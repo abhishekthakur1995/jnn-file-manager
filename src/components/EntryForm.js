@@ -12,9 +12,29 @@ import { EntryFormService } from './services/ApiServices'
 import { PageHead } from './uiComponents/CommonComponent'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { required, phoneNumber } from './helpers/ValidationHelper'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label } from 'react-bootstrap'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/slide.css'
+
+const messages = defineMessages({
+    submitBtnSaveText: {
+        id: 'fileManager.entryForm.submitBtnSaveText',
+        defaultMessage: 'Save',
+    },
+    submitBtnUpdateText: {
+        id: 'fileManager.entryForm.submitBtnUpdateText',
+        defaultMessage: 'Update',
+    },
+    saveEntryFormLabel: {
+        id: 'fileManager.entryForm.saveEntryFormLabel',
+        defaultMessage: 'New Entry',
+    },
+    updateEntryFormLabel: {
+        id: 'fileManager.entryForm.updateEntryFormLabel',
+        defaultMessage: 'Update Entry',
+    }
+})
 
 class EntryForm extends React.Component {
     constructor(props) {
@@ -24,13 +44,13 @@ class EntryForm extends React.Component {
         this.state = {
             fields: {
                 applicantName: '',
-                applicantType: '',
                 applicantAddress: '',
                 applicantContact: '',
-                buildingName: '',
-                buildingAddress: '',
-                buildingArea: '',
                 fileNumber: '',
+                fileDescription: '',
+                department: '',
+                zone: '',
+                ward: '',
                 remark: '',
             }
         }
@@ -46,13 +66,13 @@ class EntryForm extends React.Component {
             this.setState({
                 fields: {
                     applicantName: record.APPLICANT_NAME,
-                    applicantType: record.APPLICANT_TYPE,
                     applicantAddress: record.APPLICANT_ADDRESS,
                     applicantContact: record.APPLICANT_CONTACT,
-                    buildingName: record.BUILDING_NAME,
-                    buildingAddress: record.BUILDING_ADDRESS,
-                    buildingArea: record.BUILDING_AREA,
                     fileNumber: record.FILE_NUMBER,
+                    fileDescription: record.FILE_DESCRIPTION,
+                    department: record.DEPARTMENT,
+                    zone: record.ZONE,
+                    ward: record.WARD,
                     remark: record.REMARK,
                 }
             })
@@ -76,13 +96,13 @@ class EntryForm extends React.Component {
         const method = this.props.mode === 'edit' ? 'put' : 'post'
         const data = {
             applicant_name: this.state.fields.applicantName,
-            applicant_type: this.state.fields.applicantType,
             applicant_address: this.state.fields.applicantAddress,
             applicant_contact: this.state.fields.applicantContact,
-            building_name: this.state.fields.buildingName,
-            building_address: this.state.fields.buildingAddress,
-            building_area: this.state.fields.buildingArea,
             file_number: this.state.fields.fileNumber,
+            file_description: this.state.fields.fileDescription,
+            department: this.state.fields.department,
+            zone: this.state.fields.zone,
+            ward: this.state.fields.ward,
             remark: this.state.fields.remark
         }
         EntryFormService.addNewRecord(method, url, data).then((res) => {
@@ -96,7 +116,8 @@ class EntryForm extends React.Component {
     }
 
     render() {
-        const btnText = this.props.mode === 'edit' ? 'Update' : 'Save'
+        const { intl } = this.props
+        const btnText = this.props.mode === 'edit' ? intl.formatMessage(messages.submitBtnUpdateText) : intl.formatMessage(messages.submitBtnSaveText)
         return (
             <Grid bsClass="entry-form">
             {this.props.mode !== 'edit' && <BreadcrumbsItem to={FileRecord.getAbsolutePath('addNewRecord')}> Add New Record </BreadcrumbsItem>}
@@ -107,11 +128,13 @@ class EntryForm extends React.Component {
                         <Form onSubmit={this.handleSubmit}>
                             <fieldset className="custom-fieldset margin-bottom-2x">
                             <legend className="custom-legend">
-                                <Label bsStyle="primary" className="padding-2x">{this.props.mode === 'edit' ? 'Update Entry' : 'New Entry'}</Label>
+                                <Label bsStyle="primary" className="padding-2x">{this.props.mode === 'edit' ? intl.formatMessage(messages.updateEntryFormLabel) : intl.formatMessage(messages.saveEntryFormLabel)}</Label>
                             </legend>
                                 <Col md={4}>
-                                    <FormGroup>
-                                        <ControlLabel htmlFor="applicantName">Applicant Name</ControlLabel>
+                                    <FormGroup className="required">
+                                        <ControlLabel htmlFor="applicantName">
+                                            <FormattedMessage id="fileManager.entryForm.applicantName" defaultMessage="Applicant Name" />
+                                        </ControlLabel>
                                         <Input
                                             type="text"
                                             autoComplete="on"
@@ -125,8 +148,10 @@ class EntryForm extends React.Component {
                                 </Col>
 
                                 <Col md={4}>
-                                    <FormGroup>
-                                        <ControlLabel htmlFor="applicantAddress">Applicant Address</ControlLabel>
+                                    <FormGroup className="required">
+                                        <ControlLabel htmlFor="applicantAddress">
+                                            <FormattedMessage id="fileManager.entryForm.applicantAddress" defaultMessage="Applicant Address" />
+                                        </ControlLabel>
                                         <Input
                                             type="text"
                                             autoComplete="on"
@@ -140,8 +165,10 @@ class EntryForm extends React.Component {
                                 </Col>
 
                                 <Col md={4}>
-                                    <FormGroup>
-                                        <ControlLabel htmlFor="applicantContact">Applicant Contact</ControlLabel>
+                                    <FormGroup className="required">
+                                        <ControlLabel htmlFor="applicantContact">
+                                            <FormattedMessage id="fileManager.entryForm.applicantContact" defaultMessage="Applicant Contact" />
+                                        </ControlLabel>
                                         <Input
                                             type="text"
                                             autoComplete="on"
@@ -156,58 +183,13 @@ class EntryForm extends React.Component {
                                 <Clearfix />
 
                                 <Col md={4}>
-                                    <FormGroup>
-                                        <ControlLabel htmlFor="buildingName">Building Name</ControlLabel>
-                                        <Input
-                                            type="text"
-                                            autoComplete="on"
-                                            name="buildingName"
-                                            validations={[required]}
-                                            className="form-control"
-                                            value={this.state.fields.buildingName}
-                                            onChange={this.handleChange}
-                                        />
-                                    </FormGroup>
-                                </Col>
-
-                                <Col md={4}>
-                                    <FormGroup>
-                                        <ControlLabel htmlFor="buildingAddress">Building Address</ControlLabel>
-                                        <Input
-                                            type="text"
-                                            autoComplete="on"
-                                            name="buildingAddress"
-                                            validations={[required]}
-                                            className="form-control"
-                                            value={this.state.fields.buildingAddress}
-                                            onChange={this.handleChange}
-                                        />
-                                    </FormGroup>
-                                </Col>
-
-                                <Col md={4}>
-                                    <FormGroup>
-                                        <ControlLabel htmlFor="buildingArea">Area</ControlLabel>
+                                    <FormGroup className="required">
+                                        <ControlLabel htmlFor="department">
+                                            <FormattedMessage id="fileManager.entryForm.department" defaultMessage="Department" />
+                                        </ControlLabel>
                                         <Select
-                                        name="buildingArea"
-                                        value={this.state.fields.buildingArea}
-                                        validations={[required]}
-                                        className="form-control"
-                                        onChange={this.handleChange}>
-                                            <option value="">Select</option>
-                                            <option value="urban">Urban</option>
-                                            <option value="rural">Rural</option>
-                                        </Select>
-                                    </FormGroup>
-                                </Col>
-                                <Clearfix />
-
-                                <Col md={4}>
-                                    <FormGroup>
-                                        <ControlLabel htmlFor="applicantType">Applicant Type</ControlLabel>
-                                        <Select
-                                        name="applicantType"
-                                        value={this.state.fields.applicantType}
+                                        name="department"
+                                        value={this.state.fields.department}
                                         className="form-control"
                                         onChange={this.handleChange}>
                                             <option value="">Select</option>
@@ -218,8 +200,45 @@ class EntryForm extends React.Component {
                                 </Col>
 
                                 <Col md={4}>
-                                    <FormGroup>
-                                        <ControlLabel htmlFor="fileNumber">File Number</ControlLabel>
+                                    <FormGroup className="required">
+                                        <ControlLabel htmlFor="zone">
+                                            <FormattedMessage id="fileManager.entryForm.zone" defaultMessage="Zone" />
+                                        </ControlLabel>
+                                        <Select
+                                        name="zone"
+                                        value={this.state.fields.zone}
+                                        className="form-control"
+                                        onChange={this.handleChange}>
+                                            <option value="">Select</option>
+                                            <option value="permanent">Permanent</option>
+                                            <option value="temporary">Temporary</option>
+                                        </Select>
+                                    </FormGroup>
+                                </Col>
+
+                                <Col md={4}>
+                                    <FormGroup className="required">
+                                        <ControlLabel htmlFor="ward">
+                                            <FormattedMessage id="fileManager.entryForm.ward" defaultMessage="Ward" />
+                                        </ControlLabel>
+                                        <Select
+                                        name="ward"
+                                        value={this.state.fields.ward}
+                                        className="form-control"
+                                        onChange={this.handleChange}>
+                                            <option value="">Select</option>
+                                            <option value="permanent">Permanent</option>
+                                            <option value="temporary">Temporary</option>
+                                        </Select>
+                                    </FormGroup>
+                                </Col>
+                                <Clearfix />
+
+                                <Col md={4}>
+                                    <FormGroup className="required">
+                                        <ControlLabel htmlFor="fileNumber">
+                                            <FormattedMessage id="fileManager.entryForm.fileNumber" defaultMessage="File Number" />
+                                        </ControlLabel>
                                         <Input
                                             type="text"
                                             autoComplete="on"
@@ -233,9 +252,27 @@ class EntryForm extends React.Component {
                                 </Col>
                                 <Clearfix />
 
-                                <Col md={12}>
-                                    <FormGroup bsSize="large" >
-                                        <ControlLabel htmlFor="remark">Remark</ControlLabel>
+                                <Col md={6}>
+                                    <FormGroup bsSize="large" className="required">
+                                        <ControlLabel htmlFor="fileDescription">
+                                            <FormattedMessage id="fileManager.entryForm.fileDescription" defaultMessage="File Description" />
+                                        </ControlLabel>
+                                        <Textarea
+                                            autoComplete="on"
+                                            name="fileDescription"
+                                            className="form-control"
+                                            validations={[required]}
+                                            value={this.state.fields.fileDescription}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
+
+                                <Col md={6}>
+                                    <FormGroup bsSize="large" className="required">
+                                        <ControlLabel htmlFor="remark">
+                                            <FormattedMessage id="fileManager.entryForm.remark" defaultMessage="Remark" />
+                                        </ControlLabel>
                                         <Textarea
                                             autoComplete="on"
                                             name="remark"
@@ -262,9 +299,10 @@ class EntryForm extends React.Component {
 }
 
 EntryForm.propTypes = {
+    intl: PropTypes.object,
     record: PropTypes.object,
     mode: PropTypes.string,
     onUpdate: PropTypes.func,
 }
 
-export default EntryForm
+export default injectIntl(EntryForm)

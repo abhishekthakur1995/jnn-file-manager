@@ -102,7 +102,9 @@ export const EditRecordModal = (props) => {
             </Modal.Body>
 
             <Modal.Footer>
-                <Button onClick={props.handleModalClose}>Close</Button>
+                <Button onClick={props.handleModalClose}>
+                    <FormattedMessage id="common.general.closeBtn" defaultMessage="Close" />
+                </Button>
             </Modal.Footer>
         </Modal>
     )
@@ -127,15 +129,15 @@ export const DeleteRecordModal = (props) => {
             </Modal.Header>
 
             <Modal.Body>
-                <FormattedMessage id="record.deleteRecordModal.warning" defaultMessage="Are you sure you want to delete this record? This cannot be undone." />
+                <FormattedMessage id="fileManager.record.deleteRecordModal.warning" defaultMessage="Are you sure you want to delete this record? This cannot be undone." />
             </Modal.Body>
 
             <Modal.Footer>
                 <Button onClick={props.handleModalClose}>
-                    <FormattedMessage id="record.deleteRecordModal.closeBtn" defaultMessage="Close" />
+                    <FormattedMessage id="common.general.closeBtn" defaultMessage="Close" />
                 </Button>
                 <Button bsClass="btn btn-danger" onClick={props.onDelete}>
-                    <FormattedMessage id="record.deleteRecordModal.deleteBtn" defaultMessage="Delete" />
+                    <FormattedMessage id="fileManager.record.deleteRecordModal.deleteBtn" defaultMessage="Delete" />
                 </Button>
             </Modal.Footer>
         </Modal>
@@ -207,9 +209,15 @@ export const RecordDetails = (props) => {
 
             {props.showActionButtons &&
                 <Grid bsClass="width-10x display-inline">
-                    <Button className="btn-danger pull-right margin-left-1x" onClick={props.handleRejectBtnClick}>Reject</Button>
-                    <Button className="btn-success pull-right margin-left-1x" onClick={props.handleApproveBtnClick}>Approve</Button>
-                    <Button className="btn-warning pull-right margin-left-1x" onClick={props.handlePendingBtnClick}>Pending</Button>
+                    <Button className="btn-danger pull-right margin-left-1x" onClick={props.handleRejectBtnClick}>
+                        <FormattedMessage id="common.general.rejected" defaultMessage="Rejected" />
+                    </Button>
+                    <Button className="btn-success pull-right margin-left-1x" onClick={props.handleApproveBtnClick}>
+                        <FormattedMessage id="common.general.approved" defaultMessage="Approve"/>
+                    </Button>
+                    <Button className="btn-warning pull-right margin-left-1x" onClick={props.handlePendingBtnClick}>
+                        <FormattedMessage id="common.general.pending" defaultMessage="Pending"/>
+                    </Button>
                 </Grid>
             }
         </Grid>
@@ -263,15 +271,19 @@ export const TableFunctionalityBase = (props) => {
                 title="Mark selected record as pending"
                 onClick={() => props.onReject('pending')}
                 className="margin-right-2x" >
-                <Grid componentClass="span" bsClass="">Pending</Grid>
+                <Grid componentClass="span" bsClass="">
+                <FormattedMessage id="common.general.pending" defaultMessage="Pending"/>
+                </Grid>
             </Glyphicon>}
 
             {props.onApprove && <Glyphicon
                 glyph="ok"
-                title="Mark selected record as approveed"
+                title="Mark selected record as approved"
                 onClick={() => props.onApprove('approve')}
                 className="margin-right-2x">
-                <Grid componentClass="span" bsClass="">Approve</Grid>
+                <Grid componentClass="span" bsClass="">
+                    <FormattedMessage id="common.general.approved" defaultMessage="Approve"/>
+                </Grid>
             </Glyphicon>}
 
             {props.onApprove && <Glyphicon
@@ -279,7 +291,9 @@ export const TableFunctionalityBase = (props) => {
                 title="Mark selected record as rejected"
                 onClick={() => props.onReject('reject')}
                 className="margin-right-2x" >
-                <Grid componentClass="span" bsClass="">Reject</Grid>
+                <Grid componentClass="span" bsClass="">
+                    <FormattedMessage id="common.general.rejected" defaultMessage="Rejected"/>
+                </Grid>
             </Glyphicon>}
 
             {props.onPageSizeChange && <FormControl bsClass="pageSize" componentClass="select" onChange={(e) => { props.onPageSizeChange(e.target.value) }}>

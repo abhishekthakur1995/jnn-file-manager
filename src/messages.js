@@ -11,7 +11,8 @@ export default {
 				outgoing: 'बाहर जाने वाला',
 				dashboard: 'डैशबोर्ड',
 				action: 'कार्य',
-				noResult: 'कोई रिकॉर्ड नहीं मिला'
+				noResult: 'कोई रिकॉर्ड नहीं मिला',
+				closeBtn: 'बंद करे'
 			},
 			filter: {
 				title: 'फ़िल्टर लगाए',
@@ -98,22 +99,38 @@ export default {
 			},
 			record: {
 				dropdown: {
-					btn1: '',
-					btn2: '',
-					btn3: ''
+					btn1: 'रिकॉर्ड मैनेज करे',
+					btn2: 'रिकॉर्ड संपादित करें',
+					btn3: 'रिकॉर्ड हटाएं'
 				},
 				editRecordModal: {
-					title: ''
+					title: 'रिकॉर्ड संपादित करें'
 				},
 				deleteRecordModal: {
-					title: '',
-					warning: '',
-					closeBtn: '',
-					deleteBtn: ''
+					title: 'रिकॉर्ड हटाएं',
+					warning: 'क्या आप वाकई इस रिकॉर्ड को मिटाना चाहते हैं?',
+					deleteBtn: 'डिलीट करे'
 				},
 				manageRecordModal: {
-					title: ''
+					title: 'रिकॉर्ड मैनेज करे'
 				}
+			},
+			entryForm: {
+				applicantName: 'आवेदक का नाम',
+				applicantAddress: 'आवेदक का पता',
+				applicantContact: 'आवेदक का मोबाइल नंबर',
+				fileNumber: 'फाइल संख्या',
+				fileDescription: 'फाइल विवरण',
+				department: 'डिपार्टमेंट',
+				ward: 'वार्ड',
+				zone: 'जोन',
+				remark: 'टिप्पणी',
+				submitBtnSaveText: 'सेव करे',
+				submitBtnUpdateText: 'अपडेट करे',
+				saveEntryFormLabel: 'नया रिकॉर्ड जोड़े',
+				updateEntryFormLabel: 'रिकॉर्ड अपडेट करे',
+				fileStatus: 'फ़ाइल की स्थिति',
+				dateCreated: 'दिनांक और समय'
 			}
 		},
 		letterTracking: {
@@ -213,5 +230,5 @@ export default {
 				}
 			}
 		}
-	},
+	}
 }

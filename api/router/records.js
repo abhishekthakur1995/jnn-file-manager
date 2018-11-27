@@ -15,13 +15,13 @@ const { check, validationResult } = require('express-validator/check')
 records.post('/addNewRecord',
 	[
 		check('applicant_name').not().isEmpty().withMessage('Applicant name cannot be empty').trim().escape(),
-		check('applicant_type').not().isEmpty().withMessage('Please select an applicant type').trim().escape(),
 		check('applicant_address').not().isEmpty().withMessage('Applicant address cannot be empty').trim().escape(),
 		check('applicant_contact').not().isEmpty().withMessage('Applicant contact cannot be empty').trim().escape(),
-		check('building_name').not().isEmpty().withMessage('Building name cannot be empty').trim().escape(),
-		check('building_address').not().isEmpty().withMessage('Building Address cannot be empty').trim().escape(),
-		check('building_area').not().isEmpty().withMessage('Building Area cannot be empty').trim().escape(),
 		check('file_number').not().isEmpty().withMessage('File number cannot be empty').trim().escape(),
+		check('file_description').not().isEmpty().withMessage('File description cannot be empty').trim().escape(),
+		check('department').not().isEmpty().withMessage('Please select a department').trim().escape(),
+		check('ward').not().isEmpty().withMessage('Please select a ward').trim().escape(),
+		check('zone').not().isEmpty().withMessage('Please select a zone').trim().escape(),
 		check('remark').trim().escape()
 	],
 	(req, res) => {
@@ -31,14 +31,14 @@ records.post('/addNewRecord',
 	  	}
 		const fileRecordData = {
 	        "APPLICANT_NAME": req.body.applicant_name,
-	        "APPLICANT_TYPE": req.body.applicant_type,
 	        "APPLICANT_ADDRESS": req.body.applicant_address,
 	        "APPLICANT_CONTACT": req.body.applicant_contact,
-	        "BUILDING_NAME": req.body.building_name,
-	        "BUILDING_ADDRESS": req.body.building_address,
-	        "BUILDING_AREA": req.body.building_area,
 	        "FILE_NUMBER": req.body.file_number,
-	        "REMARK": req.body.remark,
+	        "FILE_DESCRIPTION": req.body.file_description,
+	        "DEPARTMENT": req.body.department,
+	        "ZONE" : req.body.zone,
+	        "WARD": req.body.ward,
+	        "REMARK": req.body.remark
 	    }
 		connection.query(`INSERT INTO ${process.env.FILE_RECORD_TBL} SET ?`, fileRecordData, (err, results, fields) => {
 			if (err) {

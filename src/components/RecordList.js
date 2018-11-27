@@ -8,6 +8,7 @@ import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { Common, FileRecord } from './helpers/CommonHelper'
 import FilterComponent from './uiComponents/FilterComponent'
 import PaginationComponent from './uiComponents/PaginationComponent'
+import { FormattedMessage } from 'react-intl'
 import { PageHead, LoadingSpinner, QuickSearchComponent, TableFunctionalityBase, FilterButton, NoData } from './uiComponents/CommonComponent'
 
 class RecordList extends React.Component {
@@ -81,14 +82,14 @@ class RecordList extends React.Component {
 			records: prevState.records.map(
 				record => (record.ID !== updatedRecord.ID) ? record : {...record,
 					APPLICANT_NAME: updatedRecord.applicantName,
-					APPLICANT_TYPE: updatedRecord.applicantType,
 					APPLICANT_ADDRESS: updatedRecord.applicantAddress,
 					APPLICANT_CONTACT: updatedRecord.applicantContact,
-					BUILDING_NAME: updatedRecord.buildingName,
-					BUILDING_ADDRESS: updatedRecord.buildingAddress,
-					BUILDING_AREA: updatedRecord.buildingArea,
 					FILE_NUMBER: updatedRecord.fileNumber,
-					REMARK: updatedRecord.remark,
+					FILE_DESCRIPTION: updatedRecord.fileDescription,
+					DEPARTMENT: updatedRecord.department,
+					WARD: updatedRecord.ward,
+					ZONE: updatedRecord.zone,
+					REMARK: updatedRecord.remark
 				}
 			)
 		}))
@@ -314,27 +315,31 @@ class RecordList extends React.Component {
 	                    		</th>
 	                            <th
 	                            	className={`cursor-pointer ${this.state.sortField === 'applicantName' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-	                            	onClick={() => this.sortField('applicantName')}>Applicant Name
+	                            	onClick={() => this.sortField('applicantName')}>
+	                            	<FormattedMessage id="fileManager.entryForm.applicantName" defaultMessage="Applicant Name" />
 	                        	</th>
 	                            <th
 	                            	className={`cursor-pointer ${this.state.sortField === 'applicantAddress' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-	                            	onClick={() => this.sortField('applicantAddress')}>Applicant Address
+	                            	onClick={() => this.sortField('applicantAddress')}>
+	                            	<FormattedMessage id="fileManager.entryForm.applicantAddress" defaultMessage="Applicant Address" />
 	                        	</th>
 	                            <th
 	                            	className={`cursor-pointer ${this.state.sortField === 'applicantContact' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-	                            	onClick={() => this.sortField('applicantContact')}>Applicant Contact
+	                            	onClick={() => this.sortField('applicantContact')}>
+	                            	<FormattedMessage id="fileManager.entryForm.applicantContact" defaultMessage="Applicant Contact" />
 	                        	</th>
-	                            <th
-	                            	className={`cursor-pointer ${this.state.sortField === 'buildingName' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-	                         		onClick={() => this.sortField('buildingName')}>Building Name
-	                     		</th>
-	                            <th>File Number</th>
-	                            <th>Current State</th>
+	                            <th><FormattedMessage id="fileManager.entryForm.fileNumber" defaultMessage="File Number" /></th>
+	                            <th><FormattedMessage id="fileManager.entryForm.fileDescription" defaultMessage="fileDescription" /></th>
+	                            <th><FormattedMessage id="fileManager.entryForm.department" defaultMessage="department" /></th>
+	                            <th><FormattedMessage id="fileManager.entryForm.ward" defaultMessage="ward" /></th>
+	                            <th><FormattedMessage id="fileManager.entryForm.zone" defaultMessage="zone" /></th>
+	                            <th><FormattedMessage id="fileManager.entryForm.fileStatus" defaultMessage="Current State" /></th>
 	                           	<th
 	                           		className={`cursor-pointer ${this.state.sortField === 'dateCreated' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
-	                        		onClick={() => this.sortField('dateCreated')}>Date Created
+	                        		onClick={() => this.sortField('dateCreated')}>
+	                        		<FormattedMessage id="fileManager.entryForm.dateCreated" defaultMessage="Date Created" />
 	                    		</th>
-	                            <th>Action</th>
+	                            <th><FormattedMessage id="common.general.action" defaultMessage="Action" /></th>
 	                        </tr>
 	                    </thead>
 
