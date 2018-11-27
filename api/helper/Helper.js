@@ -13,7 +13,6 @@ const LETTER_STATUS_CODE_MAPPING = {
 }
 
 const DB_FIELDS_CODE_MAPPING = {
-	'buildingName'		: 	'BUILDING_NAME',
 	'applicantName'		: 	'APPLICANT_NAME',
 	'applicantContact'	: 	'APPLICANT_CONTACT',
 	'applicantAddress'  : 	'APPLICANT_ADDRESS',

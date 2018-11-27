@@ -466,11 +466,10 @@ MonthDropDown.propTypes = {
 
 export const SearchFilterOptions = injectIntl((props) => {
     const optionsList = [
-        { id: 'buildingName', name: 'Building Name'},
-        { id: 'applicantName', name: 'Applicant Name'},
-        { id: 'applicantContact', name: 'Applicant Contact'},
-        { id: 'applicantAddress', name: 'Applicant Address'},
-        { id: 'fileNumber', name: 'File Number'}
+        { id: 'applicantName', name: props.intl.formatMessage(messages.APPLICANT_NAME)},
+        { id: 'applicantContact', name: props.intl.formatMessage(messages.APPLICANT_CONTACT)},
+        { id: 'applicantAddress', name: props.intl.formatMessage(messages.APPLICANT_ADDRESS)},
+        { id: 'fileNumber', name: props.intl.formatMessage(messages.FILE_NUMBER)}
     ]
 
     return (
