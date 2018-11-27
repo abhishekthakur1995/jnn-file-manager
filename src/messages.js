@@ -60,7 +60,7 @@ export default {
 				manageRecords: 'रिकार्ड्स मैनेज करे',
 				getRecords: 'रिकार्ड्स रिपोर्ट देखे',
 				importExcel: 'एक्सेल से रिकॉर्ड डाटा डाले',
-				manageSystemInputs: ''
+				manageSystemInputs: 'सेटिंग्स'
 			},
 			infoboard: {
 				chartHolderTitle: 'फाइल रिकॉर्ड सारांश'
