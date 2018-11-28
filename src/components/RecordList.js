@@ -257,7 +257,7 @@ class RecordList extends React.Component {
 	render() {
 		let filteredRecords = this.state.records
 		if (_.isEmpty(filteredRecords)) {
-			filteredRecords = <NoData colSpan={8} />
+			filteredRecords = <NoData colSpan={13} />
 		} else {
 			filteredRecords = filteredRecords.map(function(record, index) {
 				return (
@@ -334,6 +334,11 @@ class RecordList extends React.Component {
 	                            <th><FormattedMessage id="fileManager.entryForm.ward" defaultMessage="ward" /></th>
 	                            <th><FormattedMessage id="fileManager.entryForm.zone" defaultMessage="zone" /></th>
 	                            <th><FormattedMessage id="fileManager.entryForm.fileStatus" defaultMessage="Current State" /></th>
+                                <th
+                               		className={`cursor-pointer ${this.state.sortField === 'FILE_DATE' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
+                            		onClick={() => this.sortField('FILE_DATE')}>
+                            		<FormattedMessage id='fileManager.entryForm.date' />
+                        		</th>
 	                           	<th
 	                           		className={`cursor-pointer ${this.state.sortField === 'dateCreated' ? (this.state.sortFieldCriteria === 'asc' ? 'asc-box-shadow' : 'desc-box-shadow') : ''}`}
 	                        		onClick={() => this.sortField('dateCreated')}>

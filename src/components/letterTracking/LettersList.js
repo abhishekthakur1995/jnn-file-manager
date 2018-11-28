@@ -188,7 +188,7 @@ class LettersList extends React.Component {
 	render() {
 		let filteredRecords = this.state.letters
 		if (_.isEmpty(filteredRecords)) {
-			filteredRecords = <NoData colSpan={9} />
+			filteredRecords = <NoData colSpan={10} />
 		} else {
 			filteredRecords = filteredRecords.map(function(letter, index) {
 				return (

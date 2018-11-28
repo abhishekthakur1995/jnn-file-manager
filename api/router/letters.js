@@ -31,8 +31,8 @@ letters.post('/addNewLetterRecord',
 		if (!errors.isEmpty()) {
 		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
+	  	req.body.LETTER_DATE = helper.convertDateTimeToMysqlFormat(req.body.LETTER_DATE)
 		const letterRecordData = req.body
-		req.body.LETTER_DATE = helper.convertDateTimeToMysqlFormat(req.body.LETTER_DATE)
 		connection.query(`INSERT INTO ${process.env.LETTER_RECORD_TBL} SET ?`, letterRecordData, (err, results, fields) => {
 			if (err) {
 				if(err.code === 'ER_DUP_ENTRY') {

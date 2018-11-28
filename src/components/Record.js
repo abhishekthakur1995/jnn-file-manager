@@ -140,6 +140,7 @@ class Record extends React.Component {
 		const { intl } = this.props
 		const record = this.props.singleRecord
 		const fileStatus = record.FILE_STATUS == 1 ? 'Approved' : (record.FILE_STATUS == 2 ? 'Rejected' : 'Pending')
+		const fileDate = Common.getDisplayFormatDate(record.fileDate)
 		const dateCreated = Common.getDisplayFormatDateTime(record.CREATED)
 		return (
 			<tr>
@@ -159,6 +160,7 @@ class Record extends React.Component {
 			    <td title={record.WARD}>{record.WARD}</td>
 			    <td title={record.ZONE}>{record.ZONE}</td>
 			    <td title={fileStatus}>{fileStatus}</td>
+			    <td title={fileDate}>{fileDate}</td>
 			    <td title={dateCreated}>{dateCreated}</td>
 			    <td>
 			    	<SplitButton title={intl.formatMessage(messages.dropdownBtn1)} data-id="manage" id={`split-button-basic-${this.props.index + 1}`} pullRight onClick={this.showModal}>

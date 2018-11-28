@@ -122,6 +122,7 @@ export default {
 				fileNumber: 'फाइल संख्या',
 				fileDescription: 'फाइल विवरण',
 				department: 'डिपार्टमेंट',
+				date: 'फाइल का दिनांक',
 				ward: 'वार्ड',
 				zone: 'जोन',
 				remark: 'टिप्पणी',

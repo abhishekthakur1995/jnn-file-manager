@@ -1,7 +1,9 @@
 import React from 'react'
+import moment from 'moment'
 import config from 'config'
 import Alert from 'react-s-alert'
 import PropTypes from 'prop-types'
+import DatePicker from 'react-datepicker'
 import Form from 'react-validation/build/form'
 import Input from 'react-validation/build/input'
 import Select from 'react-validation/build/select'
@@ -14,6 +16,7 @@ import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { required, phoneNumber } from './helpers/ValidationHelper'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label } from 'react-bootstrap'
+import 'react-datepicker/dist/react-datepicker.css'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/slide.css'
 
@@ -52,12 +55,14 @@ class EntryForm extends React.Component {
                 zone: '',
                 ward: '',
                 remark: '',
+                fileDate: moment(),
             }
         }
 
         // functions binding
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleDatePickerChange = this.handleDatePickerChange.bind(this)
     }
 
     componentDidMount() {
@@ -69,6 +74,7 @@ class EntryForm extends React.Component {
                     applicantAddress: record.APPLICANT_ADDRESS,
                     applicantContact: record.APPLICANT_CONTACT,
                     fileNumber: record.FILE_NUMBER,
+                    fileDate: moment(record.FILE_DATE),
                     fileDescription: record.FILE_DESCRIPTION,
                     department: record.DEPARTMENT,
                     zone: record.ZONE,
@@ -90,6 +96,16 @@ class EntryForm extends React.Component {
         }))
     }
 
+    handleDatePickerChange(date) {
+        this.setState((prevState) => ({
+            ...prevState,
+            fields: {
+                ...prevState.fields,
+                ['fileDate']: date
+            }
+        }))
+    }
+
     handleSubmit(event) {
         event.preventDefault()
         const url = this.props.mode === 'edit' ? `${config.baseUrl}/updateRecord/${this.props.record.ID}` : `${config.baseUrl}/addNewRecord`
@@ -99,6 +115,7 @@ class EntryForm extends React.Component {
             applicant_address: this.state.fields.applicantAddress,
             applicant_contact: this.state.fields.applicantContact,
             file_number: this.state.fields.fileNumber,
+            file_date: this.state.fields.fileDate,
             file_description: this.state.fields.fileDescription,
             department: this.state.fields.department,
             zone: this.state.fields.zone,
@@ -130,6 +147,41 @@ class EntryForm extends React.Component {
                             <legend className="custom-legend">
                                 <Label bsStyle="primary" className="padding-2x">{this.props.mode === 'edit' ? intl.formatMessage(messages.updateEntryFormLabel) : intl.formatMessage(messages.saveEntryFormLabel)}</Label>
                             </legend>
+                                <Col md={4}>
+                                    <FormGroup className="required">
+                                        <ControlLabel htmlFor="fileNumber">
+                                            <FormattedMessage id="fileManager.entryForm.fileNumber" defaultMessage="File Number" />
+                                        </ControlLabel>
+                                        <Input
+                                            type="text"
+                                            autoComplete="on"
+                                            name="fileNumber"
+                                            className="form-control"
+                                            validations={[required]}
+                                            value={this.state.fields.fileNumber}
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
+
+                                <Col md={4}>
+                                    <FormGroup className="required" >
+                                        <ControlLabel htmlFor="fileDate">
+                                            <FormattedMessage id="fileManager.entryForm.date" defaultMessage="SELECT_DATE" />
+                                        </ControlLabel>
+                                        <DatePicker
+                                            name="fileDate"
+                                            className="form-control"
+                                            dateFormat={config.datePicker.dateFormat}
+                                            placeholderText="Click to select a date"
+                                            maxDate={moment()}
+                                            selected={this.state.fields.fileDate}
+                                            onChange={this.handleDatePickerChange}
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Clearfix />
+
                                 <Col md={4}>
                                     <FormGroup className="required">
                                         <ControlLabel htmlFor="applicantName">
@@ -230,24 +282,6 @@ class EntryForm extends React.Component {
                                             <option value="permanent">Permanent</option>
                                             <option value="temporary">Temporary</option>
                                         </Select>
-                                    </FormGroup>
-                                </Col>
-                                <Clearfix />
-
-                                <Col md={4}>
-                                    <FormGroup className="required">
-                                        <ControlLabel htmlFor="fileNumber">
-                                            <FormattedMessage id="fileManager.entryForm.fileNumber" defaultMessage="File Number" />
-                                        </ControlLabel>
-                                        <Input
-                                            type="text"
-                                            autoComplete="on"
-                                            name="fileNumber"
-                                            className="form-control"
-                                            validations={[required]}
-                                            value={this.state.fields.fileNumber}
-                                            onChange={this.handleChange}
-                                        />
                                     </FormGroup>
                                 </Col>
                                 <Clearfix />
