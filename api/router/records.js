@@ -219,13 +219,14 @@ records.post('/getSearchResults',
 records.put('/updateRecord/:id',
 	[
 		check('applicant_name').not().isEmpty().withMessage('Applicant name cannot be empty').trim().escape(),
-		check('applicant_type').not().isEmpty().withMessage('Please select an applicant type').trim().escape(),
 		check('applicant_address').not().isEmpty().withMessage('Applicant address cannot be empty').trim().escape(),
 		check('applicant_contact').not().isEmpty().withMessage('Applicant contact cannot be empty').trim().escape(),
-		check('building_name').not().isEmpty().withMessage('Building name cannot be empty').trim().escape(),
-		check('building_address').not().isEmpty().withMessage('Building Address cannot be empty').trim().escape(),
-		check('building_area').not().isEmpty().withMessage('Building Area cannot be empty').trim().escape(),
 		check('file_number').not().isEmpty().withMessage('File number cannot be empty').trim().escape(),
+		check('file_date').not().isEmpty().withMessage('File date cannot be empty').trim().escape(),
+		check('file_description').not().isEmpty().withMessage('File description cannot be empty').trim().escape(),
+		check('department').not().isEmpty().withMessage('Please select a department').trim().escape(),
+		check('ward').not().isEmpty().withMessage('Please select a ward').trim().escape(),
+		check('zone').not().isEmpty().withMessage('Please select a zone').trim().escape(),
 		check('remark').trim().escape(),
 		check('id').not().isEmpty().withMessage('No record id was sent')
 	],
@@ -235,7 +236,7 @@ records.put('/updateRecord/:id',
 		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
-		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET APPLICANT_NAME = ?, APPLICANT_TYPE = ?, APPLICANT_ADDRESS = ?, APPLICANT_CONTACT = ?, BUILDING_NAME = ?, BUILDING_ADDRESS = ?, BUILDING_AREA = ?, FILE_NUMBER = ?, REMARK = ? WHERE ID = ?`, [req.body.applicant_name, req.body.applicant_type, req.body.applicant_address, req.body.applicant_contact, req.body.building_name, req.body.building_address, req.body.building_area, req.body.file_number, req.body.remark, req.params.id], (err, results, fields) => {
+		connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET APPLICANT_NAME = ?, APPLICANT_ADDRESS = ?, APPLICANT_CONTACT = ?, FILE_NUMBER = ?, FILE_DATE = ?, FILE_DESCRIPTION = ?, DEPARTMENT = ?, WARD = ?, ZONE = ?, REMARK = ? WHERE ID = ?`, [req.body.applicant_name, req.body.applicant_address, req.body.applicant_contact, req.body.file_number, helper.convertDateTimeToMysqlFormat(req.body.file_date), req.body.file_description, req.body.department, req.body.ward, req.body.zone, req.body.remark, req.params.id], (err, results, fields) => {
 			if (err) {
 				return res.status(400).json({message : lang.convertMessage('recordUpdateUnsuccess'), saved : false})
 			}
