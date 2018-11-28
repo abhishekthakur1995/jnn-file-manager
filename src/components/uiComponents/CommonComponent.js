@@ -82,6 +82,10 @@ const messages = defineMessages({
         id: 'fileManager.entryForm.fileDescription',
         defaultMessage: 'File Description'
     },
+    FILE_DATE: {
+        id: 'fileManager.entryForm.date',
+        defaultMessage: 'File Date'
+    },
     WARD: {
         id: 'fileManager.entryForm.ward',
         defaultMessage: 'Ward'
@@ -272,7 +276,7 @@ export const RecordDetails = injectIntl((props) => {
                     val = FileRecord.getFileStatusFromCode(record[key])
                 } else if (key === 'LETTER_STATUS') {
                     val = LetterTracking.getLetterStatusFromCode(record[key])
-                } else if (key === 'LETTER_DATE') {
+                } else if (key === 'LETTER_DATE' || key === 'FILE_DATE') {
                     val = Common.getDisplayFormatDate(record[key])
                 } else if (key === 'CREATED') {
                     val = Common.getDisplayFormatDateTime(record[key])
