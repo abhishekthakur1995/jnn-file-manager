@@ -64,6 +64,8 @@ class EntryForm extends React.Component {
             }
         }
 
+        this.departmentList = []
+
         // functions binding
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -71,6 +73,11 @@ class EntryForm extends React.Component {
     }
 
     componentDidMount() {
+        this.setState({ showLoading: true })
+        EntryFormService.getInputFieldsData().then(res => {
+            this.departmentList = res.data.data.DEPARTMENT_NAME
+            this.setState({ showLoading: false })
+        })
         if (this.props.record) {
             const record = this.props.record
             this.setState({
@@ -250,8 +257,7 @@ class EntryForm extends React.Component {
                                         className="form-control"
                                         onChange={this.handleChange}>
                                             <option value="">{intl.formatMessage(messages.selectText)}</option>
-                                            <option value="permanent">Permanent</option>
-                                            <option value="temporary">Temporary</option>
+                                            {this.departmentList.map((dept) => <option key={dept.CODE} value={dept.CODE}>{dept.NAME}</option>)}
                                         </Select>
                                     </FormGroup>
                                 </Col>

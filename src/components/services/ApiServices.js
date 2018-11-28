@@ -121,6 +121,14 @@ export const EntryFormService = {
 			.then(res => resolves(res))
 			.catch(err => rejects(err))
 		})
+	},
+	getInputFieldsData() {
+		return new Promise((resolves, rejects) => {
+			const headers = userAuth.getHeaders()
+			axios.get(`${config.baseUrl}/getInputFieldsData`, {headers})
+	      	.then(res => resolves(res))
+	      	.catch(err => rejects(err))
+      	})
 	}
 }
 

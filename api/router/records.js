@@ -454,4 +454,19 @@ records.post('/importDataToDB',
 	}
 )
 
+/* path: /getInputFieldsData
+ *	type: GET
+*/
+
+records.get('/getInputFieldsData', (req, res) => {
+	var inputFieldData = {}
+	connection.query(`SELECT NAME, CODE FROM ${process.env.INPUTS_TBL} WHERE STATUS = ? AND TYPE = ?`, [1, 'DEPARTMENT_NAME'], (err, results, fields) => {
+		if (err) return res.status(400).json({data: [], message : err, success : false})
+
+		inputFieldData['DEPARTMENT_NAME'] = results
+
+		//send response
+		res.status(200).json({data : inputFieldData, message : 'Data returned successfully', success : true})
+	})
+})
 module.exports = records
