@@ -37,6 +37,10 @@ const messages = defineMessages({
     updateEntryFormLabel: {
         id: 'fileManager.entryForm.updateEntryFormLabel',
         defaultMessage: 'Update Entry',
+    },
+    selectText: {
+        id: 'common.general.select',
+        defaultMessage: 'Select',
     }
 })
 
@@ -245,7 +249,7 @@ class EntryForm extends React.Component {
                                         value={this.state.fields.department}
                                         className="form-control"
                                         onChange={this.handleChange}>
-                                            <option value="">Select</option>
+                                            <option value="">{intl.formatMessage(messages.selectText)}</option>
                                             <option value="permanent">Permanent</option>
                                             <option value="temporary">Temporary</option>
                                         </Select>
@@ -262,7 +266,7 @@ class EntryForm extends React.Component {
                                         value={this.state.fields.zone}
                                         className="form-control"
                                         onChange={this.handleChange}>
-                                            <option value="">Select</option>
+                                            <option value="">{intl.formatMessage(messages.selectText)}</option>
                                             {ZoneWardList.map((zone) => <option key={zone.CODE} value={zone.CODE}>{zone.NAME}</option>)}
                                         </Select>
                                     </FormGroup>
@@ -279,7 +283,7 @@ class EntryForm extends React.Component {
                                         className="form-control"
                                         disabled={this.state.fields.zone === ''}
                                         onChange={this.handleChange}>
-                                            <option value="">Select</option>
+                                            <option value="">{intl.formatMessage(messages.selectText)}</option>
                                             {
                                                 ZoneWardList.map((zone) => {
                                                     if (this.state.fields.zone === zone.CODE) {
