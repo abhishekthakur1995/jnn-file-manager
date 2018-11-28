@@ -64,3 +64,7 @@ CREATE TABLE `tbl_input_fields` (
 // LETTER STATUS LEGEND
 // 1 = INCOMING
 // 2 = OUTGOING
+
+// RECORD STATUS
+// 1 = ACTIVE
+// 0 = DELETED
