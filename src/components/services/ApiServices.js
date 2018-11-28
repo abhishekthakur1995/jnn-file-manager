@@ -94,7 +94,7 @@ export const RecordsService = {
 	deleteRecord(deletedRecordId) {
 		return new Promise((resolves, rejects) => {
 			const headers = userAuth.getHeaders()
-			axios.get(`${config.baseUrl}/deleteRecord/${deletedRecordId}`, {headers})
+			axios.delete(`${config.baseUrl}/deleteRecord/${deletedRecordId}`, {headers})
 	      	.then(res => resolves(res))
 	      	.catch(err => rejects(err))
       	})

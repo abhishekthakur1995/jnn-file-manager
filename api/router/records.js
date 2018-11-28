@@ -309,7 +309,7 @@ records.delete('/deleteRecord/:id',
 		    return res.status(400).json({message: errors.array()[0].msg, saved : false})
 	  	}
 
-		connection.query(`DELETE FROM ${process.env.FILE_RECORD_TBL} WHERE ID = ${req.params.id}`, (err, results, fields) => {
+	  	connection.query(`UPDATE ${process.env.FILE_RECORD_TBL} SET STATUS = ? WHERE ID = ?`, [0, req.params.id], (err, results, fields) => {
 			if (err) {
 				return res.status(400).json({message : err, saved : false})
 			}
