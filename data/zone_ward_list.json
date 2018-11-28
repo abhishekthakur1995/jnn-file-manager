@@ -1,0 +1,26 @@
+[
+	{
+		"NAME" : "Zone-1",
+		"CODE" : "zone-1",
+		"WARD_LIST": [
+			{
+				"NAME": "Ward-1",
+				"CODE": "ward-1"
+			},
+			{
+				"NAME": "Ward-2",
+				"CODE": "ward-2"
+			}
+		]
+	},
+	{
+		"NAME" : "Zone-2",
+		"CODE" : "zone-2",
+		"WARD_LIST": [
+			{
+				"NAME": "Ward-2",
+				"CODE": "ward-2"
+			}
+		]
+	}
+]

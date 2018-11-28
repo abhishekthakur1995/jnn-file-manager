@@ -19,6 +19,7 @@ import { Grid, FormGroup, ControlLabel, Row, Col, Clearfix, Glyphicon, Label } f
 import 'react-datepicker/dist/react-datepicker.css'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/slide.css'
+import ZoneWardList from '../../data/zone_ward_list.json'
 
 const messages = defineMessages({
     submitBtnSaveText: {
@@ -262,8 +263,7 @@ class EntryForm extends React.Component {
                                         className="form-control"
                                         onChange={this.handleChange}>
                                             <option value="">Select</option>
-                                            <option value="permanent">Permanent</option>
-                                            <option value="temporary">Temporary</option>
+                                            {ZoneWardList.map((zone) => <option key={zone.CODE} value={zone.CODE}>{zone.NAME}</option>)}
                                         </Select>
                                     </FormGroup>
                                 </Col>
@@ -277,10 +277,20 @@ class EntryForm extends React.Component {
                                         name="ward"
                                         value={this.state.fields.ward}
                                         className="form-control"
+                                        disabled={this.state.fields.zone === ''}
                                         onChange={this.handleChange}>
                                             <option value="">Select</option>
-                                            <option value="permanent">Permanent</option>
-                                            <option value="temporary">Temporary</option>
+                                            {
+                                                ZoneWardList.map((zone) => {
+                                                    if (this.state.fields.zone === zone.CODE) {
+                                                        return (
+                                                            zone.WARD_LIST.map((ward) =>
+                                                                <option key={ward.CODE} value={ward.CODE}>{ward.NAME}</option>
+                                                            )
+                                                        )
+                                                    }
+                                                })
+                                            }
                                         </Select>
                                     </FormGroup>
                                 </Col>
