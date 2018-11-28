@@ -121,7 +121,7 @@ export default {
 				applicantContact: 'आवेदक का मोबाइल नंबर',
 				fileNumber: 'फाइल संख्या',
 				fileDescription: 'फाइल विवरण',
-				department: 'डिपार्टमेंट',
+				department: 'संबंधित विभाग',
 				date: 'फाइल का दिनांक',
 				ward: 'वार्ड',
 				zone: 'जोन',

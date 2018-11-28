@@ -2,18 +2,66 @@ import React from 'react'
 import _ from 'underscore'
 import config from 'config'
 import moment from 'moment'
+import PropTypes from 'prop-types'
 import { CSVLink } from 'react-csv'
 import DatePicker from 'react-datepicker'
 import pdfMake from 'pdfmake/build/pdfmake'
-import { FormattedMessage } from 'react-intl'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import { FileRecord } from './helpers/CommonHelper'
 import { GetRecordsService } from './services/ApiServices'
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import { Grid, Radio, Table, Button, Clearfix } from 'react-bootstrap'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { PageHead, MonthDropDown, YearDropDown } from './uiComponents/CommonComponent'
 import 'react-datepicker/dist/react-datepicker.css'
 pdfMake.vfs = pdfFonts.pdfMake.vfs
+
+const messages = defineMessages({
+    APPLICANT_NAME: {
+        id: 'fileManager.entryForm.applicantName',
+        defaultMessage: 'Applicant Name'
+    },
+    APPLICANT_ADDRESS: {
+        id: 'fileManager.entryForm.applicantAddress',
+        defaultMessage: 'Applicant Address'
+    },
+    APPLICANT_CONTACT: {
+        id: 'fileManager.entryForm.applicantContact',
+        defaultMessage: 'Applicant Contact'
+    },
+    FILE_NUMBER: {
+        id: 'fileManager.entryForm.fileNumber',
+        defaultMessage: 'File Number'
+    },
+    FILE_STATUS: {
+        id: 'fileManager.entryForm.fileStatus',
+        defaultMessage: 'File Status'
+    },
+    FILE_DESCRIPTION: {
+        id: 'fileManager.entryForm.fileDescription',
+        defaultMessage: 'File Description'
+    },
+    WARD: {
+        id: 'fileManager.entryForm.ward',
+        defaultMessage: 'Ward'
+    },
+    ZONE: {
+        id: 'fileManager.entryForm.zone',
+        defaultMessage: 'Zone'
+    },
+    DEPARTMENT: {
+        id: 'fileManager.entryForm.department',
+        defaultMessage: 'Department'
+    },
+    REMARK: {
+        id: 'fileManager.entryForm.remark',
+        defaultMessage: 'Remark'
+    },
+    DATE: {
+        id: 'fileManager.entryForm.date',
+        defaultMessage: 'Date on File'
+    }
+})
 
 class GetRecords extends React.Component {
 	constructor(props) {
@@ -120,7 +168,7 @@ class GetRecords extends React.Component {
   	            }
   	        })
 
-  	        body.push(dataRow);
+  	        body.push(dataRow)
   	    })
 
   	    return body
@@ -130,7 +178,7 @@ class GetRecords extends React.Component {
   	    return {
   	        table: {
   	            headerRows: 1,
-  	            widths: [ '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%' ],
+  	            widths: [ '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%' ],
   	            body: this.buildTableBody(data, columns)
   	        }
   	    }
@@ -138,31 +186,23 @@ class GetRecords extends React.Component {
 
   	handlePdfGeneration() {
   		pdfMake.fonts = {
-  		   	mangal: {
-	     		normal: 'mangal.ttf',
-	     		bold: 'mangal.ttf',
-  		     	italics: 'mangal.ttf',
-  		     	bolditalics: 'mangal.ttf'
-  		   	},
-  		   	roboto: {
-	     		normal: 'roboto.ttf',
-	     		bold: 'roboto.ttf',
-  		     	italics: 'roboto.ttf',
-  		     	bolditalics: 'roboto.ttf'
-  		   	}
+	   	   	utsaah: {
+	   			normal: 'utsaah.ttf'
+	   	   	}
 	   	}
   		var pdfLayout = {
   			pageSize: 'A4',
+  			pageMargins: [ 10, 40, 52, 40 ],  // left top right bottom
   		    content: [
-  		    	this.table(this.state.downloadData, ['APPLICANT_NAME', 'APPLICANT_ADDRESS', 'APPLICANT_CONTACT', 'DEPARTMENT', 'WARD', 'ZONE', 'FILE_NUMBER', 'FILE_STATUS', 'CREATED', 'REMARK'])
+  		    	this.table(this.state.downloadData, [this.props.intl.formatMessage(messages['FILE_NUMBER']), this.props.intl.formatMessage(messages['DATE']), this.props.intl.formatMessage(messages['APPLICANT_NAME']), this.props.intl.formatMessage(messages['APPLICANT_CONTACT']), this.props.intl.formatMessage(messages['APPLICANT_ADDRESS']), this.props.intl.formatMessage(messages['DEPARTMENT']), this.props.intl.formatMessage(messages['FILE_STATUS']), this.props.intl.formatMessage(messages['WARD']), this.props.intl.formatMessage(messages['ZONE']), this.props.intl.formatMessage(messages['FILE_DESCRIPTION']), this.props.intl.formatMessage(messages['REMARK']) ])
   		    ],
   		    defaultStyle: {
-  		        font: 'roboto',
+  		        font: 'utsaah',
   		        fontSize: 12,
-  		        alignment: 'center'
+  		        alignment: 'left'
 		    }
   		}
-  		pdfMake.createPdf(pdfLayout).open()
+  		pdfMake.createPdf(pdfLayout).download()
   	}
 
 	render() {
@@ -329,4 +369,8 @@ class GetRecords extends React.Component {
 	}
 }
 
-export default GetRecords
+GetRecords.propTypes = {
+    intl: PropTypes.object
+}
+
+export default injectIntl(GetRecords)

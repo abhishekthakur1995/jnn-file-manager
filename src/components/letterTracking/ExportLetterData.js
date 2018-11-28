@@ -24,6 +24,46 @@ const messages = defineMessages({
 	outgoing: {
 		id: 'common.general.outgoing',
 		defaultMessage: 'Outgoing'
+	},
+	DEPARTMENT_NAME: {
+	    id: 'letterTracking.newLetterEntryForm.deptName',
+	    defaultMessage: 'Department Name'
+	},
+	ASSIGNED_OFFICER: {
+	    id: 'letterTracking.newLetterEntryForm.assignedOfficer',
+	    defaultMessage: 'Assigned Officer'
+	},
+	LETTER_TYPE: {
+	    id: 'letterTracking.newLetterEntryForm.type',
+	    defaultMessage: 'Letter Type'
+	},
+	LETTER_TAG: {
+	    id: 'letterTracking.newLetterEntryForm.tag',
+	    defaultMessage: 'Letter Tag'
+	},
+	LETTER_ADDRESS: {
+	    id: 'letterTracking.newLetterEntryForm.address',
+	    defaultMessage: 'Letter Address'
+	},
+	LETTER_SUBJECT: {
+	    id: 'letterTracking.newLetterEntryForm.subject',
+	    defaultMessage: 'Letter Subject'
+	},
+	LETTER_REG_NO: {
+	    id: 'letterTracking.newLetterEntryForm.regNo',
+	    defaultMessage: 'Letter Reg No'
+	},
+	LETTER_STATUS: {
+	    id: 'letterTracking.newLetterEntryForm.status',
+	    defaultMessage: 'Letter Status'
+	},
+	LETTER_DATE: {
+	    id: 'letterTracking.newLetterEntryForm.date',
+	    defaultMessage: 'Letter Date'
+	},
+	REMARK: {
+	    id: 'letterTracking.newLetterEntryForm.remark',
+	    defaultMessage: 'Remark'
 	}
 })
 
@@ -195,7 +235,7 @@ class ExportLetterData extends React.Component {
   	    return {
   	        table: {
   	            headerRows: 1,
-  	            widths: [ '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%' ],
+  	            widths: [ '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%'],
   	            body: this.buildTableBody(data, columns)
   	        }
   	    }
@@ -203,31 +243,25 @@ class ExportLetterData extends React.Component {
 
   	handlePdfGeneration() {
   		pdfMake.fonts = {
-  		   	mangal: {
-	     		normal: 'mangal.ttf',
-	     		bold: 'mangal.ttf',
-  		     	italics: 'mangal.ttf',
-  		     	bolditalics: 'mangal.ttf'
-  		   	},
-  		   	roboto: {
-	     		normal: 'roboto.ttf',
-	     		bold: 'roboto.ttf',
-  		     	italics: 'roboto.ttf',
-  		     	bolditalics: 'roboto.ttf'
-  		   	}
+	   	   	utsaah: {
+	   			normal: 'utsaah.ttf',
+	   			bold: 'utsaah.ttf',
+	   	     	italics: 'utsaah.ttf',
+	   	     	bolditalics: 'utsaah.ttf'
+	   	   	}
 	   	}
   		var pdfLayout = {
   			pageSize: 'A4',
   		    content: [
-  		        this.table(this.state.downloadData, ['DEPARTMENT_NAME', 'ASSIGNED_OFFICER', 'LETTER_TYPE', 'LETTER_TAG', 'LETTER_ADDRESS', 'LETTER_SUBJECT', 'LETTER_REG_NO', 'LETTER_STATUS', 'LETTER_DATE', 'REMARK'])
+  		        this.table(this.state.downloadData, [this.props.intl.formatMessage(messages['LETTER_REG_NO']), this.props.intl.formatMessage(messages['LETTER_DATE']), this.props.intl.formatMessage(messages['DEPARTMENT_NAME']), this.props.intl.formatMessage(messages['ASSIGNED_OFFICER']), this.props.intl.formatMessage(messages['LETTER_ADDRESS']), this.props.intl.formatMessage(messages['LETTER_SUBJECT']), this.props.intl.formatMessage(messages['LETTER_TYPE']), this.props.intl.formatMessage(messages['LETTER_TAG']), this.props.intl.formatMessage(messages['LETTER_STATUS']), this.props.intl.formatMessage(messages['REMARK'])])
   		    ],
   		    defaultStyle: {
-  		        font: 'roboto',
-  		        fontSize: 8,
-  		        alignment: 'center'
+  		        font: 'utsaah',
+  		        fontSize: 12,
+  		        alignment: 'left'
 		    }
   		}
-  		pdfMake.createPdf(pdfLayout).open()
+  		pdfMake.createPdf(pdfLayout).download()
   	}
 
 	render() {
