@@ -203,11 +203,17 @@ class ExportLetterData extends React.Component {
 
   	handlePdfGeneration() {
   		pdfMake.fonts = {
-  		   	times: {
-	     		normal: 'times.ttf',
-	     		bold: 'times.ttf',
-  		     	italics: 'times.ttf',
-  		     	bolditalics: 'times.ttf'
+  		   	mangal: {
+	     		normal: 'mangal.ttf',
+	     		bold: 'mangal.ttf',
+  		     	italics: 'mangal.ttf',
+  		     	bolditalics: 'mangal.ttf'
+  		   	},
+  		   	roboto: {
+	     		normal: 'roboto.ttf',
+	     		bold: 'roboto.ttf',
+  		     	italics: 'roboto.ttf',
+  		     	bolditalics: 'roboto.ttf'
   		   	}
 	   	}
   		var pdfLayout = {
@@ -216,7 +222,7 @@ class ExportLetterData extends React.Component {
   		        this.table(this.state.downloadData, ['DEPARTMENT_NAME', 'ASSIGNED_OFFICER', 'LETTER_TYPE', 'LETTER_TAG', 'LETTER_ADDRESS', 'LETTER_SUBJECT', 'LETTER_REG_NO', 'LETTER_STATUS', 'LETTER_DATE', 'REMARK'])
   		    ],
   		    defaultStyle: {
-  		        font: 'times',
+  		        font: 'roboto',
   		        fontSize: 8,
   		        alignment: 'center'
 		    }
@@ -467,7 +473,7 @@ class ExportLetterData extends React.Component {
 												{this.state.downloadData && this.state.filter.downloadFormat === 'excel' &&
 													<CSVLink
 														data={this.state.downloadData}
-												  		filename={`${this.state.filter.month}.csv`}
+												  		filename={`${this.state.filter.month || moment(this.state.filter.startDate).format(config.defaultDateFormat) + '--' + moment(this.state.filter.endDate).format(config.defaultDateFormat)}.csv`}
 												  		target="_blank"
 												  		className="traditional-link">
 												  		<FormattedMessage id="letterTracking.exportLetterData.downloadExcelLink" defaultMessage="Download Excel" />

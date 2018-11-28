@@ -42,6 +42,8 @@ const FILTER_FIELDS_CODE_MAPPING = {
 const MYSQL_DTM_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 const UPLOAD_FILE_SIZE_LIMIT = 102400   //100 kb in bytes
 const UPLOAD_FILE_VALID_EXTENSIONS = ['.jpg', '.png', '.doc', '.docx', '.pdf']
+const DEFAULT_DATE_FORMAT = "DD/MM/YYYY"
+const DEFAULT_DATE_TIME_FORMAT = "DD/MM/YYYY h:mm a"
 
 class Helper {
 
@@ -83,6 +85,14 @@ class Helper {
 
 	static getUploadFileValidExtensions() {
 		return UPLOAD_FILE_VALID_EXTENSIONS
+	}
+
+	static getDisplayFormatDateTime(date) {
+		return moment(date).format(DEFAULT_DATE_TIME_FORMAT)
+	}
+
+	static getDisplayFormatDate(date) {
+		return moment(date).format(DEFAULT_DATE_FORMAT)
 	}
 
 	static log(value, helpText="logger") {

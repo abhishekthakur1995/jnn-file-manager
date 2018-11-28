@@ -331,8 +331,13 @@ letters.get('/getDataBasedOnSelectedMonth',
 		const month = req.query.month
 		const year = req.query.year
 
-		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], (err, results, fields) => {
+		connection.query(`SELECT SELECT LETTER_REG_NO AS '${lang.convertToHindi('regNo')}', DEPARTMENT_NAME AS '${lang.convertToHindi('department')}', ASSIGNED_OFFICER AS '${lang.convertToHindi('assignedOfficer')}', LETTER_TYPE AS '${lang.convertToHindi('type')}', LETTER_TAG '${lang.convertToHindi('tag')}', LETTER_ADDRESS '${lang.convertToHindi('address')}', LETTER_SUBJECT '${lang.convertToHindi('subject')}', LETTER_STATUS '${lang.convertToHindi('status')}', LETTER_DATE '${lang.convertToHindi('date')}', REMARK '${lang.convertToHindi('remark')}' FROM ${process.env.LETTER_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
+
+			results.map((data) => {
+				data[lang.convertToHindi('status')] = lang.getLetterStatusInHindi(data[lang.convertToHindi('status')])
+				data[lang.convertToHindi('date')] = helper.getDisplayFormatDate(data[lang.convertToHindi('date')])
+			})
 
 			// send response
 			res.status(200).json({data : results, message : 'Data fetched successfully', success : true})
@@ -359,8 +364,13 @@ letters.get('/getDataBasedOnSelectedDuration',
  		startDate = helper.convertTimestampToUnixTimestamp(startDate)
  		endDate = helper.convertTimestampToUnixTimestamp(endDate)
 
- 		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, (err, results, fields) => {
+ 		connection.query(`SELECT LETTER_REG_NO AS '${lang.convertToHindi('regNo')}', DEPARTMENT_NAME AS '${lang.convertToHindi('department')}', ASSIGNED_OFFICER AS '${lang.convertToHindi('assignedOfficer')}', LETTER_TYPE AS '${lang.convertToHindi('type')}', LETTER_TAG '${lang.convertToHindi('tag')}', LETTER_ADDRESS '${lang.convertToHindi('address')}', LETTER_SUBJECT '${lang.convertToHindi('subject')}', LETTER_STATUS '${lang.convertToHindi('status')}', LETTER_DATE '${lang.convertToHindi('date')}', REMARK '${lang.convertToHindi('remark')}' FROM ${process.env.LETTER_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, (err, results, fields) => {
  			if (err) return res.status(400).json({data: [], message : err, success : false})
+
+			results.map((data) => {
+				data[lang.convertToHindi('status')] = lang.getLetterStatusInHindi(data[lang.convertToHindi('status')])
+				data[lang.convertToHindi('date')] = helper.getDisplayFormatDate(data[lang.convertToHindi('date')])
+			})
 
  			// send response		
  			res.status(200).json({data : results, message : 'Data fetched successfully', success : true})

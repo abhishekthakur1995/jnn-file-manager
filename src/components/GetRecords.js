@@ -152,9 +152,9 @@ class GetRecords extends React.Component {
   		   	}
 	   	}
   		var pdfLayout = {
-  			pageSize: 'A2',
+  			pageSize: 'A4',
   		    content: [
-  		        this.table(this.state.downloadData, ['APPLICANT_NAME', 'APPLICANT_ADDRESS', 'APPLICANT_CONTACT', 'BUILDING_NAME', 'BUILDING_ADDRESS', 'BUILDING_AREA', 'FILE_NUMBER', 'FILE_STATUS', 'CREATED', 'REMARK'])
+  		    	this.table(this.state.downloadData, ['APPLICANT_NAME', 'APPLICANT_ADDRESS', 'APPLICANT_CONTACT', 'DEPARTMENT', 'WARD', 'ZONE', 'FILE_NUMBER', 'FILE_STATUS', 'CREATED', 'REMARK'])
   		    ],
   		    defaultStyle: {
   		        font: 'roboto',
@@ -162,7 +162,7 @@ class GetRecords extends React.Component {
   		        alignment: 'center'
 		    }
   		}
-  		pdfMake.createPdf(pdfLayout).download()
+  		pdfMake.createPdf(pdfLayout).open()
   	}
 
 	render() {
@@ -302,7 +302,7 @@ class GetRecords extends React.Component {
 												{this.state.downloadData && this.state.filter.downloadFormat === 'excel' &&
 													<CSVLink
 														data={this.state.downloadData}
-												  		filename={`${this.state.filter.month}.csv`}
+												  		filename={`${this.state.filter.month || moment(this.state.filter.startDate).format(config.defaultDateFormat) + '--' + moment(this.state.filter.endDate).format(config.defaultDateFormat)}.csv`}
 												  		target="_blank"
 												  		className="traditional-link">
 												  		<FormattedMessage id="fileManager.getRecords.downloadExcelLink" defaultMessage="Download Excel" />

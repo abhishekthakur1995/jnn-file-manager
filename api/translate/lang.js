@@ -42,9 +42,54 @@ const EnglishLangArr = {
 	recordUpdateUnsuccess: 'Unable to update file record data. Please try again',
 }
 
+const dbFieldsArr = {
+	applicantName: 'आवेदक का नाम',
+	applicantAddress: 'आवेदक का पता',
+	applicantContact: 'आवेदक का मोबाइल नंबर',
+	fileNumber: 'फाइल संख्या',
+	fileDescription: 'फाइल विवरण',
+	fileStatus: 'फ़ाइल की स्थिति',
+	department: 'संबंधित विभाग',
+	fileDate: 'फाइल का दिनांक',
+	ward: 'वार्ड',
+	zone: 'जोन',
+	regNo: 'क्रमांक',
+	status: 'पत्र स्थिति',
+	date: 'पत्र का दिनांक',
+	type: 'पत्र प्रकार',
+	tag: 'विषय में',
+	assignedOfficer: 'नियुक्त अधिकारी',
+	address: 'पत्र पता',
+	subject: 'पत्र विषय',
+	remark: 'टिप्पणी'
+}
+
+const fileStatusCodesToText = {
+	1: 'स्वीकृत',
+	2: 'अस्वीकृत',
+	0: 'लंबित',
+}
+
+const letterStatusCodesToText = {
+	1: 'आने वाला',
+	2: 'बाहर जाने वाला'
+}
+
 class Lang {
 	static convertMessage(code) {
 	    return hindiLangArr[code]
+	}
+
+	static convertToHindi(field) {
+		return dbFieldsArr[field]	
+	}
+
+	static getFileStatusInHindi(status) {
+		return fileStatusCodesToText[status]
+	}
+
+	static getLetterStatusInHindi(status) {
+		return letterStatusCodesToText[status]
 	}
 }
 

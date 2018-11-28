@@ -349,10 +349,15 @@ records.get('/getDataBasedOnSelectedMonth',
 		const month = req.query.month
 		const year = req.query.year
 
-		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], (err, results, fields) => {
+		connection.query(`SELECT APPLICANT_NAME AS '${lang.convertToHindi('applicantName')}', APPLICANT_ADDRESS AS '${lang.convertToHindi('applicantAddress')}', APPLICANT_CONTACT AS '${lang.convertToHindi('applicantContact')}', FILE_NUMBER AS '${lang.convertToHindi('fileNumber')}', FILE_STATUS AS '${lang.convertToHindi('fileStatus')}', FILE_DATE AS '${lang.convertToHindi('fileDate')}', DEPARTMENT AS '${lang.convertToHindi('department')}', FILE_DESCRIPTION AS '${lang.convertToHindi('fileDescription')}', ZONE AS '${lang.convertToHindi('zone')}', WARD AS '${lang.convertToHindi('ward')}', REMARK AS '${lang.convertToHindi('remark')}' FROM ${process.env.FILE_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 
-			// send response		
+			results.map((data) => {
+				data[lang.convertToHindi('fileStatus')] = lang.getFileStatusInHindi(data[lang.convertToHindi('fileStatus')])
+				data[lang.convertToHindi('fileDate')] = helper.getDisplayFormatDate(data[lang.convertToHindi('fileDate')])
+			})
+
+			// send response
 			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
 		})
 	}
@@ -377,10 +382,15 @@ records.get('/getDataBasedOnSelectedDuration',
  		startDate = helper.convertTimestampToUnixTimestamp(startDate)
  		endDate = helper.convertTimestampToUnixTimestamp(endDate)
 
- 		connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, (err, results, fields) => {
+ 		connection.query(`SELECT APPLICANT_NAME AS '${lang.convertToHindi('applicantName')}', APPLICANT_ADDRESS AS '${lang.convertToHindi('applicantAddress')}', APPLICANT_CONTACT AS '${lang.convertToHindi('applicantContact')}', FILE_NUMBER AS '${lang.convertToHindi('fileNumber')}', FILE_STATUS AS '${lang.convertToHindi('fileStatus')}', FILE_DATE AS '${lang.convertToHindi('fileDate')}', DEPARTMENT AS '${lang.convertToHindi('department')}', FILE_DESCRIPTION AS '${lang.convertToHindi('fileDescription')}', ZONE AS '${lang.convertToHindi('zone')}', WARD AS '${lang.convertToHindi('ward')}', REMARK AS '${lang.convertToHindi('remark')}' FROM ${process.env.FILE_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, (err, results, fields) => {
  			if (err) return res.status(400).json({data: [], message : err, success : false})
 
- 			// send response		
+			results.map((data) => {
+				data[lang.convertToHindi('fileStatus')] = lang.getFileStatusInHindi(data[lang.convertToHindi('fileStatus')])
+				data[lang.convertToHindi('fileDate')] = helper.getDisplayFormatDate(data[lang.convertToHindi('fileDate')])
+			})
+
+ 			// send response
  			res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
  		})
  	}
