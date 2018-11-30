@@ -72,7 +72,7 @@ class SingleLetter extends React.Component {
 	render() {
 		const { intl } = this.props
 		const letter = this.props.singleLetter
-		const letterStatus = LetterTracking.getLetterStatusFromCode(letter.LETTER_STATUS)
+		const letterStatus = LetterTracking.getLetterStatusInHindiFromCode(letter.LETTER_STATUS)
 		const letterDate = Common.getDisplayFormatDate(letter.LETTER_DATE)
 		const created = Common.getDisplayFormatDateTime(letter.CREATED)
 		return (

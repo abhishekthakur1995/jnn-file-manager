@@ -65,14 +65,14 @@ const dbFieldsArr = {
 }
 
 const fileStatusCodesToText = {
-	1: 'स्वीकृत',
-	2: 'अस्वीकृत',
-	0: 'लंबित',
+	'1' : 'स्वीकृत',
+	'2' : 'अस्वीकृत',
+	'0' : 'लंबित',
 }
 
 const letterStatusCodesToText = {
-	1: 'आने वाला',
-	2: 'बाहर जाने वाला'
+	'1' : 'आने वाला',
+	'2' : 'बाहर जाने वाला'
 }
 
 class Lang {

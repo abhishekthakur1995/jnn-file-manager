@@ -12,11 +12,11 @@ import { Grid, Col, Modal, Button, Table, FormControl, Glyphicon, FormGroup, Bre
 const messages = defineMessages({
     quickSearchPlaceHolder: {
         id: 'common.filter.quickSearchPlaceHolder',
-        defaultMessage: 'Quick Search',
+        defaultMessage: 'Quick Search'
     },
     selectText: {
         id: 'common.general.select',
-        defaultMessage: 'Select',
+        defaultMessage: 'Select'
     },
     DEPARTMENT_NAME: {
         id: 'letterTracking.newLetterEntryForm.deptName',
@@ -273,9 +273,9 @@ export const RecordDetails = injectIntl((props) => {
             if (!_.contains(['MODIFIED', 'ID', 'STATUS', 'LETTER_FILE', 'LETTER_FILE_EXT', 'DEPARTMENT_VIEW_LEVEL'], key)) {
                 let val = ''
                 if (key === 'FILE_STATUS') {
-                    val = FileRecord.getFileStatusFromCode(record[key])
+                    val = FileRecord.getFileStatusInHindiFromCode(record[key])
                 } else if (key === 'LETTER_STATUS') {
-                    val = LetterTracking.getLetterStatusFromCode(record[key])
+                    val = LetterTracking.getLetterStatusInHindiFromCode(record[key])
                 } else if (key === 'LETTER_DATE' || key === 'FILE_DATE') {
                     val = Common.getDisplayFormatDate(record[key])
                 } else if (key === 'CREATED') {

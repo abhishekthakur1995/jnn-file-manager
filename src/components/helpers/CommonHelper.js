@@ -7,9 +7,20 @@ const FILE_STATUS_CODE_MAPPING = {
 	'2' : 'Rejected'
 }
 
+const FILE_STATUS_HINDI_CODE_MAPPING = {
+	'1' : 'स्वीकृत',
+	'2' : 'अस्वीकृत',
+	'0' : 'लंबित'
+}
+
 const LETTER_STATUS_CODE_MAPPING = {
 	'1' : 'Incoming',
 	'2' : 'Outgoing'
+}
+
+const LETTER_STATUS_HINDI_CODE_MAPPING = {
+	'1' : 'आने वाला',
+	'2' : 'बाहर जाने वाला'
 }
 
 const UPLOAD_FILE_VALID_EXTENSIONS = ['.jpg', '.png', '.doc', '.docx', '.pdf']
@@ -50,6 +61,9 @@ export const LetterTracking = {
 	getLetterStatusFromCode(code) {
 		return LETTER_STATUS_CODE_MAPPING[code]
 	},
+	getLetterStatusInHindiFromCode(code) {
+		return LETTER_STATUS_HINDI_CODE_MAPPING[code]
+	},
 	createCodeFromSettingsName(settingsName) {
 		return settingsName.toLowerCase().trim().replace(/\s\s+/g, ' ').replace(/ /g,"_")
 	},
@@ -71,5 +85,8 @@ export const FileRecord = {
 	},
 	getFileStatusFromCode(code) {
 		return FILE_STATUS_CODE_MAPPING[code]
+	},
+	getFileStatusInHindiFromCode(code) {
+		return FILE_STATUS_HINDI_CODE_MAPPING[code]
 	}
 }

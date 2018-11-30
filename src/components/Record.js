@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import EntryForm from './EntryForm'
-import { Common } from './helpers/CommonHelper'
+import { Common, FileRecord } from './helpers/CommonHelper'
 import { defineMessages, injectIntl } from 'react-intl'
 import { SplitButton, MenuItem, Checkbox } from 'react-bootstrap'
 import { EditRecordModal, DeleteRecordModal, ManageRecordModal } from './uiComponents/CommonComponent'
@@ -9,11 +9,11 @@ import { EditRecordModal, DeleteRecordModal, ManageRecordModal } from './uiCompo
 const messages = defineMessages({
     editModalTitle: {
 		id: 'fileManager.record.editRecordModal.title',
-        defaultMessage: 'Edit record',
+        defaultMessage: 'Edit record'
     },
     deleteModalTitle: {
 		id: 'fileManager.record.deleteRecordModal.title',
-        defaultMessage: 'Delete record',
+        defaultMessage: 'Delete record'
     },
     manageModalTitle: {
 		id: 'fileManager.record.manageRecordModal.title',
@@ -139,7 +139,8 @@ class Record extends React.Component {
 	render() {
 		const { intl } = this.props
 		const record = this.props.singleRecord
-		const fileStatus = record.FILE_STATUS == 1 ? 'Approved' : (record.FILE_STATUS == 2 ? 'Rejected' : 'Pending')
+
+		const fileStatus = FileRecord.getFileStatusInHindiFromCode(record.FILE_STATUS)
 		const fileDate = Common.getDisplayFormatDate(record.fileDate)
 		const dateCreated = Common.getDisplayFormatDateTime(record.CREATED)
 		return (
