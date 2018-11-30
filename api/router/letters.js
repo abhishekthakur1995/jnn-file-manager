@@ -117,7 +117,7 @@ letters.post('/addNewSettings',
  */
 
 letters.get('/getLetterBoardData', (req, res) => {
-	connection.query(`SELECT COUNT(*) AS TOTAL, COUNT(CASE WHEN LETTER_STATUS = 1 THEN 1 END) AS INCOMING, COUNT(CASE WHEN LETTER_STATUS = 2 THEN 1 END) AS OUTGOING FROM ${process.env.LETTER_RECORD_TBL}`, (err, results, fields) => {
+	connection.query(`SELECT COUNT(*) AS TOTAL, COUNT(CASE WHEN LETTER_STATUS = 1 THEN 1 END) AS INCOMING, COUNT(CASE WHEN LETTER_STATUS = 2 THEN 1 END) AS OUTGOING FROM ${process.env.LETTER_RECORD_TBL} WHERE STATUS = 1`, (err, results, fields) => {
 		if (err) { return res.status(400).json({data: [], message : err, success : false}) }
 		res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
 	})
@@ -157,7 +157,7 @@ letters.get('/getInputFieldsData', (req, res) => {
  */
 
 letters.get('/getCountOfAllLetters', (req, res) => {
-	connection.query(`SELECT COUNT(*) as count FROM ${process.env.LETTER_RECORD_TBL}`, (err, results, fields) => {
+	connection.query(`SELECT COUNT(*) as count FROM ${process.env.LETTER_RECORD_TBL} WHERE STATUS = 1`, (err, results, fields) => {
 		if (err) {
 			return res.status(400).json({data: [], message : err, success : false})
 		}
@@ -187,12 +187,12 @@ letters.get('/getRecords',
 		let totalCount = 0
 		let results = ''
 
-		let dataQuery = `SELECT * FROM ${process.env.LETTER_RECORD_TBL} ORDER BY CREATED DESC LIMIT ${offset}, ${limit}`
+		let dataQuery = `SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE STATUS = 1 ORDER BY CREATED DESC LIMIT ${offset}, ${limit}`
 		if(req.query.sortField && req.query.orderBy) {
-			dataQuery = `SELECT * FROM ${process.env.LETTER_RECORD_TBL} ORDER BY ${helper.getDbFieldCodeFromName(req.query.sortField)} ${req.query.orderBy.toUpperCase()} LIMIT ${offset}, ${limit}`
+			dataQuery = `SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE STATUS = 1 ORDER BY ${helper.getDbFieldCodeFromName(req.query.sortField)} ${req.query.orderBy.toUpperCase()} LIMIT ${offset}, ${limit}`
 		}
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL}`, (err, results, fields) => {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} WHERE STATUS = 1`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
@@ -231,11 +231,11 @@ letters.post('/getSearchResults',
 		let totalCount = 0
 		let results = ''
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} WHERE LETTER_REG_NO LIKE '%${query}%'`, (err, results, fields) => {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} WHERE STATUS = 1 LETTER_REG_NO LIKE '%${query}%'`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE LETTER_REG_NO LIKE '%${query}%' LIMIT ${offset}, ${limit}`, (err, results, fields) => {
+			connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} WHERE STATUS = 1LETTER_REG_NO LIKE '%${query}%' LIMIT ${offset}, ${limit}`, (err, results, fields) => {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
@@ -298,11 +298,11 @@ letters.post('/getFilteredData',
 			}
 		}
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria}`, (err, results, fields) => {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria} AND STATUS = 1`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria} LIMIT ${offset}, ${limit}`, (err, results, fields) => {
+			connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria} AND STATUS = 1 LIMIT ${offset}, ${limit}`, (err, results, fields) => {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
@@ -331,7 +331,7 @@ letters.get('/getDataBasedOnSelectedMonth',
 		const month = req.query.month
 		const year = req.query.year
 
-		connection.query(`SELECT SELECT LETTER_REG_NO AS '${lang.convertToHindi('regNo')}', DEPARTMENT_NAME AS '${lang.convertToHindi('department')}', ASSIGNED_OFFICER AS '${lang.convertToHindi('assignedOfficer')}', LETTER_TYPE AS '${lang.convertToHindi('type')}', LETTER_TAG '${lang.convertToHindi('tag')}', LETTER_ADDRESS '${lang.convertToHindi('address')}', LETTER_SUBJECT '${lang.convertToHindi('subject')}', LETTER_STATUS '${lang.convertToHindi('status')}', LETTER_DATE '${lang.convertToHindi('date')}', REMARK '${lang.convertToHindi('remark')}' FROM ${process.env.LETTER_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], (err, results, fields) => {
+		connection.query(`SELECT SELECT LETTER_REG_NO AS '${lang.convertToHindi('regNo')}', DEPARTMENT_NAME AS '${lang.convertToHindi('department')}', ASSIGNED_OFFICER AS '${lang.convertToHindi('assignedOfficer')}', LETTER_TYPE AS '${lang.convertToHindi('type')}', LETTER_TAG '${lang.convertToHindi('tag')}', LETTER_ADDRESS '${lang.convertToHindi('address')}', LETTER_SUBJECT '${lang.convertToHindi('subject')}', LETTER_STATUS '${lang.convertToHindi('status')}', LETTER_DATE '${lang.convertToHindi('date')}', REMARK '${lang.convertToHindi('remark')}' FROM ${process.env.LETTER_RECORD_TBL} WHERE STATUS = 1 AND MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 
 			results.map((data) => {
@@ -364,7 +364,7 @@ letters.get('/getDataBasedOnSelectedDuration',
  		startDate = helper.convertTimestampToUnixTimestamp(startDate)
  		endDate = helper.convertTimestampToUnixTimestamp(endDate)
 
- 		connection.query(`SELECT LETTER_REG_NO AS '${lang.convertToHindi('regNo')}', DEPARTMENT_NAME AS '${lang.convertToHindi('department')}', ASSIGNED_OFFICER AS '${lang.convertToHindi('assignedOfficer')}', LETTER_TYPE AS '${lang.convertToHindi('type')}', LETTER_TAG '${lang.convertToHindi('tag')}', LETTER_ADDRESS '${lang.convertToHindi('address')}', LETTER_SUBJECT '${lang.convertToHindi('subject')}', LETTER_STATUS '${lang.convertToHindi('status')}', LETTER_DATE '${lang.convertToHindi('date')}', REMARK '${lang.convertToHindi('remark')}' FROM ${process.env.LETTER_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, (err, results, fields) => {
+ 		connection.query(`SELECT LETTER_REG_NO AS '${lang.convertToHindi('regNo')}', DEPARTMENT_NAME AS '${lang.convertToHindi('department')}', ASSIGNED_OFFICER AS '${lang.convertToHindi('assignedOfficer')}', LETTER_TYPE AS '${lang.convertToHindi('type')}', LETTER_TAG '${lang.convertToHindi('tag')}', LETTER_ADDRESS '${lang.convertToHindi('address')}', LETTER_SUBJECT '${lang.convertToHindi('subject')}', LETTER_STATUS '${lang.convertToHindi('status')}', LETTER_DATE '${lang.convertToHindi('date')}', REMARK '${lang.convertToHindi('remark')}' FROM ${process.env.LETTER_RECORD_TBL} WHERE STATUS = 1 AND CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, (err, results, fields) => {
  			if (err) return res.status(400).json({data: [], message : err, success : false})
 
 			results.map((data) => {
@@ -417,7 +417,7 @@ letters.post('/getDataBasedOnSelectedTags',
 			}
 		}
 
-		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria}`, (err, results, fields) => {
+		connection.query(`SELECT * FROM ${process.env.LETTER_RECORD_TBL} ${whereCriteria} AND STATUS = 1`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 
 			// send response

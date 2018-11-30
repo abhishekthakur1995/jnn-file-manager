@@ -59,10 +59,8 @@ records.post('/addNewRecord',
  */
 
 records.get('/getCountOfAllRecords', (req, res) => {
-	connection.query(`SELECT COUNT(*) as count FROM ${process.env.FILE_RECORD_TBL}`, (err, results, fields) => {
-		if (err) {
-			return res.status(400).json({data: [], message : err, success : false})
-		}
+	connection.query(`SELECT COUNT(*) as count FROM ${process.env.FILE_RECORD_TBL} WHERE STATUS = 1`, (err, results, fields) => {
+		if (err) return res.status(400).json({data: [], message : err, success : false})
 		res.status(200).json({data : results, message : 'Records fetched successfully', success : true})
 	})
 })
@@ -89,12 +87,12 @@ records.get('/getRecords',
 		let totalCount = 0
 		let results = ''
 
-		let dataQuery = `SELECT * FROM ${process.env.FILE_RECORD_TBL} ORDER BY CREATED DESC LIMIT ${offset}, ${limit}`
+		let dataQuery = `SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE STATUS = 1 ORDER BY CREATED DESC LIMIT ${offset}, ${limit}`
 		if(req.query.sortField && req.query.orderBy) {
-			dataQuery = `SELECT * FROM ${process.env.FILE_RECORD_TBL} ORDER BY ${helper.getDbFieldCodeFromName(req.query.sortField)} ${req.query.orderBy.toUpperCase()} LIMIT ${offset}, ${limit}`
+			dataQuery = `SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE STATUS = 1 ORDER BY ${helper.getDbFieldCodeFromName(req.query.sortField)} ${req.query.orderBy.toUpperCase()} LIMIT ${offset}, ${limit}`
 		}
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL}`, (err, results, fields) => {
+		connection.query(`SELECT COUNT(*) AS totalCount WHERE STATUS = 1 FROM ${process.env.FILE_RECORD_TBL}`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
@@ -155,9 +153,9 @@ records.post('/getFilteredData',
 			searchCriteria = `${helper.getDbFieldCodeFromName(searchFilters.queryField)} LIKE '%${searchFilters.searchTerm}%'`
 		}
 
-		whereCriteria = `WHERE ${searchCriteria} ${sortCriteria}`
+		whereCriteria = `WHERE STATUS = 1 AND ${searchCriteria} ${sortCriteria}`
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} ${whereCriteria}`, (err, results, fields) => {
+		connection.query(`SELECT COUNT(*) as totalCount WHERE STATUS = 1 FROM ${process.env.FILE_RECORD_TBL} ${whereCriteria}`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
@@ -196,11 +194,11 @@ records.post('/getSearchResults',
 		let totalCount = 0
 		let results = ''
 
-		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%'`, (err, results, fields) => {
+		connection.query(`SELECT COUNT(*) as totalCount FROM ${process.env.FILE_RECORD_TBL} WHERE STATUS = 1 AND APPLICANT_NAME LIKE '%${query}%'`, (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 			totalCount = results[0].totalCount
 
-			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE APPLICANT_NAME LIKE '%${query}%' LIMIT ${offset}, ${limit}`, (err, results, fields) => {
+			connection.query(`SELECT * FROM ${process.env.FILE_RECORD_TBL} WHERE STATUS = 1 AND APPLICANT_NAME LIKE '%${query}%' LIMIT ${offset}, ${limit}`, (err, results, fields) => {
 				if (err) return res.status(400).json({data: [], message : err, success : false})
 				results = results
 
@@ -324,7 +322,7 @@ records.delete('/deleteRecord/:id',
  */
 
 records.get('/getDashboardData', (req, res) => {
-	connection.query(`SELECT COUNT(*) AS TOTAL, COUNT(CASE WHEN FILE_STATUS = 0 THEN 1 END) AS PENDING, COUNT(CASE WHEN FILE_STATUS = 1 THEN 1 END) AS APPROVED, COUNT(CASE WHEN FILE_STATUS = 2 THEN 1 END) AS REJECTED FROM ${process.env.FILE_RECORD_TBL}`, (err, results, fields) => {
+	connection.query(`SELECT COUNT(*) AS TOTAL, COUNT(CASE WHEN FILE_STATUS = 0 THEN 1 END) AS PENDING, COUNT(CASE WHEN FILE_STATUS = 1 THEN 1 END) AS APPROVED, COUNT(CASE WHEN FILE_STATUS = 2 THEN 1 END) AS REJECTED FROM ${process.env.FILE_RECORD_TBL} WHERE STATUS = 1`, (err, results, fields) => {
 		if (err) {
 			return res.status(400).json({data: [], message : err, success : false})
 		}
@@ -350,7 +348,7 @@ records.get('/getDataBasedOnSelectedMonth',
 		const month = req.query.month
 		const year = req.query.year
 
-		connection.query(`SELECT APPLICANT_NAME AS '${lang.convertToHindi('applicantName')}', APPLICANT_ADDRESS AS '${lang.convertToHindi('applicantAddress')}', APPLICANT_CONTACT AS '${lang.convertToHindi('applicantContact')}', FILE_NUMBER AS '${lang.convertToHindi('fileNumber')}', FILE_STATUS AS '${lang.convertToHindi('fileStatus')}', FILE_DATE AS '${lang.convertToHindi('fileDate')}', DEPARTMENT AS '${lang.convertToHindi('department')}', FILE_DESCRIPTION AS '${lang.convertToHindi('fileDescription')}', ZONE AS '${lang.convertToHindi('zone')}', WARD AS '${lang.convertToHindi('ward')}', REMARK AS '${lang.convertToHindi('remark')}' FROM ${process.env.FILE_RECORD_TBL} WHERE MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], (err, results, fields) => {
+		connection.query(`SELECT APPLICANT_NAME AS '${lang.convertToHindi('applicantName')}', APPLICANT_ADDRESS AS '${lang.convertToHindi('applicantAddress')}', APPLICANT_CONTACT AS '${lang.convertToHindi('applicantContact')}', FILE_NUMBER AS '${lang.convertToHindi('fileNumber')}', FILE_STATUS AS '${lang.convertToHindi('fileStatus')}', FILE_DATE AS '${lang.convertToHindi('fileDate')}', DEPARTMENT AS '${lang.convertToHindi('department')}', FILE_DESCRIPTION AS '${lang.convertToHindi('fileDescription')}', ZONE AS '${lang.convertToHindi('zone')}', WARD AS '${lang.convertToHindi('ward')}', REMARK AS '${lang.convertToHindi('remark')}' FROM ${process.env.FILE_RECORD_TBL} WHERE STATUS = 1 AND MONTH(CREATED) = ? AND YEAR(CREATED) = ?`, [month, year], (err, results, fields) => {
 			if (err) return res.status(400).json({data: [], message : err, success : false})
 
 			results.map((data) => {
@@ -383,7 +381,7 @@ records.get('/getDataBasedOnSelectedDuration',
  		startDate = helper.convertTimestampToUnixTimestamp(startDate)
  		endDate = helper.convertTimestampToUnixTimestamp(endDate)
 
- 		connection.query(`SELECT APPLICANT_NAME AS '${lang.convertToHindi('applicantName')}', APPLICANT_ADDRESS AS '${lang.convertToHindi('applicantAddress')}', APPLICANT_CONTACT AS '${lang.convertToHindi('applicantContact')}', FILE_NUMBER AS '${lang.convertToHindi('fileNumber')}', FILE_STATUS AS '${lang.convertToHindi('fileStatus')}', FILE_DATE AS '${lang.convertToHindi('fileDate')}', DEPARTMENT AS '${lang.convertToHindi('department')}', FILE_DESCRIPTION AS '${lang.convertToHindi('fileDescription')}', ZONE AS '${lang.convertToHindi('zone')}', WARD AS '${lang.convertToHindi('ward')}', REMARK AS '${lang.convertToHindi('remark')}' FROM ${process.env.FILE_RECORD_TBL} WHERE CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, (err, results, fields) => {
+ 		connection.query(`SELECT APPLICANT_NAME AS '${lang.convertToHindi('applicantName')}', APPLICANT_ADDRESS AS '${lang.convertToHindi('applicantAddress')}', APPLICANT_CONTACT AS '${lang.convertToHindi('applicantContact')}', FILE_NUMBER AS '${lang.convertToHindi('fileNumber')}', FILE_STATUS AS '${lang.convertToHindi('fileStatus')}', FILE_DATE AS '${lang.convertToHindi('fileDate')}', DEPARTMENT AS '${lang.convertToHindi('department')}', FILE_DESCRIPTION AS '${lang.convertToHindi('fileDescription')}', ZONE AS '${lang.convertToHindi('zone')}', WARD AS '${lang.convertToHindi('ward')}', REMARK AS '${lang.convertToHindi('remark')}' FROM ${process.env.FILE_RECORD_TBL} WHERE STATUS = 1 AND CREATED BETWEEN FROM_UNIXTIME(${startDate}) AND FROM_UNIXTIME(${endDate})`, (err, results, fields) => {
  			if (err) return res.status(400).json({data: [], message : err, success : false})
 
 			results.map((data) => {
